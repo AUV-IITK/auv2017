@@ -9,6 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
 )
+find_package( OpenCV REQUIRED )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -119,7 +120,7 @@ add_dependencies(firefighter beginner_tutorials_generate_messages_cpp)
 # )
 target_link_libraries(ablanari ${catkin_LIBRARIES})
 target_link_libraries(firefighter ${catkin_LIBRARIES})
-
+target_link_libraries( ablanari ${OpenCV_LIBS} )
 #############
 ## Install ##
 #############

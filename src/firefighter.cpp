@@ -9,11 +9,14 @@
  * 				 This node listens to messages on topic "chatter". On recieving message on chatter it runs a bash file.
  * 				 the bash file in turn communicates to the arduino through serial talk.
  * 				 on the arduino a led it made high.
+ * TODO tasks are marked by comments as TODO. when you create a pull request in github please create a separate issue for each TODO
  */
+
 void chatterCallback(const std_msgs::String::ConstPtr& msg)
 {
   ROS_INFO("Red Alert : [%s]", msg->data.c_str());
-  
+  //send arduino codes
+  system("arduino-serial -b 9600 -p /dev/ttyACM0 -s \"a\"");
 }
 
 int main(int argc, char **argv)

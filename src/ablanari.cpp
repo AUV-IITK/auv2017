@@ -1,7 +1,13 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-
 #include <sstream>
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <iostream>
+
+using namespace cv;
+using namespace std;
 
 /**
  * This node is an example to see how messages are send over the ROS system.
@@ -12,6 +18,18 @@
  */
 int main(int argc, char **argv)
 {
+	
+   Mat image;
+   image = imread("~/ip/lena.jpg");
+   if(! image.data )                              // Check for invalid input
+    {
+        cout <<  "Could not open or find the image" << std::endl ;
+    }
+    else
+    {
+		namedWindow( "Display window", WINDOW_AUTOSIZE );// Create a window for display.
+		imshow( "Display window", image );               // Show our image inside it.
+    }
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line. For programmatic
@@ -50,7 +68,7 @@ int main(int argc, char **argv)
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
-  ros::Rate loop_rate(1);
+  ros::Rate loop_rate(0.25);
 
   /**
    * A count of how many messages we have sent. This is used to create
