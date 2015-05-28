@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 {
 	
    Mat image;
-   image = imread("~/ip/lena.jpg");
+   image = imread("/home/shikher/ip/lena.jpg");
    if(! image.data )                              // Check for invalid input
     {
         cout <<  "Could not open or find the image" << std::endl ;
@@ -29,6 +29,7 @@ int main(int argc, char **argv)
     {
 		namedWindow( "Display window", WINDOW_AUTOSIZE );// Create a window for display.
 		imshow( "Display window", image );               // Show our image inside it.
+		waitKey(5000);
     }
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
