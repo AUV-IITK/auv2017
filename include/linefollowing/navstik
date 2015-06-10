@@ -1,0 +1,169 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+#include<cstdlib>
+
+using namespace std;
+
+class NavStik
+{
+  public:
+	enum Status { fine, path_not_defined, not_connected, not_initialised };
+
+  private:
+	Status stat;
+	ifstream navstik;
+	string Path;
+	void getPath();	
+
+  public:
+	static const float error = 5.0;
+	
+	string path()
+	{
+		return Path;
+	}
+
+	Status status()
+	{
+		return stat;
+	}
+	
+	NavStik();
+	float yaw();
+	float pitch();
+	float roll();
+
+	~NavStik()
+	{
+		navstik.close();
+	}
+};
+
+NavStik::NavStik()
+{
+	string val;
+	bool init = false;
+	stat = fine;
+
+	getPath();
+	if(stat != fine)
+		return;	
+
+	navstik.open(Path.c_str());
+
+	if(!navstik)
+	{
+		cout<<"NavStik not connected!"<<endl;
+		stat = not_connected;
+	}
+	else
+	{
+		for(int i=1; i<10; i++)
+		{	
+			getline(navstik, val);		
+			if(val.find("NAVSTIK") != string::npos)
+			{
+				init = true;
+				break;
+			}
+		}
+
+		if(!init)
+		{
+			cout<<"NavStik not initialised!"<<endl;
+			stat = not_initialised;
+		}
+	}
+}
+
+float NavStik::roll()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK2")) != string::npos)
+		{
+			val = val.substr(pos+10, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::pitch()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK2")) != string::npos)
+		{
+			val = val.substr(pos+19, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::yaw()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK2")) != string::npos)
+		{
+			val = val.substr(pos+28, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+void NavStik::getPath()
+{
+	string nav;
+	ifstream npath;
+	long int pos;
+	bool found = false;
+	
+	npath.open("PATH");
+	while(!npath.eof())
+	{	
+		getline(npath, nav);
+		if(nav.find("//") != string::npos)
+			continue;
+		else if((pos = nav.find("navstik")) != string::npos)
+		{
+			nav = nav.substr(pos+8);
+			found = true;
+			break;
+		}
+	}
+	
+	if(found)
+	{	
+		npath.close();
+		nav.erase(0, 1);
+		nav.erase(nav.length()-1);
+		Path = nav;
+	}
+	else
+	{	
+		cout<<"NavStik's Path not defined!"<<endl;
+		npath.close();
+		stat = path_not_defined;
+	}
+}
+
