@@ -12,6 +12,7 @@ Mat img,imgHSV,imgThresholded,imgSmooth,imgCanny,imgLines;
 int lineCount=0;
 
 //parameters in param file should be nearly the same as the commented values
+//params for an orange strip
 int LowH ; //0
 int HighH ; //88
 
@@ -21,11 +22,15 @@ int HighS ; //251
 int LowV ; //0
 int HighV ; //255
 
+//params for smoothing image
 int ksize; //21
-int stype; //4
+int stype; //4  -> decides which type of filter has to be used 
+
+//params for bilateral filter in smoothcallback
 int sigmaColor; //150
 int sigmaSpace; //10
 
+//params for hough line transform
 int lineThresh; //60
 int minLineLength; //70
 int maxLineGap; //10
@@ -45,6 +50,7 @@ void StretchContrast()
 	merge(ch,3,img);
 }
 
+//called when large no of line detected
 double computeMean(vector<Vec2f>& newRhoAngle){
 	double sum=0;
 	for( size_t i = 0; i < newRhoAngle.size(); i++ ){
@@ -53,6 +59,8 @@ double computeMean(vector<Vec2f>& newRhoAngle){
     return sum/newRhoAngle.size();
 }
 
+//called when few lines are detected 
+//to remove errors due to any stray results
 double computeMode(vector<Vec2f>& newRhoAngle){
 	double mode=newRhoAngle[0][1];
 	int freq=1;
@@ -79,6 +87,8 @@ double computeMode(vector<Vec2f>& newRhoAngle){
 	return mode;
 }
 
+//callback for smoothing image
+//contains different filters "stype" decides which filter to use
 void SmoothCallback(int ,void *){
 	if(ksize%2==0) ksize=ksize+1;     //kernel size can not be even
 	switch(stype){
@@ -86,13 +96,13 @@ void SmoothCallback(int ,void *){
 			blur( img, imgSmooth, Size( ksize, ksize ) ); //ksize=17 
 			break;
 		case 2:
-			GaussianBlur( img, imgSmooth, Size( ksize, ksize ), 0, 0 ); //ksize= ??
+			GaussianBlur( img, imgSmooth, Size( ksize, ksize ), 0, 0 );
 			break;
 		case 3:
-			medianBlur( img, imgSmooth, ksize ); //ksize= ??
+			medianBlur( img, imgSmooth, ksize );
 			break;
 		case 4:
-			bilateralFilter( img, imgSmooth, ksize, sigmaColor, sigmaSpace); //ksize=?? sigmaColor=?? sigmaSpace=??
+			bilateralFilter( img, imgSmooth, ksize, sigmaColor, sigmaSpace);
 			break;
 		default:
 			cout<<"Please enter a smoothing type "<<endl;
@@ -100,7 +110,7 @@ void SmoothCallback(int ,void *){
 
 }
 
-
+//contains canny edge detection and houghline transform
 void callback(int ,void *){
 	cvtColor(imgSmooth, imgHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
 	inRange(imgHSV, Scalar(LowH, LowS, LowV), Scalar(HighH, HighS, HighV), imgThresholded); //Threshold the image
@@ -144,8 +154,8 @@ void callback(int ,void *){
     } 
     cout<<endl;
     lineCount=rhoAngle.size();
-    //if num of lines are large than one or two stray lines won't affect the mean much
-    //but if they are small in number than mode has to be taken to save the error due to those stray line
+    //num of lines :-large ->mean is computed
+    //num of lines :-small ->mode is computed -> removes error due to lines
     if(rhoAngle.size()>0 && rhoAngle.size()<10) finalAngle=computeMode(rhoAngle);
     else if(rhoAngle.size()>0) finalAngle=computeMean(rhoAngle);
 
@@ -158,12 +168,13 @@ void callback(int ,void *){
 
 int main( int argc, char** argv ) {
 
-	FILE* fp=fopen("/home/jayant/catkin_ws/src/linefollowing/src/params.txt","r");
+	//enter the path which contains params.txt
+	FILE* fp=fopen("/home/shibhansh/catkin_ws/src/linefollowing/src/params.txt","r"); 
 	fscanf(fp,"%d %d %d %d %d %d\n%d %d %d %d\n%d %d %d\n%d",&LowH,&HighH,&LowS,&HighS,&LowV,&HighV,&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
 	fclose(fp);
 
-    VideoCapture cap(1); //capture the video from webcam
-    //VideoCapture cap("/home/jayant/catkin_ws/src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
+    //VideoCapture cap(0); //capture the video from webcam
+    VideoCapture cap("/home/shibhansh/catkin_ws/src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
 
     if ( !cap.isOpened() )  // if not success, exit program
     {

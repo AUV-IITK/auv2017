@@ -5,7 +5,6 @@ project(linefollowing)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  OpenCV
   roscpp
   rospy
   rosserial_arduino
@@ -13,7 +12,9 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   message_generation
 )
-
+find_package(
+	OpenCV
+)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -85,7 +86,7 @@ add_message_files(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES lineFollowing
-   CATKIN_DEPENDS roscpp rospy rosserial_arduino rosserial_client std_msgs message_runtime
+   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime rosserial_arduino rosserial_client 
 #  DEPENDS system_lib
 )
 
@@ -100,18 +101,18 @@ include_directories(include
   ${catkin_INCLUDE_DIRS}
 )
 
-   rosserial_generate_ros_lib(
-     PACKAGE rosserial_arduino
-     SCRIPT make_libraries.py
-   )
+rosserial_generate_ros_lib(
+  PACKAGE rosserial_arduino
+  SCRIPT make_libraries.py
+)
    
-   rosserial_configure_client(
-     DIRECTORY src
-     TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
-   )
+rosserial_configure_client(
+  DIRECTORY src
+  TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
+)
    
-   rosserial_add_client_target(src hello ALL)#this hello need not be changed for anything
-   rosserial_add_client_target(src hello-upload)#this hello need not be changed for anything
+rosserial_add_client_target(src hello ALL) #this hello need not be changed for anything
+rosserial_add_client_target(src hello-upload) #this hello need not be changed for anything
 
 add_executable(pid_angle src/pid_angle.cpp)
 target_link_libraries(pid_angle ${catkin_LIBRARIES})

@@ -7,6 +7,6 @@
    
    generate_arduino_firmware(hello
      SRCS hello.cpp ${ROS_LIB_DIR}/time.cpp
-     BOARD uno
-     PORT /dev/ttyACM1
+     BOARD mega
+     PORT /dev/ttyACM0
    )

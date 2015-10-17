@@ -23,12 +23,12 @@ void pid(double p=1,double i=0, double d=0){
 	previous_angle=current_angle;
 	double error=setpoint-current_angle;
 	double change=current_angle-previous_angle;
-	double dt=0.01;//assuming incoming rate to be 100 Hz
+	double dt=0.001;//assuming incoming rate to be 100 Hz
 	double max=120;//depends upon micro-controller
 	double min=90;
 	ros::NodeHandle nh;
-	ros::Publisher pwm=nh.advertise<std_msgs::Int32>("pwm",1000);
-	ros::Rate loop_rate(100);
+	ros::Publisher pwm=nh.advertise<std_msgs::Int32>("turningPWM",1000);
+	ros::Rate loop_rate(1000);
 	reset=false;
 	while(!reset&&ros::ok()){
 		integral =integral +((current_angle+previous_angle)*dt)/2;
@@ -37,6 +37,11 @@ void pid(double p=1,double i=0, double d=0){
 		error=setpoint-current_angle;
 		error=error*(180/3.14);
 		output=p*error+i*integral+d*derivative;
+
+
+		//out.data=255;
+		
+
 		/*if(error>0)
 			output = 90+(output*3/3.14);
 		else{
@@ -50,12 +55,12 @@ void pid(double p=1,double i=0, double d=0){
 		//	output=min;
 		//if(((current_angle<0.1)&&(current_angle>-0.1))&&((derivative>-0.01)&&(derivative<0.01)))
 		//break;
-		if(error>0)
+		if(error<0)
 			out.data=(int)output;
 		else
 			out.data=-1*(int)output;
-		//printf("give the value of pwm");
-		//scanf("%d",&out.data);
+		printf("give the value of pwm");
+		scanf("%d",&out.data);
 		ROS_INFO("pwm send to arduino %d",out.data);
 		pwm.publish(out);
 		ros::spinOnce();
