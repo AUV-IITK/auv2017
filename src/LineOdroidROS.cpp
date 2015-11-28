@@ -40,6 +40,8 @@ double rho=0.1;
 double finalAngle;
 double minDeviation=0.02;
 
+bool vidCheck=false;
+
 void StretchContrast()
 {
 	Mat ch[3];
@@ -51,35 +53,35 @@ void StretchContrast()
 }
 
 //called when large no of line detected
-double computeMean(vector<Vec2f>& newRhoAngle){
-	double sum=0;
-	for( size_t i = 0; i < newRhoAngle.size(); i++ ){
-    	sum=sum+newRhoAngle[i][1];    		
-    }
-    return sum/newRhoAngle.size();
-}
 
+double computeMean(vector<double>& newAngles){
+	double sum=0;
+	for( size_t i = 0; i < newAngles.size(); i++ ){
+    	sum=sum+newAngles[i];    		
+    }
+    return sum/newAngles.size();
+}
 //called when few lines are detected 
 //to remove errors due to any stray results
-double computeMode(vector<Vec2f>& newRhoAngle){
-	double mode=newRhoAngle[0][1];
+double computeMode(vector<double>& newAngles){
+	double mode=newAngles[0];
 	int freq=1;
 	int tempFreq;
 	double diff;
-	for(int i=0;i<newRhoAngle.size();i++){
+	for(int i=0;i<newAngles.size();i++){
 		tempFreq=1;
 
-		for(int j=i+1;j<newRhoAngle.size();j++){
-			diff=newRhoAngle[j][1]-newRhoAngle[i][1]>0.0? newRhoAngle[j][1]-newRhoAngle[i][1]:newRhoAngle[i][1]-newRhoAngle[j][1];
+		for(int j=i+1;j<newAngles.size();j++){
+			diff=newAngles[j]-newAngles[i]>0.0? newAngles[j]-newAngles[i]:newAngles[i]-newAngles[j];
 			if(diff<=minDeviation){
 				tempFreq++;
-				newRhoAngle.erase(newRhoAngle.begin()+j);
+				newAngles.erase(newAngles.begin()+j);
 				j=j-1;
 			}
 		}
 
 		if(tempFreq>=freq){
-			mode=newRhoAngle[i][1];
+			mode=newAngles[i];
 			freq=tempFreq;
 		}
 	}
@@ -111,6 +113,7 @@ void SmoothCallback(int ,void *){
 }
 
 //contains canny edge detection and houghline transform
+
 void callback(int ,void *){
 	cvtColor(imgSmooth, imgHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
 	inRange(imgHSV, Scalar(LowH, LowS, LowV), Scalar(HighH, HighS, HighV), imgThresholded); //Threshold the image
@@ -131,50 +134,48 @@ void callback(int ,void *){
 
 	img.copyTo(imgLines);
 	imgLines=Scalar(0,0,0);
+	vector<double> angles(lines.size());
+
+	cout<<"No of lines : "<<lines.size()<<endl<<"Angles(radian): ";
 
 	for( size_t i = 0; i < lines.size(); i++ )
 	{
   		Vec4i l = lines[i];
   		line( imgLines, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,255,0), 1, CV_AA);
+  		angles[i] = atan(double(l[2]-l[0])/(l[1]-l[3]));
+  		cout<<angles[i]<<" ";
 	}
-
-	cout<<"No of lines initially: "<<lines.size()<<endl;
+	cout<<endl;
 	imshow("LINES",imgLines+img);
 
-	cvtColor(imgLines, imgLines, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
-	inRange(imgLines, Scalar(59, 0, 0), Scalar(61, 255, 255), imgLines); //Threshold the image
-	Canny(imgLines,imgLines,50,150,3,true);//canny edge detection
-	vector<Vec2f> rhoAngle;
-    HoughLines(imgLines, rhoAngle, rho, CV_PI/180, houghThresh, 0, 0 );
- 
-    cout<<"No of lines finally: "<<rhoAngle.size()<<" "<<", Angles(radian): ";	
-    for( size_t i = 0; i < rhoAngle.size(); i++ ){
-    	cout<<rhoAngle[i][1]<<" ";
-    	rhoAngle[i][1]=rhoAngle[i][1]>1.57? -1*(3.14-rhoAngle[i][1]):rhoAngle[i][1];    		
-    } 
-    cout<<endl;
-    lineCount=rhoAngle.size();
-    //num of lines :-large ->mean is computed
-    //num of lines :-small ->mode is computed -> removes error due to lines
-    if(rhoAngle.size()>0 && rhoAngle.size()<10) finalAngle=computeMode(rhoAngle);
-    else if(rhoAngle.size()>0) finalAngle=computeMean(rhoAngle);
+    //if num of lines are large than one or two stray lines won't affect the mean much
+    //but if they are small in number than mode has to be taken to save the error due to those stray line
+    
+    if(lines.size()>0 && lines.size()<10) finalAngle=computeMode(angles);
+	else if(lines.size()>0) finalAngle=computeMean(angles);
 
-    //if(finalAngle >1.57) finalAngle= -1*(3.14-finalAngle );
-
-    cout<<"Final Angle: "<<finalAngle<<endl;
-
-	//imshow("check",imgLines);
+    cout<<"Final Angle: "<<finalAngle<<endl<<endl;
 }
 
-int main( int argc, char** argv ) {
 
+
+int main( int argc, char** argv ) {
+	if(argc<2){
+		cout<<"please specify whether you want the display or not : "<<endl<<"USAGE: "<<endl<< "add argument 1 if you want the display, otherwise 0"<<endl;
+		return 0;
+	}
+
+	if(*argv[1]=='1') vidCheck=true;
+ 
 	//enter the path which contains params.txt
-	FILE* fp=fopen("/home/shibhansh/catkin_ws/src/linefollowing/src/params.txt","r"); 
+	FILE* fp=fopen("src/linefollowing/src/params.txt","r"); 
 	fscanf(fp,"%d %d %d %d %d %d\n%d %d %d %d\n%d %d %d\n%d",&LowH,&HighH,&LowS,&HighS,&LowV,&HighV,&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
 	fclose(fp);
 
     //VideoCapture cap(0); //capture the video from webcam
-    VideoCapture cap("/home/shibhansh/catkin_ws/src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
+    //VideoCapture cap("src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
+    VideoCapture cap("src/linefollowing/src/TestingLine.mp4"); 
+    
 
     if ( !cap.isOpened() )  // if not success, exit program
     {
@@ -182,26 +183,24 @@ int main( int argc, char** argv ) {
          return -1;
     }
 
-    namedWindow("LINES",CV_WINDOW_AUTOSIZE);
+    if (vidCheck) namedWindow("LINES",CV_WINDOW_AUTOSIZE);
 
     ros::init(argc, argv, "LineOdroidROS");
 	ros::NodeHandle node;
- 	ros::Publisher tracker_pub = node.advertise<std_msgs::Float64>("lineAngle", 1000);	
-
- 	finalAngle=0.0;
+ 	ros::Publisher tracker_pub1 = node.advertise<std_msgs::Float64>("lineAngle", 1000);
+ 	ros::Publisher tracker_pub2 = node.advertise<std_msgs::Float64>("toKalman", 1000);
 
     bool bSuccess;
     while(ros::ok()){
 
     	std_msgs::Float64 msg;
-    	msg.data = finalAngle;
+    	msg.data = finalAngle*(180/3.14);
 
-    	cout<<lineCount<<endl;
+    	//cout<<lineCount<<endl;
 
-  		if(lineCount>0){
-		tracker_pub.publish(msg);
+		tracker_pub1.publish(msg);
+		tracker_pub2.publish(msg);
 		ROS_INFO("%lf", msg.data);
-		}
 		
 		ros::spinOnce();
 

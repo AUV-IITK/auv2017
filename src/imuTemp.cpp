@@ -81,9 +81,9 @@ int main(int argc, char**argv)
       imu_msg.linear_acceleration.z = 0.0;
       imu_msg.linear_acceleration_covariance[0] = -1;
 
-      msg.data = TO_DEG(yaw);
+      msg.data = TO_DEG(-atan2(magnetom[1],magnetom[0]));
       chatter_pub.publish(msg);
-      ROS_INFO("%s %f", "send an imu message",TO_DEG(yaw));
+      ROS_INFO("%s %f", "send an imu message",TO_DEG(-atan2(magnetom[1],magnetom[0])));
       //ros::spinOnce();
 	  }
 	}

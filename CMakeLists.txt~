@@ -5,7 +5,6 @@ project(linefollowing)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  #OpenCV
   roscpp
   rospy
   rosserial_arduino
@@ -102,18 +101,18 @@ include_directories(include
   ${catkin_INCLUDE_DIRS}
 )
 
-   rosserial_generate_ros_lib(
-     PACKAGE rosserial_arduino
-     SCRIPT make_libraries.py
-   )
+rosserial_generate_ros_lib(
+  PACKAGE rosserial_arduino
+  SCRIPT make_libraries.py
+)
    
-   rosserial_configure_client(
-     DIRECTORY src
-     TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
-   )
+rosserial_configure_client(
+  DIRECTORY src
+  TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
+)
    
-   rosserial_add_client_target(src hello ALL) #this hello need not be changed for anything
-   rosserial_add_client_target(src hello-upload) #this hello need not be changed for anything
+rosserial_add_client_target(src hello ALL) #this hello need not be changed for anything
+rosserial_add_client_target(src hello-upload) #this hello need not be changed for anything
 
 add_executable(pid_angle src/pid_angle.cpp)
 target_link_libraries(pid_angle ${catkin_LIBRARIES})
@@ -122,6 +121,10 @@ add_dependencies(pid_angle linefollowing_generate_messages_cpp)
 add_executable(imu src/imu.cpp)
 target_link_libraries(imu ${catkin_LIBRARIES})
 add_dependencies(imu linefollowing_generate_messages_cpp)
+
+add_executable(imuTemp src/imuTemp.cpp)
+target_link_libraries(imuTemp ${catkin_LIBRARIES})
+add_dependencies(imuTemp linefollowing_generate_messages_cpp)
 
 add_executable(task_handler src/task_handler.cpp)
 target_link_libraries(task_handler ${catkin_LIBRARIES})
@@ -132,6 +135,10 @@ target_link_libraries(LineOdroidROS ${catkin_LIBRARIES})
 target_link_libraries(LineOdroidROS  ${OpenCV_LIBS} )
 add_dependencies(LineOdroidROS linefollowing_generate_messages_cpp)
 
+add_executable(kalman src/kalman.cpp)
+target_link_libraries(kalman ${catkin_LIBRARIES})
+target_link_libraries(kalman  ${OpenCV_LIBS} )
+add_dependencies(kalman linefollowing_generate_messages_cpp)
 ## Declare a cpp library
 # add_library(lineFollowing
 #   src/${PROJECT_NAME}/lineFollowing.cpp

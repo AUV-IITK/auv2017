@@ -22,7 +22,7 @@ double mod(double a){
 // }
 void imucb(std_msgs::Float64 msg1){
 	imuangle=msg1.data;
-	ROS_INFO("DATA FROM IMU RECEIVED %lf",msg1.data*180/3.14);
+	ROS_INFO("DATA FROM IMU RECEIVED %lf",msg1.data);
 }
 
 
@@ -41,7 +41,7 @@ int main(int argc,char ** argv){
 		output.setPoint=setpoint; 
 		output.currentPosition=imuangle;
 		final_angle.publish(output);
-		ROS_INFO("FINAL ANGLE IS GIVEN TO THE ARDUINO NODE is %lf  ",imuangle*180/3.14);
+		ROS_INFO("FINAL ANGLE IS GIVEN TO THE ARDUINO NODE is %lf  ",imuangle);
 		ros::spinOnce();
 		looprate.sleep();
 		output.reset=false;

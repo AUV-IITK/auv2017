@@ -35,7 +35,7 @@ void pid(double p=1,double i=0, double d=0){
 		change=current_angle- previous_angle;
 		derivative = change/dt;
 		error=setpoint-current_angle;
-		error=error*(180/3.14);
+		error=error;
 		output=p*error+i*integral+d*derivative;
 
 
@@ -72,7 +72,7 @@ void anglecb(linefollowing::line_arduino msg){
 	if(!(msg.reset)){	
 		previous_angle=current_angle;
 		current_angle=msg.currentPosition;
-		ROS_INFO("NOT RESET ANGLE, TARGET REMAINS SAME %lf AND currentPosition IS %lf",(setpoint*180/3.14),msg.currentPosition*(180/3.14));
+		ROS_INFO("NOT RESET ANGLE, TARGET REMAINS SAME %lf AND currentPosition IS %lf",setpoint,msg.currentPosition);
 	}
 	else{
 		setpoint=msg.setPoint;
