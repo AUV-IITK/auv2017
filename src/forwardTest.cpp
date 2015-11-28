@@ -7,19 +7,32 @@
 
 
 typedef actionlib::SimpleActionClient<motionlibrary::ForwardAction> Client;
+<<<<<<< HEAD
 bool cancel=false;
+=======
+
+>>>>>>> initial commit
 //never ever put the argument of the callback function anything other then the specified
 //void forwardCb(const motionlibrary::ForwardActionFeedbackConstPtr msg){
 void forwardCb(motionlibrary::ForwardActionFeedback msg){
 	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.TimeRemaining);
+<<<<<<< HEAD
 	if(msg.feedback.TimeRemaining == 15){
 //		forwardTestClient.cancelGoal();
 		ROS_INFO("Goal cancelled");
 	}
+=======
+>>>>>>> initial commit
 }
 
 void spinThread()
 {
+<<<<<<< HEAD
+=======
+	ros::NodeHandle nh;
+	ros::Subscriber sub_ = nh.subscribe<motionlibrary::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
+
+>>>>>>> initial commit
 	ros::spin();
 }
 // void doneCb(){
@@ -36,17 +49,24 @@ void spinThread()
 // }
 
 int main(int argc, char** argv){
+<<<<<<< HEAD
 
 	ros::init(argc, argv, "testForwardMotion");
 	
 	ros::NodeHandle nh;
 	ros::Subscriber sub_ = nh.subscribe<motionlibrary::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
 
+=======
+	ros::init(argc, argv, "testForwardMotion");
+>>>>>>> initial commit
 
 	// Create the action client
 	Client forwardTestClient("forward");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> initial commit
 	// Here the thread is created and the ros node is started spinning in the background.
 	// By using this method you can create multiple threads for your action client if needed. 
 	boost::thread spin_thread(&spinThread);
@@ -62,8 +82,12 @@ int main(int argc, char** argv){
 	ROS_INFO("Goal Send");
 
 	//here this part of the code simply waits for the result and rest of the part can be done in the thread
+<<<<<<< HEAD
 	forwardTestClient.waitForResult(); //gives true after the result is accomplished
 	
+=======
+	forwardTestClient.waitForResult();
+>>>>>>> initial commit
 
 	ros::shutdown();
 
