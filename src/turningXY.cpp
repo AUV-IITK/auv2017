@@ -32,7 +32,7 @@ public:
 	   	turnServer_(nh_, name, boost::bind(&TurnAction::analysisCB, this, _1), false),
     	action_name_(name)
 	{
-//		forwardServer_.registerGoalCallback(boost::bind(&forwardAction::goalCB, this));
+//		turnServer_.registerGoalCallback(boost::bind(&TurnAction::goalCB, this));
 		turnServer_.registerPreemptCallback(boost::bind(&TurnAction::preemptCB, this));
 
 //this type callback can be used if we want to do the callback from some specific node
@@ -98,7 +98,7 @@ public:
 			if(error<5 && error >-5){//assuming that this angle is in degree
 				//write something to calculate the time we will wait for and check if we are in the range of 5 degrees
 				// we can also check that if we are in this range and the angular velocity is also small then we can assume
-				// that we are stable and we can now start moving forward
+				// that we are stable and we can now start moving 
 				reached=true;
 				pwm.data = 0;
 				dir.data = 5;
@@ -163,21 +163,21 @@ void yawCb(std_msgs::Float64 msg){
 }
 
 int main(int argc, char** argv){
-	ros::init(argc, argv, "forward");
+	ros::init(argc, argv, "TurnXY");
 	// input theta will be positive if we have to rotate the bot ACW
-	if(argc!=2){
-		cout << "incorret number of arguments" << endl;
-		return 1;
-	}
-	else
-		theta=atof(argv[1]);
+	// if(argc!=2){
+	// 	cout << "incorret number of arguments" << endl;
+	// 	return 1;
+	// }
+	// else
+	// 	theta=atof(argv[1]);
 	cout << "theta is " <<argv[1] << endl;
 
 	ros::NodeHandle n;
 	ros::Subscriber yaw=n.subscribe<std_msgs::Float64>("yaw",1000,&yawCb);
 
 	ROS_INFO("Waiting for Goal");
-	TurnAction forward(ros::this_node::getName());
+	TurnAction turn(ros::this_node::getName());
 
 	ros::spin();
 	return 0;

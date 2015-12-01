@@ -5,4 +5,4 @@ float32 AngleToTurn
 bool MotionCompleted
 ---
 #feedback
-
+float32 AngleRemaining
