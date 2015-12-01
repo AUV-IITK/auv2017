@@ -132,6 +132,9 @@ target_link_libraries(forwardTest ${catkin_LIBRARIES})
 add_executable(turningXY src/turningXY.cpp)
 target_link_libraries(turningXY ${catkin_LIBRARIES})
 
+add_executable(turningXYTest src/turningXYTest.cpp)
+target_link_libraries(turningXYTest ${catkin_LIBRARIES})
+
 ## Declare a C++ library
 # add_library(motionlibrary
 #   src/${PROJECT_NAME}/motionlibrary.cpp
