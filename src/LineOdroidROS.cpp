@@ -172,10 +172,10 @@ int main( int argc, char** argv ) {
 	fscanf(fp,"%d %d %d %d %d %d\n%d %d %d %d\n%d %d %d\n%d",&LowH,&HighH,&LowS,&HighS,&LowV,&HighV,&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
 	fclose(fp);
 
-    VideoCapture cap(1); //capture the video from webcam
+    //VideoCapture cap(1); //capture the video from webcam
     //VideoCapture cap("src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
     //VideoCapture cap("src/linefollowing/src/TestingLine.mp4"); 
-    //VideoCapture cap("src/linefollowing/src/test1.avi"); 
+    VideoCapture cap("src/linefollowing/src/test1.avi"); 
     
 
     if ( !cap.isOpened() )  // if not success, exit program
