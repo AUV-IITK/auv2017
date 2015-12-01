@@ -4,9 +4,18 @@
 #include <motionlibrary/ForwardActionFeedback.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
+#include <dynamic_reconfigure/server.h>
+#include <motionlibrary/forwardConfig.h>
 
 typedef actionlib::SimpleActionClient<motionlibrary::ForwardAction> Client;
 Client *chutiya;
+
+//dynamic reconfig 
+void callback(motionlibrary::forwardConfig &config, int level) {
+  ROS_INFO("Reconfigure Request: %d %s", 
+            config.int_param, 
+            config.bool_param?"True":"False");
+}
 
 //never ever put the argument of the callback function anything other then the specified
 //void forwardCb(const motionlibrary::ForwardActionFeedbackConstPtr msg){
@@ -22,30 +31,21 @@ void forwardCb(motionlibrary::ForwardActionFeedback msg){
 
 void spinThread()
 {
-	ros::NodeHandle nh;
-	ros::Subscriber sub_ = nh.subscribe<motionlibrary::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
-
 	ros::spin();
 }
-// void doneCb(){
-// 	ROS_INFO("Finished successfully");
-// 	ros::shutdown();
-// }
-// void activeCb()
-// {
-//    ROS_INFO("Goal just went active");
-// }
-// void feedbackCb(const motionlibrary::ForwardFeedbackConstPtr& feedback)
-// {
-//    ROS_INFO("Got Feedback,time remaining %f", feedback->TimeRemaining);
-// }
 
 int main(int argc, char** argv){
 
 	ros::init(argc, argv, "testForwardMotion");
 	
 	ros::NodeHandle nh;
-	ros::Subscriber sub_ = nh.subscribe<motionlibrary::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
+	//ros::Subscriber sub_ = nh.subscribe<motionlibrary::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
+
+	//register dynamic reconfig server.
+	dynamic_reconfigure::Server<motionlibrary::forwardConfig> server;
+	dynamic_reconfigure::Server<motionlibrary::forwardConfig>::CallbackType f;
+	f = boost::bind(&callback, _1, _2);
+	server.setCallback(f);
 
 	// Create the action client
 	Client forwardTestClient("forward");
@@ -64,10 +64,6 @@ int main(int argc, char** argv){
 	forwardTestClient.sendGoal(goal);
 	chutiya = &forwardTestClient;
 	ROS_INFO("Goal Send");
-
-	// Here the thread is created and the ros node is started spinning in the background.
-	// By using this method you can create multiple threads for your action client if needed. 
-	boost::thread spin_thread(&spinThread);
 
 	//here this part of the code simply waits for the result and rest of the part can be done in the thread
 	forwardTestClient.waitForResult();

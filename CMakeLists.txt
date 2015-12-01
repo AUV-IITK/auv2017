@@ -6,6 +6,7 @@ project(motionlibrary)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   actionlib
+  dynamic_reconfigure
   actionlib_msgs
   message_generation
   message_runtime
@@ -91,10 +92,10 @@ generate_messages(
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
+generate_dynamic_reconfigure_options(
+ cfg/forward.cfg
+ cfg/turning.cfg
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -120,6 +121,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
+  ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -127,6 +129,7 @@ add_executable(forward src/forward.cpp)
 target_link_libraries(forward ${catkin_LIBRARIES})
 
 add_executable(forwardTest src/forwardTest.cpp)
+target_link_libraries(forwardTest ${catkin_LIBRARIES})
 target_link_libraries(forwardTest ${catkin_LIBRARIES})
 
 add_executable(turningXY src/turningXY.cpp)
