@@ -11,7 +11,7 @@ bool cancel=false;
 //never ever put the argument of the callback function anything other then the specified
 //void forwardCb(const motionlibrary::ForwardActionFeedbackConstPtr msg){
 void turnCb(motionlibrary::TurnActionFeedback msg){
-	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.AngleRemaining);
+	ROS_INFO("feedback recieved, %f deg remaining ",msg.feedback.AngleRemaining);
 }
 
 void spinThread()
@@ -24,7 +24,7 @@ int main(int argc, char** argv){
 	ros::init(argc,argv,"testTurningXY");
 
 	ros::NodeHandle nh;
-	ros::Subscriber sub_ = nh.subscribe<motionlibrary::TurnActionFeedback>("/Turn/feedback",1000,&turnCb);
+	ros::Subscriber sub_ = nh.subscribe<motionlibrary::TurnActionFeedback>("/TurnXY/feedback",1000,&turnCb);
 
 	// Create the action client
 	Client TurnTestClient("TurnXY");
@@ -46,7 +46,7 @@ int main(int argc, char** argv){
 
 	//here this part of the code simply waits for the result and rest of the part can be done in the thread
 	TurnTestClient.waitForResult(); //gives true after the result is accomplished
-	
+	ROS_INFO("Mission accomplished");
 
 	ros::shutdown();
 
