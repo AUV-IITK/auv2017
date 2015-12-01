@@ -58,11 +58,15 @@ public:
 
 		//waiting till we recieve the first value from IMU else it's useless to to any calculations
 		while(!initData){
-			ROS_INFO("Waiting for getting first input from IMU");
+			ROS_INFO("Waiting to get first input from IMU");
 			loop_rate.sleep();
 		}
 
 		finalAngularPosition = presentAngularPosition + goal->AngleToTurn;
+		if(finalAngularPosition >= 180)
+			finalAngularPosition = finalAngularPosition -360;
+		else if(finalAngularPosition <= -180)
+			finalAngularPosition = finalAngularPosition +360;
 		
 		float derivative=0,integral=0,dt=1.0/loopRate,p=1,i=0,d=0;
 		bool reached=false;
@@ -160,15 +164,11 @@ void yawCb(std_msgs::Float64 msg){
 		previousAngularPosition = presentAngularPosition;
 
 		initData = true;
-		if(finalAngularPosition >= 180)
-			finalAngularPosition = finalAngularPosition -360;
-		else if(finalAngularPosition <= -180)
-			finalAngularPosition = finalAngularPosition +360;
 	}
 	else{
 		previousAngularPosition = presentAngularPosition;
 		presentAngularPosition= msg.data;
-		ROS_INFO("New angular postion %f", msg.data);
+		// ROS_INFO("New angular postion %f", msg.data);
 	}
 }
 
