@@ -130,7 +130,6 @@ target_link_libraries(forward ${catkin_LIBRARIES})
 
 add_executable(forwardTest src/forwardTest.cpp)
 target_link_libraries(forwardTest ${catkin_LIBRARIES})
-target_link_libraries(forwardTest ${catkin_LIBRARIES})
 
 add_executable(turningXY src/turningXY.cpp)
 target_link_libraries(turningXY ${catkin_LIBRARIES})

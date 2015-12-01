@@ -39,7 +39,7 @@ int main(int argc, char** argv){
 	ros::init(argc, argv, "testForwardMotion");
 	
 	ros::NodeHandle nh;
-	//ros::Subscriber sub_ = nh.subscribe<motionlibrary::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
+	ros::Subscriber sub_ = nh.subscribe<motionlibrary::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
 
 	//register dynamic reconfig server.
 	dynamic_reconfigure::Server<motionlibrary::forwardConfig> server;

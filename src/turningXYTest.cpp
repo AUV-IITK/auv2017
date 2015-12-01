@@ -4,10 +4,19 @@
 #include <motionlibrary/TurnActionFeedback.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
+#include <dynamic_reconfigure/server.h>
+#include <motionlibrary/turningConfig.h>
 
 typedef actionlib::SimpleActionClient<motionlibrary::TurnAction> Client;
+Client *chutiya;
 
-bool cancel=false;
+//dynamic reconfig 
+void callback(motionlibrary::turningConfig &config, int level) {
+  ROS_INFO("Reconfigure Request: %d %s", 
+            config.int_param, 
+            config.bool_param?"True":"False");
+}
+
 //never ever put the argument of the callback function anything other then the specified
 //void forwardCb(const motionlibrary::ForwardActionFeedbackConstPtr msg){
 void turnCb(motionlibrary::TurnActionFeedback msg){
@@ -25,6 +34,12 @@ int main(int argc, char** argv){
 
 	ros::NodeHandle nh;
 	ros::Subscriber sub_ = nh.subscribe<motionlibrary::TurnActionFeedback>("/TurnXY/feedback",1000,&turnCb);
+
+	//register dynamic reconfig server.
+	dynamic_reconfigure::Server<motionlibrary::turningConfig> server;
+	dynamic_reconfigure::Server<motionlibrary::turningConfig>::CallbackType f;
+	f = boost::bind(&callback, _1, _2);
+	server.setCallback(f);
 
 	// Create the action client
 	Client TurnTestClient("TurnXY");
