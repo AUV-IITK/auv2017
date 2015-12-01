@@ -8,13 +8,14 @@
 #define minPWM 120
 using namespace std;
 
-float presentAngularPosition, previousAngularPosition;
+float presentAngularPosition=0;
+float previousAngularPosition=0;
 float finalAngularPosition, error, output;
 bool initData =false;
-float theta;
 
 std_msgs::Int32 pwm;
 std_msgs::Int32 dir;//that we have to send
+
 typedef actionlib::SimpleActionServer<motionlibrary::TurnAction> Server;
 
 class TurnAction{
@@ -52,16 +53,23 @@ public:
 	void analysisCB(const motionlibrary::TurnGoalConstPtr goal){
 		ROS_INFO("Inside analysisCB");
 
-		finalAngularPosition = presentAngularPosition + goal->AngleToTurn;
-		error=finalAngularPosition- presentAngularPosition;
-		
 		int loopRate =10 ;
+		ros::Rate loop_rate(loopRate);
+
+		//waiting till we recieve the first value from IMU else it's useless to to any calculations
+		while(!initData){
+			ROS_INFO("Waiting for getting first input from IMU");
+			loop_rate.sleep();
+		}
+
+		finalAngularPosition = presentAngularPosition + goal->AngleToTurn;
+		
 		float derivative=0,integral=0,dt=1.0/loopRate,p=1,i=0,d=0;
 		bool reached=false;
 		
 		ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
 		ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
-		ros::Rate loop_rate(loopRate);
+
 		pwm.data=0;
 		dir.data=5;
 
@@ -69,7 +77,7 @@ public:
 			return;
 
 		while(!turnServer_.isPreemptRequested()&&ros::ok()){
-			error = finalAngularPosition - presentAngularPosition;		
+			error = finalAngularPosition - presentAngularPosition;
 			integral+= (error*dt);
 			derivative = (presentAngularPosition- previousAngularPosition)/dt;
 
@@ -77,17 +85,13 @@ public:
 
 			turningOutputPWMMapping(output);
 
-			// //use for giving manual input
-			// int temp;
-			// cout << "give pwm input" << endl;
-			// cin >> temp;
-			// pwm.data = temp;
-
-			//this lower limit depends upon the bot itself
+			//this lower limit depends upon the bot itself, below these values of PWM thrusters will not start
 			if(pwm.data < minPWM)
 				pwm.data= minPWM;	
 
-			
+			feedback_.AngleRemaining = error;
+
+			turnServer_.publishFeedback(feedback_);
 			PWM.publish(pwm);
 			direction.publish(dir);
 			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
@@ -105,6 +109,7 @@ public:
 				PWM.publish(pwm);
 				direction.publish(dir);
 				ROS_INFO("thrusters stopped");
+				break;
 			}			
 
 			if (turnServer_.isPreemptRequested() || !ros::ok())
@@ -130,11 +135,10 @@ public:
 			output = maxOutput;
 		if(output < minOutput)
 			output = minOutput;
-		scale = 510.0/(maxOutput- minOutput);
+		scale = (2*255)/(maxOutput- minOutput);
 		float temp;
 
 		temp = output*scale;
-		//pwm= (int)temp;
 
 		if(temp>0){
 			pwm.data = (int)temp;
@@ -149,29 +153,27 @@ public:
 
 
 void yawCb(std_msgs::Float64 msg){
-	previousAngularPosition = presentAngularPosition;
-	presentAngularPosition= msg.data;
-	ROS_INFO("New angular postion %f", msg.data);
+
+	//this is used to set the final angle after getting the value of first intial position
 	if(initData == false){
-		finalAngularPosition = presentAngularPosition + theta;
+		presentAngularPosition= msg.data;
+		previousAngularPosition = presentAngularPosition;
+
 		initData = true;
 		if(finalAngularPosition >= 180)
 			finalAngularPosition = finalAngularPosition -360;
 		else if(finalAngularPosition <= -180)
 			finalAngularPosition = finalAngularPosition +360;
 	}
+	else{
+		previousAngularPosition = presentAngularPosition;
+		presentAngularPosition= msg.data;
+		ROS_INFO("New angular postion %f", msg.data);
+	}
 }
 
 int main(int argc, char** argv){
 	ros::init(argc, argv, "TurnXY");
-	// input theta will be positive if we have to rotate the bot ACW
-	// if(argc!=2){
-	// 	cout << "incorret number of arguments" << endl;
-	// 	return 1;
-	// }
-	// else
-	// 	theta=atof(argv[1]);
-	cout << "theta is " <<argv[1] << endl;
 
 	ros::NodeHandle n;
 	ros::Subscriber yaw=n.subscribe<std_msgs::Float64>("yaw",1000,&yawCb);
