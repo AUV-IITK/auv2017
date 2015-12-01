@@ -189,8 +189,6 @@ int main( int argc, char** argv ) {
     ros::init(argc, argv, "LineOdroidROS");
 	ros::NodeHandle node;
  	ros::Publisher tracker_pub1 = node.advertise<std_msgs::Float64>("lineAngle", 1000);
-
- 	ros::Publisher tracker_pub2 = node.advertise<std_msgs::Float64>("yaw", 1000);
     bool bSuccess;
     while(ros::ok()){
 
@@ -200,7 +198,7 @@ int main( int argc, char** argv ) {
     	//cout<<lineCount<<endl;
 
 		tracker_pub1.publish(msg);
-		//tracker_pub2.publish(msg);
+
 		ROS_INFO("%lf", msg.data);
 		
 		ros::spinOnce();
