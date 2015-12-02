@@ -5,7 +5,7 @@ from dynamic_reconfigure.parameter_generator_catkin import *
 
 gen = ParameterGenerator()
 
-gen.add("double_param",    double_t,    0, "Time parameter", 50,  0, 100)
+gen.add("double_param",    double_t,    0, "Angle to turn", 90, -180, 180)
 gen.add("bool_param",   bool_t,   0, "A Boolean parameter",  True)
 
-exit(gen.generate(PACKAGE, "testForwardMotion", "forward"))
+exit(gen.generate(PACKAGE, "TurnXY", "turning"))
