@@ -1,7 +1,7 @@
-#include<iostream>
-#include<fstream>
-#include<string>
-#include<cstdlib>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
 
 using namespace std;
 
@@ -280,4 +280,3 @@ void NavStik::getPath()
 		stat = path_not_defined;
 	}
 }
-
