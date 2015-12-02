@@ -1,9 +1,12 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
 #include <motionlibrary/ForwardAction.h>
 
 typedef actionlib::SimpleActionServer<motionlibrary::ForwardAction> Server;
+std_msgs::Int32 pwm;
+std_msgs::Int32 dir;
 
 class forwardAction{
 	private:
@@ -41,15 +44,31 @@ class forwardAction{
 			// }
 
 		void preemptCB(void){
+			ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
+			ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
+
+			pwm.data = 0;
+			dir.data = 5;
+			PWM.publish(pwm);
+			direction.publish(dir);							
+			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
+
 			//this command cancels the previous goal
 			forwardServer_.setPreempted();
 			ROS_INFO("%s: Preempted", action_name_.c_str());
+
 		}
 
 		void analysisCB(const motionlibrary::ForwardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
+			ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
+			ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
+
+			pwm.data = 255;
+			dir.data = 1;
 		    ros::Rate looprate(1);
 		    success = true;
+
 			if (!forwardServer_.isActive())
 				return;
 
@@ -65,12 +84,22 @@ class forwardAction{
 				// publish the feedback
 				feedback_.TimeRemaining = goal->MotionTime - timeSpent;
 				forwardServer_.publishFeedback(feedback_);
+				PWM.publish(pwm);
+				direction.publish(dir);
+				ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
+
 				ROS_INFO("timeSpent %f", timeSpent);
+				ros::spinOnce();
 				looprate.sleep();				
 			}
 			if(success){
 				result_.MotionCompleted = success;
+				ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
 				ROS_INFO("%s: Succeeded", action_name_.c_str());
+				pwm.data = 0;
+				dir.data = 5;
+				PWM.publish(pwm);
+				direction.publish(dir);				
 				// set the action state to succeeded
 				forwardServer_.setSucceeded(result_);
 			}
@@ -80,6 +109,7 @@ class forwardAction{
 
 int main(int argc, char** argv){
 	ros::init(argc, argv, "forward");
+
 	ROS_INFO("Waiting for Goal");
 	forwardAction forward(ros::this_node::getName());
 
