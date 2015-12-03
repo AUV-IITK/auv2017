@@ -193,6 +193,14 @@ int main( int argc, char** argv ) {
     while(ros::ok()){
 
     	std_msgs::Float64 msg;
+
+    	/*///////////////////////////////////
+	
+		msg.data never takes positive 90 
+		when the angle is 90 it will show -90
+		-------------TO BE CORRECTED-------------
+
+		*///////////////////////////////////
     	msg.data = -finalAngle*(180/3.14);
 
     	//cout<<lineCount<<endl;
