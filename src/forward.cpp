@@ -5,8 +5,7 @@
 #include <motionlibrary/ForwardAction.h>
 
 typedef actionlib::SimpleActionServer<motionlibrary::ForwardAction> Server;
-std_msgs::Int32 pwm;
-std_msgs::Int32 dir;
+
 
 class forwardAction{
 	private:
@@ -18,7 +17,11 @@ class forwardAction{
 		ros::Subscriber sub_;
 		float timeSpent, motionTime;
 		bool success;
-
+		ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
+		ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
+//ROS was not working properly if these variables were declared globally. Really wierd problem need to do somthing about it 
+		std_msgs::Int32 pwm;
+		std_msgs::Int32 dir;
 	public:
 		forwardAction(std::string name):
 			//here we are defining the server, third argument is optional
@@ -61,8 +64,7 @@ class forwardAction{
 
 		void analysisCB(const motionlibrary::ForwardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
-			ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
-			ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
+
 
 			pwm.data = 255;
 			dir.data = 1;

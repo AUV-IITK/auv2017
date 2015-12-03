@@ -13,8 +13,7 @@ float previousAngularPosition=0;
 float finalAngularPosition, error, output;
 bool initData =false;
 
-std_msgs::Int32 pwm;
-std_msgs::Int32 dir;//that we have to send
+
 
 typedef actionlib::SimpleActionServer<motionlibrary::TurnAction> Server;
 
@@ -26,6 +25,12 @@ private:
 	motionlibrary::TurnFeedback feedback_;
 	motionlibrary::TurnResult result_;
 
+//ROS was not working properly if these variables were declared globally. Really wierd problem need to do somthing about it 
+	std_msgs::Int32 pwm;
+	std_msgs::Int32 dir;//that we have to send
+
+	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
+	ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
 
 public:
 	TurnAction(std::string name):
@@ -47,6 +52,10 @@ public:
 	void preemptCB(void){
 		//this command cancels the previous goal
 		turnServer_.setPreempted();
+		pwm.data=0;
+		dir.data=5;
+		PWM.publish(pwm);
+		direction.publish(dir);
 		ROS_INFO("%s: Preempted", action_name_.c_str());
 	}
 
@@ -70,9 +79,6 @@ public:
 		
 		float derivative=0,integral=0,dt=1.0/loopRate,p=1,i=0,d=0;
 		bool reached=false;
-		
-		ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
-		ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
 
 		pwm.data=0;
 		dir.data=5;
