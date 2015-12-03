@@ -32,12 +32,12 @@ float magnetom[3];
 float accel[3];
 
 void removegyrooff(){
-  float gyrooff[3]={0,0,0},n=1;
+  float gyrooff[3]={0,0,0},n=50;
   for(int i=0;i<n;i++){
     gyrooff[0]+=nav.gyrox();
     gyrooff[1]+=nav.gyroy();
     gyrooff[2]+=nav.gyroz();
-    // printf("removing gyro offset %d\n",i);
+    printf("removing gyro offset %d\n",i);
   }
   BiasG_x=gyrooff[0]/n;
   BiasG_y=gyrooff[1]/n;
