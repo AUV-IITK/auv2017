@@ -168,8 +168,13 @@ int main( int argc, char** argv ) {
 	if(*argv[1]=='1') vidCheck=true;
  
 	//enter the path which contains params.txt
+	
+	FILE* fp2=fopen("src/linefollowing/src/hsv.txt","r"); 
+	fscanf(fp2,"%d %d %d %d %d %d",&LowH,&HighH,&LowS,&HighS,&LowV,&HighV);
+	fclose(fp2);	
+
 	FILE* fp=fopen("src/linefollowing/src/params.txt","r"); 
-	fscanf(fp,"%d %d %d %d %d %d\n%d %d %d %d\n%d %d %d\n%d",&LowH,&HighH,&LowS,&HighS,&LowV,&HighV,&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
+	fscanf(fp,"%d %d %d %d\n%d %d %d\n%d",&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
 	fclose(fp);
 
     //VideoCapture cap(1); //capture the video from webcam
