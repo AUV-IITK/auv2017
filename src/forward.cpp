@@ -65,7 +65,6 @@ class forwardAction{
 		void analysisCB(const motionlibrary::ForwardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 
-
 			pwm.data = 255;
 			dir.data = 1;
 		    ros::Rate looprate(1);
