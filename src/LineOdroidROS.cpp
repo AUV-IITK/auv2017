@@ -146,7 +146,7 @@ void callback(int ,void *){
   		cout<<angles[i]<<" ";
 	}
 	cout<<endl;
-	imshow("LINES",imgLines+img);
+	if(vidCheck) imshow("LINES",imgLines+img);
 
     //if num of lines are large than one or two stray lines won't affect the mean much
     //but if they are small in number than mode has to be taken to save the error due to those stray line
