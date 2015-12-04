@@ -168,8 +168,13 @@ int main( int argc, char** argv ) {
 	if(*argv[1]=='1') vidCheck=true;
  
 	//enter the path which contains params.txt
+	
+	FILE* fp2=fopen("src/linefollowing/src/hsv.txt","r"); 
+	fscanf(fp2,"%d %d %d %d %d %d",&LowH,&HighH,&LowS,&HighS,&LowV,&HighV);
+	fclose(fp2);	
+
 	FILE* fp=fopen("src/linefollowing/src/params.txt","r"); 
-	fscanf(fp,"%d %d %d %d %d %d\n%d %d %d %d\n%d %d %d\n%d",&LowH,&HighH,&LowS,&HighS,&LowV,&HighV,&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
+	fscanf(fp,"%d %d %d %d\n%d %d %d\n%d",&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
 	fclose(fp);
 
     //VideoCapture cap(1); //capture the video from webcam
@@ -193,6 +198,14 @@ int main( int argc, char** argv ) {
     while(ros::ok()){
 
     	std_msgs::Float64 msg;
+
+    	/*///////////////////////////////////
+	
+		msg.data never takes positive 90 
+		when the angle is 90 it will show -90
+		-------------TO BE CORRECTED-------------	
+
+		*///////////////////////////////////
     	msg.data = -finalAngle*(180/3.14);
 
     	//cout<<lineCount<<endl;
