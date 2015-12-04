@@ -6,6 +6,8 @@
 
 typedef actionlib::SimpleActionServer<motionlibrary::ForwardAction> Server;
 
+std_msgs::Int32 pwm;
+std_msgs::Int32 dir;
 
 class forwardAction{
 	private:
@@ -17,11 +19,11 @@ class forwardAction{
 		ros::Subscriber sub_;
 		float timeSpent, motionTime;
 		bool success;
+//ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
 		ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
 		ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
-//ROS was not working properly if these variables were declared globally. Really wierd problem need to do somthing about it 
-		std_msgs::Int32 pwm;
-		std_msgs::Int32 dir;
+
+
 	public:
 		forwardAction(std::string name):
 			//here we are defining the server, third argument is optional
@@ -57,19 +59,16 @@ class forwardAction{
 			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
 
 			//this command cancels the previous goal
-			forwardServer_.setPreempted();
-			ROS_INFO("%s: Preempted", action_name_.c_str());
-
+			// forwardServer_.setPreempted();
 		}
 
 		void analysisCB(const motionlibrary::ForwardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 
-
 			pwm.data = 255;
 			dir.data = 1;
-		    ros::Rate looprate(1);
-		    success = true;
+			ros::Rate looprate(1);
+			success = true;
 
 			if (!forwardServer_.isActive())
 				return;
