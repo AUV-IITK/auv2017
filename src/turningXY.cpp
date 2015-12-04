@@ -13,7 +13,8 @@ float previousAngularPosition=0;
 float finalAngularPosition, error, output;
 bool initData =false;
 
-
+std_msgs::Int32 pwm;
+std_msgs::Int32 dir;//that we have to send
 
 typedef actionlib::SimpleActionServer<motionlibrary::TurnAction> Server;
 
@@ -25,10 +26,7 @@ private:
 	motionlibrary::TurnFeedback feedback_;
 	motionlibrary::TurnResult result_;
 
-//ROS was not working properly if these variables were declared globally. Really wierd problem need to do somthing about it 
-	std_msgs::Int32 pwm;
-	std_msgs::Int32 dir;//that we have to send
-
+//ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
 	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
 	ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
 
