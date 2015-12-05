@@ -180,8 +180,8 @@ int main( int argc, char** argv ) {
     //VideoCapture cap(1); //capture the video from webcam
     //VideoCapture cap("src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
     //VideoCapture cap("src/linefollowing/src/TestingLine.mp4"); 
-    VideoCapture cap("src/linefollowing/src/test1.avi"); 
-    
+    // VideoCapture cap("src/linefollowing/src/test1.avi"); 
+    VideoCapture cap(1);
 
     if ( !cap.isOpened() )  // if not success, exit program
     {
