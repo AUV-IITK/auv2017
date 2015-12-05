@@ -2,16 +2,31 @@
 #include <std_msgs/Float32.h>
 #include <motionlibrary/ForwardAction.h>
 #include <motionlibrary/ForwardActionFeedback.h>
+#include <motionlibrary/ForwardActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <dynamic_reconfigure/server.h>
 #include <motionlibrary/forwardConfig.h>
 
 typedef actionlib::SimpleActionClient<motionlibrary::ForwardAction> Client;
+
 Client *chutiya;
 motionlibrary::ForwardGoal goal;
 
 bool moving=false;
+bool success=false;
+
+void spinThread(){
+	Client &temp = *chutiya;
+	temp.waitForResult();
+	success = (*(temp.getResult())).MotionCompleted;
+	if(success){
+		ROS_INFO("motion successful");
+	}
+	else
+		ROS_INFO("motion unsuccessful");
+}
+
 
 //dynamic reconfig 
 void callback(motionlibrary::forwardConfig &config, double level) {
@@ -32,6 +47,7 @@ void callback(motionlibrary::forwardConfig &config, double level) {
 		}
 		goal.MotionTime = config.double_param;
 		can.sendGoal(goal);
+		boost::thread spin_thread(&spinThread);
 	 	ROS_INFO("Goal Send %f", goal.MotionTime);
 		moving = true;
 	}
@@ -43,12 +59,6 @@ void callback(motionlibrary::forwardConfig &config, double level) {
 void forwardCb(motionlibrary::ForwardActionFeedback msg){
 	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.TimeRemaining);
 }
-
-
-// void spinThread()
-// {
-// 	ros::spin();
-// }
 
 int main(int argc, char** argv){
 
@@ -64,6 +74,8 @@ int main(int argc, char** argv){
 	forwardTestClient.waitForServer();
 	goal.MotionTime =0;
 	ROS_INFO("Action server started, sending goal.");
+
+
 
 	//register dynamic reconfig server.
 	dynamic_reconfigure::Server<motionlibrary::forwardConfig> server;
