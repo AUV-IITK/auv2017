@@ -135,6 +135,12 @@ target_link_libraries(LineOdroidROS ${catkin_LIBRARIES})
 target_link_libraries(LineOdroidROS  ${OpenCV_LIBS} )
 add_dependencies(LineOdroidROS linefollowing_generate_messages_cpp)
 
+
+add_executable(LineNew src/LineNew.cpp)
+target_link_libraries(LineNew ${catkin_LIBRARIES})
+target_link_libraries(LineNew  ${OpenCV_LIBS} )
+add_dependencies(LineNew linefollowing_generate_messages_cpp)
+
 #add_executable(kalman src/kalman.cpp)
 #target_link_libraries(kalman ${catkin_LIBRARIES})
 #target_link_libraries(kalman  ${OpenCV_LIBS} )
