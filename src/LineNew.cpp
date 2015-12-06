@@ -162,13 +162,16 @@ void callback(int ,void *){
 
 
 int main( int argc, char** argv ) {
-	if(argc<2){
-		cout<<"please specify whether you want the display or not : "<<endl<<"USAGE: "<<endl<< "add argument 1 if you want the display, otherwise 0"<<endl;
+if(argc<3){
+		cout<<"please specify whether you want the display or not : "<<endl<<"USAGE: "<<endl<< "first argument: 1 for display, otherwise 0"<<endl;
+		cout << "second argument : 0 / 1 for live "<<endl;
 		return 0;
 	}
 
 	if(*argv[1]=='1') vidCheck=true;
- 
+ 	int index=0;
+	if(*argv[2] == '1') index=1;
+	//else if(*argv[2] == '2') index=2;  	
 	//enter the path which contains params.txt
 	
 	FILE* fp2=fopen("src/linefollowing/src/hsv.txt","r"); 
@@ -179,12 +182,12 @@ int main( int argc, char** argv ) {
 	fscanf(fp,"%d %d %d %d\n%d %d %d\n%d",&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
 	fclose(fp);
 
-    VideoCapture cap(1); //capture the video from webcam
-    //VideoCapture cap("src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
-    //VideoCapture cap("src/linefollowing/src/TestingLine.mp4"); 
-    //VideoCapture cap("src/linefollowing/src/test1.avi"); 
-    
+	VideoCapture cap(index);
 
+    	//VideoCapture cap("src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
+    	//VideoCapture cap("src/linefollowing/src/TestingLine.mp4"); 
+    	//VideoCapture cap("src/linefollowing/src/test1.avi");
+    
     if ( !cap.isOpened() )  // if not success, exit program
     {
          cout << "Cannot get the stream" << endl;
