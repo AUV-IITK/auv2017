@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(redalert)
+project(vision)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  sensor_msgs
 )
 find_package( OpenCV REQUIRED )
 
@@ -82,7 +83,7 @@ find_package( OpenCV REQUIRED )
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES redalert
+#  LIBRARIES vision
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
@@ -94,33 +95,30 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
+include_directories(include
   ${catkin_INCLUDE_DIRS}
 )
-
+include_directories(${OpenCV_INCLUDE_DIRS})
 ## Declare a cpp library
-# add_library(redalert
-#   src/${PROJECT_NAME}/redalert.cpp
+# add_library(vision
+#   src/${PROJECT_NAME}/vision.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(redalert_node src/redalert_node.cpp)
-add_executable(ablanari src/ablanari.cpp)
-add_executable(firefighter src/firefighter.cpp)
+# add_executable(vision_node src/vision_node.cpp)
+add_executable(orangedetection src/orangedetection.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(redalert_node redalert_generate_messages_cpp)
-add_dependencies(ablanari beginner_tutorials_generate_messages_cpp)
-add_dependencies(firefighter beginner_tutorials_generate_messages_cpp)
+# add_dependencies(vision_node vision_generate_messages_cpp)
+add_dependencies(orangedetection beginner_tutorials_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(redalert_node
+# target_link_libraries(vision_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(ablanari ${catkin_LIBRARIES})
-target_link_libraries(firefighter ${catkin_LIBRARIES})
-target_link_libraries( ablanari ${OpenCV_LIBS} )
+target_link_libraries(orangedetection ${catkin_LIBRARIES})
+target_link_libraries( orangedetection ${OpenCV_LIBS} )
 #############
 ## Install ##
 #############
@@ -136,7 +134,7 @@ target_link_libraries( ablanari ${OpenCV_LIBS} )
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS redalert redalert_node
+# install(TARGETS vision vision_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -161,7 +159,7 @@ target_link_libraries( ablanari ${OpenCV_LIBS} )
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_redalert.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_vision.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
