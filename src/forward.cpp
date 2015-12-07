@@ -49,8 +49,6 @@ class forwardAction{
 			// }
 
 		void preemptCB(void){
-			ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
-			ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
 
 			pwm.data = 0;
 			dir.data = 5;
