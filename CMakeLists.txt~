@@ -114,9 +114,6 @@ rosserial_configure_client(
 rosserial_add_client_target(src hello ALL) #this hello need not be changed for anything
 rosserial_add_client_target(src hello-upload) #this hello need not be changed for anything
 
-add_executable(pid_angle src/pid_angle.cpp)
-target_link_libraries(pid_angle ${catkin_LIBRARIES})
-add_dependencies(pid_angle linefollowing_generate_messages_cpp)
 
 add_executable(imu src/imu.cpp)
 target_link_libraries(imu ${catkin_LIBRARIES})
@@ -125,10 +122,6 @@ add_dependencies(imu linefollowing_generate_messages_cpp)
 add_executable(imuTemp src/imuTemp.cpp)
 target_link_libraries(imuTemp ${catkin_LIBRARIES})
 add_dependencies(imuTemp linefollowing_generate_messages_cpp)
-
-add_executable(task_handler src/task_handler.cpp)
-target_link_libraries(task_handler ${catkin_LIBRARIES})
-add_dependencies(task_handler linefollowing_generate_messages_cpp)
 
 add_executable(LineOdroidROS src/LineOdroidROS.cpp)
 target_link_libraries(LineOdroidROS ${catkin_LIBRARIES})
