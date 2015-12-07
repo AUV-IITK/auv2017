@@ -14,7 +14,7 @@ using namespace cv;
 using namespace std;
 
 Mat image;
-VideoCapture inputVideo(0);
+VideoCapture inputVideo("test1.avi");
 
 int firstflag = 0; // used to check if the function detect() is being run for the first time
 int detect()

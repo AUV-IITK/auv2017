@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(vision)
+project(linedetection)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -9,6 +9,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
+  actionlib
+  actionlib_msgs
+  message_generation
 )
 find_package( OpenCV REQUIRED )
 
@@ -59,18 +62,15 @@ find_package( OpenCV REQUIRED )
 #   Service2.srv
 # )
 
-## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
+add_action_files(
+   DIRECTORY action
+   FILES orange.action
+)
 
-## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+   DEPENDENCIES
+   actionlib_msgs   std_msgs
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -83,8 +83,8 @@ find_package( OpenCV REQUIRED )
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES vision
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+#  LIBRARIES linedetection
+   CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 
@@ -100,21 +100,21 @@ include_directories(include
 )
 include_directories(${OpenCV_INCLUDE_DIRS})
 ## Declare a cpp library
-# add_library(vision
-#   src/${PROJECT_NAME}/vision.cpp
+# add_library(linedetection
+#   src/${PROJECT_NAME}/linedetection.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(vision_node src/vision_node.cpp)
+# add_executable(linedetection_node src/linedetection_node.cpp)
 add_executable(orangedetection src/orangedetection.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(vision_node vision_generate_messages_cpp)
+# add_dependencies(linedetection_node linedetection_generate_messages_cpp)
 add_dependencies(orangedetection beginner_tutorials_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(vision_node
+# target_link_libraries(linedetection_node
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(orangedetection ${catkin_LIBRARIES})
@@ -134,7 +134,7 @@ target_link_libraries( orangedetection ${OpenCV_LIBS} )
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS vision vision_node
+# install(TARGETS linedetection linedetection_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -159,7 +159,7 @@ target_link_libraries( orangedetection ${OpenCV_LIBS} )
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_vision.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_linedetection.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
