@@ -18,20 +18,20 @@ using namespace cv;
 using namespace std;
 
 int percentage = 20; //used for how much percent of the screen should be orange before deciding that a line is below. Used in dynamic_reconfig
-bool doimageprocessing = true; // only do ip if this is true.
 //callback for change the percent of orange before saying there is a line below
 void callback(linedetection::orangeConfig &config, int level) {
 	percentage = config.int_param;
 	ROS_INFO("Reconfigure Request. New percentage : %d", percentage);
 }
 
-//callback for on off switch.
-void onoffCallback(std_msgs::Bool msg)
+//callback for off switch.
+void offCallback(std_msgs::Bool msg)
 {
 	if(msg.data)
-		doimageprocessing=true;
-	else
-		doimageprocessing=false;
+	{
+		ROS_INFO("Sucide Sucide!!");
+		ros::shutdown();
+	}
 }
 
 int detect(Mat image)
@@ -69,29 +69,22 @@ int detect(Mat image)
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "orangedetection");
-  ros::NodeHandle n;
-  ros::Publisher robot_pub = n.advertise<std_msgs::Bool>("linedetected", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("orangeonoff", 1000, &onoffCallback);
-  ros::Rate loop_rate(12);//this rate should be same as the rate of camera input. and in the case of other sensors , this rate should be same as there rate of data generation
+	ros::init(argc, argv, "orangedetection");
+	ros::NodeHandle n;
+	ros::Publisher robot_pub = n.advertise<std_msgs::Bool>("linedetected", 1000);
+	ros::Subscriber sub = n.subscribe<std_msgs::Bool>("orangeoff", 1000, &offCallback);
+	ros::Rate loop_rate(12);//this rate should be same as the rate of camera input. and in the case of other sensors , this rate should be same as there rate of data generation
 
-  //setting callback for the orange percentage.
-  dynamic_reconfigure::Server<linedetection::orangeConfig> server;
-  dynamic_reconfigure::Server<linedetection::orangeConfig>::CallbackType f;
-  f = boost::bind(&callback, _1, _2);
-  server.setCallback(f);
-
-  Mat image;
-  int count = 0;
-  VideoCapture inputVideo(0);//webcam input
-  while (ros::ok())
-  {
-  	if(doimageprocessing)
-  	{
-  		// VideoCapture* inputVideo = new VideoCapture(0);
-		// inputVideo->read(image);
-		// inputVideo->release();
-  		// delete inputVideo;
+	//setting callback for the orange percentage.
+	dynamic_reconfigure::Server<linedetection::orangeConfig> server;
+	dynamic_reconfigure::Server<linedetection::orangeConfig>::CallbackType f;
+	f = boost::bind(&callback, _1, _2);
+	server.setCallback(f);
+	VideoCapture inputVideo(0);//webcam input
+	Mat image;
+	int count = 0;
+	while (ros::ok())
+	{
   		inputVideo.read(image);
 		int alert = detect(image);
 		if(alert==1)
@@ -112,14 +105,9 @@ int main(int argc, char **argv)
 		{
 			return 0;
 		}
+		ros::spinOnce();
+		loop_rate.sleep();
+   		++count;
 	}
-	else
-	{
-		ROS_INFO("stoped ip");
-	}
-	ros::spinOnce();
-	loop_rate.sleep();
-   	++count;
-  }
-  return 0;
+	return 0;
 }

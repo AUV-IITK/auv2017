@@ -17,7 +17,7 @@ class LineDetectionInnerClass{
 		linedetection::orangeResult result_;
 		ros::Subscriber sub_;
 		bool success;
-		ros::Publisher onoff_pub_;
+		ros::Publisher off_pub_;
 		bool isOrange;
 	public:
 		LineDetectionInnerClass(std::string name):
@@ -25,9 +25,9 @@ class LineDetectionInnerClass{
 	    	lineDetectionServer_(nh_, name, boost::bind(&LineDetectionInnerClass::analysisCB, this, _1), false),
     		action_name_(name)
 		{
-			isOrange=false;
+			ROS_INFO("inside constructor");
 			lineDetectionServer_.registerPreemptCallback(boost::bind(&LineDetectionInnerClass::preemptCB, this));
-			onoff_pub_ = nh_.advertise<std_msgs::Bool>("orangeonoff", 1000);
+			off_pub_ = nh_.advertise<std_msgs::Bool>("orangeoff", 1000);
 			sub_ = nh_.subscribe<std_msgs::Bool>("linedetected", 1000,&LineDetectionInnerClass::lineDetectedListener,this);
 			lineDetectionServer_.start();
 		}
@@ -51,11 +51,13 @@ class LineDetectionInnerClass{
 		void analysisCB(const linedetection::orangeGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 			success = true;
+			isOrange=false;
 			ros::Rate looprate(12);
 
 			if (!lineDetectionServer_.isActive())
 				return;
 
+			boost::thread vision_thread(&LineDetectionInnerClass::startIP, this);	
 			while(goal->order){
 				if (lineDetectionServer_.isPreemptRequested() || !ros::ok())
 				{
@@ -65,7 +67,6 @@ class LineDetectionInnerClass{
         			success = false;
         			break;
 				}
-				startIP();
 				looprate.sleep();
 				// start moving forward.
 				if(isOrange)
@@ -92,21 +93,18 @@ class LineDetectionInnerClass{
 				// set the action state to succeeded
 				lineDetectionServer_.setSucceeded(result_);
 			}
-
 		}
 
 		void startIP()
 		{
-			std_msgs::Bool msg;
-			msg.data = true;
-			onoff_pub_.publish(msg);
+			std::system("rosrun linedetection orangedetection");
 		}
 
 		void stopIP()
 		{
 			std_msgs::Bool msg;
-			msg.data = false;
-			onoff_pub_.publish(msg);
+			msg.data = true;
+			off_pub_.publish(msg);
 		}
 };
 
