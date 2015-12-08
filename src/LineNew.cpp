@@ -162,14 +162,11 @@ void callback(int ,void *){
     cout<<"Final Angle: "<<finalAngle<<endl<<endl;
 }
 
-void pauseandplay(std_msgs::Bool msg){
+void offCallback(std_msgs::Bool msg){
 	start = msg.data;
 	if(start){
-   		ROS_INFO("node resumed");
-	}
-	else{
-		ROS_INFO("node paused");
-		destroyAllWindows();
+   		ROS_INFO("Sucide Sucide !!");
+   		ros::shutdown();
 	}
 }
 
@@ -211,7 +208,7 @@ if(argc<3){
     ros::init(argc, argv, "LineAlignment");
 	ros::NodeHandle node;
  	ros::Publisher tracker_pub1 = node.advertise<std_msgs::Float64>("lineAngle", 1000);
- 	ros::Subscriber sub = node.subscribe<std_msgs::Bool>("controlEdgeDetection",1000 , &pauseandplay);
+ 	ros::Subscriber sub = node.subscribe<std_msgs::Bool>("lineoff",1000 , &offCallback);
 	int loopRate =10 ;
 	ros::Rate loop_rate(loopRate); 	
     

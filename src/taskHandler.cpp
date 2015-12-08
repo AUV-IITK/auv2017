@@ -22,9 +22,8 @@ class AlignAction{
 		int loopRate;
 
 		std::string action_name_;
-		std_msgs::Bool startEdgeDetection;
 		ros::Subscriber subIP_, subTurn_;
-		ros::Publisher pub_;
+		ros::Publisher off_pub_;
 
 		linefollowing::AlignResult result_;
 		linefollowing::AlignFeedback feedback_;
@@ -40,11 +39,10 @@ class AlignAction{
 			AlignServer_(nh_,name,boost::bind(&AlignAction::analysisCB, this, _1) ,false), action_name_(name),
 			TurnClient_(node)
 		{
-			Client	TurnClient_("TurnXY");
 			AlignServer_.registerPreemptCallback(boost::bind(&AlignAction::preemptCB, this));
 			subIP_ = nh_.subscribe("lineAngle", 100, &AlignAction::lineCB, this);
 			subTurn_ = nh_.subscribe("/TurnXY/feedback",100,&AlignAction::turnCB, this);
-			pub_ = nh_.advertise<std_msgs::Bool>("controlEdgeDetection",1000);
+			off_pub_ = nh_.advertise<std_msgs::Bool>("lineoff",1000);
 			AlignServer_.start();
 		}
 
@@ -98,14 +96,14 @@ class AlignAction{
 			feedbackTurn = true;
 		}
 
+
 		void analysisCB(const linefollowing::AlignGoalConstPtr &target){
+			ROS_INFO("Inside analysisCB");
 			intiData = false;
 			success =false;
 			turnActive = false;
-			startEdgeDetection.data = true;
 			feedbackTurn = false;
 			firstData = false;
-			ROS_INFO("Inside analysisCB");
 
 			loopRate =10;
 			ros::Rate loop_rate(loopRate);
@@ -115,6 +113,7 @@ class AlignAction{
 				return;
 			}
 
+			boost::thread vision_thread(&AlignAction::startIP, this);	
 			ROS_INFO("Waiting for Turn server to start.");
 			TurnClient_.waitForServer();
 			turnActive = true;
@@ -131,21 +130,32 @@ class AlignAction{
 			//ensure that goal has been send here
 			TurnClient_.waitForResult();
 			success = (*(TurnClient_.getResult())).MotionCompleted;
-
 			// make sure that target has been reached
 
+			stopIP();
 			if(success){
 				result_.Aligned = success;
-				startEdgeDetection.data = false;
-				pub_.publish(startEdgeDetection);
 				ROS_INFO("%s: Succeeded", action_name_.c_str());
 				// set the action state to succeeded
 
 				AlignServer_.setSucceeded(result_);
 			}
 		}
+
 		void spinThread(){
 			ros::spin();
+		}
+
+		void startIP()
+		{
+			std::system("rosrun linefollowing LineNew 1 1");
+		}
+
+		void stopIP()
+		{
+			std_msgs::Bool msg;
+			msg.data = true;
+			off_pub_.publish(msg);
 		}
 };
 
