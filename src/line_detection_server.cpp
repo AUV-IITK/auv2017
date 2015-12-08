@@ -4,9 +4,14 @@
 #include <std_msgs/String.h>
 #include <std_msgs/Bool.h>
 #include <actionlib/server/simple_action_server.h>
+#include <actionlib/client/simple_action_client.h>
 #include <linedetection/orangeAction.h>
 
+#include <motionlibrary/ForwardAction.h>
+#include <motionlibrary/ForwardActionFeedback.h>
+
 typedef actionlib::SimpleActionServer<linedetection::orangeAction> Server;
+typedef actionlib::SimpleActionClient<motionlibrary::ForwardAction> Client;
 
 class LineDetectionInnerClass{
 	private:
@@ -19,11 +24,13 @@ class LineDetectionInnerClass{
 		bool success;
 		ros::Publisher off_pub_;
 		bool isOrange;
+		Client ForwardClient_;
+		motionlibrary::ForwardGoal forwardgoal;
 	public:
-		LineDetectionInnerClass(std::string name):
+		LineDetectionInnerClass(std::string name, std::string node):
 			//here we are defining the server, third argument is optional
 	    	lineDetectionServer_(nh_, name, boost::bind(&LineDetectionInnerClass::analysisCB, this, _1), false),
-    		action_name_(name)
+    		action_name_(name), ForwardClient_(node)
 		{
 			ROS_INFO("inside constructor");
 			lineDetectionServer_.registerPreemptCallback(boost::bind(&LineDetectionInnerClass::preemptCB, this));
@@ -57,7 +64,13 @@ class LineDetectionInnerClass{
 			if (!lineDetectionServer_.isActive())
 				return;
 
+			ROS_INFO("Waiting for Forward server to start.");
+			ForwardClient_.waitForServer();
+
 			boost::thread vision_thread(&LineDetectionInnerClass::startIP, this);	
+			// start moving forward.
+			forwardgoal.MotionTime = 100;
+			ForwardClient_.sendGoal(forwardgoal);
 			while(goal->order){
 				if (lineDetectionServer_.isPreemptRequested() || !ros::ok())
 				{
@@ -68,23 +81,18 @@ class LineDetectionInnerClass{
         			break;
 				}
 				looprate.sleep();
-				// start moving forward.
 				if(isOrange)
 				{
-					//stop now
+					//stop will happen outside while loop so if preempted then too it will stop
 					break;
 				}
-				else
-				{
-					//line not present below
-				}
-				// if we are past the initial line then feedback=true. else feedback=false;
 				// publish the feedback
 				feedback_.nosignificance = false;
 				lineDetectionServer_.publishFeedback(feedback_);
 				ROS_INFO("timeSpent");
 				ros::spinOnce();
 			}
+			ForwardClient_.cancelGoal();			//stop motion here
 			stopIP();
 			if(success){
 				isOrange=false;
@@ -111,7 +119,7 @@ class LineDetectionInnerClass{
 int main(int argc, char** argv){
 	ros::init(argc, argv, "linedetectionserver");
 	ROS_INFO("Waiting for Goal");
-	LineDetectionInnerClass lineDetectionObject(ros::this_node::getName());
+	LineDetectionInnerClass lineDetectionObject(ros::this_node::getName(),"forward");
 	ros::spin();
 	return 0;
 }
