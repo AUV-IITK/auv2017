@@ -22,6 +22,7 @@ void spinThread(){
 	}
 	else
 		ROS_INFO("motion unsuccessful");
+	ros::shutdown();
 }
 
 //never ever put the argument of the callback function anything other then the specified
@@ -31,12 +32,13 @@ void forwardCb(linedetection::orangeActionFeedback msg){
 
 int main(int argc, char** argv){
 
-	ros::init(argc, argv, "testForwardMotion");
+	ros::init(argc, argv, "linedetectionclient");
 	
 	ros::NodeHandle nh;
-	ros::Subscriber sub_ = nh.subscribe<linedetection::orangeActionFeedback>("/forward/feedback",1000,&forwardCb);
+	//here linedetectionserver is the name of the node of the actionserver.
+	ros::Subscriber sub_ = nh.subscribe<linedetection::orangeActionFeedback>("/linedetectionserver/feedback",1000,&forwardCb);
 
-	Client testClient("forward");
+	Client testClient("linedetectionserver");
 	chutiya = &testClient;
 
 	ROS_INFO("Waiting for action server to start.");
