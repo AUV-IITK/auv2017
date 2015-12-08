@@ -12,15 +12,15 @@ Client *ptrClient;
 linefollowing::AlignGoal goal;
 
 void spinThread(){
-	ros::spin();
-	// Client &temp = *ptrClient;
-	// temp.waitForResult();
-	// success = (*(temp.getResult())).MotionCompleted;
-	// if(success){
-	// 	ROS_INFO("motion successful");
-	// }
-	// else
-	// 	ROS_INFO("motion unsuccessful");
+	Client &temp = *ptrClient;
+	temp.waitForResult();
+	bool success;
+	success = (*(temp.getResult())).Aligned;
+	if(success){
+		ROS_INFO("motion successful");
+	}
+	else
+		ROS_INFO("motion unsuccessful");
 }
 
 
@@ -79,14 +79,6 @@ int main(int argc, char** argv){
 	// By using this method you can create multiple threads for your action client if needed. 
 	boost::thread spin_thread(&spinThread);
 
-	AlignTestClient.waitForResult();
-	if((*(AlignTestClient.getResult())).Aligned)
-		ROS_INFO("successful");
-	else
-		ROS_INFO("failed");
-
-	// Now that the goal is completed and we have reported the goal status, we need to shutdown the ros node and join our thread back before exiting. 
-	spin_thread.join();
-	ros::shutdown();
+	ros::spin();
 	return 0;
 }

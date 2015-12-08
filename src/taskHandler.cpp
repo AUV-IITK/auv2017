@@ -43,7 +43,7 @@ class AlignAction{
 			Client	TurnClient_("TurnXY");
 			AlignServer_.registerPreemptCallback(boost::bind(&AlignAction::preemptCB, this));
 			subIP_ = nh_.subscribe("lineAngle", 100, &AlignAction::lineCB, this);
-			subTurn_ = nh_.subscribe("/Turn/feedback",100,&AlignAction::turnCB, this);
+			subTurn_ = nh_.subscribe("/TurnXY/feedback",100,&AlignAction::turnCB, this);
 			pub_ = nh_.advertise<std_msgs::Bool>("controlEdgeDetection",1000);
 			AlignServer_.start();
 		}
@@ -91,7 +91,7 @@ class AlignAction{
 		}
 
 		void turnCB(motionlibrary::TurnActionFeedback msg){
-			ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.AngleRemaining);
+			ROS_INFO("feedback recieved %fdeg remaining ",msg.feedback.AngleRemaining);
 			feedbackFromTurn = msg.feedback.AngleRemaining;
 			feedback_.AngleRemaining = feedbackFromTurn;
 			AlignServer_.publishFeedback(feedback_);
@@ -127,6 +127,7 @@ class AlignAction{
 			}
 			ROS_INFO("got data form edge detecting node");
 
+			boost::thread spin_thread(&AlignAction::spinThread, this);
 			//ensure that goal has been send here
 			TurnClient_.waitForResult();
 			success = (*(TurnClient_.getResult())).MotionCompleted;
@@ -142,6 +143,9 @@ class AlignAction{
 
 				AlignServer_.setSucceeded(result_);
 			}
+		}
+		void spinThread(){
+			ros::spin();
 		}
 };
 
