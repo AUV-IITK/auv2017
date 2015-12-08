@@ -208,7 +208,7 @@ if(argc<3){
 
     if (vidCheck) namedWindow("LINES",CV_WINDOW_AUTOSIZE);
 
-    ros::init(argc, argv, "LineOdroidROS");
+    ros::init(argc, argv, "LineAlignment");
 	ros::NodeHandle node;
  	ros::Publisher tracker_pub1 = node.advertise<std_msgs::Float64>("lineAngle", 1000);
  	ros::Subscriber sub = node.subscribe<std_msgs::Bool>("controlEdgeDetection",1000 , &pauseandplay);
