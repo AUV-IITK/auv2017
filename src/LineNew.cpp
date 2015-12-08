@@ -3,10 +3,13 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include "ros/ros.h"
 #include "std_msgs/Float64.h"
+#include "std_msgs/Bool.h"
 #include <fstream>
 
 using namespace cv;
 using namespace std;
+
+bool start=true;
 
 Mat img,imgHSV,imgThresholded,imgSmooth,imgCanny,imgLines;
 int lineCount=0;
@@ -159,7 +162,16 @@ void callback(int ,void *){
     cout<<"Final Angle: "<<finalAngle<<endl<<endl;
 }
 
-
+void pauseandplay(std_msgs::Bool msg){
+	start = msg.data;
+	if(start){
+   		ROS_INFO("node resumed");
+	}
+	else{
+		ROS_INFO("node paused");
+		destroyAllWindows();
+	}
+}
 
 int main( int argc, char** argv ) {
 if(argc<3){
@@ -169,14 +181,14 @@ if(argc<3){
 	}
 
 	if(*argv[1]=='1') vidCheck=true;
- 	int index=0;
+	int index=0;
 	if(*argv[2] == '1') index=1;
 	//else if(*argv[2] == '2') index=2;  	
 	//enter the path which contains params.txt
 	
 	FILE* fp2=fopen("src/linefollowing/src/hsv.txt","r"); 
 	fscanf(fp2,"%d %d %d %d %d %d",&LowH,&HighH,&LowS,&HighS,&LowV,&HighV);
-	fclose(fp2);	
+	fclose(fp2);
 
 	FILE* fp=fopen("src/linefollowing/src/params.txt","r"); 
 	fscanf(fp,"%d %d %d %d\n%d %d %d\n%d",&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
@@ -185,8 +197,8 @@ if(argc<3){
 	VideoCapture cap(index);
 
     	//VideoCapture cap("src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
-    	//VideoCapture cap("src/linefollowing/src/TestingLine.mp4"); 
-    	//VideoCapture cap("src/linefollowing/src/test1.avi");
+    	// VideoCapture cap("src/linefollowing/src/TestingLine.mp4"); 
+    	// VideoCapture cap("src/linefollowing/src/test1.avi");
     
     if ( !cap.isOpened() )  // if not success, exit program
     {
@@ -199,6 +211,10 @@ if(argc<3){
     ros::init(argc, argv, "LineOdroidROS");
 	ros::NodeHandle node;
  	ros::Publisher tracker_pub1 = node.advertise<std_msgs::Float64>("lineAngle", 1000);
+ 	ros::Subscriber sub = node.subscribe<std_msgs::Bool>("controlEdgeDetection",1000 , &pauseandplay);
+	int loopRate =10 ;
+	ros::Rate loop_rate(loopRate); 	
+    
     bool bSuccess;
     while(ros::ok()){
 
@@ -219,8 +235,6 @@ if(argc<3){
 
 		ROS_INFO("%lf", msg.data);
 		}
-		
-		ros::spinOnce();
 
     	bSuccess = cap.read(img); // read a new frame from video
 
@@ -238,6 +252,13 @@ if(argc<3){
     	char key=cvWaitKey(30);
 		if(key==27){
 			break;
+		}
+		ros::spinOnce();
+		loop_rate.sleep();
+		while(!start){
+			ros::spinOnce();
+			loop_rate.sleep();
+			ROS_INFO("Paused by taskHandler");
 		}
     }
 

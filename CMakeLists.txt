@@ -5,6 +5,8 @@ project(linefollowing)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  actionlib
+  actionlib_msgs
   roscpp
   rospy
   rosserial_arduino
@@ -62,16 +64,15 @@ add_message_files(
 # )
 
 ## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
+add_action_files(
+  DIRECTORY action
+  FILES Align.action
+)
 
 ## Generate added messages and services with any dependencies listed here
  generate_messages(
    DEPENDENCIES
-   std_msgs
+   std_msgs actionlib_msgs actionlib
  )
 
 ###################################
@@ -83,10 +84,11 @@ add_message_files(
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES lineFollowing
-   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime rosserial_arduino rosserial_client 
+   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime rosserial_arduino rosserial_client actionlib actionlib_msgs
 #  DEPENDS system_lib
 )
 
@@ -122,6 +124,14 @@ add_dependencies(imu linefollowing_generate_messages_cpp)
 add_executable(imuTemp src/imuTemp.cpp)
 target_link_libraries(imuTemp ${catkin_LIBRARIES})
 add_dependencies(imuTemp linefollowing_generate_messages_cpp)
+
+add_executable(taskHandler src/taskHandler.cpp)
+target_link_libraries(taskHandler ${catkin_LIBRARIES})
+add_dependencies(taskHandler linefollowing_generate_messages_cpp)
+
+add_executable(taskHandlerTest src/taskHandlerTest.cpp)
+target_link_libraries(taskHandlerTest ${catkin_LIBRARIES})
+add_dependencies(taskHandlerTest linefollowing_generate_messages_cpp)
 
 add_executable(LineOdroidROS src/LineOdroidROS.cpp)
 target_link_libraries(LineOdroidROS ${catkin_LIBRARIES})
