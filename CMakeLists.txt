@@ -5,6 +5,7 @@ project(linedetection)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  dynamic_reconfigure
   roscpp
   rospy
   std_msgs
@@ -72,6 +73,22 @@ generate_messages(
    actionlib_msgs   std_msgs
 )
 
+## To declare and build dynamic reconfigure parameters within this
+## package, follow these steps:
+## * In the file package.xml:
+##   * add a build_depend and a run_depend tag for "dynamic_reconfigure"
+## * In this file (CMakeLists.txt):
+##   * add "dynamic_reconfigure" to
+##     find_package(catkin REQUIRED COMPONENTS ...)
+##   * uncomment the "generate_dynamic_reconfigure_options" section below
+##     and list every .cfg file to be processed
+
+## Generate dynamic reconfigure parameters in the 'cfg' folder
+generate_dynamic_reconfigure_options(
+ cfg/orange.cfg
+)
+#option for reconfig cfg
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -96,6 +113,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(include
+  ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
   ${catkin_INCLUDE_DIRS}
 )
 include_directories(${OpenCV_INCLUDE_DIRS})
@@ -107,6 +125,8 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 ## Declare a cpp executable
 # add_executable(linedetection_node src/linedetection_node.cpp)
 add_executable(orangedetection src/orangedetection.cpp)
+add_executable(line_detection_server src/line_detection_server.cpp)
+add_executable(line_detection_client src/line_detection_client.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -118,7 +138,9 @@ add_dependencies(orangedetection beginner_tutorials_generate_messages_cpp)
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(orangedetection ${catkin_LIBRARIES})
-target_link_libraries( orangedetection ${OpenCV_LIBS} )
+target_link_libraries(orangedetection ${OpenCV_LIBS} )
+target_link_libraries(line_detection_server ${catkin_LIBRARIES})
+target_link_libraries(line_detection_client ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
