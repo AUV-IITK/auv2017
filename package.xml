@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>vision</name>
+  <name>linedetection</name>
   <version>0.0.0</version>
-  <description>The vision package</description>
+  <description>The linedetection package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
@@ -40,12 +40,20 @@
   <!-- Use test_depend for packages you need only for testing: -->
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>dynamic_reconfigure</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>dynamic_reconfigure</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
+  <run_depend>message_generation</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
