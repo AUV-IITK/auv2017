@@ -21,34 +21,8 @@ void spinThread(){
 	}
 	else
 		ROS_INFO("motion unsuccessful");
+	ros::shutdown();
 }
-
-
-// //dynamic reconfig 
-// void callback(motionlibrary::forwardConfig &config, double level) {
-// 	ROS_INFO("Reconfigure Request: %f %s", config.double_param, config.bool_param?"True":"False");
-// 	Client &can = *ptrClient;
-// 	if(!config.bool_param){
-// 		if(moving){
-// 			moving = false;
-// 			can.cancelGoal();
-// 			ROS_INFO("Goal Cancelled");
-// 		}
-// 	}
-// 	else{
-// 		if(moving){
-// 			Client &can = *ptrClient;
-// 			can.cancelGoal();
-// 			ROS_INFO("Goal Cancelled");	
-// 		}
-// 		goal.MotionTime = config.double_param;
-// 		can.sendGoal(goal);
-// 		boost::thread spin_thread(&spinThread);
-// 	 	ROS_INFO("Goal Send %f", goal.MotionTime);
-// 		moving = true;
-// 	}
-	
-// }
 
 //never ever put the argument of the callback function anything other then the specified
 //void forwardCb(const motionlibrary::ForwardActionFeedbackConstPtr msg){
