@@ -28,6 +28,7 @@ private:
 
 //ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
 	ros::Publisher PWM ,direction;
+	bool reached, preempt;	
 
 public:
 	TurnAction(std::string name):
@@ -57,14 +58,16 @@ public:
 		PWM.publish(pwm);
 		direction.publish(dir);
 		ROS_INFO("%s: Preempted", action_name_.c_str());
+		reached = false;
+		preempt = true;
 	}
 
 	void analysisCB(const motionlibrary::TurnGoalConstPtr goal){
 		ROS_INFO("Inside analysisCB");
-
+		preempt = false;
 		int loopRate =10 ;
 		ros::Rate loop_rate(loopRate);
-
+		reached = false;
 		//waiting till we recieve the first value from IMU else it's useless to to any calculations
 		while(!initData){
 			ROS_INFO("Waiting to get first input from IMU");
@@ -79,7 +82,6 @@ public:
 			finalAngularPosition = finalAngularPosition +360;
 		
 		float derivative=0,integral=0,dt=1.0/loopRate,p=1,i=0,d=0;
-		bool reached=false;
 
 		pwm.data=0;
 		dir.data=5;
@@ -87,7 +89,7 @@ public:
 		if (!turnServer_.isActive())
 			return;
 
-		while(!turnServer_.isPreemptRequested()&&ros::ok()){
+		while(!preempt && ros::ok()){
 			error = finalAngularPosition - presentAngularPosition;
 			integral+= (error*dt);
 			derivative = (presentAngularPosition- previousAngularPosition)/dt;
@@ -121,12 +123,9 @@ public:
 				direction.publish(dir);
 				ROS_INFO("thrusters stopped");
 				break;
-			}			
+			}
 
-			if (turnServer_.isPreemptRequested() || !ros::ok())
-			{
-				ROS_INFO("%s: Preempted", action_name_.c_str());
-				reached = false;
+			if (preempt){
 				break;
 			}
 		}
@@ -138,6 +137,7 @@ public:
 			turnServer_.setSucceeded(result_);
 		}
 	}
+
 	void turningOutputPWMMapping(float output){
 		float maxOutput=120, minOutput=-120,scale;
 		if(output > maxOutput)
