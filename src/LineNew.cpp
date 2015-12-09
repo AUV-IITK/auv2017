@@ -9,7 +9,7 @@
 using namespace cv;
 using namespace std;
 
-bool start=true;
+bool stop=false;
 
 Mat img,imgHSV,imgThresholded,imgSmooth,imgCanny,imgLines;
 int lineCount=0;
@@ -163,8 +163,8 @@ void callback(int ,void *){
 }
 
 void offCallback(std_msgs::Bool msg){
-	start = msg.data;
-	if(start){
+	stop = msg.data;
+	if(stop){
    		ROS_INFO("Sucide Sucide !!");
    		ros::shutdown();
 	}
@@ -252,11 +252,11 @@ if(argc<3){
 		}
 		ros::spinOnce();
 		loop_rate.sleep();
-		while(!start){
-			ros::spinOnce();
-			loop_rate.sleep();
-			ROS_INFO("Paused by taskHandler");
-		}
+		// while(!start){
+		// 	ros::spinOnce();
+		// 	loop_rate.sleep();
+		// 	ROS_INFO("Paused by taskHandler");
+		// }
     }
 
     destroyAllWindows();
