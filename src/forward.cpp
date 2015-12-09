@@ -20,8 +20,7 @@ class forwardAction{
 		float timeSpent, motionTime;
 		bool success;
 //ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
-		ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
-		ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
+		ros::Publisher PWM, direction;
 
 
 	public:
@@ -32,6 +31,8 @@ class forwardAction{
 		{
 //			forwardServer_.registerGoalCallback(boost::bind(&forwardAction::goalCB, this));
 			forwardServer_.registerPreemptCallback(boost::bind(&forwardAction::preemptCB, this));
+			PWM = nh_.advertise<std_msgs::Int32>("PWM",1000);
+			direction = nh_.advertise<std_msgs::Int32>("direction",1000);
 
 //this type callback can be used if we want to do the callback from some specific node
 //			sub_ = nh_.subscribe("name of the node", 1, &forwardAction::analysisCB, this);
