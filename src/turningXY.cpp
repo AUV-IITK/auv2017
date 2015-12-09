@@ -27,8 +27,7 @@ private:
 	motionlibrary::TurnResult result_;
 
 //ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
-	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
-	ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
+	ros::Publisher PWM ,direction;
 
 public:
 	TurnAction(std::string name):
@@ -38,6 +37,9 @@ public:
 	{
 //		turnServer_.registerGoalCallback(boost::bind(&TurnAction::goalCB, this));
 		turnServer_.registerPreemptCallback(boost::bind(&TurnAction::preemptCB, this));
+
+		PWM = nh_.advertise<std_msgs::Int32>("PWM",1000);
+		direction =nh_.advertise<std_msgs::Int32>("direction",1000);
 
 //this type callback can be used if we want to do the callback from some specific node
 //		sub_ = nh_.subscribe("name of the node", 1, &TurnAction::analysisCB, this);
@@ -67,6 +69,7 @@ public:
 		while(!initData){
 			ROS_INFO("Waiting to get first input from IMU");
 			loop_rate.sleep();
+			ros::spinOnce();
 		}
 
 		finalAngularPosition = presentAngularPosition + goal->AngleToTurn;
@@ -123,8 +126,6 @@ public:
 			if (turnServer_.isPreemptRequested() || !ros::ok())
 			{
 				ROS_INFO("%s: Preempted", action_name_.c_str());
-				// set the action state to preempted
-				turnServer_.setPreempted();
 				reached = false;
 				break;
 			}
