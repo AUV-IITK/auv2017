@@ -131,13 +131,12 @@ class AlignAction{
 			TurnClient_.waitForResult();
 			success = (*(TurnClient_.getResult())).MotionCompleted;
 			// make sure that target has been reached
-
 			stopIP();
 			if(success){
 				result_.Aligned = success;
 				ROS_INFO("%s: Succeeded", action_name_.c_str());
 				// set the action state to succeeded
-
+	
 				AlignServer_.setSucceeded(result_);
 			}
 		}
