@@ -27,7 +27,6 @@ int main(int argc, char** argv)
   cv::Mat frame;
   sensor_msgs::ImagePtr msg;
 
-  ros::Rate loop_rate(5);
   while (nh.ok()) {
     cap >> frame;
     // Check if grabbed frame is actually full with some content
@@ -39,6 +38,5 @@ int main(int argc, char** argv)
     }
 
     ros::spinOnce();
-    // loop_rate.sleep();
   }
 }
