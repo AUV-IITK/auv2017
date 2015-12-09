@@ -23,62 +23,58 @@ ros::NodeHandle nh;
 // #define led 13
 
 int pwm= 255;
-int temp=3;
 int prevDir=0;
+int Delay= 1500;
 
 void PWMCb(const std_msgs::Int32& msg){
-	pwm = 255 - msg.data;
+    pwm = 255 - msg.data;
     analogWrite(pwma,pwm);
     analogWrite(pwmb,pwm);
 
 }
 
 void directionCb(const std_msgs::Int32& msg){
-	if (msg.data== 1){//forward input
+    if (msg.data== 1){//forward input
         prevDir=1;
         digitalWrite(ina1,HIGH);
         digitalWrite(ina2,LOW);
         digitalWrite(inb1,HIGH);
         digitalWrite(inb2,LOW);
-	}
-	else if(msg.data == 2){//backward input
+    }
+    else if(msg.data == 2){//backward input
         prevDir=2;
         digitalWrite(ina1,LOW);
         digitalWrite(ina2,HIGH);
         digitalWrite(inb1,LOW);
         digitalWrite(inb2,HIGH);
-	}
-	else if(msg.data == 4){//cloclwise
+    }
+    else if(msg.data == 4){//cloclwise
         digitalWrite(ina1,LOW);
         digitalWrite(ina2,HIGH);
         digitalWrite(inb1,HIGH);
         digitalWrite(inb2,LOW);
-	}
-	else if(msg.data == 3){//anti clockwise
+    }
+    else if(msg.data == 3){//anti clockwise
         digitalWrite(ina1,HIGH);
         digitalWrite(ina2,LOW);
         digitalWrite(inb1,LOW);
         digitalWrite(inb2,HIGH);
-	}
+    }
 //just a temp method to try to stop the bot while moving forward
     else if(msg.data == 5){
         if(prevDir==1){
-            while(temp--){
-                digitalWrite(ina1,LOW);
-                digitalWrite(ina2,HIGH);
-                digitalWrite(inb1,LOW);
-                digitalWrite(inb2,HIGH);
-                delay(1000);
-            }
+            digitalWrite(ina1,LOW);
+            digitalWrite(ina2,HIGH);
+            digitalWrite(inb1,LOW);
+            digitalWrite(inb2,HIGH);
+            delay(Delay);
         }
         else{
-            while(temp--){
-                digitalWrite(ina1,HIGH);
-                digitalWrite(ina2,LOW);
-                digitalWrite(inb1,HIGH);
-                digitalWrite(inb2,LOW);
-                delay(1000);
-            }
+            digitalWrite(ina1,HIGH);
+            digitalWrite(ina2,LOW);
+            digitalWrite(inb1,HIGH);
+            digitalWrite(inb2,LOW);
+            delay(Delay);
         }
         digitalWrite(ina1,LOW);
         digitalWrite(ina2,LOW);
@@ -86,12 +82,12 @@ void directionCb(const std_msgs::Int32& msg){
         digitalWrite(inb2,LOW);
     }
 
-	else {
+    else {
         digitalWrite(ina1,LOW);
         digitalWrite(ina2,LOW);
         digitalWrite(inb1,LOW);
         digitalWrite(inb2,LOW);
-	}
+    }
 }
 
 ros::Subscriber<std_msgs::Int32> subPWM("PWM", &PWMCb );//only this syntax is correct for defining the "sub" not the upper commented one(to find out it's reason)
@@ -111,6 +107,6 @@ void setup(){
     Serial.begin(57600);
 }
 void loop(){
-	nh.spinOnce();
-	delay(1);
+    nh.spinOnce();
+    delay(1);
 }

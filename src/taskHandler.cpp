@@ -148,7 +148,7 @@ class AlignAction{
 
 		void startIP()
 		{
-			std::system("rosrun linefollowing LineNew 1 1");
+			std::system("rosrun linefollowing LineNew 1 0");
 		}
 
 		void stopIP()
