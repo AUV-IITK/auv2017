@@ -122,6 +122,10 @@ include_directories(
 add_executable(master src/master.cpp)
 target_link_libraries(master ${catkin_LIBRARIES})
 add_dependencies(master linefollowing_generate_messages_cpp)
+
+add_executable(masterAlternate src/masterAlternate.cpp)
+target_link_libraries(masterAlternate ${catkin_LIBRARIES})
+add_dependencies(masterAlternate linefollowing_generate_messages_cpp)
 ## Declare a C++ library
 # add_library(the_master
 #   src/${PROJECT_NAME}/the_master.cpp
