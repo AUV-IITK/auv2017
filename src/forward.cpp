@@ -64,7 +64,7 @@ class forwardAction{
 		void analysisCB(const motionlibrary::ForwardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 
-			pwm.data = 255;
+			pwm.data = 90;
 			dir.data = 1;
 			ros::Rate looprate(1);
 			success = true;
@@ -96,7 +96,7 @@ class forwardAction{
 				result_.MotionCompleted = success;
 				ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
 				ROS_INFO("%s: Succeeded", action_name_.c_str());
-				pwm.data = 0;
+				pwm.data = 120;
 				dir.data = 5;
 				PWM.publish(pwm);
 				direction.publish(dir);				
