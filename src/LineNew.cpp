@@ -241,7 +241,7 @@ if(argc<3){
              break;
         }
 
-        StretchContrast();
+        //StretchContrast();
 
         SmoothCallback(0,0); //for assigning imgSmooth initially
 		callback(0,0); //for displaying the thresholded image initially		
@@ -257,6 +257,8 @@ if(argc<3){
 		// 	loop_rate.sleep();
 		// 	ROS_INFO("Paused by taskHandler");
 		// }
+		if(stop)
+			return 0;
     }
 
     destroyAllWindows();

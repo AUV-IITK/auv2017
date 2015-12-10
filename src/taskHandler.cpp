@@ -119,14 +119,13 @@ class AlignAction{
 			turnActive = true;
 			ROS_INFO("Turn server started");
 
+			// boost::thread spin_thread(&AlignAction::spinThread, this);
 			ROS_INFO("waiting for data from edge detecting node");
 			while(!intiData){
-				ros::spinOnce();
 				loop_rate.sleep();
 			}
 			ROS_INFO("got data form edge detecting node");
 
-			boost::thread spin_thread(&AlignAction::spinThread, this);
 			//ensure that goal has been send here
 			TurnClient_.waitForResult();
 			success = (*(TurnClient_.getResult())).MotionCompleted;
@@ -141,9 +140,9 @@ class AlignAction{
 			}
 		}
 
-		void spinThread(){
-			ros::spin();
-		}
+		// void spinThread(){
+		// 	ros::spin();
+		// }
 
 		void startIP()
 		{
