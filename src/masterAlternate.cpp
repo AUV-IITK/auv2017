@@ -71,18 +71,6 @@ int main(int argc, char** argv){
 	boost::thread spin_thread(&spinThread);
 
 	while(ros::ok()){
-		forwardgoal.MotionTime = 2;
-		forwardClient.sendGoal(forwardgoal);
-		ROS_INFO("Moving forward");
-		forwardClient.waitForResult();
-		forwardSuccess = (*(forwardClient.getResult())).MotionCompleted;
-		if(forwardSuccess){
-			ROS_INFO("forward motion successful");
-		}
-		else
-			ROS_INFO("forward motion unsuccessful");			
-
-
 		orangegoal.order = true;
 		orangeClient.sendGoal(orangegoal);
 		ROS_INFO("Orange detection started");
@@ -104,6 +92,17 @@ int main(int argc, char** argv){
 		}
 		else
 			ROS_INFO("alignment failed");
+		forwardgoal.MotionTime = forwardTime;
+		forwardClient.sendGoal(forwardgoal);
+		ROS_INFO("Moving forward");
+		forwardClient.waitForResult();
+		forwardSuccess = (*(forwardClient.getResult())).MotionCompleted;
+		if(forwardSuccess){
+			ROS_INFO("forward motion successful");
+		}
+		else
+			ROS_INFO("forward motion unsuccessful");			
+
 	}
 	return 0;
 }
