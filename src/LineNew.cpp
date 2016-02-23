@@ -191,11 +191,11 @@ if(argc<3){
 	fscanf(fp,"%d %d %d %d\n%d %d %d\n%d",&ksize,&stype,&sigmaSpace,&sigmaColor,&lineThresh,&minLineLength,&maxLineGap,&houghThresh);
 	fclose(fp);
 
-	VideoCapture cap(index);
+	//VideoCapture cap(index);
 
     	//VideoCapture cap("src/linefollowing/src/outputnorm.avi"); //path of the video for checking the code 
-    	// VideoCapture cap("src/linefollowing/src/TestingLine.mp4"); 
-    	// VideoCapture cap("src/linefollowing/src/test1.avi");
+   	//VideoCapture cap("src/linefollowing/src/TestingLine.mp4"); 
+    	VideoCapture cap("src/linefollowing/src/test1.avi");
     
     if ( !cap.isOpened() )  // if not success, exit program
     {
@@ -241,7 +241,7 @@ if(argc<3){
              break;
         }
 
-        //StretchContrast();
+//        StretchContrast();
 
         SmoothCallback(0,0); //for assigning imgSmooth initially
 		callback(0,0); //for displaying the thresholded image initially		

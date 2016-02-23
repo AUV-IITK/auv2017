@@ -9,7 +9,6 @@ using namespace cv;
 using namespace std;
 
 Mat img,imgHSV,imgThresholded,imgSmooth,imgCanny,imgLines;
-int lineCount=0;
 
 //parameters in param file should be nearly the same as the commented values
 //params for an orange strip
@@ -95,7 +94,7 @@ void SmoothCallback(int ,void *){
 	if(ksize%2==0) ksize=ksize+1;     //kernel size can not be even
 	switch(stype){
 		case 1:
-			blur( img, imgSmooth, Size( ksize, ksize ) ); //ksize=17 
+			blur( img, imgSmooth, Size( ksize, ksize ) ); //ksize=5 
 			break;
 		case 2:
 			GaussianBlur( img, imgSmooth, Size( ksize, ksize ), 0, 0 );
@@ -109,7 +108,6 @@ void SmoothCallback(int ,void *){
 		default:
 			cout<<"Please enter a smoothing type "<<endl;
 	}
-
 }
 
 //contains canny edge detection and houghline transform
@@ -117,7 +115,7 @@ void SmoothCallback(int ,void *){
 void callback(int ,void *){
 	cvtColor(imgSmooth, imgHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
 	inRange(imgHSV, Scalar(LowH, LowS, LowV), Scalar(HighH, HighS, HighV), imgThresholded); //Threshold the image
-      
+
 	//opening (removes small objects from the foreground)
 		erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
 		dilate( imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) ); 
@@ -125,6 +123,7 @@ void callback(int ,void *){
 	//closing (removes small holes from the foreground)
 		dilate( imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) ); 
 		erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
+
 
 	Canny(imgThresholded,imgCanny,50,150,3,true);//canny edge detection
 
@@ -212,8 +211,6 @@ int main( int argc, char** argv ) {
 		*///////////////////////////////////
     	msg.data = -finalAngle*(180/3.14);
 
-    	//cout<<lineCount<<endl;
-
 		tracker_pub1.publish(msg);
 
 		ROS_INFO("%lf", msg.data);
@@ -230,7 +227,7 @@ int main( int argc, char** argv ) {
 
         StretchContrast();
 
-        SmoothCallback(0,0); //for assigning imgSmooth initially
+        SmoothCallback(0,0); //for smoothing image
 		callback(0,0); //for displaying the thresholded image initially		
 
     	char key=cvWaitKey(30);
@@ -238,6 +235,8 @@ int main( int argc, char** argv ) {
 			break;
 		}
     }
+
+    VideoCapture release();
 
     destroyAllWindows();
 }
