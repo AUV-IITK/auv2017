@@ -1,8 +1,8 @@
 #goal definition
-float32 MotionTime
+float32 Goal
 ---
 #result definition
-bool MotionCompleted
+bool Result
 ---
 #feedback
-float32 TimeRemaining
+float32 Feedback

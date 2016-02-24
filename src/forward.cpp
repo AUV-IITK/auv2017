@@ -72,7 +72,7 @@ class forwardAction{
 			if (!forwardServer_.isActive())
 				return;
 
-			for(timeSpent=0; timeSpent <= goal->MotionTime; timeSpent++){
+			for(timeSpent=0; timeSpent <= goal->Goal; timeSpent++){
 				if (forwardServer_.isPreemptRequested() || !ros::ok())
 				{
 					ROS_INFO("%s: Preempted", action_name_.c_str());
@@ -82,7 +82,7 @@ class forwardAction{
         			break;
 				}
 				// publish the feedback
-				feedback_.TimeRemaining = goal->MotionTime - timeSpent;
+				feedback_.Feedback = goal->Goal - timeSpent;
 				forwardServer_.publishFeedback(feedback_);
 				PWM.publish(pwm);
 				direction.publish(dir);
@@ -93,7 +93,7 @@ class forwardAction{
 				looprate.sleep();				
 			}
 			if(success){
-				result_.MotionCompleted = success;
+				result_.Result = success;
 				ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
 				ROS_INFO("%s: Succeeded", action_name_.c_str());
 				pwm.data = 120;

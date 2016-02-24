@@ -19,7 +19,7 @@ bool success=false;
 void spinThread(){
 	Client &temp = *chutiya;
 	temp.waitForResult();
-	success = (*(temp.getResult())).MotionCompleted;
+	success = (*(temp.getResult())).Result;
 	if(success){
 		ROS_INFO("motion successful");
 	}
@@ -45,10 +45,10 @@ void callback(motionlibrary::forwardConfig &config, double level) {
 			can.cancelGoal();
 			ROS_INFO("Goal Cancelled");	
 		}
-		goal.MotionTime = config.double_param;
+		goal.Goal = config.double_param;
 		can.sendGoal(goal);
 		boost::thread spin_thread(&spinThread);
-	 	ROS_INFO("Goal Send %f", goal.MotionTime);
+	 	ROS_INFO("Goal Send %f", goal.Goal);
 		moving = true;
 	}
 	
@@ -57,7 +57,7 @@ void callback(motionlibrary::forwardConfig &config, double level) {
 //never ever put the argument of the callback function anything other then the specified
 //void forwardCb(const motionlibrary::ForwardActionFeedbackConstPtr msg){
 void forwardCb(motionlibrary::ForwardActionFeedback msg){
-	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.TimeRemaining);
+	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.Feedback);
 }
 
 int main(int argc, char** argv){
@@ -72,7 +72,7 @@ int main(int argc, char** argv){
 
 	ROS_INFO("Waiting for action server to start.");
 	forwardTestClient.waitForServer();
-	goal.MotionTime =0;
+	goal.Goal =0;
 	ROS_INFO("Action server started, sending goal.");
 
 
