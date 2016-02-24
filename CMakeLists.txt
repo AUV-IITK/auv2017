@@ -69,7 +69,6 @@ add_action_files(
   DIRECTORY action
   FILES
     Forward.action
-    Turn.action
 )
 
 ## Generate added messages and services with any dependencies listed here
@@ -95,7 +94,6 @@ generate_messages(
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
  cfg/forward.cfg
- cfg/turning.cfg
 )
 
 ###################################
@@ -131,12 +129,6 @@ target_link_libraries(forward ${catkin_LIBRARIES})
 
 add_executable(forwardTest src/forwardTest.cpp)
 target_link_libraries(forwardTest ${catkin_LIBRARIES})
-
-add_executable(turningXY src/turningXY.cpp)
-target_link_libraries(turningXY ${catkin_LIBRARIES})
-
-add_executable(turningXYTest src/turningXYTest.cpp)
-target_link_libraries(turningXYTest ${catkin_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(motionlibrary
