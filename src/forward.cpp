@@ -43,6 +43,7 @@ class forwardAction{
 		}
 
 		// callback for goal cancelled
+		// Stop the bot
 		void preemptCB(void){
 			pwm.data = 0;
 			dir.data = 5;
@@ -54,6 +55,7 @@ class forwardAction{
 		}
 
 		// called when new goal recieved
+		// Start motion and finish it, if not interupted
 		void analysisCB(const motionlibrary::ForwardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 

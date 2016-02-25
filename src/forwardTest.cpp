@@ -17,6 +17,7 @@ bool moving=false;
 bool success=false;
 
 // New thread for recieving result, called from dynamic reconfig callback
+// Result recieved, start next motion or if motion unsuccessful then do error handling
 void spinThread(){
 	Client &temp = *clientPointer;
 	temp.waitForResult();
@@ -28,7 +29,8 @@ void spinThread(){
 		ROS_INFO("motion unsuccessful");
 }
 
-//dynamic reconfig; Our primary way of debugging 
+//dynamic reconfig; Our primary way of debugging
+//Send new goal or cancel goal depending on input from GUI 
 void callback(motionlibrary::forwardConfig &config, double level) {
 	ROS_INFO("Reconfigure Request: %f %s", config.double_param, config.bool_param?"True":"False");
 	Client &can = *clientPointer;
