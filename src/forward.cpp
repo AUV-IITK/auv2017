@@ -4,11 +4,12 @@
 #include <actionlib/server/simple_action_server.h>
 #include <motionlibrary/ForwardAction.h>
 
-typedef actionlib::SimpleActionServer<motionlibrary::ForwardAction> Server;
+typedef actionlib::SimpleActionServer<motionlibrary::ForwardAction> Server; // defining the Client type
 
-std_msgs::Int32 pwm;
-std_msgs::Int32 dir;
+std_msgs::Int32 pwm; // pwm to be send to arduino
+std_msgs::Int32 dir; // dir to be send to arudino
 
+// new inner class, to encapsulate the interaction with actionclient
 class forwardAction{
 	private:
 		ros::NodeHandle nh_;
@@ -19,48 +20,40 @@ class forwardAction{
 		ros::Subscriber sub_;
 		float timeSpent, motionTime;
 		bool success;
-//ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
 		ros::Publisher PWM, direction;
 
-
 	public:
+		//Constructor, called when new instance of class declared
 		forwardAction(std::string name):
 			//here we are defining the server, third argument is optional
 	    	forwardServer_(nh_, name, boost::bind(&forwardAction::analysisCB, this, _1), false),
     		action_name_(name)
 		{
-//			forwardServer_.registerGoalCallback(boost::bind(&forwardAction::goalCB, this));
+			// Add preempt callback
 			forwardServer_.registerPreemptCallback(boost::bind(&forwardAction::preemptCB, this));
+			// Declaring publisher for PWM and direction
 			PWM = nh_.advertise<std_msgs::Int32>("PWM",1000);
 			direction = nh_.advertise<std_msgs::Int32>("direction",1000);
-
-//this type callback can be used if we want to do the callback from some specific node
-//			sub_ = nh_.subscribe("name of the node", 1, &forwardAction::analysisCB, this);
+			// Starting new Action Server
 			forwardServer_.start();
 		}
 
+		// default contructor
 		~forwardAction(void){
 		}
 
-//Some strange warning was occuring if we were using this goalCB function. Aprntly there was some other callback function for goals
-			// void goalCB(){
-			// 	timeSpent = 0;
-			// 	motionTime = forwardServer_.acceptNewGoal()->MotionTime;
-			// 	ROS_INFO("%s: New goal recieved %f", action_name_.c_str(),motionTime);
-			// }
-
+		// callback for goal cancelled
 		void preemptCB(void){
-
 			pwm.data = 0;
 			dir.data = 5;
 			PWM.publish(pwm);
 			direction.publish(dir);							
 			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
-
 			//this command cancels the previous goal
 			// forwardServer_.setPreempted();
 		}
 
+		// called when new goal recieved
 		void analysisCB(const motionlibrary::ForwardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 
@@ -108,10 +101,13 @@ class forwardAction{
 };
 
 int main(int argc, char** argv){
+
+	// Initializing the node
 	ros::init(argc, argv, "forward");
 
-	ROS_INFO("Waiting for Goal");
+	// declaring a new instance of inner class, constructor gets called
 	forwardAction forward(ros::this_node::getName());
+	ROS_INFO("Waiting for Goal");
 
 	ros::spin();
 	return 0;
