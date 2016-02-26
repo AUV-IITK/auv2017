@@ -1,25 +1,27 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
-#include <motionlibrary/ForwardAction.h>
-#include <motionlibrary/ForwardActionFeedback.h>
-#include <motionlibrary/ForwardActionResult.h>
+#include <motion_forward/ForwardAction.h>
+#include <motion_forward/ForwardActionFeedback.h>
+#include <motion_forward/ForwardActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <dynamic_reconfigure/server.h>
-#include <motionlibrary/forwardConfig.h>
+#include <motion_forward/forwardConfig.h>
 
-typedef actionlib::SimpleActionClient<motionlibrary::ForwardAction> Client;
+typedef actionlib::SimpleActionClient<motion_forward::ForwardAction> Client; // defining the Client type
 
-Client *chutiya;
-motionlibrary::ForwardGoal goal;
+Client *clientPointer; // pointer for sharing client across threads
+motion_forward::ForwardGoal goal; // new goal object to send to action server
 
 bool moving=false;
 bool success=false;
 
+// New thread for recieving result, called from dynamic reconfig callback
+// Result recieved, start next motion or if motion unsuccessful then do error handling
 void spinThread(){
-	Client &temp = *chutiya;
+	Client &temp = *clientPointer;
 	temp.waitForResult();
-	success = (*(temp.getResult())).MotionCompleted;
+	success = (*(temp.getResult())).Result;
 	if(success){
 		ROS_INFO("motion successful");
 	}
@@ -27,11 +29,11 @@ void spinThread(){
 		ROS_INFO("motion unsuccessful");
 }
 
-
-//dynamic reconfig 
-void callback(motionlibrary::forwardConfig &config, double level) {
+//dynamic reconfig; Our primary way of debugging
+//Send new goal or cancel goal depending on input from GUI 
+void callback(motion_forward::forwardConfig &config, double level) {
 	ROS_INFO("Reconfigure Request: %f %s", config.double_param, config.bool_param?"True":"False");
-	Client &can = *chutiya;
+	Client &can = *clientPointer;
 	if(!config.bool_param){
 		if(moving){
 			moving = false;
@@ -41,74 +43,48 @@ void callback(motionlibrary::forwardConfig &config, double level) {
 	}
 	else{
 		if(moving){
-			Client &can = *chutiya;
+			Client &can = *clientPointer;
 			can.cancelGoal();
 			ROS_INFO("Goal Cancelled");	
 		}
-		goal.MotionTime = config.double_param;
+		goal.Goal = config.double_param;
 		can.sendGoal(goal);
 		boost::thread spin_thread(&spinThread);
-	 	ROS_INFO("Goal Send %f", goal.MotionTime);
+	 	ROS_INFO("Goal Send %f", goal.Goal);
 		moving = true;
 	}
-	
 }
 
-//never ever put the argument of the callback function anything other then the specified
-//void forwardCb(const motionlibrary::ForwardActionFeedbackConstPtr msg){
-void forwardCb(motionlibrary::ForwardActionFeedback msg){
-	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.TimeRemaining);
+// Callback for Feedback from Action Server
+void forwardCb(motion_forward::ForwardActionFeedback msg){
+	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.Feedback);
 }
 
 int main(int argc, char** argv){
 
+	// Initializing the node
 	ros::init(argc, argv, "testForwardMotion");
 	
 	ros::NodeHandle nh;
-	ros::Subscriber sub_ = nh.subscribe<motionlibrary::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
+	// Subscribing to feedback from ActionServer
+	ros::Subscriber sub_ = nh.subscribe<motion_forward::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
 
+	//Declaring a new ActionClient
 	Client forwardTestClient("forward");
-	chutiya = &forwardTestClient;
+	//Saving pointer to use across threads
+	clientPointer = &forwardTestClient;
 
+	//Waiting for action server to start
 	ROS_INFO("Waiting for action server to start.");
 	forwardTestClient.waitForServer();
-	goal.MotionTime =0;
-	ROS_INFO("Action server started, sending goal.");
-
-
 
 	//register dynamic reconfig server.
-	dynamic_reconfigure::Server<motionlibrary::forwardConfig> server;
-	dynamic_reconfigure::Server<motionlibrary::forwardConfig>::CallbackType f;
+	dynamic_reconfigure::Server<motion_forward::forwardConfig> server;
+	dynamic_reconfigure::Server<motion_forward::forwardConfig>::CallbackType f;
 	f = boost::bind(&callback, _1, _2);
 	server.setCallback(f);
 
-	// // Create the action client
-	// Client forwardTestClient("forward");
-
-	// // Here the thread is created and the ros node is started spinning in the background.
-	// // By using this method you can create multiple threads for your action client if needed. 
-	// boost::thread spin_thread(&spinThread);
-
-	// ROS_INFO("Waiting for action server to start.");
-	// forwardTestClient.waitForServer();
-	// ROS_INFO("Action server started, sending goal.");
-
-	// // Send Goal
-	// motionlibrary::ForwardGoal goal;
-	// goal.MotionTime = 20;
-	// forwardTestClient.sendGoal(goal);
-	// chutiya = &forwardTestClient;
-	// ROS_INFO("Goal Send");
-
-	// //here this part of the code simply waits for the result and rest of the part can be done in the thread
-	// forwardTestClient.waitForResult();
-
-	// ros::shutdown();
-
-	// // Now that the goal is completed and we have reported the goal status, we need to shutdown the ros node and join our thread back before exiting. 
-	// spin_thread.join();
-
+	//waiting for goal
 	ros::spin();
 	return 0;
 }

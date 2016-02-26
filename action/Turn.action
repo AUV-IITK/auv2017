@@ -1,8 +1,0 @@
-#goal definition
-float32 AngleToTurn
----
-#result definition
-bool MotionCompleted
----
-#feedback
-float32 AngleRemaining
