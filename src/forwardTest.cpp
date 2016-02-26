@@ -1,17 +1,17 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
-#include <motionlibrary/ForwardAction.h>
-#include <motionlibrary/ForwardActionFeedback.h>
-#include <motionlibrary/ForwardActionResult.h>
+#include <motion_forward/ForwardAction.h>
+#include <motion_forward/ForwardActionFeedback.h>
+#include <motion_forward/ForwardActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <dynamic_reconfigure/server.h>
-#include <motionlibrary/forwardConfig.h>
+#include <motion_forward/forwardConfig.h>
 
-typedef actionlib::SimpleActionClient<motionlibrary::ForwardAction> Client; // defining the Client type
+typedef actionlib::SimpleActionClient<motion_forward::ForwardAction> Client; // defining the Client type
 
 Client *clientPointer; // pointer for sharing client across threads
-motionlibrary::ForwardGoal goal; // new goal object to send to action server
+motion_forward::ForwardGoal goal; // new goal object to send to action server
 
 bool moving=false;
 bool success=false;
@@ -31,7 +31,7 @@ void spinThread(){
 
 //dynamic reconfig; Our primary way of debugging
 //Send new goal or cancel goal depending on input from GUI 
-void callback(motionlibrary::forwardConfig &config, double level) {
+void callback(motion_forward::forwardConfig &config, double level) {
 	ROS_INFO("Reconfigure Request: %f %s", config.double_param, config.bool_param?"True":"False");
 	Client &can = *clientPointer;
 	if(!config.bool_param){
@@ -56,7 +56,7 @@ void callback(motionlibrary::forwardConfig &config, double level) {
 }
 
 // Callback for Feedback from Action Server
-void forwardCb(motionlibrary::ForwardActionFeedback msg){
+void forwardCb(motion_forward::ForwardActionFeedback msg){
 	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.Feedback);
 }
 
@@ -67,7 +67,7 @@ int main(int argc, char** argv){
 	
 	ros::NodeHandle nh;
 	// Subscribing to feedback from ActionServer
-	ros::Subscriber sub_ = nh.subscribe<motionlibrary::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
+	ros::Subscriber sub_ = nh.subscribe<motion_forward::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
 
 	//Declaring a new ActionClient
 	Client forwardTestClient("forward");
@@ -79,8 +79,8 @@ int main(int argc, char** argv){
 	forwardTestClient.waitForServer();
 
 	//register dynamic reconfig server.
-	dynamic_reconfigure::Server<motionlibrary::forwardConfig> server;
-	dynamic_reconfigure::Server<motionlibrary::forwardConfig>::CallbackType f;
+	dynamic_reconfigure::Server<motion_forward::forwardConfig> server;
+	dynamic_reconfigure::Server<motion_forward::forwardConfig>::CallbackType f;
 	f = boost::bind(&callback, _1, _2);
 	server.setCallback(f);
 

@@ -2,9 +2,9 @@
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
-#include <motionlibrary/ForwardAction.h>
+#include <motion_forward/ForwardAction.h>
 
-typedef actionlib::SimpleActionServer<motionlibrary::ForwardAction> Server; // defining the Client type
+typedef actionlib::SimpleActionServer<motion_forward::ForwardAction> Server; // defining the Client type
 
 std_msgs::Int32 pwm; // pwm to be send to arduino
 std_msgs::Int32 dir; // dir to be send to arudino
@@ -15,8 +15,8 @@ class forwardAction{
 		ros::NodeHandle nh_;
 		Server forwardServer_;
 		std::string action_name_;
-		motionlibrary::ForwardFeedback feedback_;
-		motionlibrary::ForwardResult result_;
+		motion_forward::ForwardFeedback feedback_;
+		motion_forward::ForwardResult result_;
 		ros::Subscriber sub_;
 		float timeSpent, motionTime;
 		bool success;
@@ -56,7 +56,7 @@ class forwardAction{
 
 		// called when new goal recieved
 		// Start motion and finish it, if not interupted
-		void analysisCB(const motionlibrary::ForwardGoalConstPtr goal){
+		void analysisCB(const motion_forward::ForwardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 
 			pwm.data = 90;
