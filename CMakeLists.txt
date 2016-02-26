@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(motionlibrary)
+project(motion_sideward)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -68,7 +68,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_action_files(
   DIRECTORY action
   FILES
-    Forward.action
+    Sideward.action
 )
 
 ## Generate added messages and services with any dependencies listed here
@@ -93,7 +93,7 @@ generate_messages(
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
- cfg/forward.cfg
+ cfg/sideward.cfg
 )
 
 ###################################
@@ -107,7 +107,7 @@ generate_dynamic_reconfigure_options(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES motionlibrary
+#  LIBRARIES motion_sideward
   CATKIN_DEPENDS actionlib actionlib_msgs
 #  DEPENDS system_lib
 )
@@ -124,31 +124,31 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(forward src/forward.cpp)
-target_link_libraries(forward ${catkin_LIBRARIES})
+add_executable(sideward src/sideward.cpp)
+target_link_libraries(sideward ${catkin_LIBRARIES})
 
-add_executable(forwardTest src/forwardTest.cpp)
-target_link_libraries(forwardTest ${catkin_LIBRARIES})
+add_executable(sidewardTest src/sidewardTest.cpp)
+target_link_libraries(sidewardTest ${catkin_LIBRARIES})
 
 ## Declare a C++ library
-# add_library(motionlibrary
-#   src/${PROJECT_NAME}/motionlibrary.cpp
+# add_library(motion_sideward
+#   src/${PROJECT_NAME}/motion_sideward.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(motionlibrary ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(motion_sideward ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(motionlibrary_node src/motionlibrary_node.cpp)
+# add_executable(motion_sideward_node src/motion_sideward_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(motionlibrary_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(motion_sideward_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(motionlibrary_node
+# target_link_libraries(motion_sideward_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -167,7 +167,7 @@ target_link_libraries(forwardTest ${catkin_LIBRARIES})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS motionlibrary motionlibrary_node
+# install(TARGETS motion_sideward motion_sideward_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -192,7 +192,7 @@ target_link_libraries(forwardTest ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_motionlibrary.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_motion_sideward.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
