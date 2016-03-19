@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AUV-IITK/motion_library.svg?branch=master)](https://travis-ci.org/AUV-IITK/motion_library)
+
 # Build Instruction
 ```sh
 catkin_make clean
