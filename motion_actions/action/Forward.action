@@ -5,4 +5,4 @@ float32 Goal
 bool Result
 ---
 #feedback
-float32 Feedback
+float32 DistanceRemaining
