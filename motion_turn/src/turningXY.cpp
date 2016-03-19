@@ -3,7 +3,7 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
-#include <turn_xy/TurnAction.h>
+#include <motion_turn/TurnAction.h>
 #include <iostream>
 #define minPWM 120
 using namespace std;
@@ -16,15 +16,15 @@ bool initData =false;
 std_msgs::Int32 pwm;
 std_msgs::Int32 dir;//that we have to send
 
-typedef actionlib::SimpleActionServer<turn_xy::TurnAction> Server;
+typedef actionlib::SimpleActionServer<motion_turn::TurnAction> Server;
 
 class TurnAction{
 private:
 	ros::NodeHandle nh_;
 	Server turnServer_;
 	std::string action_name_;
-	turn_xy::TurnFeedback feedback_;
-	turn_xy::TurnResult result_;
+	motion_turn::TurnFeedback feedback_;
+	motion_turn::TurnResult result_;
 
 //ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
 	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWMy",1000);
@@ -57,7 +57,7 @@ public:
 		ROS_INFO("%s: Preempted", action_name_.c_str());
 	}
 
-	void analysisCB(const turn_xy::TurnGoalConstPtr goal){
+	void analysisCB(const motion_turn::TurnGoalConstPtr goal){
 		ROS_INFO("Inside analysisCB");
 
 		int loopRate =10 ;

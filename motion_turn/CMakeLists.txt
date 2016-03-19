@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(turn_xy)
+project(motion_turn)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -107,7 +107,7 @@ generate_dynamic_reconfigure_options(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES turn_xy
+#  LIBRARIES motion_turn
   CATKIN_DEPENDS actionlib actionlib_msgs
 #  DEPENDS system_lib
 )
@@ -124,31 +124,31 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-# add_executable(turningXY src/turningXY.cpp)
-# target_link_libraries(turningXY ${catkin_LIBRARIES})
+add_executable(turningXY src/turningXY.cpp)
+target_link_libraries(turningXY ${catkin_LIBRARIES})
 
-# add_executable(turningXYTest src/turningXYTest.cpp)
-# target_link_libraries(turningXYTest ${catkin_LIBRARIES})
+add_executable(turningXYTest src/turningXYTest.cpp)
+target_link_libraries(turningXYTest ${catkin_LIBRARIES})
 
 ## Declare a C++ library
-# add_library(turn_xy
-#   src/${PROJECT_NAME}/turn_xy.cpp
+# add_library(motion_turn
+#   src/${PROJECT_NAME}/motion_turn.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(turn_xy ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(motion_turn ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(turn_xy_node src/turn_xy_node.cpp)
+# add_executable(motion_turn_node src/motion_turn_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(turn_xy_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(motion_turn_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(turn_xy_node
+# target_link_libraries(motion_turn_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -167,7 +167,7 @@ include_directories(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS turn_xy turn_xy_node
+# install(TARGETS motion_turn motion_turn_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -192,7 +192,7 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_turn_xy.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_motion_turn.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
