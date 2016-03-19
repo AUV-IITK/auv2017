@@ -177,7 +177,7 @@ void yawCb(std_msgs::Float64 msg){
 }
 
 int main(int argc, char** argv){
-	ros::init(argc, argv, "TurnXY");
+	ros::init(argc, argv, "turningXY");
 
 	ros::NodeHandle n;
 	ros::Subscriber yaw=n.subscribe<std_msgs::Float64>("yaw",1000,&yawCb);

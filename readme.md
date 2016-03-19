@@ -12,3 +12,7 @@ The stack contains
   - `motion_sideward` sway motion
   - `motion_turn` rotating in horizontal plain
   - `motion_upward` vertical motion
+
+# Rosgraph
+
+![rosgraph](/rosgraph_motionlib_groupnamespaces_hidedebug.svg)
