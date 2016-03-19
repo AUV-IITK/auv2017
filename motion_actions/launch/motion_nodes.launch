@@ -1,0 +1,10 @@
+<launch>
+  <node name="forward" pkg="motion_forward" type="forward" respawn="true" />
+  <node name="forwardTest" pkg="motion_forward" type="forwardTest" respawn="true" />
+  <node name="sideward" pkg="motion_sideward" type="sideward" respawn="true" />
+  <node name="sidewardTest" pkg="motion_sideward" type="sidewardTest" respawn="true" />
+  <node name="turningXY" pkg="motion_turn" type="turningXY" respawn="true" />
+  <node name="turningXYTest" pkg="motion_turn" type="turningXYTest" respawn="true" />
+  <node name="upward" pkg="motion_upward" type="upward" respawn="true" />
+  <node name="upwardTest" pkg="motion_upward" type="upwardTest" respawn="true" />
+</launch>

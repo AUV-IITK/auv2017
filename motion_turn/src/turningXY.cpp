@@ -27,8 +27,8 @@ private:
 	motion_actions::TurnResult result_;
 
 //ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
-	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWMy",1000);
-	ros::Publisher direction=nh_.advertise<std_msgs::Int32>("directiony",1000);
+	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
+	ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
 
 public:
 	innerActionClass(std::string name):

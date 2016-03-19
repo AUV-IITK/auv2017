@@ -32,8 +32,8 @@ class innerActionClass{
 			// Add preempt callback
 			sidewardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
 			// Declaring publisher for PWM and direction
-			PWM = nh_.advertise<std_msgs::Int32>("PWMy",1000);
-			direction = nh_.advertise<std_msgs::Int32>("directiony",1000);
+			PWM = nh_.advertise<std_msgs::Int32>("PWM",1000);
+			direction = nh_.advertise<std_msgs::Int32>("direction",1000);
 			// Starting new Action Server
 			sidewardServer_.start();
 		}
