@@ -15,4 +15,4 @@ The stack contains
 
 # Rosgraph
 
-![rosgraph](/rosgraph_motionlib_groupnamespaces_hidedebug.svg)
+![rosgraph](/images/rosgraph_motionlib_groupnamespaces_hidedebug.png)
