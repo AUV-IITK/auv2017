@@ -57,7 +57,7 @@ void callback(motion_sideward::sidewardConfig &config, double level) {
 
 // Callback for Feedback from Action Server
 void sidewardCb(motion_actions::SidewardActionFeedback msg){
-	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.Feedback);
+	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.DistanceRemaining);
 }
 
 int main(int argc, char** argv){
