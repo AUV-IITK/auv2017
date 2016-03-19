@@ -4,8 +4,11 @@
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
 #include <motion_actions/TurnAction.h>
+#include <dynamic_reconfigure/server.h>
+#include <motion_turn/pidConfig.h>
 #include <iostream>
-#define minPWM 120
+
+#define minPWM 120 //Minimum PWM at which thrusters will move
 using namespace std;
 
 float presentAngularPosition=0;
@@ -26,21 +29,22 @@ private:
 	motion_actions::TurnFeedback feedback_;
 	motion_actions::TurnResult result_;
 
-//ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
+	//ROS was not working properly if these variables were declared inside function.
 	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
 	ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
+	float p,i,d;
 
 public:
 	innerActionClass(std::string name):
-		//here we are defining the server, third argument is optional
+		//Defining the server, third argument is optional
 	   	turnServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false),
     	action_name_(name)
 	{
-//		turnServer_.registerGoalCallback(boost::bind(&innerActionClass::goalCB, this));
+		p=1;i=0;d=0;
 		turnServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
 
-//this type callback can be used if we want to do the callback from some specific node
-//		sub_ = nh_.subscribe("name of the node", 1, &innerActionClass::analysisCB, this);
+		//this type callback can be used if we want to do the callback from some specific node
+		//sub_ = nh_.subscribe("name of the node", 1, &innerActionClass::analysisCB, this);
 		turnServer_.start();
 	}
 
@@ -75,7 +79,7 @@ public:
 		else if(finalAngularPosition <= -180)
 			finalAngularPosition = finalAngularPosition +360;
 		
-		float derivative=0,integral=0,dt=1.0/loopRate,p=1,i=0,d=0;
+		float derivative=0,integral=0,dt=1.0/loopRate;
 		bool reached=false;
 
 		pwm.data=0;
@@ -118,7 +122,7 @@ public:
 				direction.publish(dir);
 				ROS_INFO("thrusters stopped");
 				break;
-			}			
+			}
 
 			if (turnServer_.isPreemptRequested() || !ros::ok())
 			{
@@ -157,16 +161,26 @@ public:
 			dir.data = 4;
 		}
 	}
+	void setPID(float new_p, float new_i, float new_d) {
+		p=new_p;
+		i=new_i;
+		d=new_d;
+	}
 };
 
+innerActionClass* object; 
+
+//dynamic reconfig 
+void callback(motion_turn::pidConfig &config, double level) {
+	ROS_INFO("Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
+	object->setPID(config.p, config.i, config.d);
+}
 
 void yawCb(std_msgs::Float64 msg){
-
 	//this is used to set the final angle after getting the value of first intial position
 	if(initData == false){
 		presentAngularPosition= msg.data;
 		previousAngularPosition = presentAngularPosition;
-
 		initData = true;
 	}
 	else{
@@ -183,7 +197,13 @@ int main(int argc, char** argv){
 	ros::Subscriber yaw=n.subscribe<std_msgs::Float64>("yaw",1000,&yawCb);
 
 	ROS_INFO("Waiting for Goal");
-	innerActionClass turn(ros::this_node::getName());
+	object = new innerActionClass(ros::this_node::getName());
+
+	//register dynamic reconfig server.
+	dynamic_reconfigure::Server<motion_turn::pidConfig> server;
+	dynamic_reconfigure::Server<motion_turn::pidConfig>::CallbackType f;
+	f = boost::bind(&callback, _1, _2);
+	server.setCallback(f);
 
 	ros::spin();
 	return 0;
