@@ -1,0 +1,8 @@
+#goal definition
+float32 Goal
+---
+#result definition
+bool Result
+---
+#feedback
+float32 Feedback
