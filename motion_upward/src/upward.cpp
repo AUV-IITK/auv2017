@@ -2,21 +2,21 @@
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
-#include <motion_upward/upwardAction.h>
+#include <motion_actions/UpwardAction.h>
 
-typedef actionlib::SimpleActionServer<motion_upward::upwardAction> Server; // defining the Client type
+typedef actionlib::SimpleActionServer<motion_actions::UpwardAction> Server; // defining the Client type
 
 std_msgs::Int32 pwm; // pwm to be send to arduino
 std_msgs::Int32 dir; // dir to be send to arudino
 
 // new inner class, to encapsulate the interaction with actionclient
-class upwardAction{
+class innerActionClass{
 	private:
 		ros::NodeHandle nh_;
 		Server upwardServer_;
 		std::string action_name_;
-		motion_upward::upwardFeedback feedback_;
-		motion_upward::upwardResult result_;
+		motion_actions::UpwardFeedback feedback_;
+		motion_actions::UpwardResult result_;
 		ros::Subscriber sub_;
 		float timeSpent, motionTime;
 		bool success;
@@ -24,13 +24,13 @@ class upwardAction{
 
 	public:
 		//Constructor, called when new instance of class declared
-		upwardAction(std::string name):
+		innerActionClass(std::string name):
 			//here we are defining the server, third argument is optional
-	    	upwardServer_(nh_, name, boost::bind(&upwardAction::analysisCB, this, _1), false),
+	    	upwardServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false),
     		action_name_(name)
 		{
 			// Add preempt callback
-			upwardServer_.registerPreemptCallback(boost::bind(&upwardAction::preemptCB, this));
+			upwardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
 			// Declaring publisher for PWM and direction
 			PWM = nh_.advertise<std_msgs::Int32>("PWM",1000);
 			direction = nh_.advertise<std_msgs::Int32>("direction",1000);
@@ -39,7 +39,7 @@ class upwardAction{
 		}
 
 		// default contructor
-		~upwardAction(void){
+		~innerActionClass(void){
 		}
 
 		// callback for goal cancelled
@@ -56,7 +56,7 @@ class upwardAction{
 
 		// called when new goal recieved
 		// Start motion and finish it, if not interupted
-		void analysisCB(const motion_upward::upwardGoalConstPtr goal){
+		void analysisCB(const motion_actions::UpwardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 
 			pwm.data = 90;
@@ -108,7 +108,7 @@ int main(int argc, char** argv){
 	ros::init(argc, argv, "upward");
 
 	// declaring a new instance of inner class, constructor gets called
-	upwardAction upward(ros::this_node::getName());
+	innerActionClass upward(ros::this_node::getName());
 	ROS_INFO("Waiting for Goal");
 
 	ros::spin();

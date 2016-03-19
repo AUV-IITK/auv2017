@@ -1,17 +1,17 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
-#include <motion_upward/upwardAction.h>
-#include <motion_upward/upwardActionFeedback.h>
-#include <motion_upward/upwardActionResult.h>
+#include <motion_actions/UpwardAction.h>
+#include <motion_actions/UpwardActionFeedback.h>
+#include <motion_actions/UpwardActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_upward/upwardConfig.h>
 
-typedef actionlib::SimpleActionClient<motion_upward::upwardAction> Client; // defining the Client type
+typedef actionlib::SimpleActionClient<motion_actions::UpwardAction> Client; // defining the Client type
 
 Client *clientPointer; // pointer for sharing client across threads
-motion_upward::upwardGoal goal; // new goal object to send to action server
+motion_actions::UpwardGoal goal; // new goal object to send to action server
 
 bool moving=false;
 bool success=false;
@@ -56,7 +56,7 @@ void callback(motion_upward::upwardConfig &config, double level) {
 }
 
 // Callback for Feedback from Action Server
-void upwardCb(motion_upward::upwardActionFeedback msg){
+void upwardCb(motion_actions::UpwardActionFeedback msg){
 	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.Feedback);
 }
 
@@ -67,7 +67,7 @@ int main(int argc, char** argv){
 	
 	ros::NodeHandle nh;
 	// Subscribing to feedback from ActionServer
-	ros::Subscriber sub_ = nh.subscribe<motion_upward::upwardActionFeedback>("/upward/feedback",1000,&upwardCb);
+	ros::Subscriber sub_ = nh.subscribe<motion_actions::UpwardActionFeedback>("/upward/feedback",1000,&upwardCb);
 
 	//Declaring a new ActionClient
 	Client upwardTestClient("upward");

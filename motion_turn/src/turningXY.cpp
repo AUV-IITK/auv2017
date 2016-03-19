@@ -3,7 +3,7 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
-#include <motion_turn/TurnAction.h>
+#include <motion_actions/TurnAction.h>
 #include <iostream>
 #define minPWM 120
 using namespace std;
@@ -16,35 +16,35 @@ bool initData =false;
 std_msgs::Int32 pwm;
 std_msgs::Int32 dir;//that we have to send
 
-typedef actionlib::SimpleActionServer<motion_turn::TurnAction> Server;
+typedef actionlib::SimpleActionServer<motion_actions::TurnAction> Server;
 
-class TurnAction{
+class innerActionClass{
 private:
 	ros::NodeHandle nh_;
 	Server turnServer_;
 	std::string action_name_;
-	motion_turn::TurnFeedback feedback_;
-	motion_turn::TurnResult result_;
+	motion_actions::TurnFeedback feedback_;
+	motion_actions::TurnResult result_;
 
 //ROS was not working properly if these variables were declared inside function. Really wierd problem need to do somthing about it 
 	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWMy",1000);
 	ros::Publisher direction=nh_.advertise<std_msgs::Int32>("directiony",1000);
 
 public:
-	TurnAction(std::string name):
+	innerActionClass(std::string name):
 		//here we are defining the server, third argument is optional
-	   	turnServer_(nh_, name, boost::bind(&TurnAction::analysisCB, this, _1), false),
+	   	turnServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false),
     	action_name_(name)
 	{
-//		turnServer_.registerGoalCallback(boost::bind(&TurnAction::goalCB, this));
-		turnServer_.registerPreemptCallback(boost::bind(&TurnAction::preemptCB, this));
+//		turnServer_.registerGoalCallback(boost::bind(&innerActionClass::goalCB, this));
+		turnServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
 
 //this type callback can be used if we want to do the callback from some specific node
-//		sub_ = nh_.subscribe("name of the node", 1, &TurnAction::analysisCB, this);
+//		sub_ = nh_.subscribe("name of the node", 1, &innerActionClass::analysisCB, this);
 		turnServer_.start();
 	}
 
-	~TurnAction(void){
+	~innerActionClass(void){
 	}
 
 	void preemptCB(void){
@@ -57,7 +57,7 @@ public:
 		ROS_INFO("%s: Preempted", action_name_.c_str());
 	}
 
-	void analysisCB(const motion_turn::TurnGoalConstPtr goal){
+	void analysisCB(const motion_actions::TurnGoalConstPtr goal){
 		ROS_INFO("Inside analysisCB");
 
 		int loopRate =10 ;
@@ -183,7 +183,7 @@ int main(int argc, char** argv){
 	ros::Subscriber yaw=n.subscribe<std_msgs::Float64>("yaw",1000,&yawCb);
 
 	ROS_INFO("Waiting for Goal");
-	TurnAction turn(ros::this_node::getName());
+	innerActionClass turn(ros::this_node::getName());
 
 	ros::spin();
 	return 0;

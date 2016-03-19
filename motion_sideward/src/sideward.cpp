@@ -2,21 +2,21 @@
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
-#include <motion_sideward/SidewardAction.h>
+#include <motion_actions/SidewardAction.h>
 
-typedef actionlib::SimpleActionServer<motion_sideward::SidewardAction> Server; // defining the Client type
+typedef actionlib::SimpleActionServer<motion_actions::SidewardAction> Server; // defining the Client type
 
 std_msgs::Int32 pwm; // pwm to be send to arduino
 std_msgs::Int32 dir; // dir to be send to arudino
 
 // new inner class, to encapsulate the interaction with actionclient
-class sidewardAction{
+class innerActionClass{
 	private:
 		ros::NodeHandle nh_;
 		Server sidewardServer_;
 		std::string action_name_;
-		motion_sideward::SidewardFeedback feedback_;
-		motion_sideward::SidewardResult result_;
+		motion_actions::SidewardFeedback feedback_;
+		motion_actions::SidewardResult result_;
 		ros::Subscriber sub_;
 		float timeSpent, motionTime;
 		bool success;
@@ -24,13 +24,13 @@ class sidewardAction{
 
 	public:
 		//Constructor, called when new instance of class declared
-		sidewardAction(std::string name):
+		innerActionClass(std::string name):
 			//here we are defining the server, third argument is optional
-	    	sidewardServer_(nh_, name, boost::bind(&sidewardAction::analysisCB, this, _1), false),
+	    	sidewardServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false),
     		action_name_(name)
 		{
 			// Add preempt callback
-			sidewardServer_.registerPreemptCallback(boost::bind(&sidewardAction::preemptCB, this));
+			sidewardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
 			// Declaring publisher for PWM and direction
 			PWM = nh_.advertise<std_msgs::Int32>("PWMy",1000);
 			direction = nh_.advertise<std_msgs::Int32>("directiony",1000);
@@ -39,7 +39,7 @@ class sidewardAction{
 		}
 
 		// default contructor
-		~sidewardAction(void){
+		~innerActionClass(void){
 		}
 
 		// callback for goal cancelled
@@ -56,7 +56,7 @@ class sidewardAction{
 
 		// called when new goal recieved
 		// Start motion and finish it, if not interupted
-		void analysisCB(const motion_sideward::SidewardGoalConstPtr goal){
+		void analysisCB(const motion_actions::SidewardGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 
 			pwm.data = 90;
@@ -108,7 +108,7 @@ int main(int argc, char** argv){
 	ros::init(argc, argv, "sideward");
 
 	// declaring a new instance of inner class, constructor gets called
-	sidewardAction sideward(ros::this_node::getName());
+	innerActionClass sideward(ros::this_node::getName());
 	ROS_INFO("Waiting for Goal");
 
 	ros::spin();

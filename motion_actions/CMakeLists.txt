@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(motion_sideward)
+project(motion_actions)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -65,8 +65,20 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate actions in the 'action' folder
+add_action_files(
+  DIRECTORY action
+  FILES
+    Forward.action
+    Sideward.action
+    Turn.action
+    Upward.action
+)
 
 ## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  actionlib_msgs std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -82,11 +94,6 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * uncomment the "generate_dynamic_reconfigure_options" section below
 ##     and list every .cfg file to be processed
 
-## Generate dynamic reconfigure parameters in the 'cfg' folder
-generate_dynamic_reconfigure_options(
- cfg/sideward.cfg
-)
-
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -98,7 +105,7 @@ generate_dynamic_reconfigure_options(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES motion_sideward
+#  LIBRARIES motion_actions
   CATKIN_DEPENDS actionlib actionlib_msgs
 #  DEPENDS system_lib
 )
@@ -110,36 +117,26 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
-  ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
-  ${catkin_INCLUDE_DIRS}
-)
-
-add_executable(sideward src/sideward.cpp)
-target_link_libraries(sideward ${catkin_LIBRARIES})
-
-add_executable(sidewardTest src/sidewardTest.cpp)
-target_link_libraries(sidewardTest ${catkin_LIBRARIES})
 
 ## Declare a C++ library
-# add_library(motion_sideward
-#   src/${PROJECT_NAME}/motion_sideward.cpp
+# add_library(motion_actions
+#   src/${PROJECT_NAME}/motion_actions.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(motion_sideward ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(motion_actions ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(motion_sideward_node src/motion_sideward_node.cpp)
+# add_executable(motion_actions_node src/motion_actions_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(motion_sideward_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(motion_actions_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(motion_sideward_node
+# target_link_libraries(motion_actions_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -158,7 +155,7 @@ target_link_libraries(sidewardTest ${catkin_LIBRARIES})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS motion_sideward motion_sideward_node
+# install(TARGETS motion_actions motion_actions_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -183,7 +180,7 @@ target_link_libraries(sidewardTest ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_motion_sideward.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_motion_actions.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
