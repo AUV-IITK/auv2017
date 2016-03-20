@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Float64.h>
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
 #include <motion_actions/ForwardAction.h>
@@ -7,7 +8,8 @@
 #include <motion_forward/pidConfig.h>
 #include <std_msgs/Float64.h>
 
-#define minPWM 120
+#define minPWM 120 //Minimum PWM at which thrusters will move
+using namespace std;
 
 typedef actionlib::SimpleActionServer<motion_actions::ForwardAction> Server; // defining the Client type
 
@@ -17,7 +19,6 @@ float finalForwardPosition, error, output;
 bool initData =false;
 
 std_msgs::Int32 pwm; // pwm to be send to arduino
-std_msgs::Int32 dir; // dir to be send to arudino
 
 // new inner class, to encapsulate the interaction with actionclient
 class innerActionClass{
@@ -27,10 +28,8 @@ class innerActionClass{
 		std::string action_name_;
 		motion_actions::ForwardFeedback feedback_;
 		motion_actions::ForwardResult result_;
-		ros::Subscriber sub_;
-		float timeSpent, motionTime;
-		bool success;
-		ros::Publisher PWM, direction;
+ 	
+		ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("/pwm/turn",1000);
 		float p,i,d;
 
 	public:
@@ -43,8 +42,7 @@ class innerActionClass{
 			// Add preempt callback
 			forwardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
 			// Declaring publisher for PWM and direction
-			PWM = nh_.advertise<std_msgs::Int32>("PWM",1000);
-			direction = nh_.advertise<std_msgs::Int32>("direction",1000);
+			PWM = nh_.advertise<std_msgs::Int32>("/pwm/forward",1000);
 			// Starting new Action Server
 			forwardServer_.start();
 		}
@@ -57,14 +55,15 @@ class innerActionClass{
 		// Stop the bot
 		void preemptCB(void){
 			pwm.data = 0;
-			dir.data = 5;
 			PWM.publish(pwm);
-			direction.publish(dir);							
-			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
+			ROS_INFO("pwm send to arduino %d", pwm.data);
 			//this command cancels the previous goal
 			// forwardServer_.setPreempted();
 		}
-
+		int mod(int a){
+			if(a<0)	return -a;
+			else return a;
+		}
 		// called when new goal recieved
 		// Start motion and finish it, if not interupted
 		void analysisCB(const motion_actions::ForwardGoalConstPtr goal){
@@ -86,7 +85,6 @@ class innerActionClass{
 		bool reached=false;
 
 		pwm.data=0;
-		dir.data=5;
 
 		if (!forwardServer_.isActive())
 			return;
@@ -101,15 +99,18 @@ class innerActionClass{
 			forwardOutputPWMMapping(output);
 
 			//this lower limit depends upon the bot itself, below these values of PWM thrusters will not start
-			if(pwm.data < minPWM)
-				pwm.data= minPWM;	
+			if(mod(pwm.data) < minPWM){
+				if(mod(pwm.data < 0))
+					pwm.data = -minPWM;
+				else 
+					pwm.data = minPWM;
+			}
 
 			feedback_.DistanceRemaining = error;
 
 			forwardServer_.publishFeedback(feedback_);
 			PWM.publish(pwm);
-			direction.publish(dir);
-			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
+			ROS_INFO("pwm send to arduino %d", pwm.data);
 			
 			ros::spinOnce();
 			loop_rate.sleep();
@@ -120,9 +121,7 @@ class innerActionClass{
 				// that we are stable and we can now start moving 
 				reached=true;
 				pwm.data = 0;
-				dir.data = 5;
 				PWM.publish(pwm);
-				direction.publish(dir);
 				ROS_INFO("thrusters stopped");
 				break;
 			}
@@ -147,15 +146,7 @@ class innerActionClass{
 			float temp;
 
 			temp = output*scale;
-
-			if(temp>0){
-				pwm.data = (int)temp;
-				dir.data = 3; 
-			}
-			else{
-				pwm.data = -1*(int)temp;
-				dir.data = 4;
-			}
+			pwm.data = (int)temp;
 		}
 		void setPID(float new_p, float new_i, float new_d) {
 			p=new_p;

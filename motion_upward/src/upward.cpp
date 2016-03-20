@@ -41,9 +41,8 @@ public:
 			// Add preempt callback
 		upwardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
 			// Declaring publisher for PWM and direction
-		PWM = nh_.advertise<std_msgs::Int32>("PWM",1000);
-		direction = nh_.advertise<std_msgs::Int32>("direction",1000);
-			// Starting new Action Server
+		PWM = nh_.advertise<std_msgs::Int32>("/pwm/upward",1000);
+		// Starting new Action Server
 		upwardServer_.start();
 	}
 
@@ -55,10 +54,8 @@ public:
 		// Stop the bot
 	void preemptCB(void){
 		pwm.data = 0;
-		dir.data = 5;
 		PWM.publish(pwm);
-		direction.publish(dir);							
-		ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
+		ROS_INFO("pwm send to arduino %d", pwm.data);
 			//this command cancels the previous goal
 			// upwardServer_.setPreempted();
 	}
@@ -84,7 +81,6 @@ public:
 		bool reached=false;
 
 		pwm.data=0;
-		dir.data=5;
 
 		if (!upwardServer_.isActive())
 			return;
@@ -98,16 +94,18 @@ public:
 
 			upwardOutputPWMMapping(output);
 
-			//this lower limit depends upon the bot itself, below these values of PWM thrusters will not start
-			if(pwm.data < minPWM)
-				pwm.data= minPWM;	
+			if(mod(pwm.data) < minPWM){
+				if(mod(pwm.data < 0))
+					pwm.data = -minPWM;
+				else 
+					pwm.data = minPWM;
+			}
 
 			feedback_.HeightRemaining = error;
 
 			upwardServer_.publishFeedback(feedback_);
 			PWM.publish(pwm);
-			direction.publish(dir);
-			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
+			ROS_INFO("pwm send to arduino %d", pwm.data);
 			
 			ros::spinOnce();
 			loop_rate.sleep();
@@ -118,9 +116,7 @@ public:
 				// that we are stable and we can now start moving 
 				reached=true;
 				pwm.data = 0;
-				dir.data = 5;
 				PWM.publish(pwm);
-				direction.publish(dir);
 				ROS_INFO("thrusters stopped");
 				break;
 			}
@@ -134,6 +130,10 @@ public:
 				break;
 			}
 		}
+	}
+	int mod(int a){
+		if(a<0)	return -a;
+		else return a;
 	}
 	void upwardOutputPWMMapping(float output){
 		float maxOutput=120, minOutput=-120,scale;
