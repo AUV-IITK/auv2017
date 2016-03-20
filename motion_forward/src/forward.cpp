@@ -180,6 +180,9 @@ int main(int argc, char** argv){
 	// Initializing the node
 	ros::init(argc, argv, "forward");
 
+	ros::NodeHandle n;
+	ros::Subscriber xDistance=n.subscribe<std_msgs::Float64>("xDistance",1000,&distanceCb);
+
 	// declaring a new instance of inner class, constructor gets called
 	innerActionClass forward(ros::this_node::getName());
 	ROS_INFO("Waiting for Goal");

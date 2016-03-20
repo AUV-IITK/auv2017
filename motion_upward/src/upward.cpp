@@ -187,7 +187,7 @@ int main(int argc, char** argv){
 	ros::init(argc, argv, "upward");
 
 	ros::NodeHandle n;
-	ros::Subscriber yaw=n.subscribe<std_msgs::Float64>("Height",1000,&distanceCb);
+	ros::Subscriber zDistance=n.subscribe<std_msgs::Float64>("zDistance",1000,&distanceCb);
 
 	ROS_INFO("Waiting for Goal");
 	object = new innerActionClass(ros::this_node::getName());
