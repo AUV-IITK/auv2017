@@ -1,5 +1,5 @@
 <package>
-  <name>image_transporter</name>
+  <name>hardware_camera</name>
   <version>0.0.0</version>
   <description>Tutorial for image_transport. This is useful for the tutorials at http://wiki.ros.org/image_transport/Tutorials/</description>
   <author>Vincent Rabaud</author>

@@ -1,7 +1,7 @@
 #include <image_transport/simple_publisher_plugin.h>
-#include <image_transport_tutorial/ResizedImage.h>
+#include <hardware_camera/ResizedImage.h>
 
-class ResizedPublisher : public image_transport::SimplePublisherPlugin<image_transport_tutorial::ResizedImage>
+class ResizedPublisher : public image_transport::SimplePublisherPlugin<hardware_camera::ResizedImage>
 {
 public:
   virtual std::string getTransportName() const

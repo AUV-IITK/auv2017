@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(image_transporter)
+project(hardware_camera)
 
 find_package(catkin REQUIRED COMPONENTS
 	cv_bridge
