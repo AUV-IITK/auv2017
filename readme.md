@@ -16,5 +16,5 @@ The stack contains
   - `motion_upward` vertical motion
 
 # Rosgraph
-
-![rosgraph](/images/rosgraph_motionlib_groupnamespaces_hidedebug.png)
+Motion library running along with rosserial_arduino_node.
+![rosgraph](/images/motionLibraryWithArduino.png)
