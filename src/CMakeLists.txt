@@ -5,8 +5,8 @@
    # Remove this if using an Arduino without native USB (eg, other than Leonardo)
    #add_definitions(-DUSB_CON)
    
-   generate_arduino_firmware(hello
-     SRCS hello.cpp ${ROS_LIB_DIR}/time.cpp
+   generate_arduino_firmware(arduino_node
+     SRCS arduino_node.cpp ${ROS_LIB_DIR}/time.cpp
      BOARD uno
      PORT /dev/ttyACM0
    )

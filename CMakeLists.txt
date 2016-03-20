@@ -153,8 +153,8 @@ rosserial_configure_client(
   TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
 )
    
-rosserial_add_client_target(src hello ALL) #this hello need not be changed for anything
-rosserial_add_client_target(src hello-upload) #this hello need not be changed for anything
+rosserial_add_client_target(src arduino_node ALL)
+rosserial_add_client_target(src arduino_node-upload)
 
 #############
 ## Install ##
