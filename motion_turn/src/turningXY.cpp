@@ -21,6 +21,7 @@ std_msgs::Int32 dir;//that we have to send
 
 typedef actionlib::SimpleActionServer<motion_actions::TurnAction> Server;
 
+
 class innerActionClass{
 private:
 	ros::NodeHandle nh_;
@@ -30,8 +31,7 @@ private:
 	motion_actions::TurnResult result_;
 
 	//ROS was not working properly if these variables were declared inside function.
-	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("PWM",1000);
-	ros::Publisher direction=nh_.advertise<std_msgs::Int32>("direction",1000);
+ 	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("/pwm/turn",1000);
 	float p,i,d;
 
 public:
@@ -55,10 +55,12 @@ public:
 		//this command cancels the previous goal
 		turnServer_.setPreempted();
 		pwm.data=0;
-		dir.data=5;
 		PWM.publish(pwm);
-		direction.publish(dir);
 		ROS_INFO("%s: Preempted", action_name_.c_str());
+	}
+	int mod(int a){
+		if(a<0)	return -a;
+		else return a;
 	}
 
 	void analysisCB(const motion_actions::TurnGoalConstPtr goal){
@@ -83,7 +85,6 @@ public:
 		bool reached=false;
 
 		pwm.data=0;
-		dir.data=5;
 
 		if (!turnServer_.isActive())
 			return;
@@ -98,15 +99,18 @@ public:
 			turningOutputPWMMapping(output);
 
 			//this lower limit depends upon the bot itself, below these values of PWM thrusters will not start
-			if(pwm.data < minPWM)
-				pwm.data= minPWM;	
+			if(mod(pwm.data) < minPWM){
+				if(mod(pwm.data < 0))
+					pwm.data = -minPWM;
+				else 
+					pwm.data = minPWM;
+			}
 
 			feedback_.AngleRemaining = error;
 
 			turnServer_.publishFeedback(feedback_);
 			PWM.publish(pwm);
-			direction.publish(dir);
-			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
+			ROS_INFO("pwm send to arduino %d", pwm.data);
 			
 			ros::spinOnce();
 			loop_rate.sleep();
@@ -117,9 +121,7 @@ public:
 				// that we are stable and we can now start moving 
 				reached=true;
 				pwm.data = 0;
-				dir.data = 5;
 				PWM.publish(pwm);
-				direction.publish(dir);
 				ROS_INFO("thrusters stopped");
 				break;
 			}
@@ -151,15 +153,7 @@ public:
 		float temp;
 
 		temp = output*scale;
-
-		if(temp>0){
-			pwm.data = (int)temp;
-			dir.data = 3; 
-		}
-		else{
-			pwm.data = -1*(int)temp;
-			dir.data = 4;
-		}
+		pwm.data = (int)temp;
 	}
 	void setPID(float new_p, float new_i, float new_d) {
 		p=new_p;

@@ -15,7 +15,6 @@ float finalSidePosition, error, output;
 bool initData =false;
 
 std_msgs::Int32 pwm; // pwm to be send to arduino
-std_msgs::Int32 dir; // dir to be send to arudino
 
 // new inner class, to encapsulate the interaction with actionclient
 class innerActionClass{
@@ -28,7 +27,7 @@ class innerActionClass{
 		ros::Subscriber sub_;
 		float timeSpent, motionTime;
 		bool success;
-		ros::Publisher PWM, direction;
+		ros::Publisher PWM;
 		float p,i,d;
 
 	public:
@@ -40,9 +39,7 @@ class innerActionClass{
 		{
 			// Add preempt callback
 			sidewardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
-			// Declaring publisher for PWM and direction
-			PWM = nh_.advertise<std_msgs::Int32>("PWM",1000);
-			direction = nh_.advertise<std_msgs::Int32>("direction",1000);
+			PWM = nh_.advertise<std_msgs::Int32>("/pwm/sideward",1000);
 			// Starting new Action Server
 			sidewardServer_.start();
 		}
@@ -55,10 +52,8 @@ class innerActionClass{
 		// Stop the bot
 	void preemptCB(void){
 			pwm.data = 0;
-			dir.data = 5;
 			PWM.publish(pwm);
-			direction.publish(dir);							
-			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
+			ROS_INFO("pwm send to arduino %d", pwm.data);
 			//this command cancels the previous goal
 			// sidewardServer_.setPreempted();
 		}
@@ -84,7 +79,6 @@ class innerActionClass{
 		bool reached=false;
 
 		pwm.data=0;
-		dir.data=5;
 
 		if (!sidewardServer_.isActive())
 			return;
@@ -98,16 +92,18 @@ class innerActionClass{
 
 			sidewardOutputPWMMapping(output);
 
-			//this lower limit depends upon the bot itself, below these values of PWM thrusters will not start
-			if(pwm.data < minPWM)
-				pwm.data= minPWM;	
+			if(mod(pwm.data) < minPWM){
+				if(mod(pwm.data < 0))
+					pwm.data = -minPWM;
+				else 
+					pwm.data = minPWM;
+			}
 
 			feedback_.DistanceRemaining = error;
 
 			sidewardServer_.publishFeedback(feedback_);
 			PWM.publish(pwm);
-			direction.publish(dir);
-			ROS_INFO("pwm send to arduino %d in %d", pwm.data,dir.data);
+			ROS_INFO("pwm send to arduino %d", pwm.data);
 			
 			ros::spinOnce();
 			loop_rate.sleep();
@@ -118,9 +114,7 @@ class innerActionClass{
 				// that we are stable and we can now start moving 
 				reached=true;
 				pwm.data = 0;
-				dir.data = 5;
 				PWM.publish(pwm);
-				direction.publish(dir);
 				ROS_INFO("thrusters stopped");
 				break;
 			}
@@ -135,6 +129,11 @@ class innerActionClass{
 			}
 		}
 	}
+	int mod(int a){
+		if(a<0)	return -a;
+		else return a;
+	}
+
 	void sidewardOutputPWMMapping(float output){
 		float maxOutput=120, minOutput=-120,scale;
 		if(output > maxOutput)
@@ -145,15 +144,7 @@ class innerActionClass{
 		float temp;
 
 		temp = output*scale;
-
-		if(temp>0){
-			pwm.data = (int)temp;
-			dir.data = 3; 
-		}
-		else{
-			pwm.data = -1*(int)temp;
-			dir.data = 4;
-		}
+		pwm.data = (int)temp;
 	}
 	void setPID(float new_p, float new_i, float new_d) {
 		p=new_p;
