@@ -7,8 +7,8 @@
 #include <dynamic_reconfigure/server.h>
 #include <motion_forward/pidConfig.h>
 #include <std_msgs/Float64.h>
-
-#define minPWM 120 //Minimum PWM at which thrusters will move
+#define minPWM 200 //min pwm at which thrusters move
+#define maxPWM 240 //upper limit to control spped of bot
 using namespace std;
 
 typedef actionlib::SimpleActionServer<motion_actions::ForwardAction> Server; // defining the Client type
@@ -29,7 +29,7 @@ class innerActionClass{
 		motion_actions::ForwardFeedback feedback_;
 		motion_actions::ForwardResult result_;
  	
-		ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("/pwm/turn",1000);
+		ros::Publisher PWM;
 		float p,i,d;
 
 	public:
@@ -59,10 +59,6 @@ class innerActionClass{
 			ROS_INFO("pwm send to arduino %d", pwm.data);
 			//this command cancels the previous goal
 			// forwardServer_.setPreempted();
-		}
-		int mod(int a){
-			if(a<0)	return -a;
-			else return a;
 		}
 		// called when new goal recieved
 		// Start motion and finish it, if not interupted
@@ -99,11 +95,11 @@ class innerActionClass{
 			forwardOutputPWMMapping(output);
 
 			//this lower limit depends upon the bot itself, below these values of PWM thrusters will not start
-			if(mod(pwm.data) < minPWM){
-				if(mod(pwm.data < 0))
-					pwm.data = -minPWM;
+			if(mod(pwm.data) > maxPWM){
+				if(pwm.data < 0)
+					pwm.data = -maxPWM;
 				else 
-					pwm.data = minPWM;
+					pwm.data = maxPWM;
 			}
 
 			feedback_.DistanceRemaining = error;
@@ -115,7 +111,7 @@ class innerActionClass{
 			ros::spinOnce();
 			loop_rate.sleep();
 
-			if(error<5 && error >-5){//assuming that this angle is in degree
+			if(error<40 && error >-40){//assuming that this angle is in degree
 				//write something to calculate the time we will wait for and check if we are in the range of 5 degrees
 				// we can also check that if we are in this range and the angular velocity is also small then we can assume
 				// that we are stable and we can now start moving 
@@ -137,16 +133,22 @@ class innerActionClass{
 		}
 	}
 		void forwardOutputPWMMapping(float output){
-			float maxOutput=120, minOutput=-120,scale;
-			if(output > maxOutput)
-				output = maxOutput;
-			if(output < minOutput)
-				output = minOutput;
-			scale = (2*255)/(maxOutput- minOutput);
-			float temp;
+			float maxOutput=200, minOutput=-200,scale; //upper limit in terms of error ex. 200 cm of distance we will consider all distances > 100cm as 100cm
 
-			temp = output*scale;
+			scale = (maxPWM - minPWM)/(maxOutput-0);
+			float temp;
+			float bias;
+			if(output > 0)
+				bias = minPWM; //the minPWM;		
+			else
+				bias = -minPWM;
+
+			temp = output*scale + bias;
 			pwm.data = (int)temp;
+		}
+		int mod(int a){
+			if(a<0)	return -a;
+			else return a;
 		}
 		void setPID(float new_p, float new_i, float new_d) {
 			p=new_p;
@@ -175,18 +177,14 @@ void distanceCb(std_msgs::Float64 msg){
 		// ROS_INFO("New angular postion %f", msg.data);
 	}
 }
-int main(int argc, char** argv){
 
-	// Initializing the node
+int main(int argc, char** argv){
 	ros::init(argc, argv, "forward");
 
 	ros::NodeHandle n;
 	ros::Subscriber xDistance=n.subscribe<std_msgs::Float64>("xDistance",1000,&distanceCb);
 
-	// declaring a new instance of inner class, constructor gets called
-	innerActionClass forward(ros::this_node::getName());
 	ROS_INFO("Waiting for Goal");
-
 	object = new innerActionClass(ros::this_node::getName());
 
 	//register dynamic reconfig server.
