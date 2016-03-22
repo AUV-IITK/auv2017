@@ -6,7 +6,8 @@
 #include <motion_actions/SidewardAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_sideward/pidConfig.h>
-#define minPWM 120
+#define minPWM 170
+#define maxPWM 230
 typedef actionlib::SimpleActionServer<motion_actions::SidewardAction> Server; // defining the Client type
 
 float presentSidePosition=0;
@@ -92,11 +93,12 @@ class innerActionClass{
 
 			sidewardOutputPWMMapping(output);
 
-			if(mod(pwm.data) < minPWM){
-				if(mod(pwm.data < 0))
-					pwm.data = -minPWM;
+			//this lower limit depends upon the bot itself, below these values of PWM thrusters will not start
+			if(mod(pwm.data) > maxPWM){
+				if(pwm.data < 0)
+					pwm.data = -maxPWM;
 				else 
-					pwm.data = minPWM;
+					pwm.data = maxPWM;
 			}
 
 			feedback_.DistanceRemaining = error;
@@ -129,22 +131,23 @@ class innerActionClass{
 			}
 		}
 	}
+	void sidewardOutputPWMMapping(float output){
+		float maxOutput=200, minOutput=-200,scale; //upper limit in terms of error ex. 100 cm of distance we will consider all distances > 100cm as 100cm
+
+		scale = (maxPWM - minPWM)/(maxOutput-0);
+		float temp;
+		float bias;
+		if(output > 0)
+			bias = minPWM; //the minPWM;		
+		else
+			bias = -minPWM;
+
+		temp = output*scale + bias;
+		pwm.data = (int)temp;
+	}
 	int mod(int a){
 		if(a<0)	return -a;
 		else return a;
-	}
-
-	void sidewardOutputPWMMapping(float output){
-		float maxOutput=120, minOutput=-120,scale;
-		if(output > maxOutput)
-			output = maxOutput;
-		if(output < minOutput)
-			output = minOutput;
-		scale = (2*255)/(maxOutput- minOutput);
-		float temp;
-
-		temp = output*scale;
-		pwm.data = (int)temp;
 	}
 	void setPID(float new_p, float new_i, float new_d) {
 		p=new_p;
