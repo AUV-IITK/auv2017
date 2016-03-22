@@ -117,25 +117,11 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-
-
-
 add_executable(image src/image.cpp)
 target_link_libraries(image ${catkin_LIBRARIES})
 add_dependencies(image Boi_Detection_generate_messages_cpp)
 target_link_libraries(image  ${OpenCV_LIBS} )
 
-
-
-
-
-rosserial_configure_client( 
-DIRECTORY firmware
-TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
-)
-
-rosserial_add_client_target(firmware hello ALL)
-rosserial_add_client_target(firmware hello-upload)
 ## Declare a C++ library
 # add_library(Boi_Detection
 #   src/${PROJECT_NAME}/Boi_Detection.cpp
