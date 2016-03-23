@@ -6,7 +6,7 @@
 #include <motion_actions/ForwardAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_forward/pidConfig.h>
-#include <std_msgs/Float64.h>
+
 #define minPWM 200 //min pwm at which thrusters move
 #define maxPWM 240 //upper limit to control spped of bot
 using namespace std;
@@ -22,30 +22,28 @@ std_msgs::Int32 pwm; // pwm to be send to arduino
 
 // new inner class, to encapsulate the interaction with actionclient
 class innerActionClass{
-	private:
-		ros::NodeHandle nh_;
-		Server forwardServer_;
-		std::string action_name_;
-		motion_actions::ForwardFeedback feedback_;
-		motion_actions::ForwardResult result_;
- 	
-		ros::Publisher PWM;
-		float p,i,d;
+private:
+	ros::NodeHandle nh_;
+	Server forwardServer_;
+	std::string action_name_;
+	motion_actions::ForwardFeedback feedback_;
+	motion_actions::ForwardResult result_;
+	ros::Publisher PWM;
+	float p,i,d;
 
-	public:
-		//Constructor, called when new instance of class declared
-		innerActionClass(std::string name):
-			//here we are defining the server, third argument is optional
-	    	forwardServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false),
-    		action_name_(name)
-		{
-			// Add preempt callback
-			forwardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
-			// Declaring publisher for PWM and direction
-			PWM = nh_.advertise<std_msgs::Int32>("/pwm/forward",1000);
-			// Starting new Action Server
-			forwardServer_.start();
-		}
+public:
+	//Constructor, called when new instance of class declared
+	innerActionClass(std::string name):
+		//Defining the server, third argument is optional
+	   	forwardServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false),
+		action_name_(name)
+	{
+		// Add preempt callback
+		forwardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
+		PWM = nh_.advertise<std_msgs::Int32>("/pwm/forward",1000);
+		// Starting new Action Server
+		forwardServer_.start();
+	}
 
 		// default contructor
 		~innerActionClass(void){
@@ -53,16 +51,17 @@ class innerActionClass{
 
 		// callback for goal cancelled
 		// Stop the bot
-		void preemptCB(void){
-			pwm.data = 0;
-			PWM.publish(pwm);
-			ROS_INFO("pwm send to arduino %d", pwm.data);
-			//this command cancels the previous goal
-			// forwardServer_.setPreempted();
-		}
+	void preemptCB(void){
+		pwm.data = 0;
+		PWM.publish(pwm);
+		ROS_INFO("pwm send to arduino %d", pwm.data);
+		//this command cancels the previous goal
+		// forwardServer_.setPreempted();
+	}
+
 		// called when new goal recieved
 		// Start motion and finish it, if not interupted
-		void analysisCB(const motion_actions::ForwardGoalConstPtr goal){
+	void analysisCB(const motion_actions::ForwardGoalConstPtr goal){
 		ROS_INFO("Inside analysisCB");
 
 		int loopRate =10 ;
@@ -131,30 +130,38 @@ class innerActionClass{
 				break;
 			}
 		}
+
+		if(reached){
+			result_.Result = reached;
+			ROS_INFO("%s: Succeeded", action_name_.c_str());
+			// set the action state to succeeded
+			forwardServer_.setSucceeded(result_);
+		}
 	}
-		void forwardOutputPWMMapping(float output){
-			float maxOutput=200, minOutput=-200,scale; //upper limit in terms of error ex. 200 cm of distance we will consider all distances > 100cm as 100cm
+	void forwardOutputPWMMapping(float output){
+		float maxOutput=200, minOutput=-200,scale; //upper limit in terms of error ex. 200 cm of distance we will consider all distances > 100cm as 100cm
 
-			scale = (maxPWM - minPWM)/(maxOutput-0);
-			float temp;
-			float bias;
-			if(output > 0)
-				bias = minPWM; //the minPWM;		
-			else
-				bias = -minPWM;
+		scale = (maxPWM - minPWM)/(maxOutput-0);
+		float temp;
+		float bias;
+		if(output > 0)
+			bias = minPWM; //the minPWM;		
+		else
+			bias = -minPWM;
 
-			temp = output*scale + bias;
-			pwm.data = (int)temp;
-		}
-		int mod(int a){
-			if(a<0)	return -a;
-			else return a;
-		}
-		void setPID(float new_p, float new_i, float new_d) {
-			p=new_p;
-			i=new_i;
-			d=new_d;
-		}
+		temp = output*scale + bias;
+		pwm.data = (int)temp;
+	}
+	int mod(int a){
+		if(a<0)	return -a;
+		else return a;
+	}
+
+void setPID(float new_p, float new_i, float new_d) {
+		p=new_p;
+		i=new_i;
+		d=new_d;
+	}
 };
 innerActionClass* object; 
 

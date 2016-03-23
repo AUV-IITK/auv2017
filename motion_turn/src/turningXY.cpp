@@ -6,22 +6,21 @@
 #include <motion_actions/TurnAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_turn/pidConfig.h>
-#include <iostream>
 
-#define minPWM 120 //Minimum PWM at which thrusters will move
+#define minPWM 200 //min pwm at which thrusters move
+#define maxPWM 240 //upper limit to control spped of bot
 using namespace std;
+
+typedef actionlib::SimpleActionServer<motion_actions::TurnAction> Server;
 
 float presentAngularPosition=0;
 float previousAngularPosition=0;
 float finalAngularPosition, error, output;
 bool initData =false;
 
-std_msgs::Int32 pwm;
-std_msgs::Int32 dir;//that we have to send
+std_msgs::Int32 pwm; // pwm to be send to arduino
 
-typedef actionlib::SimpleActionServer<motion_actions::TurnAction> Server;
-
-
+// new inner class, to encapsulate the interaction with actionclient
 class innerActionClass{
 private:
 	ros::NodeHandle nh_;
@@ -29,40 +28,39 @@ private:
 	std::string action_name_;
 	motion_actions::TurnFeedback feedback_;
 	motion_actions::TurnResult result_;
-
-	//ROS was not working properly if these variables were declared inside function.
- 	ros::Publisher PWM=nh_.advertise<std_msgs::Int32>("/pwm/turn",1000);
+ 	ros::Publisher PWM;
 	float p,i,d;
 
 public:
+	//Constructor, called when new instance of class declared
 	innerActionClass(std::string name):
 		//Defining the server, third argument is optional
 	   	turnServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false),
     	action_name_(name)
 	{
-		p=1;i=0;d=0;
+		// Add preempt callback
 		turnServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
-
-		//this type callback can be used if we want to do the callback from some specific node
-		//sub_ = nh_.subscribe("name of the node", 1, &innerActionClass::analysisCB, this);
+		PWM = nh_.advertise<std_msgs::Int32>("/pwm/turn",1000);
+		// Starting new Action Server
 		turnServer_.start();
 	}
 
-	~innerActionClass(void){
-	}
+		// default contructor
+		~innerActionClass(void){
+		}
 
+		// callback for goal cancelled
+		// Stop the bot
 	void preemptCB(void){
-		//this command cancels the previous goal
-		turnServer_.setPreempted();
 		pwm.data=0;
 		PWM.publish(pwm);
-		ROS_INFO("%s: Preempted", action_name_.c_str());
-	}
-	int mod(int a){
-		if(a<0)	return -a;
-		else return a;
+		ROS_INFO("pwm send to arduino %d", pwm.data);
+		//this command cancels the previous goal
+		// turnServer_.setPreempted();
 	}
 
+		// called when new goal recieved
+		// Start motion and finish it, if not interupted
 	void analysisCB(const motion_actions::TurnGoalConstPtr goal){
 		ROS_INFO("Inside analysisCB");
 
@@ -99,11 +97,11 @@ public:
 			turningOutputPWMMapping(output);
 
 			//this lower limit depends upon the bot itself, below these values of PWM thrusters will not start
-			if(mod(pwm.data) < minPWM){
-				if(mod(pwm.data < 0))
-					pwm.data = -minPWM;
+			if(mod(pwm.data) > maxPWM){
+				if(pwm.data < 0)
+					pwm.data = -maxPWM;
 				else 
-					pwm.data = minPWM;
+					pwm.data = maxPWM;
 			}
 
 			feedback_.AngleRemaining = error;
@@ -144,24 +142,30 @@ public:
 		}
 	}
 	void turningOutputPWMMapping(float output){
-		float maxOutput=120, minOutput=-120,scale;
-		if(output > maxOutput)
-			output = maxOutput;
-		if(output < minOutput)
-			output = minOutput;
-		scale = (2*255)/(maxOutput- minOutput);
-		float temp;
+		float maxOutput=200, minOutput=-200,scale; //upper limit in terms of error ex. 200 cm of distance we will consider all distances > 100cm as 100cm
 
-		temp = output*scale;
+		scale = (maxPWM - minPWM)/(maxOutput-0);
+		float temp;
+		float bias;
+		if(output > 0)
+			bias = minPWM; //the minPWM;		
+		else
+			bias = -minPWM;
+
+		temp = output*scale + bias;
 		pwm.data = (int)temp;
 	}
-	void setPID(float new_p, float new_i, float new_d) {
+	int mod(int a){
+		if(a<0)	return -a;
+		else return a;
+	}
+	
+void setPID(float new_p, float new_i, float new_d) {
 		p=new_p;
 		i=new_i;
 		d=new_d;
 	}
 };
-
 innerActionClass* object; 
 
 //dynamic reconfig 
