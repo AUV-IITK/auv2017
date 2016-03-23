@@ -6,8 +6,11 @@
 #include <motion_actions/SidewardAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_sideward/pidConfig.h>
+
 #define minPWM 170
 #define maxPWM 230
+using namespace std;
+
 typedef actionlib::SimpleActionServer<motion_actions::SidewardAction> Server; // defining the Client type
 
 float presentSidePosition=0;
@@ -25,9 +28,6 @@ class innerActionClass{
 		std::string action_name_;
 		motion_actions::SidewardFeedback feedback_;
 		motion_actions::SidewardResult result_;
-		ros::Subscriber sub_;
-		float timeSpent, motionTime;
-		bool success;
 		ros::Publisher PWM;
 		float p,i,d;
 
