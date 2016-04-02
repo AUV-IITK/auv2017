@@ -9,14 +9,11 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib_msgs
   roscpp
   rospy
-  rosserial_arduino
-  rosserial_client
   std_msgs
   message_generation
+  message_runtime
 )
-find_package(
-	OpenCV
-)
+find_package(	OpenCV )
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -51,10 +48,6 @@ find_package(
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-   FILES
-   line_arduino.msg
- )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -72,7 +65,7 @@ add_action_files(
 ## Generate added messages and services with any dependencies listed here
  generate_messages(
    DEPENDENCIES
-   std_msgs actionlib_msgs actionlib
+   actionlib_msgs std_msgs
  )
 
 ###################################
@@ -88,7 +81,7 @@ add_action_files(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES lineFollowing
-   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime rosserial_arduino rosserial_client actionlib actionlib_msgs
+   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime actionlib actionlib_msgs
 #  DEPENDS system_lib
 )
 
@@ -103,28 +96,6 @@ include_directories(include
   ${catkin_INCLUDE_DIRS}
 )
 
-rosserial_generate_ros_lib(
-  PACKAGE rosserial_arduino
-  SCRIPT make_libraries.py
-)
-   
-rosserial_configure_client(
-  DIRECTORY src
-  TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
-)
-   
-rosserial_add_client_target(src hello ALL) #this hello need not be changed for anything
-rosserial_add_client_target(src hello-upload) #this hello need not be changed for anything
-
-
-add_executable(imu src/imu.cpp)
-target_link_libraries(imu ${catkin_LIBRARIES})
-add_dependencies(imu linefollowing_generate_messages_cpp)
-
-add_executable(imuTemp src/imuTemp.cpp)
-target_link_libraries(imuTemp ${catkin_LIBRARIES})
-add_dependencies(imuTemp linefollowing_generate_messages_cpp)
-
 add_executable(taskHandler src/taskHandler.cpp)
 target_link_libraries(taskHandler ${catkin_LIBRARIES})
 add_dependencies(taskHandler linefollowing_generate_messages_cpp)
@@ -133,21 +104,10 @@ add_executable(taskHandlerTest src/taskHandlerTest.cpp)
 target_link_libraries(taskHandlerTest ${catkin_LIBRARIES})
 add_dependencies(taskHandlerTest linefollowing_generate_messages_cpp)
 
-add_executable(LineOdroidROS src/LineOdroidROS.cpp)
-target_link_libraries(LineOdroidROS ${catkin_LIBRARIES})
-target_link_libraries(LineOdroidROS  ${OpenCV_LIBS} )
-add_dependencies(LineOdroidROS linefollowing_generate_messages_cpp)
-
-
 add_executable(LineNew src/LineNew.cpp)
 target_link_libraries(LineNew ${catkin_LIBRARIES})
 target_link_libraries(LineNew  ${OpenCV_LIBS} )
 add_dependencies(LineNew linefollowing_generate_messages_cpp)
-
-#add_executable(kalman src/kalman.cpp)
-#target_link_libraries(kalman ${catkin_LIBRARIES})
-#target_link_libraries(kalman  ${OpenCV_LIBS} )
-#add_dependencies(kalman linefollowing_generate_messages_cpp)
 
 ## Declare a cpp library
 # add_library(lineFollowing
