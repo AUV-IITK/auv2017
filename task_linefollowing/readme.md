@@ -1,0 +1,47 @@
+**8 DEC 2015**
+
+**Include files for imu.cpp & imuTemp.cpp**
+
+*DCM,  math, navstik*
+
+**hello.cpp**
+
+arduino ros code
+
+**imuTemp.cpp**
+
+publishes data to topic /yaw which is subscribed by control nodes
+calculates yaw directly from magnetometer
+
+**imu.cpp**
+
+publishes data to topic /yaw which is subscribed by control nodes
+calculates yaw by using data from magnetometer, gyroscope and accelerometer
+
+**LineOdroidROS.cpp**
+
+publishes data to topic /lineAngle  which is subscribed by control nodes
+detects lines and gives output even if line is not detected in a frame
+USAGE :
+first argument : For Display : 1 , otherwise 0
+second argument : Capture index : 0/1 (internal/external cam)
+
+**LineNew.cpp**
+
+publishes data to topic /lineAngle  which is subscribed by control nodes
+gives output only when the line is detected in a frame
+USAGE :
+first argument : For Display : 1 , otherwise 0
+second argument : Capture index : 0/1 (internal/external cam)
+
+**Parameter files for LineOdroidROS.cpp and LineNew.cpp**
+
+hsv.txt -> gives the hsv values 
+params.txt -> contains the params for image smoothing and hough line transforms
+
+
+*FUTURE WORK*
+
+Hough Pruning can be applied after Hough Line Transform.
+
+
