@@ -1,0 +1,5 @@
+<launch>
+  <node name="buoy_detection" pkg="task_buoy" type="buoy_detection" respawn="true" />
+  <node name="buoyTest" pkg="task_buoy" type="buoyTest" respawn="true" />
+  <node name="buoy" pkg="task_buoy" type="buoy" respawn="true" />
+</launch>
