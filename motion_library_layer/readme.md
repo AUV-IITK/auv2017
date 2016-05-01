@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/AUV-IITK/motion_library.svg?branch=master)](https://travis-ci.org/AUV-IITK/motion_library)
-
 # Build Instruction
 ```sh
 catkin_make clean
@@ -14,7 +12,3 @@ The stack contains
   - `motion_sideward` sway motion
   - `motion_turn` rotating in horizontal plain
   - `motion_upward` vertical motion
-
-# Rosgraph
-Motion library running along with rosserial_arduino_node.
-![rosgraph](/images/motionLibraryWithArduino.png)
