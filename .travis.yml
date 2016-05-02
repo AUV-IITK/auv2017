@@ -22,7 +22,7 @@
 #
 # See the README.md for more information.
 #
-# Author: Felix Duvallet <felixd@gmail.com>
+# Author: Shikher Verma <root@shikherverma.com>
 
 # NOTE: The build lifecycle on Travis.ci is something like this:
 #    before_install
@@ -63,7 +63,9 @@ before_install:
   - sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
-  - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-catkin
+  - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-catkin 
+  - sudo apt-get install -y ros-$ROS_DISTRO-desktop-full ros-$ROS_DISTRO-vision-opencv libopencv-dev ros-$ROS_DISTRO-rosserial-arduino ros-$ROS_DISTRO-rosserial
+  - sudo apt-get install -y ros-$ROS_DISTRO-convex-decomposition ros-$ROS_DISTRO-pr2-description
   - source /opt/ros/$ROS_DISTRO/setup.bash
   # Prepare rosdep to install dependencies.
   - sudo rosdep init
@@ -98,9 +100,15 @@ before_script:
 # Compile and test. If the CATKIN_OPTIONS file exists, use it as an argument to
 # catkin_make.
 script:
+  # installing rosserial arduino
+  - cd ~
+  - mkdir -p sketchbook/libraries
+  - cd sketchbook/libraries
+  - rm -rf ros_lib
+  - rosrun rosserial_arduino make_libraries.py .
   - cd ~/catkin_ws
-  - catkin_make --pkg motion_actions
-  - catkin_make $( [ -f $CATKIN_OPTIONS ] && cat $CATKIN_OPTIONS )
+  - echo src/auv/setup.sh
+  - src/auv/setup.sh
   # Testing: Use both run_tests (to see the output) and test (to error out).
   - catkin_make run_tests  # This always returns 0, but looks pretty.
   - catkin_make test  # This will return non-zero if a test fails.
