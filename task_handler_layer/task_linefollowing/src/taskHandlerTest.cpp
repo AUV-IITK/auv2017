@@ -1,15 +1,15 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
-#include <linefollowing/AlignAction.h>
-#include <linefollowing/AlignActionFeedback.h>
-#include <linefollowing/AlignActionResult.h>
+#include <task_commons/alignAction.h>
+#include <task_commons/alignActionFeedback.h>
+#include <task_commons/alignActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
-typedef actionlib::SimpleActionClient<linefollowing::AlignAction> Client;
+typedef actionlib::SimpleActionClient<task_commons::alignAction> Client;
 
 Client *ptrClient;
-linefollowing::AlignGoal goal;
+task_commons::alignGoal goal;
 
 void spinThread(){
 	Client &temp = *ptrClient;
@@ -26,26 +26,26 @@ void spinThread(){
 
 //never ever put the argument of the callback function anything other then the specified
 //void forwardCb(const motionlibrary::ForwardActionFeedbackConstPtr msg){
-void AlignCb(linefollowing::AlignActionFeedback msg){
+void alignCb(task_commons::alignActionFeedback msg){
 	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.AngleRemaining);
 }
 
 int main(int argc, char** argv){
 
-	ros::init(argc, argv, "testAlign");
+	ros::init(argc, argv, "testalign");
 
 	ros::NodeHandle nh;
-	ros::Subscriber sub_ = nh.subscribe<linefollowing::AlignActionFeedback>("/Align/feedback",1000,&AlignCb);
+	ros::Subscriber sub_ = nh.subscribe<task_commons::alignActionFeedback>("/align/feedback",1000,&alignCb);
 
-	Client AlignTestClient("Align");
-	ptrClient = &AlignTestClient;
+	Client alignTestClient("align");
+	ptrClient = &alignTestClient;
 
 	ROS_INFO("Waiting for action server to start.");
-	AlignTestClient.waitForServer();
+	alignTestClient.waitForServer();
 	goal.StartDetection = true;
 	ROS_INFO("Action server started, sending goal.");
 	// Send Goal
-	AlignTestClient.sendGoal(goal);
+	alignTestClient.sendGoal(goal);
 	ROS_INFO("Goal Send");
 
 

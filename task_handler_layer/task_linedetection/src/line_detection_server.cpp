@@ -5,27 +5,26 @@
 #include <std_msgs/Bool.h>
 #include <actionlib/server/simple_action_server.h>
 #include <actionlib/client/simple_action_client.h>
-#include <linedetection/orangeAction.h>
+#include <task_commons/orangeAction.h>
+#include <motion_actions/ForwardAction.h>
+#include <motion_actions/ForwardActionFeedback.h>
 
-#include <motionlibrary/ForwardAction.h>
-#include <motionlibrary/ForwardActionFeedback.h>
-
-typedef actionlib::SimpleActionServer<linedetection::orangeAction> Server;
-typedef actionlib::SimpleActionClient<motionlibrary::ForwardAction> Client;
+typedef actionlib::SimpleActionServer<task_commons::orangeAction> Server;
+typedef actionlib::SimpleActionClient<motion_actions::ForwardAction> Client;
 
 class LineDetectionInnerClass{
 	private:
 		ros::NodeHandle nh_;
 		Server lineDetectionServer_;
 		std::string action_name_;
-		linedetection::orangeFeedback feedback_;
-		linedetection::orangeResult result_;
+		task_commons::orangeFeedback feedback_;
+		task_commons::orangeResult result_;
 		ros::Subscriber sub_;
 		bool success;
 		ros::Publisher off_pub_;
 		bool isOrange;
 		Client ForwardClient_;
-		motionlibrary::ForwardGoal forwardgoal;
+		motion_actions::ForwardGoal forwardgoal;
 	public:
 		LineDetectionInnerClass(std::string name, std::string node):
 			//here we are defining the server, third argument is optional
@@ -55,7 +54,7 @@ class LineDetectionInnerClass{
 			ROS_INFO("Called when preempted from the client");
 		}
 
-		void analysisCB(const linedetection::orangeGoalConstPtr goal){
+		void analysisCB(const task_commons::orangeGoalConstPtr goal){
 			ROS_INFO("Inside analysisCB");
 			success = true;
 			isOrange=false;
@@ -69,7 +68,7 @@ class LineDetectionInnerClass{
 
 			boost::thread vision_thread(&LineDetectionInnerClass::startIP, this);	
 			// start moving forward.
-			forwardgoal.MotionTime = 100;
+			forwardgoal.Goal = 100;
 			ForwardClient_.sendGoal(forwardgoal);
 			while(goal->order){
 				if (lineDetectionServer_.isPreemptRequested() || !ros::ok())

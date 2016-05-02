@@ -34,6 +34,7 @@ find_package( OpenCV REQUIRED )
 ## * Let MSG_DEP_SET be the set of packages whose message types you use in
 ##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
 ## * In the file package.xml:
+##   * add a build_depend tag for "message_generation"
 ##   * add a build_depend and a run_depend tag for each package in MSG_DEP_SET
 ##   * If MSG_DEP_SET isn't empty the following dependencies might have been
 ##     pulled in transitively but can be declared for certainty nonetheless:
@@ -63,15 +64,10 @@ find_package( OpenCV REQUIRED )
 #   Service2.srv
 # )
 
-add_action_files(
-   DIRECTORY action
-   FILES orange.action
-)
-
-generate_messages(
-   DEPENDENCIES
-   actionlib_msgs   std_msgs
-)
+#generate_messages(
+#  DEPENDENCIES
+# std_msgs
+#)
 
 ## To declare and build dynamic reconfigure parameters within this
 ## package, follow these steps:
@@ -98,6 +94,7 @@ generate_dynamic_reconfigure_options(
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES linedetection
@@ -115,8 +112,8 @@ catkin_package(
 include_directories(include
   ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
-include_directories(${OpenCV_INCLUDE_DIRS})
 ## Declare a cpp library
 # add_library(linedetection
 #   src/${PROJECT_NAME}/linedetection.cpp
@@ -131,14 +128,13 @@ add_executable(line_detection_client src/line_detection_client.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(linedetection_node linedetection_generate_messages_cpp)
-add_dependencies(orangedetection beginner_tutorials_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(linedetection_node
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(orangedetection ${catkin_LIBRARIES})
-target_link_libraries(orangedetection ${OpenCV_LIBS} )
+target_link_libraries(orangedetection ${OpenCV_LIBS})
 target_link_libraries(line_detection_server ${catkin_LIBRARIES})
 target_link_libraries(line_detection_client ${catkin_LIBRARIES})
 #############

@@ -7,46 +7,46 @@
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
-#include <linefollowing/AlignAction.h>
+#include <task_commons/alignAction.h>
 
-#include <motionlibrary/TurnAction.h>
-#include <motionlibrary/TurnActionFeedback.h>
+#include <motion_actions/TurnAction.h>
+#include <motion_actions/TurnActionFeedback.h>
 
-typedef actionlib::SimpleActionServer<linefollowing::AlignAction > Server;
-typedef actionlib::SimpleActionClient<motionlibrary::TurnAction> Client;
+typedef actionlib::SimpleActionServer<task_commons::alignAction> Server;
+typedef actionlib::SimpleActionClient<motion_actions::TurnAction> Client;
 
-class AlignAction{
+class alignAction{
 	private:
 		ros::NodeHandle nh_;
-		Server AlignServer_;
+		Server alignServer_;
 		int loopRate;
 
 		std::string action_name_;
 		ros::Subscriber subIP_, subTurn_;
 		ros::Publisher off_pub_;
 
-		linefollowing::AlignResult result_;
-		linefollowing::AlignFeedback feedback_;
+		task_commons::alignResult result_;
+		task_commons::alignFeedback feedback_;
 
 		Client TurnClient_;
-		motionlibrary::TurnGoal goal;
+		motion_actions::TurnGoal goal;
 
 		float lineAngle,feedbackFromTurn;
 		bool intiData,success,turnActive,feedbackTurn,firstData;
 
 	public:
-		AlignAction(std::string name, std::string node):
-			AlignServer_(nh_,name,boost::bind(&AlignAction::analysisCB, this, _1) ,false), action_name_(name),
+		alignAction(std::string name, std::string node):
+			alignServer_(nh_,name,boost::bind(&alignAction::analysisCB, this, _1) ,false), action_name_(name),
 			TurnClient_(node)
 		{
-			AlignServer_.registerPreemptCallback(boost::bind(&AlignAction::preemptCB, this));
-			subIP_ = nh_.subscribe("lineAngle", 100, &AlignAction::lineCB, this);
-			subTurn_ = nh_.subscribe("/TurnXY/feedback",100,&AlignAction::turnCB, this);
+			alignServer_.registerPreemptCallback(boost::bind(&alignAction::preemptCB, this));
+			subIP_ = nh_.subscribe("lineAngle", 100, &alignAction::lineCB, this);
+			subTurn_ = nh_.subscribe("/TurnXY/feedback",100,&alignAction::turnCB, this);
 			off_pub_ = nh_.advertise<std_msgs::Bool>("lineoff",1000);
-			AlignServer_.start();
+			alignServer_.start();
 		}
 
-		~AlignAction(void){
+		~alignAction(void){
 		}
 
 		float modulus(float a, float b){
@@ -85,19 +85,19 @@ class AlignAction{
 				turnActive = false;
 			}
 			ROS_INFO("Turn Goal Cancelled");
-			AlignServer_.setPreempted();
+			alignServer_.setPreempted();
 		}
 
-		void turnCB(motionlibrary::TurnActionFeedback msg){
+		void turnCB(motion_actions::TurnActionFeedback msg){
 			ROS_INFO("feedback recieved %fdeg remaining ",msg.feedback.AngleRemaining);
 			feedbackFromTurn = msg.feedback.AngleRemaining;
 			feedback_.AngleRemaining = feedbackFromTurn;
-			AlignServer_.publishFeedback(feedback_);
+			alignServer_.publishFeedback(feedback_);
 			feedbackTurn = true;
 		}
 
 
-		void analysisCB(const linefollowing::AlignGoalConstPtr &target){
+		void analysisCB(const task_commons::alignGoalConstPtr &target){
 			ROS_INFO("Inside analysisCB");
 			intiData = false;
 			success =false;
@@ -108,18 +108,18 @@ class AlignAction{
 			loopRate =10;
 			ros::Rate loop_rate(loopRate);
 
-			if (!AlignServer_.isActive()){
-				ROS_INFO("AlignServer_ is not active");
+			if (!alignServer_.isActive()){
+				ROS_INFO("alignServer_ is not active");
 				return;
 			}
 
-			boost::thread vision_thread(&AlignAction::startIP, this);	
+			boost::thread vision_thread(&alignAction::startIP, this);	
 			ROS_INFO("Waiting for Turn server to start.");
 			TurnClient_.waitForServer();
 			turnActive = true;
 			ROS_INFO("Turn server started");
 
-			// boost::thread spin_thread(&AlignAction::spinThread, this);
+			// boost::thread spin_thread(&alignAction::spinThread, this);
 			ROS_INFO("waiting for data from edge detecting node");
 			while(!intiData){
 				loop_rate.sleep();
@@ -136,7 +136,7 @@ class AlignAction{
 				ROS_INFO("%s: Succeeded", action_name_.c_str());
 				// set the action state to succeeded
 	
-				AlignServer_.setSucceeded(result_);
+				alignServer_.setSucceeded(result_);
 			}
 		}
 
@@ -146,7 +146,7 @@ class AlignAction{
 
 		void startIP()
 		{
-			std::system("rosrun linefollowing LineNew 1 0");
+			std::system("rosrun task_commons LineNew 1 0");
 		}
 
 		void stopIP()
@@ -158,11 +158,11 @@ class AlignAction{
 };
 
 int main(int argc, char** argv){
-	ros::init(argc, argv, "Align");
+	ros::init(argc, argv, "align");
 	ros::NodeHandle n;
 
 	// Client Turn("TurnXY");
-	AlignAction Align(ros::this_node::getName(),"TurnXY");
+	alignAction align(ros::this_node::getName(),"TurnXY");
 	ROS_INFO("Waiting for master command");
 
 	ros::spin();

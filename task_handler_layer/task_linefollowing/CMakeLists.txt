@@ -5,15 +5,17 @@ project(linefollowing)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  actionlib
-  actionlib_msgs
+  dynamic_reconfigure
   roscpp
   rospy
   std_msgs
+  sensor_msgs
+  actionlib
+  actionlib_msgs
   message_generation
-  message_runtime
 )
-find_package(	OpenCV )
+find_package( OpenCV REQUIRED )
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -48,6 +50,11 @@ find_package(	OpenCV )
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
+# add_message_files(
+#   FILES
+#   Message1.msg
+#   Message2.msg
+# )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -56,17 +63,26 @@ find_package(	OpenCV )
 #   Service2.srv
 # )
 
-## Generate actions in the 'action' folder
-add_action_files(
-  DIRECTORY action
-  FILES Align.action
-)
+#generate_messages(
+#  DEPENDENCIES
+# std_msgs
+#)
 
-## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-   actionlib_msgs std_msgs
- )
+## To declare and build dynamic reconfigure parameters within this
+## package, follow these steps:
+## * In the file package.xml:
+##   * add a build_depend and a run_depend tag for "dynamic_reconfigure"
+## * In this file (CMakeLists.txt):
+##   * add "dynamic_reconfigure" to
+##     find_package(catkin REQUIRED COMPONENTS ...)
+##   * uncomment the "generate_dynamic_reconfigure_options" section below
+##     and list every .cfg file to be processed
+
+## Generate dynamic reconfigure parameters in the 'cfg' folder
+generate_dynamic_reconfigure_options(
+ cfg/orange.cfg
+)
+#option for reconfig cfg
 
 ###################################
 ## catkin specific configuration ##
@@ -81,7 +97,7 @@ add_action_files(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES lineFollowing
-   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime actionlib actionlib_msgs
+   CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 
@@ -93,22 +109,10 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(include
+  ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
-
-add_executable(taskHandler src/taskHandler.cpp)
-target_link_libraries(taskHandler ${catkin_LIBRARIES})
-add_dependencies(taskHandler linefollowing_generate_messages_cpp)
-
-add_executable(taskHandlerTest src/taskHandlerTest.cpp)
-target_link_libraries(taskHandlerTest ${catkin_LIBRARIES})
-add_dependencies(taskHandlerTest linefollowing_generate_messages_cpp)
-
-add_executable(LineNew src/LineNew.cpp)
-target_link_libraries(LineNew ${catkin_LIBRARIES})
-target_link_libraries(LineNew  ${OpenCV_LIBS} )
-add_dependencies(LineNew linefollowing_generate_messages_cpp)
-
 ## Declare a cpp library
 # add_library(lineFollowing
 #   src/${PROJECT_NAME}/lineFollowing.cpp
@@ -116,6 +120,9 @@ add_dependencies(LineNew linefollowing_generate_messages_cpp)
 
 ## Declare a cpp executable
 # add_executable(lineFollowing_node src/lineFollowing_node.cpp)
+add_executable(LineNew src/LineNew.cpp)
+add_executable(taskHandler src/taskHandler.cpp)
+add_executable(taskHandlerTest src/taskHandlerTest.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -125,7 +132,10 @@ add_dependencies(LineNew linefollowing_generate_messages_cpp)
 # target_link_libraries(lineFollowing_node
 #   ${catkin_LIBRARIES}
 # )
-
+target_link_libraries(LineNew ${catkin_LIBRARIES})
+target_link_libraries(LineNew  ${OpenCV_LIBS})
+target_link_libraries(taskHandler ${catkin_LIBRARIES})
+target_link_libraries(taskHandlerTest ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(Boi_Detection)
+project(task_buoy)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -9,8 +9,6 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
-  rosserial_arduino
-  rosserial_client
 )
 
 find_package( OpenCV REQUIRED )
@@ -60,10 +58,10 @@ find_package( OpenCV REQUIRED )
 # )
 
 ## Generate added messages and services with any dependencies listed here
- generate_messages(
-   DEPENDENCIES
-  std_msgs
- )
+ # generate_messages(
+ #   DEPENDENCIES
+ #  std_msgs
+ # )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -96,16 +94,13 @@ find_package( OpenCV REQUIRED )
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 # INCLUDE_DIRS include
-#  LIBRARIES Boi_Detection
+#  LIBRARIES task_buoy
 
 CATKIN_DEPENDS roscpp rospy std_msgs
 
 # DEPENDS system_lib
 )
-rosserial_generate_ros_lib(
-PACKAGE rosserial_arduino
-SCRIPT make_libraries.py
-)
+
 ###########
 ## Build ##
 ###########
@@ -119,28 +114,27 @@ include_directories(
 
 add_executable(image src/image.cpp)
 target_link_libraries(image ${catkin_LIBRARIES})
-add_dependencies(image Boi_Detection_generate_messages_cpp)
 target_link_libraries(image  ${OpenCV_LIBS} )
 
 ## Declare a C++ library
-# add_library(Boi_Detection
-#   src/${PROJECT_NAME}/Boi_Detection.cpp
+# add_library(task_buoy
+#   src/${PROJECT_NAME}/task_buoy.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(Boi_Detection ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(task_buoy ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(Boi_Detection_node src/Boi_Detection_node.cpp)
+# add_executable(task_buoy_node src/task_buoy_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(Boi_Detection_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(task_buoy_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(Boi_Detection_node
+# target_link_libraries(task_buoy_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -159,7 +153,7 @@ target_link_libraries(image  ${OpenCV_LIBS} )
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS Boi_Detection Boi_Detection_node
+# install(TARGETS task_buoy task_buoy_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -184,7 +178,7 @@ target_link_libraries(image  ${OpenCV_LIBS} )
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_Boi_Detection.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_task_buoy.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

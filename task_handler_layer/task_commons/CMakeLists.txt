@@ -12,8 +12,6 @@ find_package(catkin REQUIRED COMPONENTS
   message_runtime
   roscpp
   rospy
-  rosserial_arduino
-  rosserial_client
   std_msgs
 )
 
@@ -68,7 +66,9 @@ find_package(catkin REQUIRED COMPONENTS
 add_action_files(
   DIRECTORY action
   FILES
-    Buoy.action
+  align.action
+  buoy.action
+  orange.action
 )
 
 ## Generate added messages and services with any dependencies listed here

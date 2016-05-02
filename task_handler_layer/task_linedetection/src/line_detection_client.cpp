@@ -1,15 +1,15 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
-#include <linedetection/orangeAction.h>
-#include <linedetection/orangeActionFeedback.h>
-#include <linedetection/orangeActionResult.h>
+#include <task_commons/orangeAction.h>
+#include <task_commons/orangeActionFeedback.h>
+#include <task_commons/orangeActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
-typedef actionlib::SimpleActionClient<linedetection::orangeAction> Client;
+typedef actionlib::SimpleActionClient<task_commons::orangeAction> Client;
 
 Client *chutiya;
-linedetection::orangeGoal goal;
+task_commons::orangeGoal goal;
 
 bool success=false;
 
@@ -26,7 +26,7 @@ void spinThread(){
 }
 
 //never ever put the argument of the callback function anything other then the specified
-void forwardCb(linedetection::orangeActionFeedback msg){
+void forwardCb(task_commons::orangeActionFeedback msg){
 	ROS_INFO("feedback recieved %d",msg.feedback.nosignificance);
 }
 
@@ -36,7 +36,7 @@ int main(int argc, char** argv){
 	
 	ros::NodeHandle nh;
 	//here linedetectionserver is the name of the node of the actionserver.
-	ros::Subscriber sub_ = nh.subscribe<linedetection::orangeActionFeedback>("/linedetectionserver/feedback",1000,&forwardCb);
+	ros::Subscriber sub_ = nh.subscribe<task_commons::orangeActionFeedback>("/linedetectionserver/feedback",1000,&forwardCb);
 
 	Client testClient("linedetectionserver");
 	chutiya = &testClient;

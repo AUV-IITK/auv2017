@@ -1,4 +1,0 @@
-1.put the package in workspace
-2.make sure every thing including rosserial,ROS,OpenCV is installed
-3.install minicom
-4.if problem with arduino node then change the permissions of python scripts
