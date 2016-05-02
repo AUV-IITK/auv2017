@@ -32,3 +32,7 @@ config.mk
 .build-version
 .rospack_cache
 *.tar.gz
+# ignore videos and ros bag files to keep repo small
+*.avi
+*.mp4
+*.bag
