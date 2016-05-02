@@ -17,4 +17,8 @@ catkin_make --pkg task_buoy &&
 catkin_make --pkg linedetection &&
 catkin_make --pkg linefollowing &&
 # build master layer
-catkin_make --pkg the_master )
+catkin_make --pkg the_master $$
+# build hardware layer
+catkin_make --pkg hardware_arduino &&
+catkin_make --pkg hardware_camera &&
+catkin_make --pkg hardware_imu )
