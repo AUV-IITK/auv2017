@@ -12,8 +12,6 @@ find_package(catkin REQUIRED COMPONENTS
   message_runtime
   roscpp
   rospy
-  rosserial_arduino
-  rosserial_client
   std_msgs
 )
 
