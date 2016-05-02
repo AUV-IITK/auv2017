@@ -5,11 +5,12 @@ project(the_master)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  actionlib
-  actionlib_msgs
+  dynamic_reconfigure
   roscpp
   rospy
   std_msgs
+  task_commons
+  motion_actions
 )
 
 ## System dependencies are found with CMake's conventions
@@ -87,10 +88,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
+generate_dynamic_reconfigure_options(
+ cfg/dynamic_reconfigure.cfg
+)
+#option for reconfig cfg
 
 ###################################
 ## catkin specific configuration ##
@@ -101,10 +102,11 @@ find_package(catkin REQUIRED COMPONENTS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES the_master
-#  CATKIN_DEPENDS actionlib actionlib_msgs roscpp rospy std_msgs
+   CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 
@@ -115,17 +117,16 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
+include_directories(include
+  ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
   ${catkin_INCLUDE_DIRS}
 )
 
 add_executable(master src/master.cpp)
 target_link_libraries(master ${catkin_LIBRARIES})
-add_dependencies(master linefollowing_generate_messages_cpp)
 
 add_executable(masterAlternate src/masterAlternate.cpp)
 target_link_libraries(masterAlternate ${catkin_LIBRARIES})
-add_dependencies(masterAlternate linefollowing_generate_messages_cpp)
 ## Declare a C++ library
 # add_library(the_master
 #   src/${PROJECT_NAME}/the_master.cpp
