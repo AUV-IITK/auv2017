@@ -15,8 +15,12 @@
 #include <opencv/highgui.h>
 #include <ctime>
 
-using namespace cv;
-using namespace std;
+using cv::Mat;
+using cv::waitKey;
+using cv::Scalar;
+using cv::Size;
+using cv::VideoCapture;
+using std::cout;
 
 int percentage = 20;  // used for how much percent of the screen should be orange
                       // before deciding that a line is below. Used in
@@ -44,7 +48,7 @@ int detect(Mat image)
   {
     cout << "Could not open or find the image" << std::endl;
     return -1;
-    // TODO : for now I am resetting the video but later we need to handle this
+    // TODO(shikherverma) : for now I am resetting the video but later we need to handle this
     // camera not available error properly
   }
   else

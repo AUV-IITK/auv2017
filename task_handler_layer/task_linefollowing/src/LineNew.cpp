@@ -6,9 +6,26 @@
 #include "std_msgs/Float64.h"
 #include "std_msgs/Bool.h"
 #include <fstream>
+#include <vector>
 
-using namespace cv;
-using namespace std;
+using cv::Mat;
+using cv::split;
+using cv::Size;
+using cv::Scalar;
+using cv::normalize;
+using cv::Point;
+using cv::VideoCapture;
+using cv::NORM_MINMAX;
+using cv::MORPH_ELLIPSE;
+using cv::COLOR_BGR2HSV;
+using cv::destroyAllWindows;
+using cv::getStructuringElement;
+using cv::Vec4i;
+using cv::namedWindow;
+using std::vector;
+using std::endl;
+using std::cout;
+
 
 bool stop = false;
 
@@ -159,7 +176,7 @@ void callback(int, void *)
   {
     Vec4i l = lines[i];
     line(imgLines, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 255, 0), 1, CV_AA);
-    angles[i] = atan(double(l[2] - l[0]) / (l[1] - l[3]));
+    angles[i] = atan(static_cast<double>(l[2] - l[0]) / (l[1] - l[3]));
     cout << angles[i] << " ";
   }
   cout << endl;
@@ -246,13 +263,11 @@ int main(int argc, char **argv)
   {
     std_msgs::Float64 msg;
 
-    /*///////////////////////////////////
-
+    /*
     msg.data never takes positive 90
     when the angle is 90 it will show -90
     -------------TO BE CORRECTED-------------
-
-    */  //////////////////////////////////
+    */
     msg.data = -finalAngle * (180 / 3.14);
 
     // cout<<lineCount<<endl;

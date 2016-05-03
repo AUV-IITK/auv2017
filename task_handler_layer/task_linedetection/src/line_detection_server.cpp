@@ -9,7 +9,7 @@
 #include <task_commons/orangeAction.h>
 #include <motion_commons/ForwardAction.h>
 #include <motion_commons/ForwardActionFeedback.h>
-
+#include <string>
 typedef actionlib::SimpleActionServer<task_commons::orangeAction> Server;
 typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> Client;
 
