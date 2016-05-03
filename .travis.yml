@@ -2,9 +2,8 @@
 # any ROS package.
 #
 # This installs ROS on a clean Travis-CI virtual machine, creates a ROS
-# workspace, resolves all listed dependencies, and sets environment variables
-# (setup.bash). Then, it compiles the entire ROS workspace (ensuring there are
-# no compilation errors), and runs all the tests. If any of the compilation/test
+# workspace, resolves all dependencies, and builds the project (build.sh)
+# ensuring there are no compilation errors, and runs all the tests. If any of the compilation/test
 # phases fail, the build is marked as a failure.
 #
 # We handle two types of package dependencies:
@@ -106,9 +105,9 @@ script:
   - cd sketchbook/libraries
   - rm -rf ros_lib
   - rosrun rosserial_arduino make_libraries.py .
+  # compile all pkgs
   - cd ~/catkin_ws
-  - echo src/auv/setup.sh
-  - src/auv/setup.sh
+  - src/auv/build.sh
   # Testing: Use both run_tests (to see the output) and test (to error out).
   - catkin_make run_tests  # This always returns 0, but looks pretty.
   - catkin_make test  # This will return non-zero if a test fails.

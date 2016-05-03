@@ -1,24 +1,39 @@
 #!/bin/bash
-# change dir to workspace
-(cd ~/catkin_ws &&
-# cleaning catkin workspace
-catkin_make clean &&
-# build action lib header files
-catkin_make --pkg motion_actions &&
-catkin_make --pkg task_commons &&
-# building rest of the pkgs
-# motion library
-catkin_make --pkg motion_forward &&
-catkin_make --pkg motion_sideward &&
-catkin_make --pkg motion_turn &&
-catkin_make --pkg motion_upward &&
-# task handlers
-catkin_make --pkg task_buoy &&
-catkin_make --pkg linedetection &&
-catkin_make --pkg linefollowing &&
-# build master layer
-catkin_make --pkg the_master $$
-# build hardware layer
-catkin_make --pkg hardware_arduino &&
-catkin_make --pkg hardware_camera &&
-catkin_make --pkg hardware_imu )
+#
+# This script downloads and installs all the dependencies of packages in auv repo.
+#
+ROS_DISTRO=$'kinetic'
+
+STR=$'This script does not install ros
+Please refer to https://github.com/AUV-IITK/AUVWiki/wiki for recommended version of ros'
+echo "$STR"
+
+echo "installing required packages"
+sudo apt-get update
+sudo apt-get install -y python-catkin-pkg python-rosdep ros-$ROS_DISTRO-catkin
+source /opt/ros/$ROS_DISTRO/setup.bash
+# Prepare rosdep to install dependencies.
+rosdep update
+
+echo "Installing dependencies"
+sudo apt-get install -y \
+    ros-$ROS_DISTRO-vision-opencv \
+    libopencv-dev \
+    ros-$ROS_DISTRO-rosserial-arduino \
+    ros-$ROS_DISTRO-rosserial \
+    ros-$ROS_DISTRO-convex-decomposition \
+    ros-$ROS_DISTRO-pr2-description \
+    ros-$ROS_DISTRO-actionlib \
+    ros-$ROS_DISTRO-dynamic-reconfigure \
+    ros-$ROS_DISTRO-image-transport
+source /opt/ros/$ROS_DISTRO/setup.bash
+# package depdencies: install using rosdep.
+cd ~/catkin_ws
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+
+# setup rosserial arduino
+echo "setting up rosserial_arduino"
+mkdir -p ~/sketchbook/libraries
+cd ~/sketchbook/libraries
+rm -rf ros_lib
+rosrun rosserial_arduino make_libraries.py .
