@@ -15,7 +15,8 @@
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 typedef actionlib::SimpleActionClient<task_commons::orangeAction> orange;
 typedef actionlib::SimpleActionClient<task_commons::alignAction> align;
