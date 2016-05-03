@@ -107,7 +107,7 @@ script:
   - rosrun rosserial_arduino make_libraries.py .
   # compile all pkgs
   - cd ~/catkin_ws
-  - src/auv/build.sh
+  - src/auv/utils/build.sh
   # Testing: Use both run_tests (to see the output) and test (to error out).
   - catkin_make run_tests  # This always returns 0, but looks pretty.
   - catkin_make test  # This will return non-zero if a test fails.
