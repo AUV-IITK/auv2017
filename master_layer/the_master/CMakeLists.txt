@@ -10,7 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   task_commons
-  motion_actions
+  motion_commons
 )
 
 ## System dependencies are found with CMake's conventions

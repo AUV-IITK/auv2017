@@ -6,11 +6,11 @@
 #include <actionlib/server/simple_action_server.h>
 #include <actionlib/client/simple_action_client.h>
 #include <task_commons/orangeAction.h>
-#include <motion_actions/ForwardAction.h>
-#include <motion_actions/ForwardActionFeedback.h>
+#include <motion_commons/ForwardAction.h>
+#include <motion_commons/ForwardActionFeedback.h>
 
 typedef actionlib::SimpleActionServer<task_commons::orangeAction> Server;
-typedef actionlib::SimpleActionClient<motion_actions::ForwardAction> Client;
+typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> Client;
 
 class LineDetectionInnerClass{
 	private:
@@ -24,7 +24,7 @@ class LineDetectionInnerClass{
 		ros::Publisher off_pub_;
 		bool isOrange;
 		Client ForwardClient_;
-		motion_actions::ForwardGoal forwardgoal;
+		motion_commons::ForwardGoal forwardgoal;
 	public:
 		LineDetectionInnerClass(std::string name, std::string node):
 			//here we are defining the server, third argument is optional

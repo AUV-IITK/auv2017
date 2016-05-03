@@ -10,7 +10,7 @@
 # cleaning catkin workspace
 catkin_make clean &&
 # build action lib header files
-catkin_make --pkg motion_actions &&
+catkin_make --pkg motion_commons &&
 catkin_make --pkg task_commons &&
 # building rest of the pkgs
 # motion library

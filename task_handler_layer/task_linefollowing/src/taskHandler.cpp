@@ -9,11 +9,11 @@
 
 #include <task_commons/alignAction.h>
 
-#include <motion_actions/TurnAction.h>
-#include <motion_actions/TurnActionFeedback.h>
+#include <motion_commons/TurnAction.h>
+#include <motion_commons/TurnActionFeedback.h>
 
 typedef actionlib::SimpleActionServer<task_commons::alignAction> Server;
-typedef actionlib::SimpleActionClient<motion_actions::TurnAction> Client;
+typedef actionlib::SimpleActionClient<motion_commons::TurnAction> Client;
 
 class alignAction{
 	private:
@@ -29,7 +29,7 @@ class alignAction{
 		task_commons::alignFeedback feedback_;
 
 		Client TurnClient_;
-		motion_actions::TurnGoal goal;
+		motion_commons::TurnGoal goal;
 
 		float lineAngle,feedbackFromTurn;
 		bool intiData,success,turnActive,feedbackTurn,firstData;
@@ -88,7 +88,7 @@ class alignAction{
 			alignServer_.setPreempted();
 		}
 
-		void turnCB(motion_actions::TurnActionFeedback msg){
+		void turnCB(motion_commons::TurnActionFeedback msg){
 			ROS_INFO("feedback recieved %fdeg remaining ",msg.feedback.AngleRemaining);
 			feedbackFromTurn = msg.feedback.AngleRemaining;
 			feedback_.AngleRemaining = feedbackFromTurn;

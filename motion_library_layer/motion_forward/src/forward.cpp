@@ -3,7 +3,7 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
-#include <motion_actions/ForwardAction.h>
+#include <motion_commons/ForwardAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_forward/pidConfig.h>
 
@@ -11,7 +11,7 @@
 #define maxPWM 240 //upper limit to control spped of bot
 using namespace std;
 
-typedef actionlib::SimpleActionServer<motion_actions::ForwardAction> Server; // defining the Client type
+typedef actionlib::SimpleActionServer<motion_commons::ForwardAction> Server; // defining the Client type
 
 float presentForwardPosition=0;
 float previousForwardPosition=0;
@@ -26,8 +26,8 @@ private:
 	ros::NodeHandle nh_;
 	Server forwardServer_;
 	std::string action_name_;
-	motion_actions::ForwardFeedback feedback_;
-	motion_actions::ForwardResult result_;
+	motion_commons::ForwardFeedback feedback_;
+	motion_commons::ForwardResult result_;
 	ros::Publisher PWM;
 	float p,i,d;
 
@@ -61,7 +61,7 @@ public:
 
 		// called when new goal recieved
 		// Start motion and finish it, if not interupted
-	void analysisCB(const motion_actions::ForwardGoalConstPtr goal){
+	void analysisCB(const motion_commons::ForwardGoalConstPtr goal){
 		ROS_INFO("Inside analysisCB");
 
 		int loopRate =10 ;

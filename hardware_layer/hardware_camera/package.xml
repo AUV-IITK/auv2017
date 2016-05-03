@@ -1,7 +1,7 @@
 <package>
   <name>hardware_camera</name>
   <version>0.0.0</version>
-  <description></description>
+  <description>image transport</description>
   <author>Shikher Verma</author>
   <maintainer email="root@shikherverma.com">Shikher Verma</maintainer>
   <license>BSD</license>

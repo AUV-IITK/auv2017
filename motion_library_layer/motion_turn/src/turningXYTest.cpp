@@ -1,15 +1,15 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
-#include <motion_actions/TurnAction.h>
-#include <motion_actions/TurnActionFeedback.h>
+#include <motion_commons/TurnAction.h>
+#include <motion_commons/TurnActionFeedback.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_turn/turningConfig.h>
 
-typedef actionlib::SimpleActionClient<motion_actions::TurnAction> Client;
+typedef actionlib::SimpleActionClient<motion_commons::TurnAction> Client;
 Client *chutiya;
-motion_actions::TurnGoal goal;
+motion_commons::TurnGoal goal;
 
 bool goalSet = false;
 
@@ -39,7 +39,7 @@ void callback(motion_turn::turningConfig &config, double level) {
 
 //never ever put the argument of the callback function anything other then the specified
 //void forwardCb(const motion_turn::ForwardActionFeedbackConstPtr msg){
-void turnCb(motion_actions::TurnActionFeedback msg){
+void turnCb(motion_commons::TurnActionFeedback msg){
 	ROS_INFO("feedback recieved, %f deg remaining ",msg.feedback.AngleRemaining);
 }
 
@@ -47,7 +47,7 @@ int main(int argc, char** argv){
 	ros::init(argc,argv,"testTurningXY");
 
 	ros::NodeHandle nh;
-	ros::Subscriber sub_ = nh.subscribe<motion_actions::TurnActionFeedback>("/turningXY/feedback",1000,&turnCb);
+	ros::Subscriber sub_ = nh.subscribe<motion_commons::TurnActionFeedback>("/turningXY/feedback",1000,&turnCb);
 
 	Client TurnTestClient("turningXY");
 	chutiya = &TurnTestClient;

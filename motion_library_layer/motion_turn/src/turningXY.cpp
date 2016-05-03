@@ -3,7 +3,7 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
-#include <motion_actions/TurnAction.h>
+#include <motion_commons/TurnAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_turn/pidConfig.h>
 
@@ -11,7 +11,7 @@
 #define maxPWM 240 //upper limit to control spped of bot
 using namespace std;
 
-typedef actionlib::SimpleActionServer<motion_actions::TurnAction> Server;
+typedef actionlib::SimpleActionServer<motion_commons::TurnAction> Server;
 
 float presentAngularPosition=0;
 float previousAngularPosition=0;
@@ -26,8 +26,8 @@ private:
 	ros::NodeHandle nh_;
 	Server turnServer_;
 	std::string action_name_;
-	motion_actions::TurnFeedback feedback_;
-	motion_actions::TurnResult result_;
+	motion_commons::TurnFeedback feedback_;
+	motion_commons::TurnResult result_;
  	ros::Publisher PWM;
 	float p,i,d;
 
@@ -61,7 +61,7 @@ public:
 
 		// called when new goal recieved
 		// Start motion and finish it, if not interupted
-	void analysisCB(const motion_actions::TurnGoalConstPtr goal){
+	void analysisCB(const motion_commons::TurnGoalConstPtr goal){
 		ROS_INFO("Inside analysisCB");
 
 		int loopRate =10 ;

@@ -1,17 +1,17 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
-#include <motion_actions/SidewardAction.h>
-#include <motion_actions/SidewardActionFeedback.h>
-#include <motion_actions/SidewardActionResult.h>
+#include <motion_commons/SidewardAction.h>
+#include <motion_commons/SidewardActionFeedback.h>
+#include <motion_commons/SidewardActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_sideward/sidewardConfig.h>
 
-typedef actionlib::SimpleActionClient<motion_actions::SidewardAction> Client; // defining the Client type
+typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> Client; // defining the Client type
 
 Client *clientPointer; // pointer for sharing client across threads
-motion_actions::SidewardGoal goal; // new goal object to send to action server
+motion_commons::SidewardGoal goal; // new goal object to send to action server
 
 bool moving=false;
 bool success=false;
@@ -56,7 +56,7 @@ void callback(motion_sideward::sidewardConfig &config, double level) {
 }
 
 // Callback for Feedback from Action Server
-void sidewardCb(motion_actions::SidewardActionFeedback msg){
+void sidewardCb(motion_commons::SidewardActionFeedback msg){
 	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.DistanceRemaining);
 }
 
@@ -67,7 +67,7 @@ int main(int argc, char** argv){
 	
 	ros::NodeHandle nh;
 	// Subscribing to feedback from ActionServer
-	ros::Subscriber sub_ = nh.subscribe<motion_actions::SidewardActionFeedback>("/sideward/feedback",1000,&sidewardCb);
+	ros::Subscriber sub_ = nh.subscribe<motion_commons::SidewardActionFeedback>("/sideward/feedback",1000,&sidewardCb);
 
 	//Declaring a new ActionClient
 	Client sidewardTestClient("sideward");

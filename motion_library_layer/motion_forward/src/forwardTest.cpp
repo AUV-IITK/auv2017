@@ -1,17 +1,17 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
-#include <motion_actions/ForwardAction.h>
-#include <motion_actions/ForwardActionFeedback.h>
-#include <motion_actions/ForwardActionResult.h>
+#include <motion_commons/ForwardAction.h>
+#include <motion_commons/ForwardActionFeedback.h>
+#include <motion_commons/ForwardActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_forward/forwardConfig.h>
 
-typedef actionlib::SimpleActionClient<motion_actions::ForwardAction> Client; // defining the Client type
+typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> Client; // defining the Client type
 
 Client *clientPointer; // pointer for sharing client across threads
-motion_actions::ForwardGoal goal; // new goal object to send to action server
+motion_commons::ForwardGoal goal; // new goal object to send to action server
 
 bool moving=false;
 bool success=false;
@@ -56,7 +56,7 @@ void callback(motion_forward::forwardConfig &config, double level) {
 }
 
 // Callback for Feedback from Action Server
-void forwardCb(motion_actions::ForwardActionFeedback msg){
+void forwardCb(motion_commons::ForwardActionFeedback msg){
 	ROS_INFO("feedback recieved %fsec remaining ",msg.feedback.DistanceRemaining);
 }
 
@@ -67,7 +67,7 @@ int main(int argc, char** argv){
 	
 	ros::NodeHandle nh;
 	// Subscribing to feedback from ActionServer
-	ros::Subscriber sub_ = nh.subscribe<motion_actions::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
+	ros::Subscriber sub_ = nh.subscribe<motion_commons::ForwardActionFeedback>("/forward/feedback",1000,&forwardCb);
 
 	//Declaring a new ActionClient
 	Client forwardTestClient("forward");

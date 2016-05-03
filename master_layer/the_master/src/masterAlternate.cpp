@@ -3,9 +3,9 @@
 #include <task_commons/alignActionFeedback.h>
 #include <task_commons/alignActionResult.h>
 
-#include <motion_actions/ForwardAction.h>
-#include <motion_actions/ForwardActionFeedback.h>
-#include <motion_actions/ForwardActionResult.h>
+#include <motion_commons/ForwardAction.h>
+#include <motion_commons/ForwardActionFeedback.h>
+#include <motion_commons/ForwardActionResult.h>
 
 #include <task_commons/orangeAction.h>
 #include <task_commons/orangeActionFeedback.h>
@@ -18,12 +18,12 @@ using namespace std;
 
 typedef actionlib::SimpleActionClient<task_commons::orangeAction> orange;
 typedef actionlib::SimpleActionClient<task_commons::alignAction> align;
-typedef actionlib::SimpleActionClient<motion_actions::ForwardAction> forward;
+typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> forward;
 
 
 task_commons::orangeGoal orangegoal;
 task_commons::alignGoal aligngoal;
-motion_actions::ForwardGoal forwardgoal;
+motion_commons::ForwardGoal forwardgoal;
 
 bool orangeSuccess= false;
 bool alignSuccess = false;

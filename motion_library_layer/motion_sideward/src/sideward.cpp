@@ -3,7 +3,7 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/Int32.h>
 #include <actionlib/server/simple_action_server.h>
-#include <motion_actions/SidewardAction.h>
+#include <motion_commons/SidewardAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_sideward/pidConfig.h>
 
@@ -11,7 +11,7 @@
 #define maxPWM 230
 using namespace std;
 
-typedef actionlib::SimpleActionServer<motion_actions::SidewardAction> Server; // defining the Client type
+typedef actionlib::SimpleActionServer<motion_commons::SidewardAction> Server; // defining the Client type
 
 float presentSidePosition=0;
 float previousSidePosition=0;
@@ -26,8 +26,8 @@ class innerActionClass{
 		ros::NodeHandle nh_;
 		Server sidewardServer_;
 		std::string action_name_;
-		motion_actions::SidewardFeedback feedback_;
-		motion_actions::SidewardResult result_;
+		motion_commons::SidewardFeedback feedback_;
+		motion_commons::SidewardResult result_;
 		ros::Publisher PWM;
 		float p,i,d;
 
@@ -61,7 +61,7 @@ class innerActionClass{
 
 		// called when new goal recieved
 		// Start motion and finish it, if not interupted
-	void analysisCB(const motion_actions::SidewardGoalConstPtr goal){
+	void analysisCB(const motion_commons::SidewardGoalConstPtr goal){
 		ROS_INFO("Inside analysisCB");
 
 		int loopRate =10 ;
