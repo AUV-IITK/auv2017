@@ -17,15 +17,15 @@ rosdep update
 
 echo "Installing dependencies"
 sudo apt-get install -y \
-    ros-$ROS_DISTRO-vision-opencv \
-    libopencv-dev \
-    ros-$ROS_DISTRO-rosserial-arduino \
-    ros-$ROS_DISTRO-rosserial \
-    ros-$ROS_DISTRO-convex-decomposition \
-    ros-$ROS_DISTRO-pr2-description \
-    ros-$ROS_DISTRO-actionlib \
-    ros-$ROS_DISTRO-dynamic-reconfigure \
-    ros-$ROS_DISTRO-image-transport
+ros-$ROS_DISTRO-vision-opencv \
+libopencv-dev \
+ros-$ROS_DISTRO-rosserial-arduino \
+ros-$ROS_DISTRO-rosserial \
+ros-$ROS_DISTRO-convex-decomposition \
+ros-$ROS_DISTRO-pr2-description \
+ros-$ROS_DISTRO-actionlib \
+ros-$ROS_DISTRO-dynamic-reconfigure \
+ros-$ROS_DISTRO-image-transport
 source /opt/ros/$ROS_DISTRO/setup.bash
 # package depdencies: install using rosdep.
 cd ~/catkin_ws
