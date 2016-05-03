@@ -25,7 +25,8 @@ ros-$ROS_DISTRO-convex-decomposition \
 ros-$ROS_DISTRO-pr2-description \
 ros-$ROS_DISTRO-actionlib \
 ros-$ROS_DISTRO-dynamic-reconfigure \
-ros-$ROS_DISTRO-image-transport
+ros-$ROS_DISTRO-image-transport \
+ros-$ROS_DISTRO-roslint
 source /opt/ros/$ROS_DISTRO/setup.bash
 # package depdencies: install using rosdep.
 cd ~/catkin_ws

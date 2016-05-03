@@ -7,8 +7,6 @@
 # compiled first.
 # change dir to workspace
 (cd ~/catkin_ws &&
-  # cleaning catkin workspace
-  catkin_make clean &&
   # build action lib header files
   catkin_make --pkg motion_commons &&
   catkin_make --pkg task_commons &&
@@ -28,3 +26,22 @@
   catkin_make --pkg hardware_arduino &&
   catkin_make --pkg hardware_camera &&
 catkin_make --pkg hardware_imu )
+
+# checking lint errors
+( cd ~/catkin_ws &&
+  # motion pkgs
+  catkin_make roslint_motion_forward &&
+  catkin_make roslint_motion_sideward &&
+  catkin_make roslint_motion_turn &&
+  catkin_make roslint_motion_upward &&
+  # task pkgs
+  catkin_make roslint_task_buoy &&
+  catkin_make roslint_linedetection &&
+  catkin_make roslint_linefollowing &&
+  # master pkgs
+  catkin_make roslint_the_master &&
+  # hardware pkgs
+  catkin_make roslint_hardware_arduino &&
+  catkin_make roslint_hardware_camera &&
+  catkin_make roslint_hardware_imu )
+
