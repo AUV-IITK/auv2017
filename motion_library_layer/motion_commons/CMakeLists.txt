@@ -66,10 +66,10 @@ find_package(catkin REQUIRED COMPONENTS
 add_action_files(
   DIRECTORY action
   FILES
-    Forward.action
-    Sideward.action
-    Turn.action
-    Upward.action
+  Forward.action
+  Sideward.action
+  Turn.action
+  Upward.action
 )
 
 ## Generate added messages and services with any dependencies listed here
@@ -102,10 +102,10 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES motion_commons
+  #  INCLUDE_DIRS include
+  #  LIBRARIES motion_commons
   CATKIN_DEPENDS actionlib actionlib_msgs
-#  DEPENDS system_lib
+  #  DEPENDS system_lib
 )
 
 ###########

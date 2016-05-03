@@ -57,8 +57,8 @@ find_package(OpenCV REQUIRED)
 
 # add the resized image message
 add_message_files(DIRECTORY msg
- FILES ResizedImage.msg
- )
+  FILES ResizedImage.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -98,10 +98,10 @@ generate_messages(DEPENDENCIES sensor_msgs)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE DIR include
-#  LIBRARIES motion_forward
-#  CATKIN_DEPENDS std_msgs
-#  DEPENDS system_lib
+  #  INCLUDE DIR include
+  #  LIBRARIES motion_forward
+  #  CATKIN_DEPENDS std_msgs
+  #  DEPENDS system_lib
 )
 
 ###########

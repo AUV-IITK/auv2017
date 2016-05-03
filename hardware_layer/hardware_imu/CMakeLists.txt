@@ -110,10 +110,10 @@ roslint_cpp()
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES IMU
-   CATKIN_DEPENDS actionlib actionlib_msgs message_generation message_runtime roscpp rospy rosserial_arduino rosserial_client std_msgs
-#  DEPENDS system_lib
+  #  INCLUDE_DIRS include
+  #  LIBRARIES IMU
+  CATKIN_DEPENDS actionlib actionlib_msgs message_generation message_runtime roscpp rospy rosserial_arduino rosserial_client std_msgs
+  #  DEPENDS system_lib
 )
 
 ###########

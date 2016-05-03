@@ -85,7 +85,7 @@ find_package( OpenCV REQUIRED )
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
- cfg/orange.cfg
+  cfg/orange.cfg
 )
 #option for reconfig cfg
 
@@ -100,10 +100,10 @@ generate_dynamic_reconfigure_options(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES linedetection
-   CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
-#  DEPENDS system_lib
+  #  INCLUDE_DIRS include
+  #  LIBRARIES linedetection
+  CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
+  #  DEPENDS system_lib
 )
 
 ###########

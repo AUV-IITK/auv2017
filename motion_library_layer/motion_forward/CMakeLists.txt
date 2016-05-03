@@ -86,8 +86,8 @@ roslint_cpp()
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
- cfg/forward.cfg
- cfg/pid.cfg
+  cfg/forward.cfg
+  cfg/pid.cfg
 )
 
 ###################################
@@ -100,10 +100,10 @@ generate_dynamic_reconfigure_options(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES motion_forward
+  #  INCLUDE_DIRS include
+  #  LIBRARIES motion_forward
   CATKIN_DEPENDS actionlib actionlib_msgs
-#  DEPENDS system_lib
+  #  DEPENDS system_lib
 )
 
 ###########

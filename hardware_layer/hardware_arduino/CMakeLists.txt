@@ -4,7 +4,7 @@ project(hardware_arduino)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS 
+find_package(catkin REQUIRED COMPONENTS
   roslint
   rosserial_arduino
   rosserial_client
@@ -107,11 +107,11 @@ roslint_cpp()
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES hardware_arduino
-#  CATKIN_DEPENDS rosserial_arduino rosserial_client std_msgs
-#  DEPENDS system_lib
-	CATKIN_DEPENDS roscpp rospy std_msgs message_runtime rosserial_arduino rosserial_client	
+  #  INCLUDE_DIRS include
+  #  LIBRARIES hardware_arduino
+  #  CATKIN_DEPENDS rosserial_arduino rosserial_client std_msgs
+  #  DEPENDS system_lib
+  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime rosserial_arduino rosserial_client
 )
 
 ###########
@@ -151,12 +151,12 @@ rosserial_generate_ros_lib(
   PACKAGE rosserial_arduino
   SCRIPT make_libraries.py
 )
-   
+
 rosserial_configure_client(
   DIRECTORY src
   TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
 )
-   
+
 rosserial_add_client_target(src arduino_node ALL)
 rosserial_add_client_target(src arduino_node-upload)
 

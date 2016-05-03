@@ -43,7 +43,7 @@ find_package( OpenCV REQUIRED )
 ##   * add "message_generation" and every package in MSG_DEP_SET to
 ##     find_package(catkin REQUIRED COMPONENTS ...)
 ##   * add "message_runtime" and every package in MSG_DEP_SET to
- ##      catkin_package(CATKIN_DEPENDS message_runtime )
+##      catkin_package(CATKIN_DEPENDS message_runtime )
 ##   * uncomment the add_*_files sections below as needed
 ##     and list every .msg/.srv/.action file to be processed
 ##   * uncomment the generate_messages entry below
@@ -62,10 +62,10 @@ find_package( OpenCV REQUIRED )
 # )
 
 ## Generate added messages and services with any dependencies listed here
- # generate_messages(
- #   DEPENDENCIES
- #  std_msgs
- # )
+# generate_messages(
+#   DEPENDENCIES
+#  std_msgs
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -97,12 +97,12 @@ find_package( OpenCV REQUIRED )
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-# INCLUDE_DIRS include
-#  LIBRARIES task_buoy
-
-CATKIN_DEPENDS roscpp rospy std_msgs
-
-# DEPENDS system_lib
+  # INCLUDE_DIRS include
+  #  LIBRARIES task_buoy
+  
+  CATKIN_DEPENDS roscpp rospy std_msgs
+  
+  # DEPENDS system_lib
 )
 
 ###########
