@@ -1,10 +1,10 @@
 <package>
   <name>hardware_camera</name>
   <version>0.0.0</version>
-  <description>Tutorial for image_transport. This is useful for the tutorials at http://wiki.ros.org/image_transport/Tutorials/</description>
-  <author>Vincent Rabaud</author>
-  <maintainer email="vincent.rabaud@gmail.com">Vincent Rabaud</maintainer>
-  <license>Apache 2.0</license>
+  <description></description>
+  <author>Shikher Verma</author>
+  <maintainer email="root@shikherverma.com">Shikher Verma</maintainer>
+  <license>BSD</license>
 
   <build_depend>cv_bridge</build_depend>
   <build_depend>image_transport</build_depend>
