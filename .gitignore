@@ -36,3 +36,5 @@ config.mk
 *.avi
 *.mp4
 *.bag
+# ignore backup files from astyle
+*.orig
