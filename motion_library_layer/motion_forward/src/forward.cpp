@@ -7,10 +7,10 @@
 #include <motion_commons/ForwardAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_forward/pidConfig.h>
-
+#include <string>
 #define minPWM 200  // min pwm at which thrusters move
 #define maxPWM 240  // upper limit to control spped of bot
-using namespace std;
+using std::string;
 
 typedef actionlib::SimpleActionServer<motion_commons::ForwardAction> Server;  // defining the Client type
 
@@ -35,7 +35,7 @@ private:
 
 public:
   // Constructor, called when new instance of class declared
-  innerActionClass(std::string name)
+  explicit innerActionClass(string name)
     :  // Defining the server, third argument is optional
     forwardServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false)
     , action_name_(name)
@@ -166,7 +166,7 @@ public:
       bias = -minPWM;
 
     temp = output * scale + bias;
-    pwm.data = (int)temp;
+    pwm.data = static_cast<int>(temp);
   }
   int mod(int a)
   {

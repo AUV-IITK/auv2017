@@ -7,10 +7,10 @@
 #include <motion_commons/SidewardAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_sideward/pidConfig.h>
-
+#include <string>
 #define minPWM 170
 #define maxPWM 230
-using namespace std;
+using std::string;
 
 typedef actionlib::SimpleActionServer<motion_commons::SidewardAction> Server;  // defining the Client type
 
@@ -35,7 +35,7 @@ private:
 
 public:
   // Constructor, called when new instance of class declared
-  innerActionClass(std::string name)
+  explicit innerActionClass(std::string name)
     :  // Defining the server, third argument is optional
     sidewardServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false)
     , action_name_(name)
@@ -158,7 +158,7 @@ public:
       bias = -minPWM;
 
     temp = output * scale + bias;
-    pwm.data = (int)temp;
+    pwm.data = static_cast<int>(temp);
   }
   int mod(int a)
   {

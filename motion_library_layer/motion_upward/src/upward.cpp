@@ -7,7 +7,9 @@
 #include <motion_commons/UpwardAction.h>
 #include <dynamic_reconfigure/server.h>
 #include <motion_upward/pidConfig.h>
+#include <string>
 #define minPWM 120
+using std::string;
 typedef actionlib::SimpleActionServer<motion_commons::UpwardAction> Server;  // defining the Client type
 
 float presentHeight = 0;
@@ -35,7 +37,7 @@ private:
 
 public:
   // Constructor, called when new instance of class declared
-  innerActionClass(std::string name)
+  explicit innerActionClass(std::string name)
     :  // Defining the server, third argument is optional
     upwardServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false)
     , action_name_(name)
@@ -164,12 +166,12 @@ public:
 
     if (temp > 0)
     {
-      pwm.data = (int)temp;
+      pwm.data = static_cast<int>(temp);
       dir.data = 3;
     }
     else
     {
-      pwm.data = -1 * (int)temp;
+      pwm.data = -1 * static_cast<int>(temp);
       dir.data = 4;
     }
   }
