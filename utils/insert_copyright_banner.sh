@@ -7,7 +7,7 @@
 # To safely handle modifying a file which is being piped, use sponge from package moreutils (it saves you the need to create your own temp file)
 cd "$(dirname "$0")"
 cd ..
-printf "Copyright 2016 AUV-IITK\n" > /tmp/$USER-license
+printf "// Copyright 2016 AUV-IITK\n" > /tmp/$USER-license
 shopt -s globstar nullglob extglob
 for f in **/*.@(cpp|h) ;do
   [[ -f $f ]] && cat "/tmp/$USER-license" "$f" | sponge "$f"
