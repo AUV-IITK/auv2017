@@ -1,3 +1,4 @@
+// Copyright 2016 AUV-IITK
 #include <image_transport/simple_publisher_plugin.h>
 #include <hardware_camera/ResizedImage.h>
 
