@@ -10,38 +10,30 @@
   # build action lib header files
   catkin_make --pkg motion_commons &&
   catkin_make --pkg task_commons &&
-  # building rest of the pkgs
+  # building rest of the pkgs and lint checking
   # motion library
   catkin_make --pkg motion_forward &&
+  catkin_make roslint_motion_forward &&
   catkin_make --pkg motion_sideward &&
+  catkin_make roslint_motion_sideward &&
   catkin_make --pkg motion_turn &&
+  catkin_make roslint_motion_turn &&
   catkin_make --pkg motion_upward &&
+  catkin_make roslint_motion_upward &&
   # task handlers
   catkin_make --pkg task_buoy &&
+  catkin_make roslint_task_buoy &&
   catkin_make --pkg linedetection &&
+  catkin_make roslint_linedetection &&
   catkin_make --pkg linefollowing &&
+  catkin_make roslint_linefollowing &&
   # build master layer
-  catkin_make --pkg the_master $$
+  catkin_make --pkg the_master &&
+  catkin_make roslint_the_master &&
   # build hardware layer
   catkin_make --pkg hardware_arduino &&
-  catkin_make --pkg hardware_camera &&
-catkin_make --pkg hardware_imu )
-
-# checking lint errors
-( cd ~/catkin_ws &&
-  # motion pkgs
-  catkin_make roslint_motion_forward &&
-  catkin_make roslint_motion_sideward &&
-  catkin_make roslint_motion_turn &&
-  catkin_make roslint_motion_upward &&
-  # task pkgs
-  catkin_make roslint_task_buoy &&
-  catkin_make roslint_linedetection &&
-  catkin_make roslint_linefollowing &&
-  # master pkgs
-  catkin_make roslint_the_master &&
-  # hardware pkgs
   catkin_make roslint_hardware_arduino &&
+  catkin_make --pkg hardware_camera &&
   catkin_make roslint_hardware_camera &&
+  catkin_make --pkg hardware_imu &&
 catkin_make roslint_hardware_imu )
-
