@@ -5,6 +5,7 @@ project(linefollowing)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  roslint
   dynamic_reconfigure
   roscpp
   rospy
@@ -14,10 +15,13 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib_msgs
   message_generation
 )
-find_package( OpenCV REQUIRED )
+
+## Check for lint errors
+roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+find_package( OpenCV REQUIRED )
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures

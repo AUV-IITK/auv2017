@@ -4,7 +4,8 @@ project(hardware_arduino)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS
+find_package(catkin REQUIRED COMPONENTS 
+  roslint
   rosserial_arduino
   rosserial_client
   std_msgs
@@ -12,6 +13,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
 )
+
+## Check for lint errors
+roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)

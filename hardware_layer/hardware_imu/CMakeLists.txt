@@ -5,6 +5,7 @@ project(hardware_imu)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  roslint
   actionlib
   actionlib_msgs
   message_generation
@@ -15,6 +16,9 @@ find_package(catkin REQUIRED COMPONENTS
   rosserial_client
   std_msgs
 )
+
+## Check for lint errors
+roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)

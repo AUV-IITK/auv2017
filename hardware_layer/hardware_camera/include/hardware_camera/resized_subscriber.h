@@ -4,7 +4,9 @@
 class ResizedSubscriber : public image_transport::SimpleSubscriberPlugin<hardware_camera::ResizedImage>
 {
 public:
-  virtual ~ResizedSubscriber() {}
+  virtual ~ResizedSubscriber()
+  {
+  }
 
   virtual std::string getTransportName() const
   {
@@ -12,6 +14,6 @@ public:
   }
 
 protected:
-  virtual void internalCallback(const typename hardware_camera::ResizedImage::ConstPtr& message,
-                                const Callback& user_cb);
+  virtual void internalCallback(const typename hardware_camera::ResizedImage::ConstPtr &message,
+                                const Callback &user_cb);
 };

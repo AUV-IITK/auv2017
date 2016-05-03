@@ -15,8 +15,8 @@
 using namespace std;
 using namespace cv;
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    /*********** DONT USE OBSOLETE IPLIMAGE **************/
-    return 0;
+  /*********** DONT USE OBSOLETE IPLIMAGE **************/
+  return 0;
 }

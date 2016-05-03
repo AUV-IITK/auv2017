@@ -5,11 +5,15 @@ project(hardware_camera)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  roslint
   cv_bridge
   genmsg
   image_transport
   sensor_msgs
 )
+
+## Check for lint errors
+roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)

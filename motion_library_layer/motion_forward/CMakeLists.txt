@@ -5,6 +5,7 @@ project(motion_forward)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  roslint
   actionlib
   dynamic_reconfigure
   actionlib_msgs
@@ -14,6 +15,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
 )
+
+## Check for lint errors
+roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
