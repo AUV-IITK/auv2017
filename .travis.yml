@@ -63,7 +63,7 @@ before_install:
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
   - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-catkin 
-  - sudo apt-get install -y ros-$ROS_DISTRO-desktop-full ros-$ROS_DISTRO-vision-opencv libopencv-dev ros-$ROS_DISTRO-rosserial-arduino ros-$ROS_DISTRO-rosserial
+  - sudo apt-get install -y ros-$ROS_DISTRO-ros-base ros-$ROS_DISTRO-vision-opencv libopencv-dev ros-$ROS_DISTRO-rosserial-arduino ros-$ROS_DISTRO-rosserial
   - sudo apt-get install -y ros-$ROS_DISTRO-convex-decomposition ros-$ROS_DISTRO-pr2-description
   - source /opt/ros/$ROS_DISTRO/setup.bash
   # Prepare rosdep to install dependencies.
