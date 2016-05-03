@@ -43,5 +43,5 @@ catkin_make --pkg hardware_imu )
   # hardware pkgs
   catkin_make roslint_hardware_arduino &&
   catkin_make roslint_hardware_camera &&
-  catkin_make roslint_hardware_imu )
+catkin_make roslint_hardware_imu )
 
