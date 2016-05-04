@@ -26,7 +26,6 @@ using std::vector;
 using std::endl;
 using std::cout;
 
-
 bool stop = false;
 
 Mat img, imgHSV, imgThresholded, imgSmooth, imgCanny, imgLines;

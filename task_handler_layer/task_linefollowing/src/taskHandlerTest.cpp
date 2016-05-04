@@ -1,4 +1,4 @@
-  // Copyright 2016 AUV-IITK
+// Copyright 2016 AUV-IITK
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
 #include <task_commons/alignAction.h>

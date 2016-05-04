@@ -56,7 +56,7 @@ int main(int argc, char **argv)
       if (timestamp > timestamp_old)
       {
         G_Dt = static_cast<float>((timestamp - timestamp_old) / 10000.0f);  // Real time of loop run. We use this on the
-                                                                 // DCM algorithm (gyro integration time)
+                                                                            // DCM algorithm (gyro integration time)
         // temp+= G_Dt;
       }
       else
