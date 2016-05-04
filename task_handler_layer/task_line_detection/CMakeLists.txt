@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(linedetection)
+project(task_line_detection)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -101,7 +101,7 @@ generate_dynamic_reconfigure_options(
 
 catkin_package(
   #  INCLUDE_DIRS include
-  #  LIBRARIES linedetection
+  #  LIBRARIES task_line_detection
   CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
   #  DEPENDS system_lib
 )
@@ -119,22 +119,22 @@ include_directories(include
   ${OpenCV_INCLUDE_DIRS}
 )
 ## Declare a cpp library
-# add_library(linedetection
-#   src/${PROJECT_NAME}/linedetection.cpp
+# add_library(task_line_detection
+#   src/${PROJECT_NAME}/task_line_detection.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(linedetection_node src/linedetection_node.cpp)
+# add_executable(task_line_detection_node src/task_line_detection_node.cpp)
 add_executable(orangedetection src/orangedetection.cpp)
 add_executable(line_detection_server src/line_detection_server.cpp)
 add_executable(line_detection_client src/line_detection_client.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(linedetection_node linedetection_generate_messages_cpp)
+# add_dependencies(task_line_detection_node task_line_detection_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(linedetection_node
+# target_link_libraries(task_line_detection_node
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(orangedetection ${catkin_LIBRARIES})
@@ -156,7 +156,7 @@ target_link_libraries(line_detection_client ${catkin_LIBRARIES})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS linedetection linedetection_node
+# install(TARGETS task_line_detection task_line_detection_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -181,7 +181,7 @@ target_link_libraries(line_detection_client ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_linedetection.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_task_line_detection.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

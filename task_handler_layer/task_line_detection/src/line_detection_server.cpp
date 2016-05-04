@@ -13,11 +13,11 @@
 typedef actionlib::SimpleActionServer<task_commons::orangeAction> Server;
 typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> Client;
 
-class LineDetectionInnerClass
+class task_line_detectionInnerClass
 {
 private:
   ros::NodeHandle nh_;
-  Server lineDetectionServer_;
+  Server task_line_detectionServer_;
   std::string action_name_;
   task_commons::orangeFeedback feedback_;
   task_commons::orangeResult result_;
@@ -29,20 +29,21 @@ private:
   motion_commons::ForwardGoal forwardgoal;
 
 public:
-  LineDetectionInnerClass(std::string name, std::string node)
+  task_line_detectionInnerClass(std::string name, std::string node)
     :  // here we are defining the server, third argument is optional
-    lineDetectionServer_(nh_, name, boost::bind(&LineDetectionInnerClass::analysisCB, this, _1), false)
+    task_line_detectionServer_(nh_, name, boost::bind(&task_line_detectionInnerClass::analysisCB, this, _1), false)
     , action_name_(name)
     , ForwardClient_(node)
   {
     ROS_INFO("inside constructor");
-    lineDetectionServer_.registerPreemptCallback(boost::bind(&LineDetectionInnerClass::preemptCB, this));
+    task_line_detectionServer_.registerPreemptCallback(boost::bind(&task_line_detectionInnerClass::preemptCB, this));
     off_pub_ = nh_.advertise<std_msgs::Bool>("orangeoff", 1000);
-    sub_ = nh_.subscribe<std_msgs::Bool>("linedetected", 1000, &LineDetectionInnerClass::lineDetectedListener, this);
-    lineDetectionServer_.start();
+    sub_ = nh_.subscribe<std_msgs::Bool>("linedetected",
+      1000, &task_line_detectionInnerClass::lineDetectedListener, this);
+    task_line_detectionServer_.start();
   }
 
-  ~LineDetectionInnerClass(void)
+  ~task_line_detectionInnerClass(void)
   {
   }
 
@@ -67,23 +68,23 @@ public:
     isOrange = false;
     ros::Rate looprate(12);
 
-    if (!lineDetectionServer_.isActive())
+    if (!task_line_detectionServer_.isActive())
       return;
 
     ROS_INFO("Waiting for Forward server to start.");
     ForwardClient_.waitForServer();
 
-    boost::thread vision_thread(&LineDetectionInnerClass::startIP, this);
+    boost::thread vision_thread(&task_line_detectionInnerClass::startIP, this);
     // start moving forward.
     forwardgoal.Goal = 100;
     ForwardClient_.sendGoal(forwardgoal);
     while (goal->order)
     {
-      if (lineDetectionServer_.isPreemptRequested() || !ros::ok())
+      if (task_line_detectionServer_.isPreemptRequested() || !ros::ok())
       {
         ROS_INFO("%s: Preempted", action_name_.c_str());
         // set the action state to preempted
-        lineDetectionServer_.setPreempted();
+        task_line_detectionServer_.setPreempted();
         success = false;
         break;
       }
@@ -96,7 +97,7 @@ public:
       }
       // publish the feedback
       feedback_.nosignificance = false;
-      lineDetectionServer_.publishFeedback(feedback_);
+      task_line_detectionServer_.publishFeedback(feedback_);
       ROS_INFO("timeSpent");
       ros::spinOnce();
     }
@@ -108,13 +109,13 @@ public:
       result_.MotionCompleted = success;
       ROS_INFO("%s: Succeeded", action_name_.c_str());
       // set the action state to succeeded
-      lineDetectionServer_.setSucceeded(result_);
+      task_line_detectionServer_.setSucceeded(result_);
     }
   }
 
   void startIP()
   {
-    std::system("rosrun linedetection orangedetection");
+    std::system("rosrun task_line_detection orangedetection");
   }
 
   void stopIP()
@@ -127,9 +128,9 @@ public:
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "linedetectionserver");
+  ros::init(argc, argv, "task_line_detectionserver");
   ROS_INFO("Waiting for Goal");
-  LineDetectionInnerClass lineDetectionObject(ros::this_node::getName(), "forward");
+  task_line_detectionInnerClass task_line_detectionObject(ros::this_node::getName(), "forward");
   ros::spin();
   return 0;
 }

@@ -37,14 +37,14 @@ void forwardCb(task_commons::orangeActionFeedback msg)
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "linedetectionclient");
+  ros::init(argc, argv, "task_line_detectionclient");
 
   ros::NodeHandle nh;
-  // here linedetectionserver is the name of the node of the actionserver.
+  // here task_line_detectionserver is the name of the node of the actionserver.
   ros::Subscriber sub_ =
-      nh.subscribe<task_commons::orangeActionFeedback>("/linedetectionserver/feedback", 1000, &forwardCb);
+      nh.subscribe<task_commons::orangeActionFeedback>("/task_line_detectionserver/feedback", 1000, &forwardCb);
 
-  Client testClient("linedetectionserver");
+  Client testClient("task_line_detectionserver");
   chutiya = &testClient;
 
   ROS_INFO("Waiting for action server to start.");

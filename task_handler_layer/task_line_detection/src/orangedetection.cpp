@@ -6,7 +6,7 @@
 #include <sstream>
 
 #include <dynamic_reconfigure/server.h>
-#include <linedetection/orangeConfig.h>
+#include <task_line_detection/orangeConfig.h>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -26,7 +26,7 @@ int percentage = 20;  // used for how much percent of the screen should be orang
                       // before deciding that a line is below. Used in
                       // dynamic_reconfig
 // callback for change the percent of orange before saying there is a line below
-void callback(linedetection::orangeConfig &config, int level)
+void callback(task_line_detection::orangeConfig &config, int level)
 {
   percentage = config.int_param;
   ROS_INFO("Reconfigure Request. New percentage : %d", percentage);
@@ -90,8 +90,8 @@ int main(int argc, char **argv)
                             // generation
 
   // setting callback for the orange percentage.
-  dynamic_reconfigure::Server<linedetection::orangeConfig> server;
-  dynamic_reconfigure::Server<linedetection::orangeConfig>::CallbackType f;
+  dynamic_reconfigure::Server<task_line_detection::orangeConfig> server;
+  dynamic_reconfigure::Server<task_line_detection::orangeConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
   VideoCapture inputVideo(0);  // webcam input
