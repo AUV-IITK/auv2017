@@ -225,21 +225,21 @@ int main(int argc, char **argv)
   // else if(*argv[2] == '2') index=2;
   // enter the path which contains params.txt
 
-  FILE *fp2 = fopen("src/linefollowing/src/hsv.txt", "r");
+  FILE *fp2 = fopen("src/task_line_following/src/hsv.txt", "r");
   fscanf(fp2, "%d %d %d %d %d %d", &LowH, &HighH, &LowS, &HighS, &LowV, &HighV);
   fclose(fp2);
 
-  FILE *fp = fopen("src/linefollowing/src/params.txt", "r");
+  FILE *fp = fopen("src/task_line_following/src/params.txt", "r");
   fscanf(fp, "%d %d %d %d\n%d %d %d\n%d", &ksize, &stype, &sigmaSpace, &sigmaColor, &lineThresh, &minLineLength,
          &maxLineGap, &houghThresh);
   fclose(fp);
 
   // VideoCapture cap(index);
 
-  // VideoCapture cap("src/linefollowing/src/outputnorm.avi"); //path of the
+  // VideoCapture cap("src/task_line_following/src/outputnorm.avi"); //path of the
   // video for checking the code
-  // VideoCapture cap("src/linefollowing/src/TestingLine.mp4");
-  VideoCapture cap("src/linefollowing/src/test1.avi");
+  // VideoCapture cap("src/task_line_following/src/TestingLine.mp4");
+  VideoCapture cap("src/task_line_following/src/test1.avi");
 
   if (!cap.isOpened())  // if not success, exit program
   {

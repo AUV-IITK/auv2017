@@ -25,8 +25,8 @@
   catkin_make roslint_task_buoy &&
   catkin_make --pkg linedetection &&
   catkin_make roslint_linedetection &&
-  catkin_make --pkg linefollowing &&
-  catkin_make roslint_linefollowing &&
+  catkin_make --pkg task_line_following &&
+  catkin_make roslint_task_line_following &&
   # build master layer
   catkin_make --pkg the_master &&
   catkin_make roslint_the_master &&

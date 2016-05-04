@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(linefollowing)
+project(task_line_following)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -100,7 +100,7 @@ generate_dynamic_reconfigure_options(
 
 catkin_package(
   #  INCLUDE_DIRS include
-  #  LIBRARIES lineFollowing
+  #  LIBRARIES task_line_following
   CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
   #  DEPENDS system_lib
 )
@@ -118,22 +118,22 @@ include_directories(include
   ${OpenCV_INCLUDE_DIRS}
 )
 ## Declare a cpp library
-# add_library(lineFollowing
-#   src/${PROJECT_NAME}/lineFollowing.cpp
+# add_library(task_line_following
+#   src/${PROJECT_NAME}/task_line_following.cpp
 # )
 
 ## Declare a cpp executable
-# add_executable(lineFollowing_node src/lineFollowing_node.cpp)
+# add_executable(task_line_following_node src/task_line_following_node.cpp)
 add_executable(LineNew src/LineNew.cpp)
 add_executable(taskHandler src/taskHandler.cpp)
 add_executable(taskHandlerTest src/taskHandlerTest.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
-# add_dependencies(lineFollowing_node lineFollowing_generate_messages_cpp)
+# add_dependencies(task_line_following_node task_line_following_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(lineFollowing_node
+# target_link_libraries(task_line_following_node
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(LineNew ${catkin_LIBRARIES})
@@ -155,7 +155,7 @@ target_link_libraries(taskHandlerTest ${catkin_LIBRARIES})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS lineFollowing lineFollowing_node
+# install(TARGETS task_line_following task_line_following_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -180,7 +180,7 @@ target_link_libraries(taskHandlerTest ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_lineFollowing.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_task_line_following.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
