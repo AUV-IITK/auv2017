@@ -26,6 +26,7 @@ ros-$ROS_DISTRO-pr2-description \
 ros-$ROS_DISTRO-actionlib \
 ros-$ROS_DISTRO-dynamic-reconfigure \
 ros-$ROS_DISTRO-image-transport \
+ros-$ROS_DISTRO-gazebo-ros \
 ros-$ROS_DISTRO-roslint
 source /opt/ros/$ROS_DISTRO/setup.bash
 # package depdencies: install using rosdep.
@@ -38,3 +39,9 @@ mkdir -p ~/sketchbook/libraries
 cd ~/sketchbook/libraries
 rm -rf ros_lib
 rosrun rosserial_arduino make_libraries.py .
+
+# suggest to setup environment variables
+echo "Please add these to your ~/.bashrc file"
+echo "source /opt/ros/kinetic/setup.sh"
+echo "source /usr/share/gazebo-7/setup.sh"
+echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH/home/$USER/catkin_ws/src/:"
