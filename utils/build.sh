@@ -36,4 +36,7 @@
   catkin_make --pkg hardware_camera &&
   catkin_make roslint_hardware_camera &&
   catkin_make --pkg hardware_imu &&
-catkin_make roslint_hardware_imu )
+  catkin_make roslint_hardware_imu &&
+  # build debug layer
+  catkin_make --pkg varun_description &&
+  catkin_make --pkg varun_gazebo )
