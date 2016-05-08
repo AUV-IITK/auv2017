@@ -1,23 +1,20 @@
-<robot name="Part1">
-  <link name="Part1">
+<robot name="varun">
+  <link name="varun">
     <inertial>
-      <origin rpy="0 0 0" xyz="0.058002 0.033467 0.005"/>
-      <mass value="0.18613"/>
-      <inertia ixx="7.62005947756838E-05" ixy="6.06410637472558E-23" ixz="2.37488664979752E-07" iyy="1.83813582909786E-20" iyz="-0.000226840155527505" izz="1.38734684222261E-20"/>
+      <origin rpy="0 0 0" xyz="0.6 0.1 0"/>
+      <mass value="10"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
     </inertial>
     <visual>
-      <origin rpy="0 0 0" xyz="1.5707963267949 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://Part1/meshes/varun.dae"/>
+        <mesh filename="package://varun_description/meshes/varun.dae"/>
       </geometry>
-      <material name="">
-        <color rgba="0.66667 0.69804 0.76863 1"/>
-      </material>
     </visual>
     <collision>
-      <origin rpy="1.5707963267949 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://Part1/meshes/varun.dae"/>
+        <mesh filename="package://varun_description/meshes/varun.dae"/>
       </geometry>
     </collision>
   </link>
