@@ -12,9 +12,9 @@
       <uri>model://sun</uri>
     </include>
 
-    <!-- VARUN MODEL -->
+    <!-- line -->
     <include>
-      <uri>model://varun</uri>
+      <uri>model://varun_gazebo/models/line</uri>
     </include>
 
     <!-- Focus camera on tall pendulum -->
