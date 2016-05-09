@@ -13,6 +13,11 @@
     </include>
 
     <include>
+      <uri>model://varun_description</uri>
+        <pose>0 -0.16 3 0 0 0</pose>
+    </include>
+
+    <include>
       <uri>model://varun_gazebo/models/line</uri>
         <pose>2 0 0 0 0 0</pose>
     </include>
@@ -69,7 +74,7 @@
 
     <include>
       <uri>model://varun_gazebo/models/line</uri>
-        <pose>18.4843 6.196 0 0 0 0.35</pose>
+        <pose>18.4843 6.196 0 0 0 0.30</pose>
     </include>
 
     <include>
@@ -79,7 +84,7 @@
 
     <include>
       <uri>model://varun_gazebo/models/line</uri>
-        <pose>18.4843 -6.196 0 0 0 -0.35</pose>
+        <pose>18.4843 -6.196 0 0 0 -0.30</pose>
     </include>
 
     <include>
