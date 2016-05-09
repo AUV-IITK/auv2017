@@ -12,18 +12,112 @@
       <uri>model://sun</uri>
     </include>
 
-    <!-- line -->
     <include>
       <uri>model://varun_gazebo/models/line</uri>
+        <pose>2 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/buoy_red</uri>
+        <pose>5 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/buoy_green</uri>
+        <pose>6.9843 2.25 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/buoy_yellow</uri>
+        <pose>6.9843 -2.25 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/line</uri>
+        <pose>8 0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/gate</uri>
+        <pose>10.9843 0.9 0 0 0 -1.57</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/line</uri>
+        <pose>12.2843 2.648 0 0 0 0.52</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/line</uri>
+        <pose>12.2843 -2.648 0 0 0 -0.52</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/line</uri>
+        <pose>14.9843 0.6 0 0 0 -1.57</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/marker_target_o</uri>
+        <pose>15.2843 3.676 0 0 0 -0.52</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/marker_target_x</uri>
+        <pose>14.5843 4.296 0 0 0 -0.52</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/line</uri>
+        <pose>18.4843 6.196 0 0 0 0.35</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/torpedo_target</uri>
+        <pose>14.9843 -4.196 0 0 0 0.52</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/line</uri>
+        <pose>18.4843 -6.196 0 0 0 -0.35</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/line</uri>
+        <pose>22.9843 0.6 0 0 0 -1.57</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/octagon_signal</uri>
+        <pose>22.9843 -7.196 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/octagon</uri>
+        <pose>25.9843 -7.196 10 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/octagon_signal</uri>
+        <pose>22.9843 7.196 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/octagon</uri>
+        <pose>25.9843 7.196 10 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://varun_gazebo/models/mittal</uri>
+        <pose>0 9 0 0 0 0</pose>
     </include>
 
     <!-- Focus camera on tall pendulum -->
-    <gui fullscreen='0'>
-      <camera name='user_camera'>
-        <pose>4.927360 -4.376610 3.740080 0.000000 0.275643 2.356190</pose>
+    <gui fullscreen="0">
+      <camera name="user_camera">
+        <pose>-9 0 3 0 0 0</pose>
         <view_controller>orbit</view_controller>
       </camera>
     </gui>
-
   </world>
 </sdf>
