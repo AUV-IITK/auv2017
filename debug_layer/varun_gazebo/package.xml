@@ -13,9 +13,7 @@
   <run_depend>gazebo_plugins</run_depend>
   <run_depend>gazebo_ros</run_depend>
   <run_depend>gazebo_ros_control</run_depend>
-  <run_depend>varun_control</run_depend>
   <run_depend>varun_description</run_depend>
-  <run_depend>xacro</run_depend>
   <export>
   </export>
 </package>
