@@ -2,13 +2,41 @@
 <sdf version="1.4">
   <!-- We use a custom world for the varun so that the camera angle is launched correctly -->
   <world name="default">
+    <scene>
+      <ambient>0.5 0.5 0.5 1</ambient>
+      <background>0.5 0.5 0.5 1</background>
+      <shadows>0</shadows>
+      <fog>
+        <color>0 0 1 0.5</color>
+        <type>linear</type>
+        <start>0.0</start>
+        <end>100.1</end>
+        <density>1</density>
+      </fog>
+    </scene>
     <include>
       <uri>model://ground_plane</uri>
     </include>
     <!-- Global light source -->
     <include>
-      <uri>model://sun</uri>
+      <uri>model://varun_gazebo/models/light/light_x</uri>
     </include>
+    <include>
+      <uri>model://varun_gazebo/models/light/light_y</uri>
+    </include>
+    <include>
+      <uri>model://varun_gazebo/models/light/light_z</uri>
+    </include>
+    <include>
+      <uri>model://varun_gazebo/models/light/light_negative_x</uri>
+    </include>
+    <include>
+      <uri>model://varun_gazebo/models/light/light_negative_y</uri>
+    </include>
+    <include>
+      <uri>model://varun_gazebo/models/light/light_negative_z</uri>
+    </include>
+    <!-- Include arena models -->
     <include>
       <uri>model://varun_description</uri>
       <pose>0 -0.16 3 0 0 0</pose>
