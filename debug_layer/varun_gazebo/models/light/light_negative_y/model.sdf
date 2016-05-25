@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <sdf version="1.5">
   <light type="directional" name="light_negative_y">
     <cast_shadows>false</cast_shadows>
