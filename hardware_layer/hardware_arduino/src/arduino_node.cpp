@@ -30,19 +30,19 @@
 /************************ for New Ground Testing Bot *******************/
 #define led 13  // 13
 
-#define pwmPinWest 5         // 3
-#define pwmPinEast 2         // 2
-#define directionPinWest1 6  // 31
-#define directionPinWest2 7  // 30
-#define directionPinEast1 3  // 33
-#define directionPinEast2 4  // 32
+#define pwmPinWest 6          // 3
+#define pwmPinEast 5          // 2
+#define directionPinWest1 23  // 31
+#define directionPinWest2 22  // 30
+#define directionPinEast1 24  // 33
+#define directionPinEast2 25  // 32
 
-#define pwmPinNorthSway 23         // 3
-#define pwmPinSouthSway 13         // 2
-#define directionPinNorthSway1 8   // 31
-#define directionPinNorthSway2 9   // 30
-#define directionPinSouthSway1 11  // 33
-#define directionPinSouthSway2 12  // 32
+#define pwmPinNorthSway 4          // 3
+#define pwmPinSouthSway 3          // 2
+#define directionPinNorthSway1 27  // 31
+#define directionPinNorthSway2 26  // 30
+#define directionPinSouthSway1 28  // 33
+#define directionPinSouthSway2 29  // 32
 
 #define pwmPinNorthUp 13        // 3
 #define pwmPinSouthUp 13        // 2
@@ -50,7 +50,6 @@
 #define directionPinNorthUp2 0  // 30
 #define directionPinSouthUp1 0  // 33
 #define directionPinSouthUp2 0  // 32
-
 /************************ for old ground bot ******************************/
 // #define pwmPinWest 4
 // #define pwmPinEast 5
@@ -198,39 +197,38 @@ void PWMCbUpward(const std_msgs::Int32 &msg)
   }
 }
 
-void PWMCbTurn(const std_msgs::Int32 &msg)
+void PWMCbTurnSway(const std_msgs::Int32 &msg)
 {
-  if (isMovingForward)
+  if (msg.data > 0)
   {
-    if (msg.data > 0)
-    {
-      thrusterEast(255 - msg.data, true);
-      thrusterWest(255 - msg.data, false);
-    }
-    else
-    {
-      thrusterEast(255 + msg.data, false);
-      thrusterWest(255 + msg.data, true);
-    }
+    thrusterEast(255 - msg.data, true);
+    thrusterWest(255 - msg.data, false);
   }
   else
   {
-    if (msg.data > 0)
-    {
-      thrusterNorthSway(255 - msg.data, false);
-      thrusterSouthSway(255 - msg.data, true);
-    }
-    else
-    {
-      thrusterNorthSway(255 + msg.data, true);
-      thrusterSouthSway(255 + msg.data, false);
-    }
+    thrusterEast(255 + msg.data, false);
+    thrusterWest(255 + msg.data, true);
+  }
+}
+
+void PWMCbTurn(const std_msgs::Int32 &msg)
+{
+  if (msg.data > 0)
+  {
+    thrusterNorthSway(255 - msg.data, false);
+    thrusterSouthSway(255 - msg.data, true);
+  }
+  else
+  {
+    thrusterNorthSway(255 + msg.data, true);
+    thrusterSouthSway(255 + msg.data, false);
   }
 }
 
 ros::Subscriber<std_msgs::Int32> subPwmForward("/pwm/forward", &PWMCbForward);
 ros::Subscriber<std_msgs::Int32> subPwmSideward("/pwm/sideward", &PWMCbSideward);
 ros::Subscriber<std_msgs::Int32> subPwmUpward("/pwm/upward", &PWMCbUpward);
+ros::Subscriber<std_msgs::Int32> subPwmTurnSway("/pwm/turnsway", &PWMCbTurnSway);
 ros::Subscriber<std_msgs::Int32> subPwmTurn("/pwm/turn", &PWMCbTurn);
 
 void setup()
@@ -263,6 +261,7 @@ void setup()
   nh.subscribe(subPwmSideward);
   nh.subscribe(subPwmUpward);
   nh.subscribe(subPwmTurn);
+  nh.subscribe(subPwmTurnSway);
   Serial.begin(57600);
 }
 

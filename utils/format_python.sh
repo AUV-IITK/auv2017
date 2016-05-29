@@ -1,3 +1,3 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-pep8ify -nw ../
+autopep8 ../ --recursive --in-place --pep8-passes 2000 --verbose

@@ -1,25 +1,22 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(hardware_arduino)
+project(remote_control)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  message_runtime
   roslint
-  rosserial_arduino
-  rosserial_client
-  std_msgs
-  message_generation
   roscpp
   rospy
+  std_msgs
+  #  message_generation
 )
-
-## Check for lint errors
-roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
+set(ROSLINT_PYTHON_OPTS "--max-line-length=185")
+roslint_python()
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -72,10 +69,10 @@ roslint_cpp()
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+#generate_messages(
+# DEPENDENCIES
+# std_msgs
+#)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -107,11 +104,10 @@ roslint_cpp()
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  #  INCLUDE_DIRS include
-  #  LIBRARIES hardware_arduino
-  #  CATKIN_DEPENDS rosserial_arduino rosserial_client std_msgs
-  #  DEPENDS system_lib
-  CATKIN_DEPENDS roscpp rospy std_msgs message_runtime rosserial_arduino rosserial_client
+  # INCLUDE_DIRS include
+  LIBRARIES remote_control
+  CATKIN_DEPENDS message_runtime roscpp rospy std_msgs
+  DEPENDS system_lib
 )
 
 ###########
@@ -126,39 +122,26 @@ include_directories(
 )
 
 ## Declare a C++ library
-# add_library(hardware_arduino
-#   src/${PROJECT_NAME}/hardware_arduino.cpp
+# add_library(remote_controll
+#   src/${PROJECT_NAME}/remote_controll.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(hardware_arduino ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(remote_controll ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-#add_executable(arduino_node src/arduino_node.cpp)
+# add_executable(remote_controll_node src/remote_controll_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(hardware_arduino_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(remote_controll_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(hardware_arduino_node
+# target_link_libraries(remote_controll_node
 #   ${catkin_LIBRARIES}
 # )
-
-rosserial_generate_ros_lib(
-  PACKAGE rosserial_arduino
-  SCRIPT make_libraries.py
-)
-
-rosserial_configure_client(
-  DIRECTORY src
-  TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
-)
-
-rosserial_add_client_target(src arduino_node ALL)
-rosserial_add_client_target(src arduino_node-upload)
 
 #############
 ## Install ##
@@ -175,7 +158,7 @@ rosserial_add_client_target(src arduino_node-upload)
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS hardware_arduino hardware_arduino_node
+# install(TARGETS remote_controll remote_controll_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -200,7 +183,7 @@ rosserial_add_client_target(src arduino_node-upload)
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_hardware_arduino.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_remote_controll.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
