@@ -39,4 +39,6 @@
   catkin_make roslint_hardware_imu &&
   # build debug layer
   catkin_make --pkg varun_description &&
-catkin_make --pkg varun_gazebo )
+  catkin_make --pkg varun_gazebo &&
+  catkin_make --pkg remote_control &&
+catkin_make roslint_remote_control)
