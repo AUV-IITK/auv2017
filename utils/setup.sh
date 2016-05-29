@@ -2,7 +2,7 @@
 #
 # This script downloads and installs all the dependencies of packages in auv repo.
 #
-ROS_DISTRO=$'kinetic'
+ROS_DISTRO=$'indigo'
 
 STR=$'This script does not install ros
 Please refer to https://github.com/AUV-IITK/AUVWiki/wiki for recommended version of ros'
@@ -11,6 +11,10 @@ echo "$STR"
 echo "installing required packages"
 sudo apt-get update
 sudo apt-get install -y python-catkin-pkg python-rosdep ros-$ROS_DISTRO-catkin
+# installing for syntax check
+sudo apt-get install python-pip
+sudo pip install autopep8
+sudo apt-get install clang-format-3.6
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Prepare rosdep to install dependencies.
 rosdep update
