@@ -43,6 +43,7 @@ cd ~/catkin_ws
 rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
 
 # setup rosserial arduino
+source /opt/ros/$ROS_DISTRO/setup.bash
 echo "setting up rosserial_arduino"
 mkdir -p ~/sketchbook/libraries
 cd ~/sketchbook/libraries
