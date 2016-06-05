@@ -17,7 +17,11 @@ sudo pip install autopep8
 sudo apt-get install clang-format-3.6
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Prepare rosdep to install dependencies.
+cd ~/catkin_ws/src
 rosdep update
+wstool init
+if [[ -f $ROSINSTALL_FILE ]] ; then wstool merge $ROSINSTALL_FILE ; fi
+wstool up
 
 echo "Installing dependencies"
 sudo apt-get install -y \
@@ -33,6 +37,7 @@ ros-$ROS_DISTRO-image-transport \
 ros-$ROS_DISTRO-gazebo-ros \
 ros-$ROS_DISTRO-roslint
 source /opt/ros/$ROS_DISTRO/setup.bash
+
 # package depdencies: install using rosdep.
 cd ~/catkin_ws
 rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO

@@ -63,8 +63,6 @@ before_install:
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
   - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-catkin 
-  - sudo apt-get install -y ros-$ROS_DISTRO-ros-base ros-$ROS_DISTRO-vision-opencv libopencv-dev ros-$ROS_DISTRO-rosserial-arduino ros-$ROS_DISTRO-rosserial
-  - sudo apt-get install -y ros-$ROS_DISTRO-convex-decomposition ros-$ROS_DISTRO-pr2-description
   - source /opt/ros/$ROS_DISTRO/setup.bash
   # Prepare rosdep to install dependencies.
   - sudo rosdep init
@@ -88,23 +86,11 @@ install:
 # wstool looks for a ROSINSTALL_FILE defined in the environment variables.
 before_script:
   # source dependencies: install using wstool.
-  - cd ~/catkin_ws/src
-  - wstool init
-  - if [[ -f $ROSINSTALL_FILE ]] ; then wstool merge $ROSINSTALL_FILE ; fi
-  - wstool up
-  # package depdencies: install using rosdep.
-  - cd ~/catkin_ws
-  - rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+ - cd ~/catkin_ws/src/auv/utils/setup.sh
 
 # Compile and test. If the CATKIN_OPTIONS file exists, use it as an argument to
 # catkin_make.
 script:
-  # installing rosserial arduino
-  - cd ~
-  - mkdir -p sketchbook/libraries
-  - cd sketchbook/libraries
-  - rm -rf ros_lib
-  - rosrun rosserial_arduino make_libraries.py .
   # compile all pkgs
   - cd ~/catkin_ws
   - src/auv/utils/build.sh
