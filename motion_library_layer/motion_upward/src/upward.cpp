@@ -34,6 +34,7 @@ private:
   bool success;
   ros::Publisher PWM, direction;
   float p, i, d;
+  int count = 0;
 
 public:
   // Constructor, called when new instance of class declared
@@ -94,7 +95,7 @@ public:
     if (!upwardServer_.isActive())
       return;
 
-    while (!upwardServer_.isPreemptRequested() && ros::ok())
+    while (!upwardServer_.isPreemptRequested() && ros::ok() && count < 10)
     {
       error = finalHeight - presentHeight;
       integral += (error * dt);
@@ -132,7 +133,8 @@ public:
         pwm.data = 0;
         PWM.publish(pwm);
         ROS_INFO("thrusters stopped");
-        break;
+        count++;
+        // break;
       }
 
       if (upwardServer_.isPreemptRequested() || !ros::ok())
@@ -143,6 +145,13 @@ public:
         reached = false;
         break;
       }
+    }
+    if (reached)
+    {
+      result_.Result = reached;
+      ROS_INFO("%s: Succeeded", action_name_.c_str());
+      // set the action state to succeeded
+      upwardServer_.setSucceeded(result_);
     }
   }
   int mod(int a)
