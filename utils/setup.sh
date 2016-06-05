@@ -27,6 +27,7 @@ echo "Installing dependencies"
 sudo apt-get install -y \
 ros-$ROS_DISTRO-vision-opencv \
 libopencv-dev \
+ros-$ROS_DISTRO-rosbash \
 ros-$ROS_DISTRO-rosserial-arduino \
 ros-$ROS_DISTRO-rosserial \
 ros-$ROS_DISTRO-convex-decomposition \
@@ -40,7 +41,7 @@ source /opt/ros/$ROS_DISTRO/setup.bash
 
 # package depdencies: install using rosdep.
 cd ~/catkin_ws
-rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+rosdep install -y --from-paths src --ig nore-src --rosdistro $ROS_DISTRO
 
 # setup rosserial arduino
 source /opt/ros/$ROS_DISTRO/setup.bash
