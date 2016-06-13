@@ -16,6 +16,19 @@
     <include>
       <uri>model://ground_plane</uri>
     </include>
+    <!-- outside blue box so that grey background is hidden -->
+    <include>
+      <uri>model://varun_gazebo/models/perimeter</uri>
+      <pose>100 0 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://varun_gazebo/models/perimeter</uri>
+      <pose>0 100 0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://varun_gazebo/models/perimeter</uri>
+      <pose>0 -100 0 0 0 0</pose>
+    </include>
     <!-- Global light source -->
     <include>
       <uri>model://varun_gazebo/models/light/light_x</uri>
