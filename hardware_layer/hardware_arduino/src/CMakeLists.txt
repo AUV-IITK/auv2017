@@ -10,3 +10,9 @@ generate_arduino_firmware(arduino_node
   BOARD uno
   PORT /dev/ttyACM0
 )
+
+generate_arduino_firmware(new_arduino_node
+  SRCS new_arduino_node.cpp ${ROS_LIB_DIR}/time.cpp
+  BOARD uno
+  PORT /dev/ttyACM0
+)
