@@ -37,6 +37,7 @@ void callback(motion_turn::turningConfig &config, double level)
       ROS_INFO("Goal Cancelled");
     }
     goal.AngleToTurn = config.double_param;
+    goal.loop = 10;
     can.sendGoal(goal);
     ROS_INFO("Goal Send %f", goal.AngleToTurn);
     goalSet = true;

@@ -57,6 +57,7 @@ void callback(motion_forward::forwardConfig &config, double level)
       ROS_INFO("Goal Cancelled");
     }
     goal.Goal = config.double_param;
+    goal.loop = 10;
     can.sendGoal(goal);
     boost::thread spin_thread(&spinThread);
     ROS_INFO("Goal Send %f", goal.Goal);

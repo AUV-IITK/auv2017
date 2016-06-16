@@ -69,6 +69,7 @@ public:
   {
     ROS_INFO("Inside analysisCB");
 
+    int count = 0;
     int loopRate = 10;
     ros::Rate loop_rate(loopRate);
 
@@ -94,7 +95,7 @@ public:
     if (!turnServer_.isActive())
       return;
 
-    while (!turnServer_.isPreemptRequested() && ros::ok())
+    while (!turnServer_.isPreemptRequested() && ros::ok() && count < goal->loop)
     {
       error = finalAngularPosition - presentAngularPosition;
       integral += (error * dt);
@@ -134,7 +135,7 @@ public:
         pwm.data = 0;
         PWM.publish(pwm);
         ROS_INFO("thrusters stopped");
-        break;
+        count++;
       }
 
       if (turnServer_.isPreemptRequested() || !ros::ok())
