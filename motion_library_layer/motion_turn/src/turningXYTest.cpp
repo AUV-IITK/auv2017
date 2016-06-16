@@ -17,7 +17,7 @@ bool goalSet = false;
 // dynamic reconfig
 void callback(motion_turn::turningConfig &config, double level)
 {
-  ROS_INFO("Reconfigure Request: %f %s", config.double_param, config.bool_param ? "True" : "False");
+  ROS_INFO("Reconfigure Request: %f %s %d", config.double_param, config.bool_param ? "True" : "False", config.loop);
   Client &can = *chutiya;
   if (!config.bool_param)
   {
@@ -37,9 +37,9 @@ void callback(motion_turn::turningConfig &config, double level)
       ROS_INFO("Goal Cancelled");
     }
     goal.AngleToTurn = config.double_param;
-    goal.loop = 10;
+    goal.loop = config.loop;
     can.sendGoal(goal);
-    ROS_INFO("Goal Send %f", goal.AngleToTurn);
+    ROS_INFO("Goal Send %f loop:%d", goal.AngleToTurn, goal.loop);
     goalSet = true;
   }
 }
