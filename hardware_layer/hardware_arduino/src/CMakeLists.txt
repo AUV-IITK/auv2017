@@ -8,11 +8,11 @@ add_definitions(-DUSB_CON)
 generate_arduino_firmware(arduino_node
   SRCS arduino_node.cpp ${ROS_LIB_DIR}/time.cpp
   BOARD uno
-  PORT /dev/ttyACM0
+  PORT /dev/arduino
 )
 
-generate_arduino_firmware(new_arduino_node
-  SRCS new_arduino_node.cpp ${ROS_LIB_DIR}/time.cpp
+generate_arduino_firmware(testing_arduino_node
+  SRCS testing_arduino_node.cpp ${ROS_LIB_DIR}/time.cpp
   BOARD uno
-  PORT /dev/ttyACM0
+  PORT /dev/arduino
 )
