@@ -1,7 +1,7 @@
 // Copyright 2016 AUV-IITK
 #include <cv.h>
 #include <highgui.h>
-#include "ros/ros.h"
+#include <ros/ros.h>
 #include "std_msgs/String.h"
 #include "std_msgs/Int8.h"
 #include <fstream>
@@ -10,7 +10,6 @@
 #include "std_msgs/Float64MultiArray.h"
 #define D 10
 #include <sstream>
-using namespace std;
 using namespace cv;
 
 bool IP = false;
@@ -22,15 +21,11 @@ void lineDetectedListener(std_msgs::Bool msg)
 
 int main(int argc, char* argv[])
 {
-               cout<<"chl gya";
-               ROS_INFO("asa24");
-  int height, width, step, channels;  // parameters of the image we are working on
+   int height, width, step, channels;  // parameters of the image we are working on
   int i, j, k, t1min = 0, t1max = 9, t2min = 104, t2max = 260, t3min = 185, t3max = 260, Rmin = 0,
                Rmax = 0;  // other variables used
-               ROS_INFO("asa24");
-  VideoWriter output_cap(argv[2], CV_FOURCC('D', 'I', 'V', 'X'), 25, Size(640, 480));
-  ROS_INFO("asa12");
-  ros::init(argc, argv, "image");
+   VideoWriter output_cap(argv[2], CV_FOURCC('D', 'I', 'V', 'X'), 25, Size(640, 480));
+   ros::init(argc, argv, "image");
   ros::NodeHandle n;
   // ROS_INFO("asa");
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("balls", 1000);
@@ -110,7 +105,7 @@ int main(int argc, char* argv[])
   // cin >> D;
   
   while (!IP)
-  {
+  
     std_msgs::Float64MultiArray array;
     // Get one frame
 
@@ -159,7 +154,7 @@ int main(int argc, char* argv[])
     GaussianBlur(thresholded, thresholded, Size(9, 9), 0, 0, 0);
 
     // find contours
-    vector<vector<Point> > contours;
+    std::vector<std::vector<Point> > contours;
     Mat thresholded_Mat = thresholded;
     findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours in the image
     double largest_area = 0, largest_contour_index = 0;
@@ -178,13 +173,13 @@ int main(int argc, char* argv[])
       }
     }
     // Convex HULL
-    vector<vector<Point> > hull(contours.size());
+    std::vector<std::vector<Point> > hull(contours.size());
     convexHull(Mat(contours[largest_contour_index]), hull[largest_contour_index], false);
 
     output_cap.write(frame);
 
-    vector<Point2f> center(1);
-    vector<float> radius(1);
+    std::vector<Point2f> center(1);
+    std::vector<float> radius(1);
     minEnclosingCircle(contours[largest_contour_index], center[0], radius[0]);
 
     Mat circles = frame;
