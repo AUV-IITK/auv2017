@@ -55,4 +55,6 @@ rosrun rosserial_arduino make_libraries.py .
 echo "Please add these to your ~/.bashrc file"
 echo "source /opt/ros/kinetic/setup.sh"
 echo "source /usr/share/gazebo-7/setup.sh"
+echo "For using gazebosim on your system plz install and configure these settings"
 echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH/home/$USER/catkin_ws/src/:/home/$USER/catkin_ws/src/auv/debug_layer/varun_gazebo/models/:"
+echo "Please download camera model from http://models.gazebosim.org/camera/ and place in ~/.gazebo/models directory"
