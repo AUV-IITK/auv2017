@@ -7,14 +7,14 @@
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <pose>0.55 0.16 0 0 0 0</pose>
-        <mass>27.5</mass>
+        <mass>38.835</mass>
         <inertia>
-          <ixx>1</ixx>
-          <ixy>1</ixy>
-          <ixz>1</ixz>
-          <iyy>1</iyy>
-          <iyz>1</iyz>
-          <izz>1</izz>
+          <ixx>1.36</ixx>
+          <ixy>-1.25</ixy>
+          <ixz>0</ixz>
+          <iyy>5.13</iyy>
+          <iyz>0</iyz>
+          <izz>5.68</izz>
         </inertia>
       </inertial>
       <visual name="body_visual">
