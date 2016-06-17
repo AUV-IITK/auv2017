@@ -32,5 +32,37 @@
         </geometry>
       </collision>
     </link>
+    <include>
+      <uri>model://camera</uri>
+      <name>front_camera</name>
+      <pose>1.1 0.12 0.15 0 0 0</pose>
+    </include>
+    <joint name="front_camera_joint" type="revolute">
+      <child>front_camera::link</child>
+      <parent>body</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
+    <include>
+      <uri>model://camera</uri>
+      <name>bottom_camera</name>
+      <pose>0.51 0.12 0.0977 0 1.5707963 0</pose>
+    </include>
+    <joint name="bottom_camera_joint" type="revolute">
+      <child>bottom_camera::link</child>
+      <parent>body</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
   </model>
 </sdf>
