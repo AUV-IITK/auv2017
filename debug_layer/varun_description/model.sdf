@@ -92,5 +92,11 @@
         </plugin>
       </sensor>
     </link>
+    <plugin filename="libgazebo_ros_imu.so" name="imu_plugin">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>0.0</updateRate>
+      <topicName>varun/sensors/imu/imu_raw</topicName>
+      <bodyName>body</bodyName>
+    </plugin>
   </model>
 </sdf>
