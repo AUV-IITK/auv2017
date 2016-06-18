@@ -6,4 +6,4 @@ int32 loop
 bool Result
 ---
 #feedback
-float32 HeightRemaining
+float32 DepthRemaining
