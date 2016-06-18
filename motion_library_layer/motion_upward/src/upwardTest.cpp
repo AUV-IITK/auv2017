@@ -68,7 +68,7 @@ void callback(motion_upward::upwardConfig &config, double level)
 // Callback for Feedback from Action Server
 void upwardCb(motion_commons::UpwardActionFeedback msg)
 {
-  ROS_INFO("feedback recieved %fsec remaining ", msg.feedback.HeightRemaining);
+  ROS_INFO("feedback recieved %fsec remaining ", msg.feedback.DepthRemaining);
 }
 
 int main(int argc, char **argv)
