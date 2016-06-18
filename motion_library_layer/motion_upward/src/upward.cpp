@@ -12,9 +12,9 @@
 using std::string;
 typedef actionlib::SimpleActionServer<motion_commons::UpwardAction> Server;  // defining the Client type
 
-float presentHeight = 0;
-float previousHeight = 0;
-float finalHeight, error, output;
+float presentDepth = 0;
+float previousDepth = 0;
+float finalDepth, error, output;
 bool initData = false;
 
 std_msgs::Int32 pwm;  // pwm to be send to arduino
@@ -67,7 +67,7 @@ public:
   }
 
   // called when new goal recieved
-  // Start motion and finish it, if not interupted
+  // Start motion and finish it, if not interrupted
   void analysisCB(const motion_commons::UpwardGoalConstPtr goal)
   {
     ROS_INFO("Inside analysisCB");
@@ -76,16 +76,14 @@ public:
     int loopRate = 10;
     ros::Rate loop_rate(loopRate);
 
-    // waiting till we recieve the first value from Camera else it's useless to
-    // to any calculations
+    // waiting till we recieve the first value from Camera/pressure sensor else it's useless do any calculations
     while (!initData)
     {
-      ROS_INFO("Waiting to get first input from Camera");
+      ROS_INFO("Waiting to get first input from Pressure Sensor");
       loop_rate.sleep();
     }
 
-    if (goal->Goal == 1)
-      finalHeight = 0;
+    finalDepth = goal->Goal;
 
     float derivative = 0, integral = 0, dt = 1.0 / loopRate;
     bool reached = false;
@@ -97,9 +95,9 @@ public:
 
     while (!upwardServer_.isPreemptRequested() && ros::ok() && count < goal->loop)
     {
-      error = finalHeight - presentHeight;
+      error = finalDepth - presentDepth;
       integral += (error * dt);
-      derivative = (presentHeight - previousHeight) / dt;
+      derivative = (presentDepth - previousDepth) / dt;
 
       output = (p * error) + (i * integral) + (d * derivative);
 
@@ -113,7 +111,7 @@ public:
           pwm.data = minPWM;
       }
 
-      feedback_.HeightRemaining = error;
+      feedback_.DepthRemaining = error;
 
       upwardServer_.publishFeedback(feedback_);
       PWM.publish(pwm);
@@ -135,6 +133,7 @@ public:
         ROS_INFO("thrusters stopped");
         count++;
       }
+      else count = 0;
 
       if (upwardServer_.isPreemptRequested() || !ros::ok())
       {
@@ -194,19 +193,17 @@ void callback(motion_upward::pidConfig &config, double level)
 
 void distanceCb(std_msgs::Float64 msg)
 {
-  // this is used to set the final angle after getting the value of first intial
-  // position
+  // this is used to set the final depth after getting the value of first intial position
   if (initData == false)
   {
-    presentHeight = msg.data;
-    previousHeight = presentHeight;
+    presentDepth = msg.data;
+    previousDepth = presentDepth;
     initData = true;
   }
   else
   {
-    previousHeight = presentHeight;
-    presentHeight = msg.data;
-    // ROS_INFO("New angular postion %f", msg.data);
+    previousDepth = presentDepth;
+    presentDepth = msg.data;
   }
 }
 
