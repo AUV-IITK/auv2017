@@ -11,6 +11,10 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
+#include <image_transport/image_transport.h>
+#include "std_msgs/Float32MultiArray.h"
+#include <cv_bridge/cv_bridge.h>
+#include <sstream>
 #include "std_msgs/Float64MultiArray.h"
 #define D 10
 #include <sstream>
@@ -21,6 +25,23 @@ void lineDetectedListener(std_msgs::Bool msg)
 {
   IP = msg.data;
   std::cout << "hi callback";
+}
+
+Mat frame;
+
+void imageCallback(const sensor_msgs::ImageConstPtr &msg)
+{
+  try
+  {
+    cout<<"imageCallback"<<endl;
+    // imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
+    frame=cv_bridge::toCvShare(msg, "bgr8")->image;
+    // waitKey(10);
+  }
+  catch (cv_bridge::Exception &e)
+  {
+    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+  }
 }
 
 int main(int argc, char* argv[])
@@ -35,6 +56,8 @@ int main(int argc, char* argv[])
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("balls", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("/balls_off", 1000, &lineDetectedListener);
   ros::Rate loop_rate(1000);
+  
+  image_transport::ImageTransport it(n); 
 
   CvMat* threshold_matrix = cvCreateMat(2, 3, CV_32FC1);
 
@@ -56,6 +79,8 @@ int main(int argc, char* argv[])
 
   int camno = (**(argv + 1) - '0');
   cv::VideoCapture cap(camno);
+  image_transport::Subscriber sub = it.subscribe("camera/image", 1, imageCallback);
+        cout<<"in while"<<endl;
 
   //*****************************************************************************************************************\\
 
@@ -126,7 +151,10 @@ int main(int argc, char* argv[])
       cap >> frame;
 
       if (frame.empty())
+    {
+    ros::spinOnce();
         continue;
+    }
       // get the image data
       height = frame.rows;
       width = frame.cols;

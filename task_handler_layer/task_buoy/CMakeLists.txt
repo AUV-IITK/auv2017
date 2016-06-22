@@ -15,10 +15,13 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   task_commons
   motion_commons
+  cv_bridge
+  sensor_msgs
+  image_transport
 )
 
 ## Check for lint errors
-roslint_cpp()
+# roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
@@ -89,6 +92,9 @@ find_package( OpenCV REQUIRED )
 #   cfg/DynReconf1.cfg
 #   cfg/DynReconf2.cfg
 # )
+add_message_files(DIRECTORY msg
+  FILES ResizedImage.msg
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -99,6 +105,11 @@ find_package( OpenCV REQUIRED )
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+generate_messages(
+   DEPENDENCIES
+  std_msgs
+  sensor_msgs
+)
 
 catkin_package(
   #  INCLUDE_DIRS include
@@ -127,6 +138,16 @@ target_link_libraries(buoy_detection ${catkin_LIBRARIES})
 target_link_libraries(buoy_server ${catkin_LIBRARIES})
 target_link_libraries(buoy_client ${catkin_LIBRARIES})
 
+# target_link_libraries(image ${catkin_LIBRARIES})
+# add_dependencies(image task_buoy_generate_messages_cpp)
+# target_link_libraries(image  ${OpenCV_LIBS} )
+# target_link_libraries(image  ${opencv2/highgui.hpp} )
+# target_link_libraries(image  ${cv_bridge/cv_bridge.h} )
+# target_link_libraries(image ${opencv2/videoio/videoio.hpp} )
+
+add_executable(vid_pub src/vid_pub.cpp)
+target_link_libraries(vid_pub ${catkin_LIBRARIES})
+target_link_libraries(vid_pub ${OpenCV_LIBS})
 ## Declare a C++ library
 # add_library(task_buoy
 #   src/${PROJECT_NAME}/task_buoy.cpp
