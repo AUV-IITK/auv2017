@@ -37,7 +37,7 @@ void spinThread()
 // Send new goal or cancel goal depending on input from GUI
 void callback(motion_forward::forwardConfig &config, double level)
 {
-  ROS_INFO("Reconfigure Request: %f %s", config.double_param, config.bool_param ? "True" : "False");
+  ROS_INFO("Reconfigure Request: %f %s %d", config.double_param, config.bool_param ? "True" : "False", config.loop);
   Client &can = *clientPointer;
   if (!config.bool_param)
   {
@@ -57,9 +57,10 @@ void callback(motion_forward::forwardConfig &config, double level)
       ROS_INFO("Goal Cancelled");
     }
     goal.Goal = config.double_param;
+    goal.loop = config.loop;
     can.sendGoal(goal);
     boost::thread spin_thread(&spinThread);
-    ROS_INFO("Goal Send %f", goal.Goal);
+    ROS_INFO("Goal Send %f loop:%d", goal.Goal, goal.loop);
     moving = true;
   }
 }
