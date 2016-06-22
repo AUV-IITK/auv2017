@@ -93,11 +93,7 @@ public:
     if (!sidewardServer_.isActive())
       return;
 
-<<<<<<< HEAD
-    while (!sidewardServer_.isPreemptRequested() && ros::ok() && count < 10)
-=======
     while (!sidewardServer_.isPreemptRequested() && ros::ok() && count < goal->loop)
->>>>>>> d7b531f09c322befff3a72ff2b3f7f83d2500edb
     {
       error = finalSidePosition - presentSidePosition;
       integral += (error * dt);

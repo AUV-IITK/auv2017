@@ -30,7 +30,6 @@
 /************************ for New Ground Testing Bot *******************/
 #define led 13  // 13
 
-<<<<<<< HEAD
 #define pwmPinWest 7          // 3
 #define pwmPinEast 6          // 2
 #define directionPinWest1 23  // 31
@@ -44,7 +43,6 @@
 #define directionPinNorthSway2 29  // 30
 #define directionPinSouthSway1 27  // 33
 #define directionPinSouthSway2 26  // 32
-=======
 #define pwmPinWest 5  // 3
 #define pwmPinEast 2  // 2
 #define directionPinWest1 6  // 31
@@ -58,7 +56,6 @@
 #define directionPinNorthSway2 9  // 30
 #define directionPinSouthSway1 11  // 33
 #define directionPinSouthSway2 12  // 32
->>>>>>> d7b531f09c322befff3a72ff2b3f7f83d2500edb
 
 #define pwmPinNorthUp 13  // 3
 #define pwmPinSouthUp 13  // 2
