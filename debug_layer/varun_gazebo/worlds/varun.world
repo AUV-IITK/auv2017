@@ -13,6 +13,16 @@
         <density>1</density>
       </fog>
     </scene>
+    <physics name="quick" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>50</iters>
+        </solver>
+      </ode>
+    </physics>
     <include>
       <uri>model://ground_plane</uri>
     </include>
