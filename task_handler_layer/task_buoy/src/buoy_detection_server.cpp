@@ -69,7 +69,9 @@ public:
     task_buoy_detectionServer_.start();
   }
 
-  ~task_buoy_detectionInnerClass(void) {}
+  ~task_buoy_detectionInnerClass(void)
+  {
+  }
 
   void buoyNavigation(std_msgs::Float64MultiArray array)
   {
@@ -114,8 +116,8 @@ public:
     UpwardClient_.waitForServer();
     // TurnClient_.waitForServer();
 
-    // boost::thread vision_thread(&task_buoy_detectionInnerClass::startIP, this);
-
+    boost::thread vision_thread(&task_buoy_detectionInnerClass::startIP, this);
+    task_buoy_detectionInnerClass::startIP();
     sidewardgoal.Goal = 0;
     SidewardClient_.sendGoal(sidewardgoal);
     upwardgoal.Goal = 0;
@@ -166,7 +168,9 @@ public:
 
   void startIP()
   {
-    std::system("rosrun task_buoy image 0 x.avi");
+    std_msgs::Bool msg;
+    msg.data = false;
+    off_pub_.publish(msg);
   }
 
   void stopIP()

@@ -31,13 +31,13 @@
 #define led 13  // 13
 
 #define pwmPinWest 7          // 3
-#define pwmPinEast 6         // 2
+#define pwmPinEast 6          // 2
 #define directionPinWest1 23  // 31
 #define directionPinWest2 22  // 30
 #define directionPinEast1 24  // 33
 #define directionPinEast2 25  // 32
 
-#define pwmPinNorthSway 4         // 3
+#define pwmPinNorthSway 4          // 3
 #define pwmPinSouthSway 5          // 2
 #define directionPinNorthSway1 28  // 31
 #define directionPinNorthSway2 29  // 30
