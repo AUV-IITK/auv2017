@@ -9,12 +9,17 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  gazebo_ros
   geometry_msgs
-  #  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+# Depend on system install of Gazebo
+find_package(gazebo REQUIRED)
+
+## Check for lint errors
+roslint_cpp()
 set(ROSLINT_PYTHON_OPTS "--max-line-length=185")
 roslint_python()
 
@@ -107,7 +112,7 @@ catkin_package(
   # INCLUDE_DIRS include
   # LIBRARIES
   CATKIN_DEPENDS message_runtime roscpp rospy std_msgs geometry_msgs
-  # DEPENDS
+  DEPENDS roscpp gazebo_ros
 )
 
 ###########
@@ -117,14 +122,15 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
-  ${catkin_INCLUDE_DIRS}
-)
+link_directories(${GAZEBO_LIBRARY_DIRS})
+include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
 ## Declare a C++ library
 # add_library(remote_controll
 #   src/${PROJECT_NAME}/remote_controll.cpp
 # )
+add_library(${PROJECT_NAME} src/varun_motion_plugin.cpp)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
