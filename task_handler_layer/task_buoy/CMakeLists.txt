@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib_msgs
   message_generation
   task_commons
+  motion_commons
 )
 
 ## Check for lint errors
@@ -102,7 +103,7 @@ find_package( OpenCV REQUIRED )
 catkin_package(
   #  INCLUDE_DIRS include
   #  LIBRARIES task_buoy
-  CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation task_commons
+  CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation task_commons motion_commons
   #  DEPENDS system_lib
 )
 
