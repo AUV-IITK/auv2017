@@ -7,10 +7,13 @@
 #include <fstream>
 #include <vector>
 #include <std_msgs/Bool.h>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/opencv.hpp>
+#include <opencv/highgui.h>
 #include "std_msgs/Float64MultiArray.h"
 #define D 10
 #include <sstream>
-// using namespace cv;
 
 bool IP = true;
 
