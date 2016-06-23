@@ -15,8 +15,6 @@ sudo apt-get install -y python-catkin-pkg python-rosdep ros-$ROS_DISTRO-catkin
 sudo apt-get install python-pip
 sudo pip install autopep8
 sudo apt-get install clang-format-3.6
-# install gazebo
-curl -ssL http://get.gazebosim.org | sh
 # source ros setup script
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Prepare rosdep to install dependencies.
@@ -59,5 +57,5 @@ rosrun rosserial_arduino make_libraries.py .
 echo "Please add these to your ~/.bashrc file"
 echo "source /opt/ros/kinetic/setup.sh"
 echo "source /usr/share/gazebo-7/setup.sh"
-echo "For using gazebosim on your system plz install and configure these settings"
-echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH/home/$USER/catkin_ws/src/auv/debug_layer/:/home/$USER/catkin_ws/src/auv/debug_layer/varun_gazebo/models/:"
+echo "For using gazebosim on your system plz install by running #curl -ssL http://get.gazebosim.org | sh"
+echo "and configure these settings #export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH/home/$USER/catkin_ws/src/auv/debug_layer/:/home/$USER/catkin_ws/src/auv/debug_layer/varun_gazebo/models/:"
