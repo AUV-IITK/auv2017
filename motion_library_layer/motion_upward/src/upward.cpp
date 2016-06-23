@@ -34,6 +34,7 @@ private:
   bool success;
   ros::Publisher PWM, direction;
   float p, i, d;
+  int count = 0;
 
 public:
   // Constructor, called when new instance of class declared
@@ -143,6 +144,13 @@ public:
         reached = false;
         break;
       }
+    }
+    if (reached)
+    {
+      result_.Result = reached;
+      ROS_INFO("%s: Succeeded", action_name_.c_str());
+      // set the action state to succeeded
+      upwardServer_.setSucceeded(result_);
     }
   }
   int mod(int a)

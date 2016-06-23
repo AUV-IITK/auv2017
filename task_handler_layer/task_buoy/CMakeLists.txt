@@ -10,13 +10,16 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  sensor_msgs
+  actionlib
+  actionlib_msgs
 )
 
 ## Check for lint errors
 roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
 find_package( OpenCV REQUIRED )
 
 
@@ -62,10 +65,10 @@ find_package( OpenCV REQUIRED )
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#  std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+ std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -100,7 +103,7 @@ catkin_package(
   # INCLUDE_DIRS include
   #  LIBRARIES task_buoy
   
-  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation
   
   # DEPENDS system_lib
 )
@@ -114,11 +117,16 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 add_executable(image src/image.cpp)
-target_link_libraries(image ${catkin_LIBRARIES})
+add_executable(buoy_detection_server src/buoy_detection_server.cpp)
+add_executable(buoy_detection_client src/buoy_detection_client.cpp)
 target_link_libraries(image  ${OpenCV_LIBS} )
+target_link_libraries(image ${catkin_LIBRARIES})
+target_link_libraries(buoy_detection_server ${catkin_LIBRARIES})
+target_link_libraries(buoy_detection_client ${catkin_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(task_buoy
