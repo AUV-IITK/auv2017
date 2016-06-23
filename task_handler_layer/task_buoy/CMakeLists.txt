@@ -9,10 +9,11 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  message_generation
   sensor_msgs
   actionlib
   actionlib_msgs
+  message_generation
+  task_commons
 )
 
 ## Check for lint errors
@@ -39,40 +40,38 @@ find_package( OpenCV REQUIRED )
 ## * In the file package.xml:
 ##   * add a build_depend tag for "message_generation"
 ##   * add a build_depend and a run_depend tag for each package in MSG_DEP_SET
-##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
-##     but can be declared for certainty nonetheless:
+##   * If MSG_DEP_SET isn't empty the following dependencies might have been
+##     pulled in transitively but can be declared for certainty nonetheless:
+##     * add a build_depend tag for "message_generation"
 ##     * add a run_depend tag for "message_runtime"
 ## * In this file (CMakeLists.txt):
 ##   * add "message_generation" and every package in MSG_DEP_SET to
 ##     find_package(catkin REQUIRED COMPONENTS ...)
 ##   * add "message_runtime" and every package in MSG_DEP_SET to
-##      catkin_package(CATKIN_DEPENDS message_runtime )
+##     catkin_package(CATKIN_DEPENDS ...)
 ##   * uncomment the add_*_files sections below as needed
 ##     and list every .msg/.srv/.action file to be processed
 ##   * uncomment the generate_messages entry below
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-
-
-## Generate services in the 'srv' folder
-
-## Generate actions in the 'action' folder
-# add_action_files(
+# add_message_files(
 #   FILES
-#   Action1.action
-#   Action2.action
+#   Message1.msg
+#   Message2.msg
 # )
 
-## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
- std_msgs
-)
+## Generate services in the 'srv' folder
+# add_service_files(
+#   FILES
+#   Service1.srv
+#   Service2.srv
+# )
 
-################################################
-## Declare ROS dynamic reconfigure parameters ##
-################################################
+#generate_messages(
+#  DEPENDENCIES
+# std_msgs
+#)
 
 ## To declare and build dynamic reconfigure parameters within this
 ## package, follow these steps:
@@ -99,13 +98,12 @@ generate_messages(
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+
 catkin_package(
-  # INCLUDE_DIRS include
+  #  INCLUDE_DIRS include
   #  LIBRARIES task_buoy
-  
-  CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation
-  
-  # DEPENDS system_lib
+  CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation task_commons
+  #  DEPENDS system_lib
 )
 
 ###########
@@ -115,7 +113,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
+include_directories(include
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
 )
