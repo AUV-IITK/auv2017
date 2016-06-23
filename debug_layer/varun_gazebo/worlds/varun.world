@@ -150,5 +150,6 @@
         <view_controller>orbit</view_controller>
       </camera>
     </gui>
+    <plugin name="varun_gazebo" filename="libvarun_gazebo.so"/>
   </world>
 </sdf>
