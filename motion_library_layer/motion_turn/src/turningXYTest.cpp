@@ -9,7 +9,7 @@
 #include <motion_turn/turningConfig.h>
 
 typedef actionlib::SimpleActionClient<motion_commons::TurnAction> Client;
-Client *chutiya;
+Client *clientPointer;
 motion_commons::TurnGoal goal;
 
 bool goalSet = false;
@@ -18,7 +18,7 @@ bool goalSet = false;
 void callback(motion_turn::turningConfig &config, double level)
 {
   ROS_INFO("Reconfigure Request: %f %s %d", config.double_param, config.bool_param ? "True" : "False", config.loop);
-  Client &can = *chutiya;
+  Client &can = *clientPointer;
   if (!config.bool_param)
   {
     if (goalSet)
@@ -32,7 +32,7 @@ void callback(motion_turn::turningConfig &config, double level)
   {
     if (goalSet)
     {
-      Client &can = *chutiya;
+      Client &can = *clientPointer;
       can.cancelGoal();
       ROS_INFO("Goal Cancelled");
     }
@@ -60,7 +60,7 @@ int main(int argc, char **argv)
   ros::Subscriber sub_ = nh.subscribe<motion_commons::TurnActionFeedback>("/turningXY/feedback", 1000, &turnCb);
 
   Client TurnTestClient("turningXY");
-  chutiya = &TurnTestClient;
+  clientPointer = &TurnTestClient;
   // this wait has to be implemented here so that we can wait for the server to
   // start
   ROS_INFO("Waiting for action server to start.");

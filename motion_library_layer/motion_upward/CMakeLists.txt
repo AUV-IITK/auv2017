@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  motion_commons
 )
 
 ## Check for lint errors
@@ -102,7 +103,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   #  INCLUDE_DIRS include
   #  LIBRARIES motion_upward
-  CATKIN_DEPENDS actionlib actionlib_msgs
+  CATKIN_DEPENDS actionlib actionlib_msgs motion_commons
   #  DEPENDS system_lib
 )
 

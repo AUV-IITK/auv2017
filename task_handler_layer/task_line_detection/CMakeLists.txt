@@ -14,6 +14,8 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib
   actionlib_msgs
   message_generation
+  task_commons
+  motion_commons
 )
 
 ## Check for lint errors
@@ -102,7 +104,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   #  INCLUDE_DIRS include
   #  LIBRARIES task_line_detection
-  CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
+  CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs task_commons motion_commons
   #  DEPENDS system_lib
 )
 

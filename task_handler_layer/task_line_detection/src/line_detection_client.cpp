@@ -9,14 +9,14 @@
 
 typedef actionlib::SimpleActionClient<task_commons::orangeAction> Client;
 
-Client *chutiya;
+Client *ptrClient;
 task_commons::orangeGoal goal;
 
 bool success = false;
 
 void spinThread()
 {
-  Client &temp = *chutiya;
+  Client &temp = *ptrClient;
   temp.waitForResult();
   success = (*(temp.getResult())).MotionCompleted;
   if (success)
@@ -45,17 +45,17 @@ int main(int argc, char **argv)
       nh.subscribe<task_commons::orangeActionFeedback>("/task_line_detectionserver/feedback", 1000, &forwardCb);
 
   Client testClient("task_line_detectionserver");
-  chutiya = &testClient;
+  ptrClient = &testClient;
 
   ROS_INFO("Waiting for action server to start.");
   testClient.waitForServer();
   goal.order = true;
   ROS_INFO("Action server started, sending goal.");
 
-  // Client &can = *chutiya;
+  // Client &can = *ptrClient;
   // can.cancelGoal();
   // ROS_INFO("Goal Cancelled");
-  Client &can = *chutiya;
+  Client &can = *ptrClient;
   // send goal
   can.sendGoal(goal);
   boost::thread spin_thread(&spinThread);
