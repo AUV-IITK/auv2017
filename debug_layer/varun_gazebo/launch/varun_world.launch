@@ -14,5 +14,4 @@
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="headless" value="$(arg headless)"/>
   </include>
-  <node name="mock_pressure_sensor" pkg="varun_gazebo" type="mock_pressure_sensor.py" respawn="true" />
 </launch>
