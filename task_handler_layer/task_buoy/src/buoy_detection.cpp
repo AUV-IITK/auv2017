@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
   int i, j, k, t1min = 0, t1max = 9, t2min = 104, t2max = 260, t3min = 185, t3max = 260, Rmin = 0,
                Rmax = 0;  // other variables used
   cv::VideoWriter output_cap(argv[2], CV_FOURCC('D', 'I', 'V', 'X'), 25, cv::Size(640, 480));
-  ros::init(argc, argv, "image");
+  ros::init(argc, argv, "buoy_detection");
   ros::NodeHandle n;
   // ROS_INFO("asa");
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("balls", 1000);
@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
       cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
 
       // find contours
-      std::vector<std::vector<cv::Point>> contours;
+      std::vector<std::vector<cv::Point> > contours;
       cv::Mat thresholded_Mat = thresholded;
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
@@ -180,7 +180,7 @@ int main(int argc, char* argv[])
         }
       }
       // Convex HULL
-      std::vector<std::vector<cv::Point>> hull(contours.size());
+      std::vector<std::vector<cv::Point> > hull(contours.size());
       convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], false);
 
       output_cap.write(frame);

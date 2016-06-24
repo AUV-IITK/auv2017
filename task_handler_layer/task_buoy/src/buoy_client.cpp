@@ -37,14 +37,14 @@ void forwardCb(task_commons::buoyActionFeedback msg)
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "task_buoy_detectionclient");
+  ros::init(argc, argv, "buoy_client");
 
   ros::NodeHandle nh;
-  // here task_line_detectionserver is the name of the node of the actionserver.
+  // here buoy_server is the name of the node of the actionserver.
   ros::Subscriber sub_ =
-      nh.subscribe<task_commons::buoyActionFeedback>("/task_buoy_detectionserver/feedback", 1000, &forwardCb);
+      nh.subscribe<task_commons::buoyActionFeedback>("/buoy_server/feedback", 1000, &forwardCb);
 
-  Client testClient("task_buoy_detectionserver");
+  Client testClient("buoy_server");
   ptrClient = &testClient;
 
   ROS_INFO("Waiting for action server to start.");

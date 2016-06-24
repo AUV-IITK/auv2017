@@ -25,11 +25,11 @@ typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> ClientSide
 typedef actionlib::SimpleActionClient<motion_commons::UpwardAction> ClientUpward;
 // typedef actionlib::SimpleActionClient<motion_commons::TurnAction> ClientTurn;
 
-class task_buoy_detectionInnerClass
+class TaskBuoyInnerClass
 {
 private:
   ros::NodeHandle nh_;
-  Server task_buoy_detectionServer_;
+  Server buoy_server_;
   std::string action_name_;
   task_commons::buoyFeedback feedback_;
   task_commons::buoyResult result_;
@@ -49,8 +49,8 @@ private:
   bool TargetSet, success, Infront, forward_goal_set;
 
 public:
-  task_buoy_detectionInnerClass(std::string name, std::string node, std::string node1, std::string node2)
-    : task_buoy_detectionServer_(nh_, name, boost::bind(&task_buoy_detectionInnerClass::analysisCB, this, _1), false)
+  TaskBuoyInnerClass(std::string name, std::string node, std::string node1, std::string node2)
+    : buoy_server_(nh_, name, boost::bind(&TaskBuoyInnerClass::analysisCB, this, _1), false)
     , action_name_(name)
     , ForwardClient_(node)
     , SidewardClient_(node1)
@@ -58,18 +58,18 @@ public:
   // ,TurnClient_(node)
   {
     ROS_INFO("inside constructor");
-    task_buoy_detectionServer_.registerPreemptCallback(boost::bind(&task_buoy_detectionInnerClass::preemptCB, this));
+    buoy_server_.registerPreemptCallback(boost::bind(&TaskBuoyInnerClass::preemptCB, this));
 
     off_pub_ = nh_.advertise<std_msgs::Bool>("balls_off", 1000);
     present_X_ = nh_.advertise<std_msgs::Float64>("yDistance", 1000);
     present_Y_ = nh_.advertise<std_msgs::Float64>("zDistance", 1000);
     present_distance_ = nh_.advertise<std_msgs::Float64>("xDistance", 1000);
     sub_ =
-        nh_.subscribe<std_msgs::Float64MultiArray>("balls", 1000, &task_buoy_detectionInnerClass::buoyNavigation, this);
-    task_buoy_detectionServer_.start();
+        nh_.subscribe<std_msgs::Float64MultiArray>("balls", 1000, &TaskBuoyInnerClass::buoyNavigation, this);
+    buoy_server_.start();
   }
 
-  ~task_buoy_detectionInnerClass(void)
+  ~TaskBuoyInnerClass(void)
   {
   }
 
@@ -107,7 +107,7 @@ public:
     Infront = false;
     forward_goal_set = false;
     ros::Rate looprate(12);
-    if (!task_buoy_detectionServer_.isActive())
+    if (!buoy_server_.isActive())
       return;
 
     ROS_INFO("Waiting for Forward server to start.");
@@ -116,8 +116,8 @@ public:
     UpwardClient_.waitForServer();
     // TurnClient_.waitForServer();
 
-    boost::thread vision_thread(&task_buoy_detectionInnerClass::startIP, this);
-    task_buoy_detectionInnerClass::startIP();
+    boost::thread vision_thread(&TaskBuoyInnerClass::startIP, this);
+    TaskBuoyInnerClass::startIP();
     sidewardgoal.Goal = 0;
     SidewardClient_.sendGoal(sidewardgoal);
     upwardgoal.Goal = 0;
@@ -125,11 +125,11 @@ public:
 
     while (goal->order)
     {
-      if (task_buoy_detectionServer_.isPreemptRequested() || !ros::ok())
+      if (buoy_server_.isPreemptRequested() || !ros::ok())
       {
         ROS_INFO("%s: Preempted", action_name_.c_str());
         // set the action state to preempted
-        task_buoy_detectionServer_.setPreempted();
+        buoy_server_.setPreempted();
         success = false;
         break;
       }
@@ -147,7 +147,7 @@ public:
       }
       // publish the feedback
       feedback_.nosignificance = false;
-      task_buoy_detectionServer_.publishFeedback(feedback_);
+      buoy_server_.publishFeedback(feedback_);
       ROS_INFO("timeSpent");
       ros::spinOnce();
     }
@@ -162,7 +162,7 @@ public:
       result_.MotionCompleted = success;
       ROS_INFO("%s: Succeeded", action_name_.c_str());
       // set the action state to succeeded
-      task_buoy_detectionServer_.setSucceeded(result_);
+      buoy_server_.setSucceeded(result_);
     }
   }
 
@@ -183,9 +183,9 @@ public:
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "task_buoy_detectionserver");
+  ros::init(argc, argv, "buoy_server");
   ROS_INFO("Waiting for Goal");
-  task_buoy_detectionInnerClass task_buoy_detectionObject(ros::this_node::getName(), "forward", "sideward", "upward");
+  TaskBuoyInnerClass taskBuoyObject(ros::this_node::getName(), "forward", "sideward", "upward");
   ros::spin();
   return 0;
 }
