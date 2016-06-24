@@ -37,8 +37,9 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   {
     count++;
     std::cout<<"imageCallback"<<count<<std::endl;
-    imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
+    // imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
     newframe=cv_bridge::toCvShare(msg, "bgr8")->image;
+    cv::imshow("newframe",newframe);
   }
   catch (cv_bridge::Exception &e)
   {
@@ -57,7 +58,7 @@ int main(int argc, char* argv[])
   // ROS_INFO("asa");
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("balls", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("/balls_off", 1000, &lineDetectedListener);
-  ros::Rate loop_rate(1000);
+  ros::Rate loop_rate(10);
   
   image_transport::ImageTransport it(n); 
 
@@ -139,8 +140,10 @@ int main(int argc, char* argv[])
   {
     if (!IP)
     {
- 
+      loop_rate.sleep();
       frame = newframe.clone();
+      cv::imshow("view",newframe);
+      cv::imshow("frame",frame);
       std_msgs::Float64MultiArray array;
       // Get one frame
 
@@ -166,7 +169,7 @@ int main(int argc, char* argv[])
       step = frame.step;
       // frame = cvQueryFrame( capture );
 
-      cv::imshow("RealPic", frame);
+      // cv::imshow("RealPic", frame);
 
       // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
       cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
@@ -200,8 +203,21 @@ int main(int argc, char* argv[])
       double largest_area = 0, largest_contour_index = 0;
       // cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
 
-      if (contours.empty())
+      if (contours.empty()){
+        array.data.push_back(0);
+        array.data.push_back(0); 
+        array.data.push_back(0);
+        array.data.push_back(0);
+        array.data.push_back(0); 
+        array.data.push_back(0);
+        // cv::imshow( "circle", circles ); // Original stream with detected ball overlay
+        pub.publish(array); 
+        ros::spinOnce();
+        //If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
+        //remove higher bits using AND operator
+        if( (cvWaitKey(10) & 255) == 27 ) break;
         continue;
+      }
 
       for (int i = 0; i < contours.size(); i++)  // iterate through each contour.
       {
@@ -257,6 +273,7 @@ int main(int argc, char* argv[])
       cvReleaseMemStorage(&storage);
 
       ros::spinOnce();
+
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
