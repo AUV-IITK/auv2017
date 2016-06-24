@@ -134,7 +134,8 @@ public:
         ROS_INFO("thrusters stopped");
         count++;
       }
-      else count = 0;
+      else
+        count = 0;
 
       if (upwardServer_.isPreemptRequested() || !ros::ok())
       {

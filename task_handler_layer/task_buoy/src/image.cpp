@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
       cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
 
       // find contours
-      std::vector<std::vector<cv::Point> > contours;
+      std::vector<std::vector<cv::Point>> contours;
       cv::Mat thresholded_Mat = thresholded;
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
@@ -180,7 +180,7 @@ int main(int argc, char* argv[])
         }
       }
       // Convex HULL
-      std::vector<std::vector<cv::Point> > hull(contours.size());
+      std::vector<std::vector<cv::Point>> hull(contours.size());
       convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], false);
 
       output_cap.write(frame);
@@ -201,7 +201,7 @@ int main(int argc, char* argv[])
       circle(circles, center[0], radius[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
       circle(circles, center[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
       circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
-      array.data.push_back(radius[0]);                                    // publish radius
+      array.data.push_back(radius[0]);                                        // publish radius
       array.data.push_back((320 - center[0].x));
       array.data.push_back((240 - center[0].y));
       array.data.push_back(distance);
