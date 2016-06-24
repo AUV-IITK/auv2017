@@ -126,9 +126,9 @@ include_directories(include
 
 ## Declare a cpp executable
 # add_executable(task_line_following_node src/task_line_following_node.cpp)
-add_executable(LineNew src/LineNew.cpp)
-add_executable(taskHandler src/taskHandler.cpp)
-add_executable(taskHandlerTest src/taskHandlerTest.cpp)
+add_executable(line_angle src/line_angle.cpp)
+add_executable(line_angle_server src/line_angle_server.cpp)
+add_executable(line_angle_client src/line_angle_client.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -138,10 +138,10 @@ add_executable(taskHandlerTest src/taskHandlerTest.cpp)
 # target_link_libraries(task_line_following_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(LineNew ${catkin_LIBRARIES})
-target_link_libraries(LineNew  ${OpenCV_LIBS})
-target_link_libraries(taskHandler ${catkin_LIBRARIES})
-target_link_libraries(taskHandlerTest ${catkin_LIBRARIES})
+target_link_libraries(line_angle ${catkin_LIBRARIES})
+target_link_libraries(line_angle  ${OpenCV_LIBS})
+target_link_libraries(line_angle_server ${catkin_LIBRARIES})
+target_link_libraries(line_angle_client ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
