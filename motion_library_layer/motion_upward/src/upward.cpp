@@ -34,7 +34,7 @@ private:
   bool success;
   ros::Publisher PWM, direction;
   float p, i, d;
-  int count = 0;
+  int count;
 
 public:
   // Constructor, called when new instance of class declared
@@ -134,7 +134,8 @@ public:
         ROS_INFO("thrusters stopped");
         count++;
       }
-      else count = 0;
+      else
+        count = 0;
 
       if (upwardServer_.isPreemptRequested() || !ros::ok())
       {

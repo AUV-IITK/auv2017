@@ -250,7 +250,7 @@ int main(int argc, char **argv)
   if (vidCheck)
     namedWindow("LINES", CV_WINDOW_AUTOSIZE);
 
-  ros::init(argc, argv, "LineAlignment");
+  ros::init(argc, argv, "line_angle");
   ros::NodeHandle node;
   ros::Publisher tracker_pub1 = node.advertise<std_msgs::Float64>("lineAngle", 1000);
   ros::Subscriber sub = node.subscribe<std_msgs::Bool>("lineoff", 1000, &offCallback);

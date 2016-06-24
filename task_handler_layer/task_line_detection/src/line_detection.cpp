@@ -2,19 +2,15 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <std_msgs/Bool.h>
-
 #include <sstream>
-
 #include <dynamic_reconfigure/server.h>
 #include <task_line_detection/orangeConfig.h>
-
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <ctime>
-
 using cv::Mat;
 using cv::waitKey;
 using cv::Scalar;
@@ -80,7 +76,7 @@ int detect(Mat image)
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "orangedetection");
+  ros::init(argc, argv, "line_detection");
   ros::NodeHandle n;
   ros::Publisher robot_pub = n.advertise<std_msgs::Bool>("linedetected", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("orangeoff", 1000, &offCallback);

@@ -119,13 +119,13 @@ include_directories(include
   ${OpenCV_INCLUDE_DIRS}
 )
 
-add_executable(image src/image.cpp)
-add_executable(buoy_detection_server src/buoy_detection_server.cpp)
-add_executable(buoy_detection_client src/buoy_detection_client.cpp)
-target_link_libraries(image  ${OpenCV_LIBS} )
-target_link_libraries(image ${catkin_LIBRARIES})
-target_link_libraries(buoy_detection_server ${catkin_LIBRARIES})
-target_link_libraries(buoy_detection_client ${catkin_LIBRARIES})
+add_executable(buoy_detection src/buoy_detection.cpp)
+add_executable(buoy_server src/buoy_server.cpp)
+add_executable(buoy_client src/buoy_client.cpp)
+target_link_libraries(buoy_detection ${OpenCV_LIBS} )
+target_link_libraries(buoy_detection ${catkin_LIBRARIES})
+target_link_libraries(buoy_server ${catkin_LIBRARIES})
+target_link_libraries(buoy_client ${catkin_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(task_buoy

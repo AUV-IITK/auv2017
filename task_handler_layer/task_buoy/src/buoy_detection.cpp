@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
   int i, j, k, t1min = 0, t1max = 9, t2min = 104, t2max = 260, t3min = 185, t3max = 260, Rmin = 0,
                Rmax = 0;  // other variables used
   cv::VideoWriter output_cap(argv[2], CV_FOURCC('D', 'I', 'V', 'X'), 25, cv::Size(640, 480));
-  ros::init(argc, argv, "image");
+  ros::init(argc, argv, "buoy_detection");
   ros::NodeHandle n;
   // ROS_INFO("asa");
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("balls", 1000);
@@ -201,7 +201,7 @@ int main(int argc, char* argv[])
       circle(circles, center[0], radius[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
       circle(circles, center[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
       circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
-      array.data.push_back(radius[0]);                                    // publish radius
+      array.data.push_back(radius[0]);                                        // publish radius
       array.data.push_back((320 - center[0].x));
       array.data.push_back((240 - center[0].y));
       array.data.push_back(distance);

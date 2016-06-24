@@ -127,7 +127,7 @@ include_directories(include
 
 ## Declare a cpp executable
 # add_executable(task_line_detection_node src/task_line_detection_node.cpp)
-add_executable(orangedetection src/orangedetection.cpp)
+add_executable(line_detection src/line_detection.cpp)
 add_executable(line_detection_server src/line_detection_server.cpp)
 add_executable(line_detection_client src/line_detection_client.cpp)
 
@@ -139,8 +139,8 @@ add_executable(line_detection_client src/line_detection_client.cpp)
 # target_link_libraries(task_line_detection_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(orangedetection ${catkin_LIBRARIES})
-target_link_libraries(orangedetection ${OpenCV_LIBS})
+target_link_libraries(line_detection ${catkin_LIBRARIES})
+target_link_libraries(line_detection ${OpenCV_LIBS})
 target_link_libraries(line_detection_server ${catkin_LIBRARIES})
 target_link_libraries(line_detection_client ${catkin_LIBRARIES})
 #############

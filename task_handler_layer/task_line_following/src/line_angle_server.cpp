@@ -15,40 +15,36 @@
 typedef actionlib::SimpleActionServer<task_commons::alignAction> Server;
 typedef actionlib::SimpleActionClient<motion_commons::TurnAction> Client;
 
-class alignAction
+class TaskLineFollowingInnerClass
 {
 private:
   ros::NodeHandle nh_;
-  Server alignServer_;
+  Server line_following_server_;
   int loopRate;
-
   std::string action_name_;
   ros::Subscriber subIP_, subTurn_;
   ros::Publisher off_pub_;
-
   task_commons::alignResult result_;
   task_commons::alignFeedback feedback_;
-
   Client TurnClient_;
   motion_commons::TurnGoal goal;
-
   float lineAngle, feedbackFromTurn;
   bool intiData, success, turnActive, feedbackTurn, firstData;
 
 public:
-  alignAction(std::string name, std::string node)
-    : alignServer_(nh_, name, boost::bind(&alignAction::analysisCB, this, _1), false)
+  TaskLineFollowingInnerClass(std::string name, std::string node)
+    : line_following_server_(nh_, name, boost::bind(&TaskLineFollowingInnerClass::analysisCB, this, _1), false)
     , action_name_(name)
     , TurnClient_(node)
   {
-    alignServer_.registerPreemptCallback(boost::bind(&alignAction::preemptCB, this));
-    subIP_ = nh_.subscribe("lineAngle", 100, &alignAction::lineCB, this);
-    subTurn_ = nh_.subscribe("/TurnXY/feedback", 100, &alignAction::turnCB, this);
+    line_following_server_.registerPreemptCallback(boost::bind(&TaskLineFollowingInnerClass::preemptCB, this));
+    subIP_ = nh_.subscribe("lineAngle", 100, &TaskLineFollowingInnerClass::lineCB, this);
+    subTurn_ = nh_.subscribe("/TurnXY/feedback", 100, &TaskLineFollowingInnerClass::turnCB, this);
     off_pub_ = nh_.advertise<std_msgs::Bool>("lineoff", 1000);
-    alignServer_.start();
+    line_following_server_.start();
   }
 
-  ~alignAction(void)
+  ~TaskLineFollowingInnerClass(void)
   {
   }
 
@@ -95,7 +91,7 @@ public:
       turnActive = false;
     }
     ROS_INFO("Turn Goal Cancelled");
-    alignServer_.setPreempted();
+    line_following_server_.setPreempted();
   }
 
   void turnCB(motion_commons::TurnActionFeedback msg)
@@ -103,7 +99,7 @@ public:
     ROS_INFO("feedback recieved %fdeg remaining ", msg.feedback.AngleRemaining);
     feedbackFromTurn = msg.feedback.AngleRemaining;
     feedback_.AngleRemaining = feedbackFromTurn;
-    alignServer_.publishFeedback(feedback_);
+    line_following_server_.publishFeedback(feedback_);
     feedbackTurn = true;
   }
 
@@ -119,19 +115,19 @@ public:
     loopRate = 10;
     ros::Rate loop_rate(loopRate);
 
-    if (!alignServer_.isActive())
+    if (!line_following_server_.isActive())
     {
-      ROS_INFO("alignServer_ is not active");
+      ROS_INFO("line_following_server_ is not active");
       return;
     }
 
-    boost::thread vision_thread(&alignAction::startIP, this);
+    boost::thread vision_thread(&TaskLineFollowingInnerClass::startIP, this);
     ROS_INFO("Waiting for Turn server to start.");
     TurnClient_.waitForServer();
     turnActive = true;
     ROS_INFO("Turn server started");
 
-    // boost::thread spin_thread(&alignAction::spinThread, this);
+    // boost::thread spin_thread(&TaskLineFollowingInnerClass::spinThread, this);
     ROS_INFO("waiting for data from edge detecting node");
     while (!intiData)
     {
@@ -150,17 +146,13 @@ public:
       ROS_INFO("%s: Succeeded", action_name_.c_str());
       // set the action state to succeeded
 
-      alignServer_.setSucceeded(result_);
+      line_following_server_.setSucceeded(result_);
     }
   }
 
-  // void spinThread(){
-  //  ros::spin();
-  // }
-
   void startIP()
   {
-    std::system("rosrun task_commons LineNew 1 0");
+    std::system("rosrun task_line_following line_angle 1 0");
   }
 
   void stopIP()
@@ -173,11 +165,10 @@ public:
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "align");
+  ros::init(argc, argv, "line_angle_server");
   ros::NodeHandle n;
 
-  // Client Turn("TurnXY");
-  alignAction align(ros::this_node::getName(), "TurnXY");
+  TaskLineFollowingInnerClass taskLineFollowingObject(ros::this_node::getName(), "TurnXY");
   ROS_INFO("Waiting for master command");
 
   ros::spin();

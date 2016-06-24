@@ -37,20 +37,20 @@ void alignCb(task_commons::alignActionFeedback msg)
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "testalign");
+  ros::init(argc, argv, "line_angle_client");
 
   ros::NodeHandle nh;
-  ros::Subscriber sub_ = nh.subscribe<task_commons::alignActionFeedback>("/align/feedback", 1000, &alignCb);
+  ros::Subscriber sub_ = nh.subscribe<task_commons::alignActionFeedback>("/line_angle_server/feedback", 1000, &alignCb);
 
-  Client alignTestClient("align");
-  ptrClient = &alignTestClient;
+  Client testClient("line_angle_server");
+  ptrClient = &testClient;
 
   ROS_INFO("Waiting for action server to start.");
-  alignTestClient.waitForServer();
+  testClient.waitForServer();
   goal.StartDetection = true;
   ROS_INFO("Action server started, sending goal.");
   // Send Goal
-  alignTestClient.sendGoal(goal);
+  testClient.sendGoal(goal);
   ROS_INFO("Goal Send");
 
   // Here the thread is created and the ros node is started spinning in the
