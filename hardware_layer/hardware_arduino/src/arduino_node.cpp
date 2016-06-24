@@ -2,6 +2,7 @@
 #include <ros.h>
 #include <Arduino.h>
 #include <std_msgs/Int32.h>
+#include <std_msgs/Float64.h>
 
 // /*************************** for AUV ****************************/
 // #define led 13
@@ -51,6 +52,7 @@
 #define directionPinSouthUp1 0  // 33
 #define directionPinSouthUp2 0  // 32
 
+#define analogPinPressureSensor A0
 /************************ for old ground bot ******************************/
 // #define pwmPinWest 4
 // #define pwmPinEast 5
@@ -75,6 +77,8 @@ const float s122 = -2.93;
 
 int Delay = 1500;
 bool isMovingForward = true;
+float v;
+std_msgs::Float64 voltage;
 ros::NodeHandle nh;
 
 int btd092(int pwm)
@@ -287,6 +291,7 @@ ros::Subscriber<std_msgs::Int32> subPwmForward("/pwm/forward", &PWMCbForward);
 ros::Subscriber<std_msgs::Int32> subPwmSideward("/pwm/sideward", &PWMCbSideward);
 ros::Subscriber<std_msgs::Int32> subPwmUpward("/pwm/upward", &PWMCbUpward);
 ros::Subscriber<std_msgs::Int32> subPwmTurn("/pwm/turn", &PWMCbTurn);
+ros::Publisher ps_voltage("zDistance", &voltage);
 
 void setup()
 {
@@ -318,11 +323,15 @@ void setup()
   nh.subscribe(subPwmSideward);
   nh.subscribe(subPwmUpward);
   nh.subscribe(subPwmTurn);
+  nh.advertise(ps_voltage);
   Serial.begin(57600);
 }
 
 void loop()
 {
+  v = analogRead(analogPinPressureSensor);
+  voltage.data = v;
+  ps_voltage.publish(&voltage);
   nh.spinOnce();
   delay(1);
 }
