@@ -27,16 +27,18 @@ void lineDetectedListener(std_msgs::Bool msg)
   std::cout << "hi callback";
 }
 
-Mat frame;
+cv::Mat frame;
+cv::Mat newframe;
+int count = 0;
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
   try
   {
-    cout<<"imageCallback"<<endl;
-    // imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
-    frame=cv_bridge::toCvShare(msg, "bgr8")->image;
-    // waitKey(10);
+    count++;
+    std::cout<<"imageCallback"<<count<<std::endl;
+    imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
+    newframe=cv_bridge::toCvShare(msg, "bgr8")->image;
   }
   catch (cv_bridge::Exception &e)
   {
@@ -79,8 +81,8 @@ int main(int argc, char* argv[])
 
   int camno = (**(argv + 1) - '0');
   cv::VideoCapture cap(camno);
-  image_transport::Subscriber sub = it.subscribe("camera/image", 1, imageCallback);
-        cout<<"in while"<<endl;
+  image_transport::Subscriber sub1 = it.subscribe("camera/image", 1, imageCallback);
+        std::cout<<"in while"<<std::endl;
 
   //*****************************************************************************************************************\\
 
@@ -88,11 +90,11 @@ int main(int argc, char* argv[])
 
   //*****************************************************************************************************************\\
     // Create a window in which the captured images will be presented
-  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("F1", CV_WINDOW_NORMAL);
-  cvNamedWindow("RealPic", CV_WINDOW_NORMAL);
-  cvNamedWindow("F2", CV_WINDOW_NORMAL);
-  cvNamedWindow("F3", CV_WINDOW_NORMAL);
+  // cvNamedWindow("Contours", CV_WINDOW_NORMAL);
+  // cvNamedWindow("F1", CV_WINDOW_NORMAL);
+  // cvNamedWindow("RealPic", CV_WINDOW_NORMAL);
+  // cvNamedWindow("F2", CV_WINDOW_NORMAL);
+  // cvNamedWindow("F3", CV_WINDOW_NORMAL);
 
   /// Create Trackbars
   char TrackbarName1[50] = "t1min";
@@ -137,24 +139,27 @@ int main(int argc, char* argv[])
   {
     if (!IP)
     {
+ 
+      frame = newframe.clone();
       std_msgs::Float64MultiArray array;
       // Get one frame
 
-      if (!cap.isOpened())
-      {
-        fprintf(stderr, "ERROR: frame is null...\n");
-        getchar();
-        break;
-      }
+      // if (!cap.isOpened())
+      // {
+      //   fprintf(stderr, "ERROR: frame is null...\n");
+      //   getchar(); 
+      //   break;
+      // }
 
-      cv::Mat frame;
-      cap >> frame;
+      // cv::Mat frame;
+      // cap >> frame;
 
       if (frame.empty())
-    {
-    ros::spinOnce();
+      {
+        std::cout << "empty frame \n";
+        ros::spinOnce();
         continue;
-    }
+      }
       // get the image data
       height = frame.rows;
       width = frame.cols;
@@ -178,13 +183,13 @@ int main(int argc, char* argv[])
       cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
       cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
 
-      cv::imshow("F1", thresholded_hsv[0]);  // individual filters
-      cv::imshow("F2", thresholded_hsv[1]);
-      cv::imshow("F3", thresholded_hsv[2]);
+      // cv::imshow("F1", thresholded_hsv[0]);  // individual filters
+      // cv::imshow("F2", thresholded_hsv[1]);
+      // cv::imshow("F3", thresholded_hsv[2]);
 
       // Memory for hough circles
       CvMemStorage* storage = cvCreateMemStorage(0);
-      cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
+      // cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
       // hough detector works better with some smoothing of the image
       cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
 
@@ -193,7 +198,7 @@ int main(int argc, char* argv[])
       cv::Mat thresholded_Mat = thresholded;
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
-      cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
+      // cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
 
       if (contours.empty())
         continue;
@@ -247,7 +252,7 @@ int main(int argc, char* argv[])
       // imshow("F1", thresholded1);  // individual filters
       // imshow("F2", thresholded2);
       // imshow("F3", thresholded3);
-      cv::imshow("circle", circles);  // Original stream with detected ball overlay
+      // cv::imshow("circle", circles);  // Original stream with detected ball overlay
 
       cvReleaseMemStorage(&storage);
 
