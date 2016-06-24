@@ -10,6 +10,8 @@
 #include <gazebo/math/gzmath.hh>
 const float THRUSTER_FORCE = 9.8;  // each thruster applies 1kgf. Gazebo uses SI units
 const float FULL_FORCE = THRUSTER_FORCE * 2;
+const float VARUN_SIDEWARD_LENGTH = 0.16;
+const float ERROR_FACTOR = 100;
 namespace gazebo
 {
 class VarunMotionPlugin : public WorldPlugin
@@ -52,7 +54,7 @@ public:
     math::Vector3 force;
     math::Vector3 reset_force;
     int pwm = msg.data;
-    force.x = FULL_FORCE * pwm / 255;
+    force.x = FULL_FORCE * pwm / 255 * ERROR_FACTOR;
     _model->GetLink("body")->SetForce(reset_force);
     _model->GetLink("body")->AddRelativeForce(force);
   }
@@ -63,7 +65,7 @@ public:
     math::Vector3 reset_force;
     int pwm = msg.data;
     pwm = -pwm;  // this is because motionlibrary assumes right to be positive while gazebo y axis points to left.
-    force.y = FULL_FORCE * pwm / 255;
+    force.y = FULL_FORCE * pwm / 255 * ERROR_FACTOR;
     _model->GetLink("body")->SetForce(reset_force);
     _model->GetLink("body")->AddRelativeForce(force);
   }
@@ -72,7 +74,7 @@ public:
   {
     math::Vector3 force;
     int pwm = msg.data;
-    force.z = FULL_FORCE * pwm / 255;
+    force.z = FULL_FORCE * pwm / 255 * ERROR_FACTOR;
     _model->GetLink("body")->SetForce(force);
   }
 
@@ -80,7 +82,7 @@ public:
   {
     math::Vector3 torque;
     int pwm = msg.data;
-    torque.z = FULL_FORCE * pwm / 255;
+    torque.z = FULL_FORCE * (pwm / 255) * (VARUN_SIDEWARD_LENGTH / 2) * ERROR_FACTOR;
     _model->GetLink("body")->SetTorque(torque);
   }
 };
