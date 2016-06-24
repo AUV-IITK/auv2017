@@ -60,12 +60,62 @@
 // #define directionPinEast2 6
 // #define led 13
 
+const float c092 = 506.22;
+const float s092 = -2.65;
+const float c093 = 448.62;
+const float s093 = -2.92;
+const float c099 = 397.65;   // reference as their graph is at lowest
+const float s099 = -2.71;  // reference as their graph is at lowest
+const float c113 = 539.85;
+const float s113 = -3.38;
+const float c117 = 441.32;
+const float s117 = -3.03;
+const float c122 = 547.39;
+const float s122 = -2.93;
+
 int Delay = 1500;
 bool isMovingForward = true;
 ros::NodeHandle nh;
 
+int btd092(int pwm)
+{
+  pwm = (c099 + s099 * pwm - c092) / (s092);
+  return pwm;
+}
+
+int btd093(int pwm)
+{
+  pwm = (c099 + s099 * pwm - c093) / (s093);
+  return pwm;
+}
+
+int btd099(int pwm)
+{
+  return pwm;
+}
+
+int btd113(int pwm)
+{
+  pwm = (c099 + s099 * pwm - c113) / (s113);
+  return pwm;
+}
+
+int btd117(int pwm)
+{
+  pwm = (c099 + s099 * pwm - c117) / (s117);
+  return pwm;
+}
+
+int btd122(int pwm)
+{
+  pwm = (c099 + s099 * pwm - c122) / (s122);
+  return pwm;
+}
+
+
 void thrusterNorthUp(int pwm, int isUpward)
 {
+  pwm = btd122(pwm);
   analogWrite(pwmPinNorthUp, pwm);
   if (isUpward)
   {
@@ -81,6 +131,7 @@ void thrusterNorthUp(int pwm, int isUpward)
 
 void thrusterSouthUp(int pwm, int isUpward)
 {
+  pwm = btd117(pwm);
   analogWrite(pwmPinSouthUp, pwm);
   if (isUpward)
   {
@@ -96,6 +147,7 @@ void thrusterSouthUp(int pwm, int isUpward)
 
 void thrusterNorthSway(int pwm, int isRight)
 {
+  pwm = btd113(pwm);
   analogWrite(pwmPinNorthSway, pwm);
   if (isRight)
   {
@@ -111,6 +163,7 @@ void thrusterNorthSway(int pwm, int isRight)
 
 void thrusterSouthSway(int pwm, int isRight)
 {
+  pwm = btd099(pwm);
   analogWrite(pwmPinSouthSway, pwm);
   if (isRight)
   {
@@ -126,6 +179,7 @@ void thrusterSouthSway(int pwm, int isRight)
 
 void thrusterEast(int pwm, int isForward)
 {
+  pwm = btd093(pwm);
   analogWrite(pwmPinEast, pwm);
   if (isForward)
   {
@@ -141,6 +195,7 @@ void thrusterEast(int pwm, int isForward)
 
 void thrusterWest(int pwm, int isForward)
 {
+  pwm = btd092(pwm);
   analogWrite(pwmPinWest, pwm);
   if (isForward)
   {
