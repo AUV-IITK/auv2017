@@ -106,7 +106,7 @@ add_message_files(DIRECTORY msg
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 generate_messages(
-   DEPENDENCIES
+  DEPENDENCIES
   std_msgs
   sensor_msgs
 )
@@ -145,10 +145,6 @@ target_link_libraries(buoy_client ${catkin_LIBRARIES})
 # target_link_libraries(image  ${cv_bridge/cv_bridge.h} )
 # target_link_libraries(image ${opencv2/videoio/videoio.hpp} )
 
-
-add_executable(testopencv src/testopencv.cpp)
-target_link_libraries(testopencv ${catkin_LIBRARIES})
-target_link_libraries(testopencv ${OpenCV_LIBS})
 
 ## Declare a C++ library
 # add_library(task_buoy

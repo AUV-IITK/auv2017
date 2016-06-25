@@ -16,7 +16,6 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
 #include "std_msgs/Float64MultiArray.h"
-#include <sstream>
 
 // bool IP = true;
 bool IP = false;
@@ -24,7 +23,6 @@ bool IP = false;
 void lineDetectedListener(std_msgs::Bool msg)
 {
   IP = msg.data;
-  std::cout << "hi callback";
 }
 
 cv::Mat frame;
@@ -37,12 +35,12 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   {
     count++;
     // imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
-    newframe=cv_bridge::toCvShare(msg, "bgr8")->image;
+    newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
 
-    /////////////////////////////DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
+    ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
-    cv::imshow("newframe",newframe);
-   //////////////////////////FATAL ///////////////////////////////////////////////////
+    cv::imshow("newframe", newframe);
+    ////////////////////////// FATAL ///////////////////////////////////////////////////
   }
   catch (cv_bridge::Exception &e)
   {
@@ -50,19 +48,19 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
-  int i, j, k, t1min = 0, t1max = 9, t2min = 104, t2max = 260, t3min = 185, t3max = 260; // other variables used
-  
+  int i, j, k, t1min = 0, t1max = 9, t2min = 104, t2max = 260, t3min = 185, t3max = 260;  // other variables used
+
   cv::VideoWriter output_cap(argv[2], CV_FOURCC('D', 'I', 'V', 'X'), 25, cv::Size(640, 480));
   ros::init(argc, argv, "buoy_detection");
   ros::NodeHandle n;
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("balls", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("/balls_off", 1000, &lineDetectedListener);
   ros::Rate loop_rate(10);
-  
-  image_transport::ImageTransport it(n); 
+
+  image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("camera/image", 1, imageCallback);
 
   char TrackbarName1[50] = "t1min";
@@ -93,7 +91,6 @@ int main(int argc, char* argv[])
     {
       loop_rate.sleep();
 
-      
       if (frame.empty())
       {
         std::cout << "empty frame \n";
@@ -102,7 +99,6 @@ int main(int argc, char* argv[])
       }
 
       // cv::imshow("frame",frame);
-
 
       // get the image data
       height = frame.rows;
@@ -139,19 +135,21 @@ int main(int argc, char* argv[])
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
       // cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
-      if (contours.empty()){
+      if (contours.empty())
+      {
         array.data.push_back(0);
-        array.data.push_back(0); 
         array.data.push_back(0);
         array.data.push_back(0);
-        array.data.push_back(0); 
+        array.data.push_back(0);
+        array.data.push_back(0);
         array.data.push_back(0);
         // cv::imshow( "circle", circles ); // Original stream with detected ball overlay
-        pub.publish(array); 
+        pub.publish(array);
         ros::spinOnce();
-        //If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-        //remove higher bits using AND operator
-        if( (cvWaitKey(10) & 255) == 27 ) break;
+        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
+        // remove higher bits using AND operator
+        if ((cvWaitKey(10) & 255) == 27)
+          break;
         continue;
       }
 
@@ -179,7 +177,7 @@ int main(int argc, char* argv[])
       pt.x = 320;  // size of my screen
       pt.y = 240;
       float distance;
-      float* p;  // array to publish
+      float *p;                                     // array to publish
       distance = pow(radius[0] / 7526.5, -.92678);  // function found using experiment
 
       circle(circles, center[0], radius[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
@@ -189,15 +187,17 @@ int main(int argc, char* argv[])
       array.data.push_back((320 - center[0].x));
       array.data.push_back((240 - center[0].y));
       array.data.push_back(distance);
-      if (((320 - center[0].x > -5) && (320 - center[0].x < 5)) && ((240 - center[0].y > -5) && (240 - center[0].y) < 5)) array.data.push_back(1);
-      else array.data.push_back(0);  // telling we are in line of center of ball
+      if (((320 - center[0].x > -5) && (320 - center[0].x < 5)) &&
+          ((240 - center[0].y > -5) && (240 - center[0].y) < 5))
+        array.data.push_back(1);
+      else
+        array.data.push_back(0);  // telling we are in line of center of ball
 
       pub.publish(array);
       // imshow("F1", thresholded1);  // individual filters
       // imshow("F2", thresholded2);
       // imshow("F3", thresholded3);
       // cv::imshow("circle", circles);  // Original stream with detected ball overlay
-
 
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),

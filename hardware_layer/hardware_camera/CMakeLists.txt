@@ -117,7 +117,7 @@ add_message_files(DIRECTORY msg
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 generate_messages(
-   DEPENDENCIES
+  DEPENDENCIES
   std_msgs
   sensor_msgs
 )
