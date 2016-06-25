@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(task_buoy)
+project(hardware_camera)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -20,13 +20,13 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
 )
 
-## Check for lint errors
+## System dependencies are found with CMake's conventions
+# find_package(Boost REQUIRED COMPONENTS system)
 roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
 find_package( OpenCV REQUIRED )
-
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -44,9 +44,8 @@ find_package( OpenCV REQUIRED )
 ## * In the file package.xml:
 ##   * add a build_depend tag for "message_generation"
 ##   * add a build_depend and a run_depend tag for each package in MSG_DEP_SET
-##   * If MSG_DEP_SET isn't empty the following dependencies might have been
-##     pulled in transitively but can be declared for certainty nonetheless:
-##     * add a build_depend tag for "message_generation"
+##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
+##     but can be declared for certainty nonetheless:
 ##     * add a run_depend tag for "message_runtime"
 ## * In this file (CMakeLists.txt):
 ##   * add "message_generation" and every package in MSG_DEP_SET to
@@ -72,10 +71,22 @@ find_package( OpenCV REQUIRED )
 #   Service2.srv
 # )
 
-#generate_messages(
-#  DEPENDENCIES
-# std_msgs
-#)
+## Generate actions in the 'action' folder
+# add_action_files(
+#   FILES
+#   Action1.action
+#   Action2.action
+# )
+
+## Generate added messages and services with any dependencies listed here
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
+
+################################################
+## Declare ROS dynamic reconfigure parameters ##
+################################################
 
 ## To declare and build dynamic reconfigure parameters within this
 ## package, follow these steps:
@@ -130,45 +141,25 @@ include_directories(include
   ${OpenCV_INCLUDE_DIRS}
 )
 
-add_executable(buoy_detection src/buoy_detection.cpp)
-add_executable(buoy_server src/buoy_server.cpp)
-add_executable(buoy_client src/buoy_client.cpp)
-target_link_libraries(buoy_detection ${OpenCV_LIBS} )
-target_link_libraries(buoy_detection ${catkin_LIBRARIES})
-target_link_libraries(buoy_server ${catkin_LIBRARIES})
-target_link_libraries(buoy_client ${catkin_LIBRARIES})
-
-# target_link_libraries(image ${catkin_LIBRARIES})
-# add_dependencies(image task_buoy_generate_messages_cpp)
-# target_link_libraries(image  ${OpenCV_LIBS} )
-# target_link_libraries(image  ${opencv2/highgui.hpp} )
-# target_link_libraries(image  ${cv_bridge/cv_bridge.h} )
-# target_link_libraries(image ${opencv2/videoio/videoio.hpp} )
-
-
-add_executable(testopencv src/testopencv.cpp)
-target_link_libraries(testopencv ${catkin_LIBRARIES})
-target_link_libraries(testopencv ${OpenCV_LIBS})
-
 ## Declare a C++ library
-# add_library(task_buoy
-#   src/${PROJECT_NAME}/task_buoy.cpp
+# add_library(hardware_camera
+#   src/${PROJECT_NAME}/hardware_camera.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(task_buoy ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(hardware_camera ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(task_buoy_node src/task_buoy_node.cpp)
+# add_executable(hardware_camera_node src/hardware_camera_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(task_buoy_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(hardware_camera_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(task_buoy_node
+# target_link_libraries(hardware_camera_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -187,7 +178,7 @@ target_link_libraries(testopencv ${OpenCV_LIBS})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS task_buoy task_buoy_node
+# install(TARGETS hardware_camera hardware_camera_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -206,13 +197,16 @@ target_link_libraries(testopencv ${OpenCV_LIBS})
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+add_executable(vid_pub src/vid_pub.cpp)
+target_link_libraries(vid_pub ${catkin_LIBRARIES})
+target_link_libraries(vid_pub ${OpenCV_LIBS})
 
 #############
 ## Testing ##
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_task_buoy.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_hardware_camera.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
