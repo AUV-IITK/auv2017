@@ -5,19 +5,19 @@
 #include <std_msgs/Float64.h>
 #include <math.h>
 
-#define pwmPinWest 4
-#define pwmPinEast 5
-#define directionPinWest1 26
-#define directionPinWest2 27
-#define directionPinEast1 35
-#define directionPinEast2 29
+#define pwmPinWest 3
+#define pwmPinEast 2
+#define directionPinWest1 30
+#define directionPinWest2 31
+#define directionPinEast1 33
+#define directionPinEast2 32
 
-#define pwmPinNorthSway 2
-#define pwmPinSouthSway 3
-#define directionPinNorthSway1 31
-#define directionPinNorthSway2 30
-#define directionPinSouthSway1 33
-#define directionPinSouthSway2 32
+#define pwmPinNorthSway 5
+#define pwmPinSouthSway 4
+#define directionPinNorthSway1 26
+#define directionPinNorthSway2 27
+#define directionPinSouthSway1 28
+#define directionPinSouthSway2 29
 
 #define pwmPinNorthUp 6
 #define pwmPinSouthUp 7
@@ -51,6 +51,8 @@ int btd092(int pwm)
   pwm = (c099 + s099 * pwm - c092) / (s092);
   if (pwm < 147)
     return 0;
+  if (pwm > 255)
+    return 255;
   return pwm;
 }
 
@@ -59,6 +61,8 @@ int btd093(int pwm)
   pwm = (c099 + s099 * pwm - c093) / (s093);
   if (pwm < 147)
     return 0;
+  if (pwm > 255)
+    return 255;
   return pwm;
 }
 
@@ -66,6 +70,8 @@ int btd099(int pwm)
 {
   if (pwm < 147)
     return 0;
+  if (pwm > 255)
+    return 255;
   return pwm;
 }
 
@@ -74,6 +80,8 @@ int btd113(int pwm)
   pwm = (c099 + s099 * pwm - c113) / (s113);
   if (pwm < 147)
     return 0;
+  if (pwm > 255)
+    return 255;
   return pwm;
 }
 
@@ -82,6 +90,8 @@ int btd117(int pwm)
   pwm = (c099 + s099 * pwm - c117) / (s117);
   if (pwm < 147)
     return 0;
+  if (pwm > 255)
+    return 255;
   return pwm;
 }
 
@@ -90,13 +100,15 @@ int btd122(int pwm)
   pwm = (c099 + s099 * pwm - c122) / (s122);
   if (pwm < 147)
     return 0;
+  if (pwm > 255)
+    return 255;
   return pwm;
 }
 
 void thrusterNorthUp(int pwm, int isUpward)
 {
   pwm = abs(pwm);
-  pwm = btd122(pwm);
+  pwm = btd117(pwm);
   analogWrite(pwmPinNorthUp, 255 - pwm);
   if (isUpward)
   {
@@ -113,7 +125,7 @@ void thrusterNorthUp(int pwm, int isUpward)
 void thrusterSouthUp(int pwm, int isUpward)
 {
   pwm = abs(pwm);
-  pwm = btd117(pwm);
+  pwm = btd093(pwm);
   analogWrite(pwmPinSouthUp, 255 - pwm);
   if (isUpward)
   {
@@ -147,7 +159,7 @@ void thrusterNorthSway(int pwm, int isRight)
 void thrusterSouthSway(int pwm, int isRight)
 {
   pwm = abs(pwm);
-  pwm = btd099(pwm);
+  pwm = btd122(pwm);
   analogWrite(pwmPinSouthSway, 255 - pwm);
   if (isRight)
   {
@@ -164,7 +176,7 @@ void thrusterSouthSway(int pwm, int isRight)
 void thrusterEast(int pwm, int isForward)
 {
   pwm = abs(pwm);
-  pwm = btd093(pwm);
+  pwm = btd092(pwm);
   analogWrite(pwmPinEast, 255 - pwm);
   if (isForward)
   {
@@ -181,7 +193,7 @@ void thrusterEast(int pwm, int isForward)
 void thrusterWest(int pwm, int isForward)
 {
   pwm = abs(pwm);
-  pwm = btd092(pwm);
+  pwm = btd099(pwm);
   analogWrite(pwmPinWest, 255 - pwm);
   if (isForward)
   {
@@ -320,5 +332,5 @@ void loop()
   voltage.data = v;
   ps_voltage.publish(&voltage);
   nh.spinOnce();
-  delay(1);
+  delay(100);
 }
