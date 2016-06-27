@@ -41,6 +41,13 @@ const float s117 = -3.03;
 const float c122 = 547.39;
 const float s122 = -2.93;
 
+float k092 = 0;
+float k093 = 0;
+float k099 = 0;
+float k113 = 0;
+float k117 = 0;
+float k122 = 0;
+
 bool isMovingForward = true;
 float v;
 std_msgs::Float64 voltage;
@@ -269,11 +276,48 @@ void PWMCbTurn(const std_msgs::Int32& msg)
   }
 }
 
+void thrust092(const std_msgs::Float64& msg)
+{
+  k092 = msg.data;
+}
+
+void thrust093(const std_msgs::Float64& msg)
+{
+  k093 = msg.data;
+}
+
+void thrust099(const std_msgs::Float64& msg)
+{
+  k099 = msg.data;
+}
+
+void thrust113(const std_msgs::Float64& msg)
+{
+  k113 = msg.data;
+}
+
+void thrust117(const std_msgs::Float64& msg)
+{
+  k117 = msg.data;
+}
+
+void thrust122(const std_msgs::Float64& msg)
+{
+  k122 = msg.data;
+}
+
 ros::Subscriber<std_msgs::Int32> subPwmForward("/pwm/forward", &PWMCbForward);
 ros::Subscriber<std_msgs::Int32> subPwmSideward("/pwm/sideward", &PWMCbSideward);
 ros::Subscriber<std_msgs::Int32> subPwmUpward("/pwm/upward", &PWMCbUpward);
 ros::Subscriber<std_msgs::Int32> subPwmTurn("/pwm/turn", &PWMCbTurn);
 ros::Publisher ps_voltage("zDistance", &voltage);
+
+ros::Subscriber<std_msgs::Float64> thruster092("/thrust/092", &thrust092);
+ros::Subscriber<std_msgs::Float64> thruster093("/thrust/093", &thrust093);
+ros::Subscriber<std_msgs::Float64> thruster099("/thrust/099", &thrust099);
+ros::Subscriber<std_msgs::Float64> thruster113("/thrust/113", &thrust113);
+ros::Subscriber<std_msgs::Float64> thruster117("/thrust/117", &thrust117);
+ros::Subscriber<std_msgs::Float64> thruster122("/thrust/122", &thrust122);
 
 void setup()
 {
@@ -312,6 +356,13 @@ void setup()
   PWMCbSideward(msg);
   PWMCbUpward(msg);
   PWMCbTurn(msg);
+
+  nh.subscribe(thruster092);
+  nh.subscribe(thruster093);
+  nh.subscribe(thruster099);
+  nh.subscribe(thruster113);
+  nh.subscribe(thruster117);
+  nh.subscribe(thruster122);
 }
 
 void loop()

@@ -16,3 +16,9 @@ generate_arduino_firmware(testing_arduino_node
   BOARD uno
   PORT /dev/arduino
 )
+
+generate_arduino_firmware(arduino_test_calib
+  SRCS arduino_test_calib.cpp ${ROS_LIB_DIR}/time.cpp
+  BOARD uno
+  PORT /dev/arduino
+)
