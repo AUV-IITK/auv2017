@@ -41,8 +41,7 @@ int main(int argc, char **argv)
 
   ros::NodeHandle nh;
   // here buoy_server is the name of the node of the actionserver.
-  ros::Subscriber sub_ =
-      nh.subscribe<task_commons::buoyActionFeedback>("/buoy_server/feedback", 1000, &forwardCb);
+  ros::Subscriber sub_ = nh.subscribe<task_commons::buoyActionFeedback>("/buoy_server/feedback", 1000, &forwardCb);
 
   Client testClient("buoy_server");
   ptrClient = &testClient;
