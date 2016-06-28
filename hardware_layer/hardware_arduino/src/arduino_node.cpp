@@ -329,7 +329,7 @@ void setup()
 void loop()
 {
   v = analogRead(analogPinPressureSensor);
-  voltage.data = v;
+  voltage.data = -v;  // negative because convention is to take upward direction as positive
   ps_voltage.publish(&voltage);
   nh.spinOnce();
   delay(100);

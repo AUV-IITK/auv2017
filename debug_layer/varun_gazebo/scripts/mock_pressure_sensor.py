@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 from std_msgs.msg import String
 from geometry_msgs.msg import Pose
 from gazebo_msgs.msg import ModelStates
@@ -16,7 +16,7 @@ def varun_height(data):
     index = names.index('varun')
     pose = data.pose[index]
     z_position = pose.position.z
-    depth = WATER_HEIGHT - z_position
+    depth = -(WATER_HEIGHT - z_position)  # negative because convention is to take upward direction as positive
 
 
 def mock_pressure_sensor():
@@ -27,7 +27,7 @@ def mock_pressure_sensor():
     rospy.Subscriber('/gazebo/model_states', ModelStates, varun_height)
     # Publish pressure sensor data.
     pub = rospy.Publisher(
-        '/varun/sensors/pressure_sensor/depth', Float32, queue_size=10)
+        '/zDistance', Float64, queue_size=10)
     rate = rospy.Rate(10)  # 10hz
     while not rospy.is_shutdown():
         pub.publish(depth)
