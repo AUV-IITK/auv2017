@@ -73,7 +73,9 @@ int main(int argc, char **argv)
   dynamic_reconfigure::Server<motion_turn::turningConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
-
+  motion_turn::turningConfig config;
+  config.bool_param = false;
+  callback(config, 0);
   ros::spin();
   return 0;
 }

@@ -18,7 +18,6 @@ float presentAngularPosition = 0;
 float previousAngularPosition = 0;
 float finalAngularPosition, error, output;
 bool initData = false;
-
 std_msgs::Int32 pwm;  // pwm to be send to arduino
 
 // new inner class, to encapsulate the interaction with actionclient

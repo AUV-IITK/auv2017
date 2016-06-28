@@ -8,17 +8,14 @@
 #include <dynamic_reconfigure/server.h>
 #include <motion_upward/pidConfig.h>
 #include <string>
-#define minPWM 120
 using std::string;
-typedef actionlib::SimpleActionServer<motion_commons::UpwardAction> Server;  // defining the Client type
 
+typedef actionlib::SimpleActionServer<motion_commons::UpwardAction> Server;  // defining the Client type
 float presentDepth = 0;
 float previousDepth = 0;
 float finalDepth, error, output;
 bool initData = false;
-
 std_msgs::Int32 pwm;  // pwm to be send to arduino
-std_msgs::Int32 dir;  // dir to be send to arudino
 
 // new inner class, to encapsulate the interaction with actionclient
 class innerActionClass
@@ -29,12 +26,8 @@ private:
   std::string action_name_;
   motion_commons::UpwardFeedback feedback_;
   motion_commons::UpwardResult result_;
-  ros::Subscriber sub_;
-  float timeSpent, motionTime;
-  bool success;
-  ros::Publisher PWM, direction;
+  ros::Publisher PWM;
   float p, i, d;
-  int count;
 
 public:
   // Constructor, called when new instance of class declared
@@ -45,7 +38,7 @@ public:
   {
     // Add preempt callback
     upwardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
-    // Declaring publisher for PWM and direction
+    // Declaring publisher for PWM
     PWM = nh_.advertise<std_msgs::Int32>("/pwm/upward", 1000);
     // Starting new Action Server
     upwardServer_.start();
@@ -56,19 +49,17 @@ public:
   {
   }
 
-  // callback for goal cancelled
-  // Stop the bot
+  // callback for goal cancelled; Stop the bot
   void preemptCB(void)
   {
     pwm.data = 0;
     PWM.publish(pwm);
     ROS_INFO("pwm send to arduino %d", pwm.data);
     // this command cancels the previous goal
-    // upwardServer_.setPreempted();
+    upwardServer_.setPreempted();
   }
 
-  // called when new goal recieved
-  // Start motion and finish it, if not interrupted
+  // called when new goal recieved; Start motion and finish it, if not interrupted
   void analysisCB(const motion_commons::UpwardGoalConstPtr goal)
   {
     ROS_INFO("Inside analysisCB");
@@ -80,7 +71,7 @@ public:
     // waiting till we recieve the first value from Camera/pressure sensor else it's useless do any calculations
     while (!initData)
     {
-      ROS_INFO("Waiting to get first input from Pressure Sensor");
+      ROS_INFO("Waiting to get first input at topic zDistance");
       loop_rate.sleep();
     }
 
@@ -88,7 +79,6 @@ public:
 
     float derivative = 0, integral = 0, dt = 1.0 / loopRate;
     bool reached = false;
-
     pwm.data = 0;
 
     if (!upwardServer_.isActive())
@@ -99,35 +89,11 @@ public:
       error = finalDepth - presentDepth;
       integral += (error * dt);
       derivative = (presentDepth - previousDepth) / dt;
-
       output = (p * error) + (i * integral) + (d * derivative);
-
       upwardOutputPWMMapping(output);
 
-      if (mod(pwm.data) < minPWM)
+      if (error <  0.5 && error > -0.5)
       {
-        if (mod(pwm.data < 0))
-          pwm.data = -minPWM;
-        else
-          pwm.data = minPWM;
-      }
-
-      feedback_.DepthRemaining = error;
-
-      upwardServer_.publishFeedback(feedback_);
-      PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino %d", pwm.data);
-
-      ros::spinOnce();
-      loop_rate.sleep();
-
-      if (error < 5 && error > -5)  // assuming that this angle is in degree
-      {
-        // write something to calculate the time we will wait for and check if
-        // we are in the range of 5 degrees
-        // we can also check that if we are in this range and the angular
-        // velocity is also small then we can assume
-        // that we are stable and we can now start moving
         reached = true;
         pwm.data = 0;
         PWM.publish(pwm);
@@ -135,7 +101,10 @@ public:
         count++;
       }
       else
+      {
+        reached = false;
         count = 0;
+      }
 
       if (upwardServer_.isPreemptRequested() || !ros::ok())
       {
@@ -145,6 +114,14 @@ public:
         reached = false;
         break;
       }
+
+      feedback_.DepthRemaining = error;
+      upwardServer_.publishFeedback(feedback_);
+      PWM.publish(pwm);
+      ROS_INFO("pwm send to arduino %d", pwm.data);
+
+      ros::spinOnce();
+      loop_rate.sleep();
     }
     if (reached)
     {
@@ -154,36 +131,19 @@ public:
       upwardServer_.setSucceeded(result_);
     }
   }
-  int mod(int a)
-  {
-    if (a < 0)
-      return -a;
-    else
-      return a;
-  }
+
   void upwardOutputPWMMapping(float output)
   {
-    float maxOutput = 120, minOutput = -120, scale;
+    const float maxOutput = 100, minOutput = -maxOutput;
+    const float scale = 255 / maxOutput;
     if (output > maxOutput)
       output = maxOutput;
     if (output < minOutput)
       output = minOutput;
-    scale = (2 * 255) / (maxOutput - minOutput);
-    float temp;
-
-    temp = output * scale;
-
-    if (temp > 0)
-    {
-      pwm.data = static_cast<int>(temp);
-      dir.data = 3;
-    }
-    else
-    {
-      pwm.data = -1 * static_cast<int>(temp);
-      dir.data = 4;
-    }
+    float temp = output * scale;
+    pwm.data = static_cast<int>(temp);
   }
+
   void setPID(float new_p, float new_i, float new_d)
   {
     p = new_p;
@@ -193,7 +153,7 @@ public:
 };
 innerActionClass *object;
 
-/// dynamic reconfig
+// dynamic reconfig
 void callback(motion_upward::pidConfig &config, double level)
 {
   ROS_INFO("Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
