@@ -263,7 +263,6 @@ void setup()
 {
   nh.initNode();
 
-  pinMode(led, OUTPUT);
   pinMode(directionPinEast1, OUTPUT);
   pinMode(directionPinEast2, OUTPUT);
   pinMode(pwmPinWest, OUTPUT);
