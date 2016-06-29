@@ -2,62 +2,30 @@
 #include <ros.h>
 #include <Arduino.h>
 #include <std_msgs/Int32.h>
+#include <math.h>
 
-// /*************************** for AUV ****************************/
-// #define led 13
+#define pwmPinWest 4
+#define pwmPinEast 5
+#define directionPinWest1 26
+#define directionPinWest2 27
+#define directionPinEast1 35
+#define directionPinEast2 29
 
-// #define pwmPinWest 5
-// #define pwmPinEast 4
-// #define directionPinWest1 27
-// #define directionPinWest2 26
-// #define directionPinEast1 29
-// #define directionPinEast2 28
+#define pwmPinNorthSway 2
+#define pwmPinSouthSway 3
+#define directionPinNorthSway1 31
+#define directionPinNorthSway2 30
+#define directionPinSouthSway1 33
+#define directionPinSouthSway2 32
 
-// #define pwmPinNorthSway 5
-// #define pwmPinSouthSway 4
-// #define directionPinNorthSway1 27
-// #define directionPinNorthSway2 26
-// #define directionPinSouthSway1 29
-// #define directionPinSouthSway2 28
+#define pwmPinNorthUp 6
+#define pwmPinSouthUp 7
+#define directionPinNorthUp1 24
+#define directionPinNorthUp2 25
+#define directionPinSouthUp1 22
+#define directionPinSouthUp2 23
 
-// #define pwmPinNorthUp 5
-// #define pwmPinSouthUp 4
-// #define directionPinNorthUp1 27
-// #define directionPinNorthUp2 26
-// #define directionPinSouthUp1 29
-// #define directionPinSouthUp2 28
-
-/************************ for New Ground Testing Bot *******************/
-#define led 13  // 13
-
-#define pwmPinWest 7          // 3
-#define pwmPinEast 6          // 2
-#define directionPinWest1 23  // 31
-#define directionPinWest2 22  // 30
-#define directionPinEast1 24  // 33
-#define directionPinEast2 25  // 32
-
-#define pwmPinNorthSway 4          // 3
-#define pwmPinSouthSway 5          // 2
-#define directionPinNorthSway1 28  // 31
-#define directionPinNorthSway2 29  // 30
-#define directionPinSouthSway1 27  // 33
-#define directionPinSouthSway2 26  // 32
-
-#define pwmPinNorthUp 13        // 3
-#define pwmPinSouthUp 13        // 2
-#define directionPinNorthUp1 0  // 31
-#define directionPinNorthUp2 0  // 30
-#define directionPinSouthUp1 0  // 33
-#define directionPinSouthUp2 0  // 32
-/************************ for old ground bot ******************************/
-// #define pwmPinWest 4
-// #define pwmPinEast 5
-// #define directionPinWest1 2
-// #define directionPinWest2 3
-// #define directionPinEast1 7
-// #define directionPinEast2 6
-// #define led 13
+#define analogPinPressureSensor A0
 
 const float c092 = 506.22;
 const float s092 = -2.65;
@@ -113,8 +81,9 @@ int btd122(int pwm)
 
 void thrusterNorthUp(int pwm, int isUpward)
 {
-  pwm = btd122(pwm);
-  analogWrite(pwmPinNorthUp, pwm);
+  pwm = abs(pwm);
+  pwm = btd117(pwm);
+  analogWrite(pwmPinNorthUp, 255 - pwm);
   if (isUpward)
   {
     digitalWrite(directionPinNorthUp1, HIGH);
@@ -129,8 +98,9 @@ void thrusterNorthUp(int pwm, int isUpward)
 
 void thrusterSouthUp(int pwm, int isUpward)
 {
-  pwm = btd117(pwm);
-  analogWrite(pwmPinSouthUp, pwm);
+  pwm = abs(pwm);
+  pwm = btd093(pwm);
+  analogWrite(pwmPinSouthUp, 255 - pwm);
   if (isUpward)
   {
     digitalWrite(directionPinSouthUp1, HIGH);
@@ -145,8 +115,9 @@ void thrusterSouthUp(int pwm, int isUpward)
 
 void thrusterNorthSway(int pwm, int isRight)
 {
+  pwm = abs(pwm);
   pwm = btd113(pwm);
-  analogWrite(pwmPinNorthSway, pwm);
+  analogWrite(pwmPinNorthSway, 255 - pwm);
   if (isRight)
   {
     digitalWrite(directionPinNorthSway1, HIGH);
@@ -161,8 +132,9 @@ void thrusterNorthSway(int pwm, int isRight)
 
 void thrusterSouthSway(int pwm, int isRight)
 {
-  pwm = btd099(pwm);
-  analogWrite(pwmPinSouthSway, pwm);
+  pwm = abs(pwm);
+  pwm = btd122(pwm);
+  analogWrite(pwmPinSouthSway, 255 - pwm);
   if (isRight)
   {
     digitalWrite(directionPinSouthSway1, HIGH);
@@ -177,8 +149,9 @@ void thrusterSouthSway(int pwm, int isRight)
 
 void thrusterEast(int pwm, int isForward)
 {
-  pwm = btd093(pwm);
-  analogWrite(pwmPinEast, pwm);
+  pwm = abs(pwm);
+  pwm = btd092(pwm);
+  analogWrite(pwmPinEast, 255 - pwm);
   if (isForward)
   {
     digitalWrite(directionPinEast1, HIGH);
@@ -193,8 +166,9 @@ void thrusterEast(int pwm, int isForward)
 
 void thrusterWest(int pwm, int isForward)
 {
-  pwm = btd092(pwm);
-  analogWrite(pwmPinWest, pwm);
+  pwm = abs(pwm);
+  pwm = btd099(pwm);
+  analogWrite(pwmPinWest, 255 - pwm);
   if (isForward)
   {
     digitalWrite(directionPinWest1, HIGH);
@@ -211,13 +185,13 @@ void PWMCbForward(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterEast(255 - msg.data, true);
-    thrusterWest(255 - msg.data, true);
+    thrusterEast(msg.data, true);
+    thrusterWest(msg.data, true);
   }
   else
   {
-    thrusterEast(255 + msg.data, false);
-    thrusterWest(255 + msg.data, false);
+    thrusterEast(msg.data, false);
+    thrusterWest(msg.data, false);
   }
   isMovingForward = true;
 }
@@ -226,13 +200,13 @@ void PWMCbSideward(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterNorthSway(255 - msg.data, true);
-    thrusterSouthSway(255 - msg.data, true);
+    thrusterNorthSway(msg.data, true);
+    thrusterSouthSway(msg.data, true);
   }
   else
   {
-    thrusterNorthSway(255 + msg.data, false);
-    thrusterSouthSway(255 + msg.data, false);
+    thrusterNorthSway(msg.data, false);
+    thrusterSouthSway(msg.data, false);
   }
   isMovingForward = false;
 }
@@ -241,13 +215,13 @@ void PWMCbUpward(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterNorthUp(255 - msg.data, true);
-    thrusterSouthUp(255 - msg.data, true);
+    thrusterNorthUp(msg.data, true);
+    thrusterSouthUp(msg.data, true);
   }
   else
   {
-    thrusterNorthUp(255 + msg.data, false);
-    thrusterSouthUp(255 + msg.data, false);
+    thrusterNorthUp(msg.data, false);
+    thrusterSouthUp(msg.data, false);
   }
 }
 
@@ -255,13 +229,13 @@ void PWMCbTurnSway(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterEast(255 - msg.data, true);
-    thrusterWest(255 - msg.data, false);
+    thrusterEast(msg.data, true);
+    thrusterWest(msg.data, false);
   }
   else
   {
-    thrusterEast(255 + msg.data, false);
-    thrusterWest(255 + msg.data, true);
+    thrusterEast(msg.data, false);
+    thrusterWest(msg.data, true);
   }
 }
 
@@ -269,13 +243,13 @@ void PWMCbTurn(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterNorthSway(255 - msg.data, false);
-    thrusterSouthSway(255 - msg.data, true);
+    thrusterNorthSway(msg.data, false);
+    thrusterSouthSway(msg.data, true);
   }
   else
   {
-    thrusterNorthSway(255 + msg.data, true);
-    thrusterSouthSway(255 + msg.data, false);
+    thrusterNorthSway(msg.data, true);
+    thrusterSouthSway(msg.data, false);
   }
 }
 
@@ -289,7 +263,6 @@ void setup()
 {
   nh.initNode();
 
-  pinMode(led, OUTPUT);
   pinMode(directionPinEast1, OUTPUT);
   pinMode(directionPinEast2, OUTPUT);
   pinMode(pwmPinWest, OUTPUT);
