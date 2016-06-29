@@ -8,18 +8,13 @@
 #include <dynamic_reconfigure/server.h>
 #include <motion_sideward/pidConfig.h>
 #include <string>
-#define minPWM 121
-#define maxPWM 140
 using std::string;
 
 typedef actionlib::SimpleActionServer<motion_commons::SidewardAction> Server;  // defining the Client type
-
 float presentSidePosition = 0;
 float previousSidePosition = 0;
 float finalSidePosition, error, output;
 bool initData = false;
-int count = 0;
-
 std_msgs::Int32 pwm;  // pwm to be send to arduino
 
 // new inner class, to encapsulate the interaction with actionclient
@@ -43,6 +38,7 @@ public:
   {
     // Add preempt callback
     sidewardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
+    // Declaring publisher for PWM
     PWM = nh_.advertise<std_msgs::Int32>("/pwm/sideward", 1000);
     // Starting new Action Server
     sidewardServer_.start();
@@ -53,19 +49,17 @@ public:
   {
   }
 
-  // callback for goal cancelled
-  // Stop the bot
+  // callback for goal cancelled ,Stop the bot
   void preemptCB(void)
   {
     pwm.data = 0;
     PWM.publish(pwm);
     ROS_INFO("pwm send to arduino %d", pwm.data);
     // this command cancels the previous goal
-    // sidewardServer_.setPreempted();
+    sidewardServer_.setPreempted();
   }
 
-  // called when new goal recieved
-  // Start motion and finish it, if not interupted
+  // called when new goal recieved; start motion and finish it, if not interupted
   void analysisCB(const motion_commons::SidewardGoalConstPtr goal)
   {
     ROS_INFO("Inside analysisCB");
@@ -74,8 +68,7 @@ public:
     int loopRate = 10;
     ros::Rate loop_rate(loopRate);
 
-    // waiting till we recieve the first value from Camera else it's useless to
-    // to any calculations
+    // waiting till we recieve the first value from Camera else it's useless to any calculations
     while (!initData)
     {
       ROS_INFO("Waiting to get first input from Camera");
@@ -87,7 +80,6 @@ public:
 
     float derivative = 0, integral = 0, dt = 1.0 / loopRate;
     bool reached = false;
-
     pwm.data = 0;
 
     if (!sidewardServer_.isActive())
@@ -98,42 +90,21 @@ public:
       error = finalSidePosition - presentSidePosition;
       integral += (error * dt);
       derivative = (presentSidePosition - previousSidePosition) / dt;
-
       output = (p * error) + (i * integral) + (d * derivative);
-
       sidewardOutputPWMMapping(output);
 
-      // this lower limit depends upon the bot itself, below these values of PWM
-      // thrusters will not start
-      if (mod(pwm.data) > maxPWM)
+      if (error < 5 && error > -5)
       {
-        if (pwm.data < 0)
-          pwm.data = -maxPWM;
-        else
-          pwm.data = maxPWM;
-      }
-
-      feedback_.DistanceRemaining = error;
-
-      sidewardServer_.publishFeedback(feedback_);
-      PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino %d", pwm.data);
-
-      ros::spinOnce();
-      loop_rate.sleep();
-
-      if (error < 5 && error > -5)  // assuming that this angle is in degree
-      {
-        // write something to calculate the time we will wait for and check if
-        // we are in the range of 5 degrees
-        // we can also check that if we are in this range and the angular
-        // velocity is also small then we can assume
-        // that we are stable and we can now start moving
         reached = true;
         pwm.data = 0;
         PWM.publish(pwm);
         ROS_INFO("thrusters stopped");
         count++;
+      }
+      else
+      {
+        reached = false;
+        count = 0;
       }
 
       if (sidewardServer_.isPreemptRequested() || !ros::ok())
@@ -144,8 +115,15 @@ public:
         reached = false;
         break;
       }
-    }
 
+      feedback_.DistanceRemaining = error;
+      sidewardServer_.publishFeedback(feedback_);
+      PWM.publish(pwm);
+      ROS_INFO("pwm send to arduino %d", pwm.data);
+
+      ros::spinOnce();
+      loop_rate.sleep();
+    }
     if (reached)
     {
       result_.Result = reached;
@@ -156,27 +134,16 @@ public:
   }
   void sidewardOutputPWMMapping(float output)
   {
-    float maxOutput = 200, minOutput = -200, scale;  // upper limit in terms of error ex. 100 cm of distance we will
-                                                     // consider all distances > 100cm as 100cm
-
-    scale = (maxPWM - minPWM) / (maxOutput - 0);
-    float temp;
-    float bias;
-    if (output > 0)
-      bias = minPWM;  // the minPWM;
-    else
-      bias = -minPWM;
-
-    temp = output * scale + bias;
+    float maxOutput = 200, minOutput = -maxOutput;
+    float scale = 255 / (maxOutput - 0);
+    if (output > maxOutput)
+      output = maxOutput;
+    if (output < minOutput)
+      output = minOutput;
+    float temp = output * scale;
     pwm.data = static_cast<int>(temp);
   }
-  int mod(int a)
-  {
-    if (a < 0)
-      return -a;
-    else
-      return a;
-  }
+
   void setPID(float new_p, float new_i, float new_d)
   {
     p = new_p;
@@ -186,7 +153,7 @@ public:
 };
 innerActionClass *object;
 
-/// dynamic reconfig
+// dynamic reconfig
 void callback(motion_sideward::pidConfig &config, double level)
 {
   ROS_INFO("Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
@@ -195,8 +162,7 @@ void callback(motion_sideward::pidConfig &config, double level)
 
 void distanceCb(std_msgs::Float64 msg)
 {
-  // this is used to set the final angle after getting the value of first intial
-  // position
+  // this is used to set the final angle after getting the value of first intial position
   if (initData == false)
   {
     presentSidePosition = msg.data;
@@ -207,7 +173,6 @@ void distanceCb(std_msgs::Float64 msg)
   {
     previousSidePosition = presentSidePosition;
     presentSidePosition = msg.data;
-    // ROS_INFO("New angular postion %f", msg.data);
   }
 }
 

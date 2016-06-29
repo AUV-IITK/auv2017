@@ -8,12 +8,9 @@
 #include <dynamic_reconfigure/server.h>
 #include <motion_turn/pidConfig.h>
 #include <string>
-#define minPWM 200  // min pwm at which thrusters move
-#define maxPWM 240  // upper limit to control spped of bot
 using std::string;
 
 typedef actionlib::SimpleActionServer<motion_commons::TurnAction> Server;
-
 float presentAngularPosition = 0;
 float previousAngularPosition = 0;
 float finalAngularPosition, error, output;
@@ -41,6 +38,7 @@ public:
   {
     // Add preempt callback
     turnServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
+    // Declaring publisher for PWM
     PWM = nh_.advertise<std_msgs::Int32>("/pwm/turn", 1000);
     // Starting new Action Server
     turnServer_.start();
@@ -51,19 +49,17 @@ public:
   {
   }
 
-  // callback for goal cancelled
-  // Stop the bot
+  // callback for goal cancelled, stop the bot
   void preemptCB(void)
   {
     pwm.data = 0;
     PWM.publish(pwm);
     ROS_INFO("pwm send to arduino %d", pwm.data);
     // this command cancels the previous goal
-    // turnServer_.setPreempted();
+    turnServer_.setPreempted();
   }
 
-  // called when new goal recieved
-  // Start motion and finish it, if not interupted
+  // called when new goal recieved; start motion and finish it, if not interupted
   void analysisCB(const motion_commons::TurnGoalConstPtr goal)
   {
     ROS_INFO("Inside analysisCB");
@@ -72,8 +68,7 @@ public:
     int loopRate = 10;
     ros::Rate loop_rate(loopRate);
 
-    // waiting till we recieve the first value from IMU else it's useless to to
-    // any calculations
+    // waiting till we recieve the first value from IMU else it's useless to any calculations
     while (!initData)
     {
       ROS_INFO("Waiting to get first input from IMU");
@@ -88,7 +83,6 @@ public:
 
     float derivative = 0, integral = 0, dt = 1.0 / loopRate;
     bool reached = false;
-
     pwm.data = 0;
 
     if (!turnServer_.isActive())
@@ -99,42 +93,21 @@ public:
       error = finalAngularPosition - presentAngularPosition;
       integral += (error * dt);
       derivative = (presentAngularPosition - previousAngularPosition) / dt;
-
       output = (p * error) + (i * integral) + (d * derivative);
-
       turningOutputPWMMapping(output);
 
-      // this lower limit depends upon the bot itself, below these values of PWM
-      // thrusters will not start
-      if (mod(pwm.data) > maxPWM)
+      if (error < 5 && error > -5)
       {
-        if (pwm.data < 0)
-          pwm.data = -maxPWM;
-        else
-          pwm.data = maxPWM;
-      }
-
-      feedback_.AngleRemaining = error;
-
-      turnServer_.publishFeedback(feedback_);
-      PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino %d", pwm.data);
-
-      ros::spinOnce();
-      loop_rate.sleep();
-
-      if (error < 5 && error > -5)  // assuming that this angle is in degree
-      {
-        // write something to calculate the time we will wait for and check if
-        // we are in the range of 5 degrees
-        // we can also check that if we are in this range and the angular
-        // velocity is also small then we can assume
-        // that we are stable and we can now start moving
         reached = true;
         pwm.data = 0;
         PWM.publish(pwm);
         ROS_INFO("thrusters stopped");
         count++;
+      }
+      else
+      {
+        reached = false;
+        count = 0;
       }
 
       if (turnServer_.isPreemptRequested() || !ros::ok())
@@ -145,8 +118,15 @@ public:
         reached = false;
         break;
       }
-    }
 
+      feedback_.AngleRemaining = error;
+      turnServer_.publishFeedback(feedback_);
+      PWM.publish(pwm);
+      ROS_INFO("pwm send to arduino %d", pwm.data);
+
+      ros::spinOnce();
+      loop_rate.sleep();
+    }
     if (reached)
     {
       result_.MotionCompleted = reached;
@@ -157,26 +137,14 @@ public:
   }
   void turningOutputPWMMapping(float output)
   {
-    float maxOutput = 200, minOutput = -200, scale;  // upper limit in terms of error ex. 200 cm of distance we will
-                                                     // consider all distances > 100cm as 100cm
-
-    scale = (maxPWM - minPWM) / (maxOutput - 0);
-    float temp;
-    float bias;
-    if (output > 0)
-      bias = minPWM;  // the minPWM;
-    else
-      bias = -minPWM;
-
-    temp = output * scale + bias;
+    float maxOutput = 200, minOutput = -maxOutput;
+    float scale = 255 / maxOutput;
+    if (output > maxOutput)
+      output = maxOutput;
+    if (output < minOutput)
+      output = minOutput;
+    float temp = output * scale;
     pwm.data = static_cast<int>(temp);
-  }
-  int mod(int a)
-  {
-    if (a < 0)
-      return -a;
-    else
-      return a;
   }
 
   void setPID(float new_p, float new_i, float new_d)
@@ -197,8 +165,7 @@ void callback(motion_turn::pidConfig &config, double level)
 
 void yawCb(std_msgs::Float64 msg)
 {
-  // this is used to set the final angle after getting the value of first intial
-  // position
+  // this is used to set the final angle after getting the value of first intial position
   if (initData == false)
   {
     presentAngularPosition = msg.data;
@@ -209,7 +176,6 @@ void yawCb(std_msgs::Float64 msg)
   {
     previousAngularPosition = presentAngularPosition;
     presentAngularPosition = msg.data;
-    // ROS_INFO("New angular postion %f", msg.data);
   }
 }
 
