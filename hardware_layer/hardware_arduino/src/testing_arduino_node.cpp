@@ -185,13 +185,13 @@ void PWMCbForward(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterEast(255 - msg.data, true);
-    thrusterWest(255 - msg.data, true);
+    thrusterEast(msg.data, true);
+    thrusterWest(msg.data, true);
   }
   else
   {
-    thrusterEast(255 + msg.data, false);
-    thrusterWest(255 + msg.data, false);
+    thrusterEast(msg.data, false);
+    thrusterWest(msg.data, false);
   }
   isMovingForward = true;
 }
@@ -200,13 +200,13 @@ void PWMCbSideward(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterNorthSway(255 - msg.data, true);
-    thrusterSouthSway(255 - msg.data, true);
+    thrusterNorthSway(msg.data, true);
+    thrusterSouthSway(msg.data, true);
   }
   else
   {
-    thrusterNorthSway(255 + msg.data, false);
-    thrusterSouthSway(255 + msg.data, false);
+    thrusterNorthSway(msg.data, false);
+    thrusterSouthSway(msg.data, false);
   }
   isMovingForward = false;
 }
@@ -215,13 +215,13 @@ void PWMCbUpward(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterNorthUp(255 - msg.data, true);
-    thrusterSouthUp(255 - msg.data, true);
+    thrusterNorthUp(msg.data, true);
+    thrusterSouthUp(msg.data, true);
   }
   else
   {
-    thrusterNorthUp(255 + msg.data, false);
-    thrusterSouthUp(255 + msg.data, false);
+    thrusterNorthUp(msg.data, false);
+    thrusterSouthUp(msg.data, false);
   }
 }
 
@@ -229,13 +229,13 @@ void PWMCbTurnSway(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterEast(255 - msg.data, true);
-    thrusterWest(255 - msg.data, false);
+    thrusterEast(msg.data, true);
+    thrusterWest(msg.data, false);
   }
   else
   {
-    thrusterEast(255 + msg.data, false);
-    thrusterWest(255 + msg.data, true);
+    thrusterEast(msg.data, false);
+    thrusterWest(msg.data, true);
   }
 }
 
@@ -243,13 +243,13 @@ void PWMCbTurn(const std_msgs::Int32 &msg)
 {
   if (msg.data > 0)
   {
-    thrusterNorthSway(255 - msg.data, false);
-    thrusterSouthSway(255 - msg.data, true);
+    thrusterNorthSway(msg.data, false);
+    thrusterSouthSway(msg.data, true);
   }
   else
   {
-    thrusterNorthSway(255 + msg.data, true);
-    thrusterSouthSway(255 + msg.data, false);
+    thrusterNorthSway(msg.data, true);
+    thrusterSouthSway(msg.data, false);
   }
 }
 
