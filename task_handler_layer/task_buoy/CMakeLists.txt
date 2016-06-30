@@ -92,9 +92,6 @@ find_package( OpenCV REQUIRED )
 #   cfg/DynReconf1.cfg
 #   cfg/DynReconf2.cfg
 # )
-add_message_files(DIRECTORY msg
-  FILES ResizedImage.msg
-)
 
 ###################################
 ## catkin specific configuration ##
@@ -142,7 +139,7 @@ target_link_libraries(buoy_client ${catkin_LIBRARIES})
 # add_dependencies(image task_buoy_generate_messages_cpp)
 # target_link_libraries(image  ${OpenCV_LIBS} )
 # target_link_libraries(image  ${opencv2/highgui.hpp} )
-# target_link_libraries(image  ${cv_bridge/cv_bridge.h} )
+## target_link_libraries(image  ${cv_bridge/cv_bridge.h} )
 # target_link_libraries(image ${opencv2/videoio/videoio.hpp} )
 
 

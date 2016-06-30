@@ -17,26 +17,28 @@
 #include <sstream>
 #include "std_msgs/Float64MultiArray.h"
 
-// bool IP = true;
+/// bool IP = true;
 bool IP = false;
+bool flag = false;
+bool video = false;
+int t1min = 0, t1max = 100, t2min = 10, t2max = 260, t3min = 185, t3max = 260;  // Default Params
+
+cv::Mat frame;
+cv::Mat newframe;
+int count = 0;
 
 void lineDetectedListener(std_msgs::Bool msg)
 {
   IP = msg.data;
 }
 
-cv::Mat frame;
-cv::Mat newframe;
-int count = 0;
-
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
   try
   {
     count++;
-    // imshow("view", cv_bridge::toCvShare(msg, "bgr8")->image);
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
-
+    cvNamedWindow("newframe", CV_WINDOW_NORMAL);
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
     cv::imshow("newframe", newframe);
@@ -51,9 +53,18 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
-  int i, j, k, t1min = 0, t1max = 9, t2min = 104, t2max = 260, t3min = 185, t3max = 260;  // other variables used
-
-  cv::VideoWriter output_cap(argv[2], CV_FOURCC('D', 'I', 'V', 'X'), 25, cv::Size(640, 480));
+  std::string Video_Name = "Random_Video";
+  if (argc >= 2)
+    flag = true;
+  if (argc == 3)
+  {
+    video = true;
+    std::string avi = ".avi";
+    Video_Name = (argv[2]) + avi;
+  }
+  printf("sssss\n");
+  cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
+  printf("ssssssdssdss\n");
   ros::init(argc, argv, "buoy_detection");
   ros::NodeHandle n;
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("balls", 1000);
@@ -63,21 +74,23 @@ int main(int argc, char *argv[])
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("camera/image", 1, imageCallback);
 
-  char TrackbarName1[50] = "t1min";
-  char TrackbarName2[50] = "t1max";
-  char TrackbarName3[50] = "t2min";
-  char TrackbarName4[50] = "t2max";
-  char TrackbarName5[50] = "t3min";
-  char TrackbarName6[50] = "t3max";
+  if (flag)
+  {
+    cvNamedWindow("Contours", CV_WINDOW_NORMAL);
+    cvNamedWindow("F1", CV_WINDOW_NORMAL);
+    cvNamedWindow("circle", CV_WINDOW_NORMAL);
+    cvNamedWindow("F2", CV_WINDOW_NORMAL);
+    cvNamedWindow("F3", CV_WINDOW_NORMAL);
 
-  cvCreateTrackbar(TrackbarName1, "F1", &t1min, 260, NULL);
-  cvCreateTrackbar(TrackbarName2, "F1", &t1max, 260, NULL);
+    cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
 
-  cvCreateTrackbar(TrackbarName3, "F2", &t2min, 260, NULL);
-  cvCreateTrackbar(TrackbarName4, "F2", &t2max, 260, NULL);
-
-  cvCreateTrackbar(TrackbarName5, "F3", &t3min, 260, NULL);
-  cvCreateTrackbar(TrackbarName6, "F3", &t3max, 260, NULL);
+    cvCreateTrackbar("t1min", "F1", &t1min, 260, NULL);
+    cvCreateTrackbar("t1max", "F1", &t1max, 260, NULL);
+    cvCreateTrackbar("t2min", "F2", &t2min, 260, NULL);
+    cvCreateTrackbar("t2max", "F2", &t2max, 260, NULL);
+    cvCreateTrackbar("t3min", "F3", &t3min, 260, NULL);
+    cvCreateTrackbar("t3max", "F3", &t3max, 260, NULL);
+  }
 
   // capture size -
   CvSize size = cvSize(width, height);
@@ -98,15 +111,14 @@ int main(int argc, char *argv[])
         continue;
       }
 
-      // cv::imshow("frame",frame);
+      if (video)
+        output_cap.write(frame);
 
       // get the image data
       height = frame.rows;
       width = frame.cols;
       step = frame.step;
-      // frame = cvQueryFrame( capture );
 
-      // cv::imshow("RealPic", frame);
       // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
       cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
       cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
@@ -121,20 +133,13 @@ int main(int argc, char *argv[])
       cv::inRange(thresholded_hsv[0], cv::Scalar(t1min, 0, 0, 0), cv::Scalar(t1max, 0, 0, 0), thresholded_hsv[0]);
       cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
       cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
-      // cv::imshow("F1", thresholded_hsv[0]);  // individual filters
-      // cv::imshow("F2", thresholded_hsv[1]);
-      // cv::imshow("F3", thresholded_hsv[2]);
-
-      // cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
-      // hough detector works better with some smoothing of the image
       cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
 
       // find contours
-      std::vector<std::vector<cv::Point> > contours;
+      std::vector<std::vector<cv::Point > > contours;
       cv::Mat thresholded_Mat = thresholded;
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
-      // cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
       if (contours.empty())
       {
         array.data.push_back(0);
@@ -143,7 +148,13 @@ int main(int argc, char *argv[])
         array.data.push_back(0);
         array.data.push_back(0);
         array.data.push_back(0);
-        // cv::imshow( "circle", circles ); // Original stream with detected ball overlay
+        if (flag)
+        {
+          cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
+          cv::imshow("F1", thresholded_hsv[0]);              // individual filters
+          cv::imshow("F2", thresholded_hsv[1]);
+          cv::imshow("F3", thresholded_hsv[2]);
+        }
         pub.publish(array);
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
@@ -165,8 +176,6 @@ int main(int argc, char *argv[])
       // Convex HULL
       std::vector<std::vector<cv::Point> > hull(contours.size());
       convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], false);
-
-      output_cap.write(frame);
 
       std::vector<cv::Point2f> center(1);
       std::vector<float> radius(1);
@@ -194,10 +203,16 @@ int main(int argc, char *argv[])
         array.data.push_back(0);  // telling we are in line of center of ball
 
       pub.publish(array);
-      // imshow("F1", thresholded1);  // individual filters
-      // imshow("F2", thresholded2);
-      // imshow("F3", thresholded3);
-      // cv::imshow("circle", circles);  // Original stream with detected ball overlay
+
+      if (flag)
+      {
+        cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
+        cv::imshow("F1", thresholded_hsv[0]);              // individual filters
+        cv::imshow("F2", thresholded_hsv[1]);
+        cv::imshow("F3", thresholded_hsv[2]);
+        cv::imshow("circle", circles);            // Original stream with detected ball overlay
+        cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
+      }
 
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
