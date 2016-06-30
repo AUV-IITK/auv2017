@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
       cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
 
       // find contours
-      std::vector<std::vector<cv::Point > > contours;
+      std::vector<std::vector<cv::Point> > contours;
       cv::Mat thresholded_Mat = thresholded;
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;

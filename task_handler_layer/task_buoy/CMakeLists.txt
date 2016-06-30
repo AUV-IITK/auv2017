@@ -135,13 +135,6 @@ target_link_libraries(buoy_detection ${catkin_LIBRARIES})
 target_link_libraries(buoy_server ${catkin_LIBRARIES})
 target_link_libraries(buoy_client ${catkin_LIBRARIES})
 
-# target_link_libraries(image ${catkin_LIBRARIES})
-# add_dependencies(image task_buoy_generate_messages_cpp)
-# target_link_libraries(image  ${OpenCV_LIBS} )
-# target_link_libraries(image  ${opencv2/highgui.hpp} )
-## target_link_libraries(image  ${cv_bridge/cv_bridge.h} )
-# target_link_libraries(image ${opencv2/videoio/videoio.hpp} )
-
 
 ## Declare a C++ library
 # add_library(task_buoy
