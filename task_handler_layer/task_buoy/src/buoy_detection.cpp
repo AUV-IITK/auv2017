@@ -17,8 +17,7 @@
 #include <sstream>
 #include "std_msgs/Float64MultiArray.h"
 
-/// bool IP = true;
-bool IP = false;
+bool IP = true;
 bool flag = false;
 bool video = false;
 int t1min = 0, t1max = 100, t2min = 10, t2max = 260, t3min = 185, t3max = 260;  // Default Params
