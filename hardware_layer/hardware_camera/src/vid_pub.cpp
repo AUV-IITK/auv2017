@@ -30,7 +30,8 @@ int main(int argc, char **argv)
     return 1;
   cv::Mat frame;
   sensor_msgs::ImagePtr msg;
-
+  int loopRate = 10;
+  ros::Rate loop_rate(loopRate);
   while (nh.ok())
   {
     cap >> frame;
@@ -39,10 +40,8 @@ int main(int argc, char **argv)
     {
       msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame).toImageMsg();
       pub.publish(msg);
-
-      cv::waitKey(1);
+      // loop_rate.sleep();
     }
-
     ros::spinOnce();
   }
 }

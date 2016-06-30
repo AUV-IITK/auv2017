@@ -6,18 +6,27 @@ project(hardware_camera)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roslint
-  cv_bridge
-  genmsg
-  image_transport
+  roscpp
+  rospy
+  std_msgs
   sensor_msgs
+  actionlib
+  actionlib_msgs
+  message_generation
+  task_commons
+  motion_commons
+  cv_bridge
+  sensor_msgs
+  image_transport
 )
-
-## Check for lint errors
-roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-find_package(OpenCV REQUIRED)
+roslint_cpp()
+
+## System dependencies are found with CMake's conventions
+find_package(Boost REQUIRED COMPONENTS system)
+find_package( OpenCV REQUIRED )
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -55,11 +64,6 @@ find_package(OpenCV REQUIRED)
 #   Message2.msg
 # )
 
-# add the resized image message
-add_message_files(DIRECTORY msg
-  FILES ResizedImage.msg
-)
-
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
@@ -68,9 +72,17 @@ add_message_files(DIRECTORY msg
 # )
 
 ## Generate actions in the 'action' folder
+# add_action_files(
+#   FILES
+#   Action1.action
+#   Action2.action
+# )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(DEPENDENCIES sensor_msgs)
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -87,6 +99,13 @@ generate_messages(DEPENDENCIES sensor_msgs)
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
+# generate_dynamic_reconfigure_options(
+#   cfg/DynReconf1.cfg
+#   cfg/DynReconf2.cfg
+# )
+add_message_files(DIRECTORY msg
+  FILES ResizedImage.msg
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -97,10 +116,16 @@ generate_messages(DEPENDENCIES sensor_msgs)
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  sensor_msgs
+)
+
 catkin_package(
-  #  INCLUDE DIR include
-  #  LIBRARIES motion_forward
-  #  CATKIN_DEPENDS std_msgs
+  #  INCLUDE_DIRS include
+  #  LIBRARIES task_buoy
+  CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation task_commons motion_commons
   #  DEPENDS system_lib
 )
 
@@ -112,39 +137,29 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(include
-  ${OpenCV_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
-# add the publisher example
-add_executable(vid_pub src/vid_pub.cpp)
-target_link_libraries(vid_pub ${catkin_LIBRARIES})
-target_link_libraries(vid_pub ${OpenCV_LIBS})
-
-# add the publisher example
-add_executable(image_listener src/image_listener.cpp)
-target_link_libraries(image_listener ${catkin_LIBRARIES})
-target_link_libraries(image_listener ${OpenCV_LIBS})
-
 ## Declare a C++ library
-# add_library(motion_forward
-#   src/${PROJECT_NAME}/motion_forward.cpp
+# add_library(hardware_camera
+#   src/${PROJECT_NAME}/hardware_camera.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(motion_forward ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(hardware_camera ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(motion_forward_node src/motion_forward_node.cpp)
+# add_executable(hardware_camera_node src/hardware_camera_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(motion_forward_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(hardware_camera_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(motion_forward_node
+# target_link_libraries(hardware_camera_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -163,7 +178,7 @@ target_link_libraries(image_listener ${OpenCV_LIBS})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS motion_forward motion_forward_node
+# install(TARGETS hardware_camera hardware_camera_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -182,13 +197,16 @@ target_link_libraries(image_listener ${OpenCV_LIBS})
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+add_executable(vid_pub src/vid_pub.cpp)
+target_link_libraries(vid_pub ${catkin_LIBRARIES})
+target_link_libraries(vid_pub ${OpenCV_LIBS})
 
 #############
 ## Testing ##
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_motion_forward.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_hardware_camera.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
