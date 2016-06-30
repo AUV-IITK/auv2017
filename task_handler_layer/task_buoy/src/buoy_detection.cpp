@@ -15,6 +15,7 @@
 #include "std_msgs/Float32MultiArray.h"
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
+#include <string>
 #include "std_msgs/Float64MultiArray.h"
 
 bool IP = true;
