@@ -55,7 +55,7 @@ rosrun rosserial_arduino make_libraries.py .
 
 # suggest to setup environment variables
 echo "Please add these to your ~/.bashrc file"
-echo "source /opt/ros/kinetic/setup.sh"
+echo "source /opt/ros/$ROS_DISTRO/setup.sh"
 echo "source /usr/share/gazebo-7/setup.sh"
 echo "For using gazebosim on your system plz install by running #curl -ssL http://get.gazebosim.org | sh"
 echo "and configure these settings #export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH/home/$USER/catkin_ws/src/auv/debug_layer/:/home/$USER/catkin_ws/src/auv/debug_layer/varun_gazebo/models/:"
