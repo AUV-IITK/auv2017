@@ -41,6 +41,7 @@ const float s117 = -3.03;
 const float c122 = 547.39;
 const float s122 = -2.93;
 
+int count, sum;
 bool isMovingForward = true;
 float v;
 std_msgs::Float64 voltage;
@@ -324,13 +325,26 @@ void setup()
   PWMCbSideward(msg);
   PWMCbUpward(msg);
   PWMCbTurn(msg);
+  count = 0;
+  sum = 0;
 }
 
 void loop()
 {
-  v = analogRead(analogPinPressureSensor);
-  voltage.data = -v;  // negative because convention is to take upward direction as positive
-  ps_voltage.publish(&voltage);
+  if (count == 100)
+  {
+    sum /= count;
+    voltage.data = -sum;  // negative because convention is to take upward direction as positive
+    ps_voltage.publish(&voltage);
+    sum = 0;
+    count = 0;
+  }
+  else
+  {
+    v = analogRead(analogPinPressureSensor);
+    sum += v;
+    count++;
+    delay(1);
+  }
   nh.spinOnce();
-  delay(100);
 }
