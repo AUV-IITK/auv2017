@@ -48,6 +48,7 @@ float k113 = 0;
 float k117 = 0;
 float k122 = 0;
 
+int count, sum;
 bool isMovingForward = true;
 float v;
 std_msgs::Float64 voltage;
@@ -368,6 +369,8 @@ void setup()
   PWMCbSideward(msg);
   PWMCbUpward(msg);
   PWMCbTurn(msg);
+  count = 0;
+  sum = 0;
 
   nh.subscribe(thruster092);
   nh.subscribe(thruster093);
@@ -379,9 +382,20 @@ void setup()
 
 void loop()
 {
-  v = analogRead(analogPinPressureSensor);
-  voltage.data = -v;  // negative because convention is to take upward direction as positive
-  ps_voltage.publish(&voltage);
+  if (count == 100)
+  {
+    sum /= count;
+    voltage.data = -sum;  // negative because convention is to take upward direction as positive
+    ps_voltage.publish(&voltage);
+    sum = 0;
+    count = 0;
+  }
+  else
+  {
+    v = analogRead(analogPinPressureSensor);
+    sum += v;
+    count++;
+    delay(1);
+  }
   nh.spinOnce();
-  delay(1);
 }
