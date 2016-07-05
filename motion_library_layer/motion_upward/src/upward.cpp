@@ -92,7 +92,7 @@ public:
       output = (p * error) + (i * integral) + (d * derivative);
       upwardOutputPWMMapping(output);
 
-      if (error <  0.5 && error > -0.5)
+      if (error <  0.01 && error > -0.01)
       {
         reached = true;
         pwm.data = 0;
@@ -134,7 +134,7 @@ public:
 
   void upwardOutputPWMMapping(float output)
   {
-    const float maxOutput = 100, minOutput = -maxOutput;
+    const float maxOutput = 1000, minOutput = -maxOutput;
     const float scale = 255 / maxOutput;
     if (output > maxOutput)
       output = maxOutput;
