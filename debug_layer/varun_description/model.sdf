@@ -6,8 +6,8 @@
       <gravity>0</gravity>
       <pose>0 0 0 0 0 0</pose>
       <velocity_decay>
-        <linear>0.001</linear>
-        <angular>0.001</angular>
+        <linear>0.0001</linear>
+        <angular>0.0001</angular>
       </velocity_decay>
       <inertial>
         <pose>0.55 0.16 0 0 0 0</pose>
