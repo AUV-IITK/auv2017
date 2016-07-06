@@ -137,7 +137,7 @@ public:
   }
   void turningOutputPWMMapping(float output)
   {
-    float maxOutput = 200, minOutput = -maxOutput;
+    float maxOutput = 1000, minOutput = -maxOutput;
     float scale = 255 / maxOutput;
     if (output > maxOutput)
       output = maxOutput;

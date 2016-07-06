@@ -48,67 +48,79 @@ float k113 = 0;
 float k117 = 0;
 float k122 = 0;
 
+int count, sum;
 bool isMovingForward = true;
 float v;
 std_msgs::Float64 voltage;
 ros::NodeHandle nh;
 
+int NormalizePWM(int pwm)
+{
+  return pwm * 53 / 255 + 147;
+}
+
 int btd092(int pwm)
 {
-  pwm = (c099 + k092 + s099 * pwm - c092) / (s092);
-  if (pwm < 147)
+  pwm = NormalizePWM(pwm);
+  if (pwm <= 147)
+  {
     return 0;
-  if (pwm > 255)
-    return 255;
+  }
+  pwm = (c099 + k092 + s099 * pwm - c092) / (s092);
   return pwm;
 }
 
 int btd093(int pwm)
 {
-  pwm = (c099 + k093 + s099 * pwm - c093) / (s093);
-  if (pwm < 147)
+  pwm = NormalizePWM(pwm);
+  if (pwm <= 147)
+  {
     return 0;
-  if (pwm > 255)
-    return 255;
+  }
+  pwm = (c099 + k093 + s099 * pwm - c093) / (s093);
   return pwm;
 }
 
 int btd099(int pwm)
 {
-  if (pwm < 147)
+  pwm = NormalizePWM(pwm);
+  if (pwm <= 147)
+  {
     return 0;
-  if (pwm > 255)
-    return 255;
+  }
   return pwm;
 }
 
 int btd113(int pwm)
 {
-  pwm = (c099 + k113 + s099 * pwm - c113) / (s113);
-  if (pwm < 147)
+  pwm = NormalizePWM(pwm);
+  if (pwm <= 147)
+  {
     return 0;
-  if (pwm > 255)
-    return 255;
+  }
+  pwm = (c099 + k113 + s099 * pwm - c113) / (s113);
   return pwm;
 }
 
 int btd117(int pwm)
 {
-  pwm = (c099 + k117 + s099 * pwm - c117) / (s117);
-  if (pwm < 147)
+  pwm = NormalizePWM(pwm);
+  if (pwm <= 147)
+  {
     return 0;
-  if (pwm > 255)
-    return 255;
+  }
+  pwm = (c099 + k117 + s099 * pwm - c117) / (s117);
   return pwm;
 }
 
 int btd122(int pwm)
 {
-  pwm = (c099 + k122 + s099 * pwm - c122) / (s122);
-  if (pwm < 147)
+  pwm = NormalizePWM(pwm);
+  if (pwm <= 147)
+  {
     return 0;
-  if (pwm > 255)
-    return 255;
+  }
+  pwm = (c099 + k122 + s099 * pwm - c122) / (s122);
   return pwm;
 }
 
@@ -368,6 +380,8 @@ void setup()
   PWMCbSideward(msg);
   PWMCbUpward(msg);
   PWMCbTurn(msg);
+  count = 0;
+  sum = 0;
 
   nh.subscribe(thruster092);
   nh.subscribe(thruster093);
@@ -379,9 +393,20 @@ void setup()
 
 void loop()
 {
-  v = analogRead(analogPinPressureSensor);
-  voltage.data = -v;  // negative because convention is to take upward direction as positive
-  ps_voltage.publish(&voltage);
+  if (count == 100)
+  {
+    sum /= count;
+    voltage.data = -sum;  // negative because convention is to take upward direction as positive
+    ps_voltage.publish(&voltage);
+    sum = 0;
+    count = 0;
+  }
+  else
+  {
+    v = analogRead(analogPinPressureSensor);
+    sum += v;
+    count++;
+    delay(1);
+  }
   nh.spinOnce();
-  delay(1);
 }
