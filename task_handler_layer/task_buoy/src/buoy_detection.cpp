@@ -62,13 +62,13 @@ int main(int argc, char *argv[])
     std::string avi = ".avi";
     Video_Name = (argv[2]) + avi;
   }
-  printf("sssss\n");
+
   cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
-  printf("ssssssdssdss\n");
+
   ros::init(argc, argv, "buoy_detection");
   ros::NodeHandle n;
-  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("balls", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("/balls_off", 1000, &lineDetectedListener);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/image_raw", 1000);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
   ros::Rate loop_rate(10);
 
   image_transport::ImageTransport it(n);

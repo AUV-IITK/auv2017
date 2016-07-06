@@ -60,11 +60,12 @@ public:
     ROS_INFO("inside constructor");
     buoy_server_.registerPreemptCallback(boost::bind(&TaskBuoyInnerClass::preemptCB, this));
 
-    off_pub_ = nh_.advertise<std_msgs::Bool>("balls_off", 1000);
+    off_pub_ = nh_.advertise<std_msgs::Bool>("buoy_detection_switch", 1000);
     present_X_ = nh_.advertise<std_msgs::Float64>("yDistance", 1000);
     present_Y_ = nh_.advertise<std_msgs::Float64>("zDistance", 1000);
     present_distance_ = nh_.advertise<std_msgs::Float64>("xDistance", 1000);
-    sub_ = nh_.subscribe<std_msgs::Float64MultiArray>("balls", 1000, &TaskBuoyInnerClass::buoyNavigation, this);
+    sub_ = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/image_raw", 1000,
+           &TaskBuoyInnerClass::buoyNavigation, this);
     buoy_server_.start();
   }
 

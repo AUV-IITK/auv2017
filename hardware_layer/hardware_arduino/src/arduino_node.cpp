@@ -302,7 +302,7 @@ ros::Subscriber<std_msgs::Int32> subPwmForward("/pwm/forward", &PWMCbForward);
 ros::Subscriber<std_msgs::Int32> subPwmSideward("/pwm/sideward", &PWMCbSideward);
 ros::Subscriber<std_msgs::Int32> subPwmUpward("/pwm/upward", &PWMCbUpward);
 ros::Subscriber<std_msgs::Int32> subPwmTurn("/pwm/turn", &PWMCbTurn);
-ros::Publisher ps_voltage("zDistance", &voltage);
+ros::Publisher ps_voltage("/varun/sensors/pressure_sensor/depth", &voltage);
 
 void setup()
 {
