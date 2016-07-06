@@ -52,6 +52,9 @@ NavStik::NavStik()
 	bool init = false;
 	stat = fine;
 
+	std::system("echo 'usb' > /dev/navstik");
+	std::system("echo 'usb' > /dev/navstik");
+
 	getPath();
 	if(stat != fine)
 		return;	
@@ -247,36 +250,5 @@ float NavStik::magz()
 
 void NavStik::getPath()
 {
-	string nav;
-	ifstream npath;
-	long int pos;
-	bool found = false;
-	
-	npath.open("PATH");
-	while(!npath.eof())
-	{	
-		getline(npath, nav);
-		if(nav.find("//") != string::npos)
-			continue;
-		else if((pos = nav.find("navstik")) != string::npos)
-		{
-			nav = nav.substr(pos+8);
-			found = true;
-			break;
-		}
-	}
-	
-	if(found)
-	{	
-		npath.close();
-		nav.erase(0, 1);
-		nav.erase(nav.length()-1);
-		Path = nav;
-	}
-	else
-	{	
-		cout<<"NavStik's Path not defined!"<<endl;
-		npath.close();
-		stat = path_not_defined;
-	}
+	Path = "/dev/navstik";
 }
