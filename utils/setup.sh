@@ -53,6 +53,9 @@ cd ~/sketchbook/libraries
 rm -rf ros_lib
 rosrun rosserial_arduino make_libraries.py .
 
+# udev rules setup for imu
+echo 'SUBSYSTEM=="tty", ATTRS{idVendor}=="26ac", ATTRS{serial}=="0", ATTRS{idProduct}=="0010", SYMLINK+="navstik"' > /etc/udev/rules.d/99-usb-serial.rules
+
 # suggest to setup environment variables
 echo "Please add these to your ~/.bashrc file"
 echo "source /opt/ros/$ROS_DISTRO/setup.sh"
