@@ -21,8 +21,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "imu");
 
   ros::NodeHandle nh;
-  ros::Publisher chatter_pub = nh.advertise<std_msgs::Float64>("/varun/sensors/imu/imu_raw", 1000);
-
+  ros::Publisher chatter_pub = nh.advertise<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000);
   std_msgs::Float64 msg;
 
   ros::Rate loopRate(10);
