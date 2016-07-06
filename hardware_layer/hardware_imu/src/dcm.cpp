@@ -31,7 +31,7 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
   ros::Publisher out_pub = n.advertise<sensor_msgs::Imu>("imuyrp", 1000);
   ros::NodeHandle nh;
-  ros::Publisher chatter_pub = nh.advertise<std_msgs::Float64>("/varun/sensors/imu/imu_raw", 1000);
+  ros::Publisher chatter_pub = nh.advertise<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000);
   sensor_msgs::Imu imu_msg;
   std_msgs::Float64 msg;
 
