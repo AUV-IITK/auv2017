@@ -27,7 +27,7 @@ def mock_pressure_sensor():
     rospy.Subscriber('/gazebo/model_states', ModelStates, varun_height)
     # Publish pressure sensor data.
     pub = rospy.Publisher(
-        '/zDistance', Float64, queue_size=10)
+        '/varun/sensors/pressure_sensor/depth', Float64, queue_size=10)
     rate = rospy.Rate(10)  # 10hz
     while not rospy.is_shutdown():
         pub.publish(depth)
