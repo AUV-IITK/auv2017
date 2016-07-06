@@ -11,7 +11,6 @@ WATER_HEIGHT = 40
 def varun_height(data):
     # Take out z position
     global depth
-    # TODO: take out z position of varun model
     names = data.name
     index = names.index('varun')
     pose = data.pose[index]
