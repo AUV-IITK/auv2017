@@ -59,6 +59,11 @@ int NormalizePWM(int pwm)
   return pwm * 53 / 255 + 147;
 }
 
+int NormalizeUpwardPWM(int pwm)
+{
+  return pwm * 73 / 255 + 147;
+}
+
 int btd092(int pwm)
 {
   pwm = NormalizePWM(pwm);
@@ -72,7 +77,7 @@ int btd092(int pwm)
 
 int btd093(int pwm)
 {
-  pwm = NormalizePWM(pwm);
+  pwm = NormalizeUpwardPWM(pwm);
   if (pwm <= 147)
   {
     return 0;
@@ -104,7 +109,7 @@ int btd113(int pwm)
 
 int btd117(int pwm)
 {
-  pwm = NormalizePWM(pwm);
+  pwm = NormalizeUpwardPWM(pwm);
   if (pwm <= 147)
   {
     return 0;
