@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <pthread.h>
 
 using namespace std;
 
@@ -56,30 +57,42 @@ NavStik::NavStik()
 	if(stat != fine)
 		return;	
 
+	std::system("echo 'usb' > /dev/navstik");
 	navstik.open(Path.c_str());
 
 	if(!navstik)
 	{
-		cout<<"NavStik not connected!"<<endl;
-		stat = not_connected;
-	}
-	else
-	{
-		for(int i=1; i<10; i++)
-		{	
-			getline(navstik, val);		
-			if(val.find("NAVSTIK") != string::npos)
-			{
-				init = true;
-				break;
-			}
+		cout<<"NavStik not connected!"<<endl<<"wait for 30 seconds...."<<endl;
+		for (int i = 1; i <= 30; ++i)
+		{
+			cout<<i<<'\n';
+			sleep(1);
+		}
+		
+		while (!navstik)
+		{
+			cout<<"Connecting..."<<endl;
+			std::system("echo 'usb' > /dev/navstik");
+			std::system("echo 'usb' > /dev/navstik");
+			navstik.open(Path.c_str());
 		}
 
-		if(!init)
+		cout<<"NavStik connected"<<endl;
+	}
+	for(int i=1; i<10; i++)
+	{	
+		getline(navstik, val);		
+		if(val.find("NAVSTIK") != string::npos)
 		{
-			cout<<"NavStik not initialised!"<<endl;
-			stat = not_initialised;
+			init = true;
+			break;
 		}
+	}
+
+	if(!init)
+	{
+		cout<<"NavStik not initialised!"<<endl;
+		stat = not_initialised;
 	}
 }
 
@@ -247,36 +260,5 @@ float NavStik::magz()
 
 void NavStik::getPath()
 {
-	string nav;
-	ifstream npath;
-	long int pos;
-	bool found = false;
-	
-	npath.open("PATH");
-	while(!npath.eof())
-	{	
-		getline(npath, nav);
-		if(nav.find("//") != string::npos)
-			continue;
-		else if((pos = nav.find("navstik")) != string::npos)
-		{
-			nav = nav.substr(pos+8);
-			found = true;
-			break;
-		}
-	}
-	
-	if(found)
-	{	
-		npath.close();
-		nav.erase(0, 1);
-		nav.erase(nav.length()-1);
-		Path = nav;
-	}
-	else
-	{	
-		cout<<"NavStik's Path not defined!"<<endl;
-		npath.close();
-		stat = path_not_defined;
-	}
+	Path = "/dev/navstik";
 }
