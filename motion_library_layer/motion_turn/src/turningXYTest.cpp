@@ -1,6 +1,7 @@
 // Copyright 2016 AUV-IITK
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Float64.h>
 #include <motion_commons/TurnAction.h>
 #include <motion_commons/TurnActionFeedback.h>
 #include <actionlib/client/simple_action_client.h>
@@ -12,6 +13,7 @@ typedef actionlib::SimpleActionClient<motion_commons::TurnAction> Client;
 Client *clientPointer;
 motion_commons::TurnGoal goal;
 
+ros::Publisher imu_data_pub;
 bool goalSet = false;
 
 // dynamic reconfig
@@ -44,9 +46,12 @@ void callback(motion_turn::turningConfig &config, double level)
   }
 }
 
-// never ever put the argument of the callback function anything other then the
-// specified
-// void forwardCb(const motion_turn::ForwardActionFeedbackConstPtr msg){
+void imu_data_callback(std_msgs::Float64 msg)
+{
+  imu_data_pub.publish(msg);
+}
+
+// never ever put the argument of the callback function anything other then the specified
 void turnCb(motion_commons::TurnActionFeedback msg)
 {
   ROS_INFO("feedback recieved, %f deg remaining ", msg.feedback.AngleRemaining);
@@ -58,11 +63,12 @@ int main(int argc, char **argv)
 
   ros::NodeHandle nh;
   ros::Subscriber sub_ = nh.subscribe<motion_commons::TurnActionFeedback>("/turningXY/feedback", 1000, &turnCb);
+  ros::Subscriber imu_data_sub = nh.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &imu_data_callback);
+  imu_data_pub = nh.advertise<std_msgs::Float64>("/yaw", 1000);
 
   Client TurnTestClient("turningXY");
   clientPointer = &TurnTestClient;
-  // this wait has to be implemented here so that we can wait for the server to
-  // start
+  // this wait has to be implemented here so that we can wait for the server to start
   ROS_INFO("Waiting for action server to start.");
   TurnTestClient.waitForServer();
   goal.AngleToTurn = 0;

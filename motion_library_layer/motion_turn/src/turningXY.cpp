@@ -184,7 +184,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "turningXY");
 
   ros::NodeHandle n;
-  ros::Subscriber yaw = n.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &yawCb);
+  ros::Subscriber yaw = n.subscribe<std_msgs::Float64>("/yaw", 1000, &yawCb);
 
   ROS_INFO("Waiting for Goal");
   object = new innerActionClass(ros::this_node::getName());
