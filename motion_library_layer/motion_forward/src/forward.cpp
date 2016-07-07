@@ -181,7 +181,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "forward");
 
   ros::NodeHandle n;
-  ros::Subscriber xDistance = n.subscribe<std_msgs::Float64>("xDistance", 1000, &distanceCb);
+  ros::Subscriber xDistance = n.subscribe<std_msgs::Float64>("/varun/motion/x_distance", 1000, &distanceCb);
 
   ROS_INFO("Waiting for Goal");
   object = new innerActionClass(ros::this_node::getName());
