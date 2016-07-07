@@ -160,7 +160,7 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_turn::pidConfig &config, double level)
 {
-  ROS_INFO("Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
+  ROS_INFO("TurnServer: Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
   object->setPID(config.p, config.i, config.d);
 }
 
@@ -183,8 +183,12 @@ void yawCb(std_msgs::Float64 msg)
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "turningXY");
-
   ros::NodeHandle n;
+  double p_param, i_param, d_param;
+  n.getParam("turningXY/p_param", p_param);
+  n.getParam("turningXY/i_param", i_param);
+  n.getParam("turningXY/d_param", d_param);
+
   ros::Subscriber yaw = n.subscribe<std_msgs::Float64>("/varun/motion/yaw", 1000, &yawCb);
 
   ROS_INFO("Waiting for Goal");
@@ -195,6 +199,12 @@ int main(int argc, char **argv)
   dynamic_reconfigure::Server<motion_turn::pidConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
+  // set launch file pid
+  motion_turn::pidConfig config;
+  config.p = p_param;
+  config.i = i_param;
+  config.d = d_param;
+  callback(config, 0);
 
   ros::spin();
   return 0;

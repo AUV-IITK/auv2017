@@ -156,7 +156,7 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_forward::pidConfig &config, double level)
 {
-  ROS_INFO("Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
+  ROS_INFO("ForwardServer: Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
   object->setPID(config.p, config.i, config.d);
 }
 
@@ -179,8 +179,12 @@ void distanceCb(std_msgs::Float64 msg)
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "forward");
-
   ros::NodeHandle n;
+  double p_param, i_param, d_param;
+  n.getParam("forward/p_param", p_param);
+  n.getParam("forward/i_param", i_param);
+  n.getParam("forward/d_param", d_param);
+
   ros::Subscriber xDistance = n.subscribe<std_msgs::Float64>("/varun/motion/x_distance", 1000, &distanceCb);
 
   ROS_INFO("Waiting for Goal");
@@ -191,6 +195,12 @@ int main(int argc, char **argv)
   dynamic_reconfigure::Server<motion_forward::pidConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
+  // set launch file pid
+  motion_forward::pidConfig config;
+  config.p = p_param;
+  config.i = i_param;
+  config.d = d_param;
+  callback(config, 0);
 
   ros::spin();
   return 0;
