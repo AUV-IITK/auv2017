@@ -64,7 +64,7 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
   ros::Subscriber sub_ = nh.subscribe<motion_commons::TurnActionFeedback>("/turningXY/feedback", 1000, &turnCb);
   ros::Subscriber imu_data_sub = nh.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &imu_data_callback);
-  imu_data_pub = nh.advertise<std_msgs::Float64>("/yaw", 1000);
+  imu_data_pub = nh.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
 
   Client TurnTestClient("turningXY");
   clientPointer = &TurnTestClient;
