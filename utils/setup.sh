@@ -39,6 +39,8 @@ ros-$ROS_DISTRO-dynamic-reconfigure \
 ros-$ROS_DISTRO-image-transport \
 ros-$ROS_DISTRO-gazebo-ros \
 ros-$ROS_DISTRO-roslint \
+doxygen \
+doxypy \
 ros-$ROS_DISTRO-rosdoc-lite
 source /opt/ros/$ROS_DISTRO/setup.bash
 
