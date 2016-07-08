@@ -5,6 +5,13 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>  // for converting the command line parameter to integer
 
+/*! \file
+* \brief super short description
+*
+* Long decription
+*/
+
+ /*! member description */
 int main(int argc, char **argv)
 {
   // Check if video source has been passed as a parameter
