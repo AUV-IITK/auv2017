@@ -37,6 +37,7 @@ rm -rf docs/html/**/* || exit 0
 doCompile
 
 # Now let's go have some fun with the cloned repo
+cd catkin_ws/src/auv
 cd docs/html/
 git config user.name "Shikher Verma"
 git config user.email "root@shikherverma.com"
