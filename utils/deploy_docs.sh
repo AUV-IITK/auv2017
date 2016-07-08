@@ -3,13 +3,12 @@
 # This script is used by travis to deploy generated docs
 #
 set -e # Exit with nonzero exit code if anything fails
-cd "$(dirname "$0")" # cd to dir of this script
 
 SOURCE_BRANCH="master"
 TARGET_BRANCH="gh-pages"
 
 function doCompile {
-  ./generate_docs.sh
+  ~/catkin_ws/src/auv/utils/generate_docs.sh
 }
 
 # Pull requests and commits to other branches shouldn't try to deploy, just build to verify
