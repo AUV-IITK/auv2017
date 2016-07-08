@@ -18,7 +18,7 @@ Client *clientPointer;             // pointer for sharing client across threads
 motion_commons::ForwardGoal goal;  // new goal object to send to action server
 
 ros::Publisher ip_data_pub;
-ros:::Publisher ip_switch;
+ros::Publisher ip_switch;
 bool moving = false;
 bool success = false;
 
@@ -52,7 +52,7 @@ void callback(motion_forward::forwardConfig &config, double level)
       can.cancelGoal();
       ROS_INFO("Goal Cancelled");
     }
-    //stoping ip
+    // stoping ip
     std_msgs::Bool msg;
     msg.data = true;
     ip_switch.publish(msg);
@@ -65,7 +65,7 @@ void callback(motion_forward::forwardConfig &config, double level)
       can.cancelGoal();
       ROS_INFO("Goal Cancelled");
     }
-    //starting ip
+    // starting ip
     std_msgs::Bool msg;
     msg.data = false;
     ip_switch.publish(msg);
@@ -102,7 +102,7 @@ int main(int argc, char **argv)
   ros::Subscriber ip_data_sub = nh.subscribe<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/ip_data", 1000,
                                 &ip_data_callback);
   ip_data_pub = nh.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
-  ip_switch = nh_.advertise<std_msgs::Bool>("buoy_detection_switch", 1000);
+  ip_switch = nh.advertise<std_msgs::Bool>("buoy_detection_switch", 1000);
 
   // Declaring a new ActionClient
   Client forwardTestClient("forward");
