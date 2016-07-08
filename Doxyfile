@@ -1,4 +1,4 @@
-PROJECT_NAME           = "auv"
+PROJECT_NAME           = "AUV"
 PROJECT_BRIEF          = "This project is the main code running on AUV-IITK"
 OUTPUT_DIRECTORY       = "./docs"
 INPUT                  = "./"
@@ -8,7 +8,7 @@ INPUT_FILTER           = "/usr/local/bin/doxypy"
 FILTER_SOURCE_FILES    = YES
 # Values that make the output look nicer
 MULTILINE_CPP_IS_BRIEF = YES
-EXTRACT_ALL            = YES
+EXTRACT_PRIVATE            = YES
 EXTRACT_STATIC         = YES
 SOURCE_BROWSER         = YES
 HTML_DYNAMIC_SECTIONS  = YES
