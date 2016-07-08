@@ -11,7 +11,7 @@
 * Long decription
 */
 
- /*! member description */
+/*! member description */
 int main(int argc, char **argv)
 {
   // Check if video source has been passed as a parameter
