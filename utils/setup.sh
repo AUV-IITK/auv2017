@@ -41,6 +41,7 @@ ros-$ROS_DISTRO-gazebo-ros \
 ros-$ROS_DISTRO-roslint \
 doxygen \
 doxypy \
+expect \
 ros-$ROS_DISTRO-rosdoc-lite
 source /opt/ros/$ROS_DISTRO/setup.bash
 
