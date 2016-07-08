@@ -64,7 +64,7 @@ public:
     present_X_ = nh_.advertise<std_msgs::Float64>("yDistance", 1000);
     present_Y_ = nh_.advertise<std_msgs::Float64>("zDistance", 1000);
     present_distance_ = nh_.advertise<std_msgs::Float64>("xDistance", 1000);
-    sub_ = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/image_raw", 1000,
+    sub_ = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/ip_data", 1000,
            &TaskBuoyInnerClass::buoyNavigation, this);
     buoy_server_.start();
   }
@@ -119,8 +119,10 @@ public:
     boost::thread vision_thread(&TaskBuoyInnerClass::startIP, this);
     TaskBuoyInnerClass::startIP();
     sidewardgoal.Goal = 0;
+    sidewardgoal.loop = 10;
     SidewardClient_.sendGoal(sidewardgoal);
     upwardgoal.Goal = 0;
+    upwardgoal.loop = 10;
     UpwardClient_.sendGoal(upwardgoal);
 
     while (goal->order)
@@ -143,6 +145,7 @@ public:
       {
         forward_goal_set = true;
         forwardgoal.Goal = 0;
+        forwardgoal.loop = 10;
         ForwardClient_.sendGoal(forwardgoal);
       }
       // publish the feedback
@@ -153,6 +156,7 @@ public:
     }
 
     forwardgoal.Goal = 10;
+    forwardgoal.loop = 10;
     ForwardClient_.sendGoal(forwardgoal);  // stop motion here
     stopIP();
 
