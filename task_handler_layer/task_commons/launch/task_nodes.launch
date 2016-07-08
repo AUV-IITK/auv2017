@@ -1,8 +1,0 @@
-<launch>
-  <node name="buoy_detection" pkg="task_buoy" type="buoy_detection" respawn="true" />
-  <node name="buoy_server" pkg="task_buoy" type="buoy_server" respawn="true" />
-  <node name="line_detection" pkg="task_line_detection" type="line_detection" respawn="true" />
-  <node name="line_detection_server" pkg="task_line_detection" type="line_detection_server" respawn="true" />
-  <node name="line_angle" pkg="task_line_following" type="line_angle" respawn="true" />
-  <node name="line_angle_server" pkg="task_line_following" type="line_angle_server" respawn="true" />
-</launch>
