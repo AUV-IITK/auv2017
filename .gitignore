@@ -38,3 +38,7 @@ config.mk
 *.bag
 # ignore backup files from astyle
 *.orig
+# ignore generated docs. Travis will generate and host at gh-pages for online use
+docs/*
+# ignore doxygen bkp file
+*.bak

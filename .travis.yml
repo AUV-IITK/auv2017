@@ -54,6 +54,7 @@ env:
     - ROSINSTALL_FILE=$CI_SOURCE_PATH/dependencies.rosinstall
     - CATKIN_OPTIONS=$CI_SOURCE_PATH/catkin.options
     - ROS_PARALLEL_JOBS='-j8 -l6'
+    - ENCRYPTION_LABEL= "175037b63dc1"
 
 ################################################################################
 
@@ -97,3 +98,4 @@ script:
   # Testing: Use both run_tests (to see the output) and test (to error out).
   - catkin_make run_tests  # This always returns 0, but looks pretty.
   - catkin_make test  # This will return non-zero if a test fails.
+  - src/auv/utils/deploy_docs.sh

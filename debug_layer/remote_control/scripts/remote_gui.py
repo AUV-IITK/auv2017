@@ -1,6 +1,12 @@
 #!/usr/bin/python
 from Tkinter import *
 import rospy
+"""
+\file
+\brief super short description
+
+Long decription
+"""
 from std_msgs.msg import Int32
 
 if __name__ == '__main__':
@@ -13,6 +19,7 @@ if __name__ == '__main__':
         rospy.init_node('remote_gui', anonymous=True)
 
         def forwardClicked():
+            """Documentation for a function"""
             rospy.loginfo("forward is clicked with pwm = %d", w1.get())
             forward_motion.publish(w1.get())
 
