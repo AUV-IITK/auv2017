@@ -2,7 +2,7 @@
 #
 # This script is used by travis to deploy generated docs
 #
-set -e # Exit with nonzero exit code if anything fails
+# set -e # Exit with nonzero exit code if anything fails
 
 SOURCE_BRANCH="master"
 TARGET_BRANCH="gh-pages"
