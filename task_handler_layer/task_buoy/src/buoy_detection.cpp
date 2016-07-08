@@ -21,7 +21,7 @@
 bool IP = true;
 bool flag = false;
 bool video = false;
-int t1min = 0, t1max = 100, t2min = 10, t2max = 260, t3min = 185, t3max = 260;  // Default Params
+int t1min = 170, t1max = 190, t2min = 229, t2max = 260, t3min = 228, t3max = 260;  // Default Params
 
 cv::Mat frame;
 cv::Mat newframe;
@@ -67,12 +67,12 @@ int main(int argc, char *argv[])
 
   ros::init(argc, argv, "buoy_detection");
   ros::NodeHandle n;
-  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/image_raw", 1000);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/ip_data", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
   ros::Rate loop_rate(10);
 
   image_transport::ImageTransport it(n);
-  image_transport::Subscriber sub1 = it.subscribe("camera/image", 1, imageCallback);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
   if (flag)
   {
@@ -97,11 +97,11 @@ int main(int argc, char *argv[])
 
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
 
-  std_msgs::Float64MultiArray array;
   while (1)
   {
     if (!IP)
     {
+      std_msgs::Float64MultiArray array;
       loop_rate.sleep();
 
       if (frame.empty())

@@ -97,7 +97,7 @@ public:
       output = (p * error) + (i * integral) + (d * derivative);
       turningOutputPWMMapping(output);
 
-      if (error < 5 && error > -5)
+      if (error < 2 && error > -2)
       {
         reached = true;
         pwm.data = 0;
