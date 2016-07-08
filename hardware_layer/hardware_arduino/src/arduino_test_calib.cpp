@@ -279,7 +279,7 @@ void PWMCbTurn(const std_msgs::Int32& msg)
 {
   if (!isMovingForward)
   {
-    if (msg.data > 0)
+    if (msg.data < 0)
     {
       thrusterEast(msg.data, true);
       thrusterWest(msg.data, false);
