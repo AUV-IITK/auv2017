@@ -1,2 +1,7 @@
 <launch>
+  <node name="yawDirect" pkg="hardware_imu" type="yawDirect" respawn="true">
+      <remap from="/varun/sensors/imu/yaw" to="/varun/motion/yaw"/>
+  </node>
+  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="/dev/arduino" respawn="true" >
+   </node>
 </launch>
