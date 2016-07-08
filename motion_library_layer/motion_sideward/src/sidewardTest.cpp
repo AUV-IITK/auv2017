@@ -1,6 +1,8 @@
 // Copyright 2016 AUV-IITK
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Float64.h>
+#include <std_msgs/Float64MultiArray.h>
 #include <motion_commons/SidewardAction.h>
 #include <motion_commons/SidewardActionFeedback.h>
 #include <motion_commons/SidewardActionResult.h>
@@ -14,6 +16,7 @@ typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> Client;  /
 Client *clientPointer;              // pointer for sharing client across threads
 motion_commons::SidewardGoal goal;  // new goal object to send to action server
 
+ros::Publisher ip_data_pub;
 bool moving = false;
 bool success = false;
 
@@ -65,6 +68,13 @@ void callback(motion_sideward::sidewardConfig &config, double level)
   }
 }
 
+void ip_data_callback(std_msgs::Float64MultiArray array)
+{
+  std_msgs::Float64 data_sideward;
+  data_sideward.data = array.data[1];
+  ip_data_pub.publish(data_sideward);
+}
+
 // Callback for Feedback from Action Server
 void sidewardCb(motion_commons::SidewardActionFeedback msg)
 {
@@ -79,6 +89,9 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
   // Subscribing to feedback from ActionServer
   ros::Subscriber sub_ = nh.subscribe<motion_commons::SidewardActionFeedback>("/sideward/feedback", 1000, &sidewardCb);
+  ros::Subscriber ip_data_sub = nh.subscribe<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/ip_data", 1000,
+                                &ip_data_callback);
+  ip_data_pub = nh.advertise<std_msgs::Float64>("/varun/motion/y_distance", 1000);
 
   // Declaring a new ActionClient
   Client sidewardTestClient("sideward");
