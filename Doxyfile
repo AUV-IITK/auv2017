@@ -1,0 +1,20 @@
+PROJECT_NAME           = "auv"
+PROJECT_BRIEF          = "This project is the main code running on AUV-IITK"
+OUTPUT_DIRECTORY       = "./docs"
+INPUT                  = "./"
+FILE_PATTERNS          = *.py *.cpp *.xml *.launch *.sh *.cfg *.action
+RECURSIVE              = YES
+INPUT_FILTER           = "/usr/local/bin/doxypy"
+FILTER_SOURCE_FILES    = YES
+# Values that make the output look nicer
+MULTILINE_CPP_IS_BRIEF = YES
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = YES
+SOURCE_BROWSER         = YES
+HTML_DYNAMIC_SECTIONS  = YES
+USE_MATHJAX            = YES
+PAPER_TYPE             = letter
+HIDE_UNDOC_RELATIONS   = NO
+HAVE_DOT               = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
