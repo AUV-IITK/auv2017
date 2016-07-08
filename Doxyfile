@@ -1,6 +1,6 @@
 PROJECT_NAME = "AUV"
 PROJECT_BRIEF = "This project is the main code running on AUV-IITK"
-OUTPUT_DIRECTORY = "./docs"
+OUTPUT_DIRECTORY = "./"
 INPUT = "./"
 FILE_PATTERNS = *.py *.cpp *.sh *.xml *.launch *.cfg *.action
 RECURSIVE = YES
