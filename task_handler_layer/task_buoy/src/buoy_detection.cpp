@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
   ros::init(argc, argv, "buoy_detection");
   ros::NodeHandle n;
-  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/ip_data", 1000);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
   ros::Rate loop_rate(10);
 

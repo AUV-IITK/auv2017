@@ -99,7 +99,7 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
   // Subscribing to feedback from ActionServer
   ros::Subscriber sub_ = nh.subscribe<motion_commons::SidewardActionFeedback>("/sideward/feedback", 1000, &sidewardCb);
-  ros::Subscriber ip_data_sub = nh.subscribe<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/ip_data", 1000,
+  ros::Subscriber ip_data_sub = nh.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000,
                                 &ip_data_callback);
   ip_data_pub = nh.advertise<std_msgs::Float64>("/varun/motion/y_distance", 1000);
   ip_switch = nh.advertise<std_msgs::Bool>("buoy_detection_switch", 1000);

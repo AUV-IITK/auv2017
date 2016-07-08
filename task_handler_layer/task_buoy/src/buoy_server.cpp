@@ -64,7 +64,7 @@ public:
     present_X_ = nh_.advertise<std_msgs::Float64>("/varun/motion/y_distance", 1000);
     present_Y_ = nh_.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
     present_distance_ = nh_.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
-    sub_ = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/sensors/front_camera/ip_data", 1000,
+    sub_ = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000,
            &TaskBuoyInnerClass::buoyNavigation, this);
     buoy_server_.start();
   }
