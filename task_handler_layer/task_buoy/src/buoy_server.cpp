@@ -10,20 +10,22 @@
 #include <actionlib/client/simple_action_client.h>
 #include <task_commons/buoyAction.h>
 #include <motion_commons/ForwardAction.h>
-// #include <motion_commons/TurnAction.h>
+#include <motion_commons/TurnAction.h>
 #include <motion_commons/SidewardAction.h>
 #include <motion_commons/UpwardAction.h>
 #include <motion_commons/ForwardActionFeedback.h>
-// #include <motion_commons/TurnActionFeedback.h>
+#include <motion_commons/TurnActionFeedback.h>
 #include <motion_commons/SidewardActionFeedback.h>
 #include <motion_commons/UpwardActionFeedback.h>
+#include <motion_commons/UpwardActionResult.h>
+#include <motion_commons/SidewardActionResult.h>
 #include <string>
 
 typedef actionlib::SimpleActionServer<task_commons::buoyAction> Server;
 typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> ClientForward;
 typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> ClientSideward;
 typedef actionlib::SimpleActionClient<motion_commons::UpwardAction> ClientUpward;
-// typedef actionlib::SimpleActionClient<motion_commons::TurnAction> ClientTurn;
+typedef actionlib::SimpleActionClient<motion_commons::TurnAction> ClientTurn;
 
 class TaskBuoyInnerClass
 {
@@ -33,29 +35,31 @@ private:
   std::string action_name_;
   task_commons::buoyFeedback feedback_;
   task_commons::buoyResult result_;
-  ros::Subscriber sub_;
+  ros::Subscriber sub_ip_;
+  ros::Subscriber yaw_sub_;
   ros::Publisher off_pub_;
+  ros::Publisher yaw_pub_;
   ros::Publisher present_distance_;
   ros::Publisher present_X_;
   ros::Publisher present_Y_;
   ClientForward ForwardClient_;
   ClientSideward SidewardClient_;
   ClientUpward UpwardClient_;
-  // ClientTurn TurnClient_;
+  ClientTurn TurnClient_;
   motion_commons::ForwardGoal forwardgoal;
   motion_commons::SidewardGoal sidewardgoal;
   motion_commons::UpwardGoal upwardgoal;
-  // motion_commons::TurnGoal turngoal;
+  motion_commons::TurnGoal turngoal;
   bool success, Infront, heightCenter, sideCenter;
 
 public:
-  TaskBuoyInnerClass(std::string name, std::string node, std::string node1, std::string node2)
+  TaskBuoyInnerClass(std::string name, std::string node, std::string node1, std::string node2, std::string node3)
     : buoy_server_(nh_, name, boost::bind(&TaskBuoyInnerClass::analysisCB, this, _1), false)
     , action_name_(name)
     , ForwardClient_(node)
     , SidewardClient_(node1)
     , UpwardClient_(node2)
-  // ,TurnClient_(node)
+    , TurnClient_(node3)
   {
     ROS_INFO("inside constructor");
     buoy_server_.registerPreemptCallback(boost::bind(&TaskBuoyInnerClass::preemptCB, this));
@@ -64,13 +68,20 @@ public:
     present_X_ = nh_.advertise<std_msgs::Float64>("/varun/motion/y_distance", 1000);
     present_Y_ = nh_.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
     present_distance_ = nh_.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
-    sub_ = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000,
+    yaw_pub_ = nh_.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
+    sub_ip_ = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000,
            &TaskBuoyInnerClass::buoyNavigation, this);
+    yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskBuoyInnerClass::yawCB, this);
     buoy_server_.start();
   }
 
   ~TaskBuoyInnerClass(void)
   {
+  }
+
+  void yawCB(std_msgs::Float64 imu_data)
+  {
+    yaw_pub_.publish(imu_data);
   }
 
   void buoyNavigation(std_msgs::Float64MultiArray array)
@@ -142,7 +153,7 @@ public:
     ForwardClient_.waitForServer();
     SidewardClient_.waitForServer();
     UpwardClient_.waitForServer();
-    // TurnClient_.waitForServer();
+    TurnClient_.waitForServer();
 
     boost::thread vision_thread(&TaskBuoyInnerClass::startIP, this);
     TaskBuoyInnerClass::startIP();
@@ -151,6 +162,11 @@ public:
     sidewardgoal.loop = 10;
     SidewardClient_.sendGoal(sidewardgoal);
     boost::thread spin_thread_sideward(&TaskBuoyInnerClass::spinThreadSideward, this);
+
+    // Stabilization of yaw
+    turngoal.AngleToTurn = 0;
+    turngoal.loop = 100000;
+    TurnClient_.sendGoal(turngoal);
 
     upwardgoal.Goal = 0;
     upwardgoal.loop = 10;
@@ -212,7 +228,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "buoy_server");
   ROS_INFO("Waiting for Goal");
-  TaskBuoyInnerClass taskBuoyObject(ros::this_node::getName(), "forward", "sideward", "upward");
+  TaskBuoyInnerClass taskBuoyObject(ros::this_node::getName(), "forward", "sideward", "upward", "turningXY");
   ros::spin();
   return 0;
 }

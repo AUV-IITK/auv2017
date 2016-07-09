@@ -168,7 +168,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "line_angle_server");
   ros::NodeHandle n;
 
-  TaskLineFollowingInnerClass taskLineFollowingObject(ros::this_node::getName(), "TurnXY");
+  TaskLineFollowingInnerClass taskLineFollowingObject(ros::this_node::getName(), "turningXY");
   ROS_INFO("Waiting for master command");
 
   ros::spin();
