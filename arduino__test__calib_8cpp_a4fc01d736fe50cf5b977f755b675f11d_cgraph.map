@@ -1,0 +1,31 @@
+<map id="setup" name="setup">
+<area shape="rect" id="node2" href="$arduino__test__calib_8cpp.html#a866af5d6e8e48eb4a4ea616bcabcbc58" title="subPwmForward" alt="" coords="113,5,233,32"/>
+<area shape="rect" id="node3" href="$arduino__test__calib_8cpp.html#aea4e6172ff2845cd88b5817ec5256420" title="subPwmSideward" alt="" coords="110,56,237,83"/>
+<area shape="rect" id="node4" href="$arduino__test__calib_8cpp.html#adc119ee82c63cf576452154e6fae6557" title="subPwmUpward" alt="" coords="114,107,233,133"/>
+<area shape="rect" id="node5" href="$arduino__test__calib_8cpp.html#a41d2365b2216958214fbbe8827d5ad40" title="subPwmTurn" alt="" coords="124,157,223,184"/>
+<area shape="rect" id="node6" href="$arduino__test__calib_8cpp.html#a99c5c9ab87608073375f719e0101519b" title="ps_voltage" alt="" coords="131,208,216,235"/>
+<area shape="rect" id="node7" href="$arduino__test__calib_8cpp.html#a0911ab71d49fb01b45b4de7eaee40d52" title="PWMCbForward" alt="" coords="114,360,233,387"/>
+<area shape="rect" id="node13" href="$arduino__test__calib_8cpp.html#a6df7e1605027db03e2d15ecf662510f8" title="PWMCbSideward" alt="" coords="110,259,237,285"/>
+<area shape="rect" id="node18" href="$arduino__test__calib_8cpp.html#a10aaaae15d18ca4fe29b848f463fc8b0" title="PWMCbUpward" alt="" coords="115,411,232,437"/>
+<area shape="rect" id="node24" href="$arduino__test__calib_8cpp.html#a42c75c7d4fc2656e6035ea12a1d6001a" title="PWMCbTurn" alt="" coords="124,309,223,336"/>
+<area shape="rect" id="node25" href="$arduino__test__calib_8cpp.html#afdfd004c65910c272c62d7a108dde839" title="thruster092" alt="" coords="130,461,217,488"/>
+<area shape="rect" id="node26" href="$arduino__test__calib_8cpp.html#ac1a06f2200f41c1d1cf0a5a8e266b0bf" title="thruster093" alt="" coords="130,512,217,539"/>
+<area shape="rect" id="node27" href="$arduino__test__calib_8cpp.html#a02c74af9aa5d8b13ed857b7800679157" title="thruster099" alt="" coords="130,563,217,589"/>
+<area shape="rect" id="node28" href="$arduino__test__calib_8cpp.html#af5d64d097b38ab663d5be6c9c3666d84" title="thruster113" alt="" coords="130,613,217,640"/>
+<area shape="rect" id="node29" href="$arduino__test__calib_8cpp.html#aceaae9374db16512c6a729ee70fc9298" title="thruster117" alt="" coords="130,664,217,691"/>
+<area shape="rect" id="node30" href="$arduino__test__calib_8cpp.html#a3415766e449241c8896acb4bb23b2331" title="thruster122" alt="" coords="130,715,217,741"/>
+<area shape="rect" id="node8" href="$arduino__test__calib_8cpp.html#a42684f18e9bce80a0243bd94d324219c" title="thrusterEast" alt="" coords="305,309,399,336"/>
+<area shape="rect" id="node11" href="$arduino__test__calib_8cpp.html#a944e26b7801dd12b5adb236b219cdeb5" title="thrusterWest" alt="" coords="303,360,401,387"/>
+<area shape="rect" id="node9" href="$arduino__test__calib_8cpp.html#a25596b33bce0b66d8404013a5952fa9a" title="btd092" alt="" coords="467,309,528,336"/>
+<area shape="rect" id="node10" href="$arduino__test__calib_8cpp.html#a49a393bc8b72c81b9bd4407f2f97b558" title="NormalizePWM" alt="" coords="599,284,713,311"/>
+<area shape="rect" id="node12" href="$arduino__test__calib_8cpp.html#a053a65ff094e13b13bcc3aa60698abdb" title="btd099" alt="" coords="467,360,528,387"/>
+<area shape="rect" id="node14" href="$arduino__test__calib_8cpp.html#a238754322d34d02dc1978eda83736d5b" title="thrusterNorthSway" alt="" coords="287,208,417,235"/>
+<area shape="rect" id="node16" href="$arduino__test__calib_8cpp.html#a26ba31bae93400833d49b39d7242c5c6" title="thrusterSouthSway" alt="" coords="285,259,419,285"/>
+<area shape="rect" id="node15" href="$arduino__test__calib_8cpp.html#a3b2966546d4bf63ad779cc09eb9178fc" title="btd113" alt="" coords="467,208,528,235"/>
+<area shape="rect" id="node17" href="$arduino__test__calib_8cpp.html#ac90efd7ea8faf3248d846d22b8c023bc" title="btd122" alt="" coords="467,259,528,285"/>
+<area shape="rect" id="node19" href="$arduino__test__calib_8cpp.html#a0abe2440f2a1887a27774f926d96e68e" title="thrusterNorthUp" alt="" coords="295,411,409,437"/>
+<area shape="rect" id="node22" href="$arduino__test__calib_8cpp.html#a23850229952a66df1045f65e08e69903" title="thrusterSouthUp" alt="" coords="293,461,411,488"/>
+<area shape="rect" id="node20" href="$arduino__test__calib_8cpp.html#a7d4ddafbb2fd5234d6fffa91c5363b60" title="btd117" alt="" coords="467,411,528,437"/>
+<area shape="rect" id="node21" href="$arduino__test__calib_8cpp.html#ab8149476e8b6bc7706e8b707d6a9cd87" title="NormalizeUpwardPWM" alt="" coords="577,436,735,463"/>
+<area shape="rect" id="node23" href="$arduino__test__calib_8cpp.html#afdfc5c303b362e8d368c1113d32d751a" title="btd093" alt="" coords="467,461,528,488"/>
+</map>

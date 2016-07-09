@@ -1,0 +1,5 @@
+<map id="thrusterSouthSway" name="thrusterSouthSway">
+<area shape="rect" id="node2" href="$arduino__test__calib_8cpp.html#a6df7e1605027db03e2d15ecf662510f8" title="PWMCbSideward" alt="" coords="187,5,314,32"/>
+<area shape="rect" id="node4" href="$arduino__test__calib_8cpp.html#a42c75c7d4fc2656e6035ea12a1d6001a" title="PWMCbTurn" alt="" coords="201,56,300,83"/>
+<area shape="rect" id="node3" href="$arduino__test__calib_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="363,31,418,57"/>
+</map>

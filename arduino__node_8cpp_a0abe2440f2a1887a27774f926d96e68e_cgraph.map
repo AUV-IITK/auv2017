@@ -1,0 +1,4 @@
+<map id="thrusterNorthUp" name="thrusterNorthUp">
+<area shape="rect" id="node2" href="$arduino__node_8cpp.html#a7d4ddafbb2fd5234d6fffa91c5363b60" title="btd117" alt="" coords="168,5,229,32"/>
+<area shape="rect" id="node3" href="$arduino__node_8cpp.html#ab8149476e8b6bc7706e8b707d6a9cd87" title="NormalizeUpwardPWM" alt="" coords="278,5,437,32"/>
+</map>
