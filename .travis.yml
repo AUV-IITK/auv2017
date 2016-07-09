@@ -56,6 +56,7 @@ env:
     - ROS_PARALLEL_JOBS='-j8 -l6'
     - ENCRYPTION_LABEL= "175037b63dc1"
     - secure: "MNKLqvnESDZohJcLtL0sadZRH09lAg1lFN8VoYpbqBhyS+T5lOM6Jq3XYwrCN2hvj+dnxTRiu+TmHS5F4feAewt4TwQks9GUIsUN/c/EKC/AQcCxf5TjrhLTD6ncXS6qcHJXikwWYe2xCo96sAGt6kcDX2ULhrRa4R4tXYIFb7gV5at8xIeHHCMWLVM5H7uAVCEeWg8nNn0xSgcdJwq9Z3QQUwwkGC5VLp39lN4XqjyOYqoCZajegEzxaQqMbXKUIfoudMCBDQLjC2Ws4/H7UsuS+aeIhiKr/w77gvshJx2WFWEwxx82iIhZADtSygC2NIoZ0xf8slq/Jq9p4QXonMxqaSNwUbtuIqUkjRMoh40BOkIJBKg+eoJ2FAhVf/P+1070FwCSFNYa86KxRsd+VdPKVfsHgT9EIZt5+0lwjLfbTm31pZQtLvRDLTbrdAPs83TWHO8ancK58OFB8sW7+MLGUFJ1Espk+xYUnBbo5SM3bS+X/AWwcHIze7BDQo9smhOJoBbcr/YCLYGGJCZnA31YFiVCIIcjZ5NJfJWf3FI4EyIDxCqxxaeT+velZwjh9jPb6dX3C97GFmR9f3LErgR6llQzg7ks+ecKK/lJmz91z0BPk1sDJiq/AG01HdkYCJJgsyHZVI0rwaHeAeSBqgAxxXY0mJxEZSj4uQ9HQQ4="
+
 ################################################################################
 
 # Install system dependencies, namely a very barebones ROS setup.
@@ -99,4 +100,4 @@ script:
   - catkin_make run_tests  # This always returns 0, but looks pretty.
   - catkin_make test  # This will return non-zero if a test fails.
   - sudo ln -s /usr/bin/doxypy /usr/local/bin/doxypy
-  # - src/auv/utils/deploy_docs_auto.sh
+  - src/auv/utils/deploy_docs.sh
