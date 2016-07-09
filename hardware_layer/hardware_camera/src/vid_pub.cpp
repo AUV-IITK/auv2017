@@ -21,7 +21,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "image_publisher");
   ros::NodeHandle nh;
   image_transport::ImageTransport it(nh);
-  image_transport::Publisher pub = it.advertise("camera/image", 1);
+  image_transport::Publisher pub = it.advertise("/varun/sensors/front_camera/image_raw", 1);
 
   // Convert the passed as command line parameter index for the video device to
   // an integer
