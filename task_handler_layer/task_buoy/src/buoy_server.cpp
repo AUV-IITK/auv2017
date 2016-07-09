@@ -46,7 +46,7 @@ private:
   motion_commons::SidewardGoal sidewardgoal;
   motion_commons::UpwardGoal upwardgoal;
   // motion_commons::TurnGoal turngoal;
-  bool TargetSet, success, Infront, forward_goal_set;
+  bool success, Infront, heightCenter, sideCenter;
 
 public:
   TaskBuoyInnerClass(std::string name, std::string node, std::string node1, std::string node2)
@@ -75,10 +75,6 @@ public:
 
   void buoyNavigation(std_msgs::Float64MultiArray array)
   {
-    if (array.data[5])
-    {
-      TargetSet = true;
-    }
     if (array.data[4])
     {
       Infront = true;
@@ -100,12 +96,44 @@ public:
     ROS_INFO("Called when preempted from the client");
   }
 
+  void spinThreadUpward()
+  {
+    ClientUpward &tempUpward = UpwardClient_;
+    tempUpward.waitForResult();
+    heightCenter = (*(tempUpward.getResult())).Result;
+    if (heightCenter)
+    {
+      ROS_INFO("Bot is at height center");
+    }
+    else
+    {
+      ROS_INFO("Bot is not at height center, something went wrong");
+      ros::shutdown();
+    }
+  }
+
+  void spinThreadSideward()
+  {
+    ClientSideward &tempSideward = SidewardClient_;
+    tempSideward.waitForResult();
+    sideCenter = (*(tempSideward.getResult())).Result;
+    if (sideCenter)
+    {
+      ROS_INFO("Bot is at side center");
+    }
+    else
+    {
+      ROS_INFO("Bot is not at side center, something went wrong");
+      ros::shutdown();
+    }
+  }
+
   void analysisCB(const task_commons::buoyGoalConstPtr goal)
   {
     ROS_INFO("Inside analysisCB");
-    TargetSet = false;
     Infront = false;
-    forward_goal_set = false;
+    heightCenter = false;
+    sideCenter = false;
     ros::Rate looprate(12);
     if (!buoy_server_.isActive())
       return;
@@ -118,12 +146,16 @@ public:
 
     boost::thread vision_thread(&TaskBuoyInnerClass::startIP, this);
     TaskBuoyInnerClass::startIP();
+
     sidewardgoal.Goal = 0;
     sidewardgoal.loop = 10;
     SidewardClient_.sendGoal(sidewardgoal);
+    boost::thread spin_thread_sideward(&TaskBuoyInnerClass::spinThreadSideward, this);
+
     upwardgoal.Goal = 0;
     upwardgoal.loop = 10;
     UpwardClient_.sendGoal(upwardgoal);
+    boost::thread spin_thread_upward(&TaskBuoyInnerClass::spinThreadUpward, this);
 
     while (goal->order)
     {
@@ -136,17 +168,9 @@ public:
         break;
       }
       looprate.sleep();
-      if (TargetSet)
+      if (Infront && heightCenter && sideCenter)
       {
-        // now need to go forward
         break;
-      }
-      if (Infront && !forward_goal_set)
-      {
-        forward_goal_set = true;
-        forwardgoal.Goal = 0;
-        forwardgoal.loop = 10;
-        ForwardClient_.sendGoal(forwardgoal);
       }
       // publish the feedback
       feedback_.nosignificance = false;
@@ -162,7 +186,6 @@ public:
 
     if (success)
     {
-      TargetSet = false;
       result_.MotionCompleted = success;
       ROS_INFO("%s: Succeeded", action_name_.c_str());
       // set the action state to succeeded
