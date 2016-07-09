@@ -28,8 +28,7 @@ void spinThread()
   ros::shutdown();
 }
 
-// never ever put the argument of the callback function anything other then the
-// specified
+// never ever put the argument of the callback function anything other then the specified
 void forwardCb(task_commons::buoyActionFeedback msg)
 {
   ROS_INFO("feedback recieved %d", msg.feedback.nosignificance);
