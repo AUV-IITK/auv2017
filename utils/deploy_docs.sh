@@ -37,9 +37,7 @@ git config user.email "root@shikherverma.com"
 # The delta will show diffs between new and old versions.
 git add . --all
 echo "git commit"
-git log
 git commit -m "Deploy $SHA"
-git log
 
 # Now that we're all set up, we can push.
 git push -f https://ShikherVerma:$GH_TOKEN@github.com/AUV-IITK/auv.git gh-pages
