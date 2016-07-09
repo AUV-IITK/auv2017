@@ -19,27 +19,31 @@ export SHA=`git rev-parse --verify HEAD`
 
 # Clone the existing gh-pages for this repo into html/
 # Create a new empty branch if gh-pages doesn't exist yet (should only happen on first deply)
-git clone  "git@github.com:AUV-IITK/auv.git" ~/catkin_ws/src/auv/html/
+git clone  "https://github.com/AUV-IITK/auv.git" ~/catkin_ws/src/auv/html/
 cd ~/catkin_ws/src/auv/html/
-git checkout gh-pages
+git checkout -b gh-pages origin/gh-pages
 cd ..
 
 # Clean html/ existing contents except .git folder
 rm -rf ~/catkin_ws/src/auv/html/
 
 # Run our compile script
+echo "compile docs"
 doCompile
 
 # Now let's go have some fun with the cloned repo
 cd ~/catkin_ws/src/auv/html/
+echo "git diff started"
 git diff
+echo "git config"
 git config user.name "Shikher Verma"
 git config user.email "root@shikherverma.com"
 
 # Commit the "changes", i.e. the new version.
 # The delta will show diffs between new and old versions.
-git add .
-git commit -m "$SHA"
+git add . --all
+echo "git commit"
+git commit -m "Deploy $SHA"
 
 # Now that we're all set up, we can push.
-git push origin gh-pages -f
+git push -f https://ShikherVerma:$GH_TOKEN@github.com/AUV-IITK/auv.git gh-pages
