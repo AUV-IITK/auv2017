@@ -163,8 +163,6 @@ rosserial_add_client_target(src arduino_node-upload)
 rosserial_add_client_target(src testing_arduino_node ALL)
 rosserial_add_client_target(src testing_arduino_node-upload)
 
-rosserial_add_client_target(src arduino_test_calib ALL)
-rosserial_add_client_target(src arduino_test_calib-upload)
 #############
 ## Install ##
 #############
