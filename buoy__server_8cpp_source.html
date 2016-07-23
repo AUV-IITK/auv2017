@@ -160,8 +160,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#ad704f9f6cb494e04cfba451eb928064b">present_Y_</a> = <a class="code" href="classTaskBuoyInnerClass.html#a65effd0ffd4ccee0f8f6ca003c54dc55">nh_</a>.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/z_distance&quot;</span>, 1000);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a1570a7dceb1538c51ebc8fda202af90d">present_distance_</a> = <a class="code" href="classTaskBuoyInnerClass.html#a65effd0ffd4ccee0f8f6ca003c54dc55">nh_</a>.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/x_distance&quot;</span>, 1000);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#aa88ad2242f1f6fa2e62b52a90c35bb0e">yaw_pub_</a> = <a class="code" href="classTaskBuoyInnerClass.html#a65effd0ffd4ccee0f8f6ca003c54dc55">nh_</a>.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/yaw&quot;</span>, 1000);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a1498d17429aee5bf0549460ececc8538">sub_ip_</a> = <a class="code" href="classTaskBuoyInnerClass.html#a65effd0ffd4ccee0f8f6ca003c54dc55">nh_</a>.subscribe&lt;std_msgs::Float64MultiArray&gt;(<span class="stringliteral">&quot;/varun/ip/buoy&quot;</span>, 1000,</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;           &amp;<a class="code" href="classTaskBuoyInnerClass.html#ae7da72a871d348a8900625846d32cef4">TaskBuoyInnerClass::buoyNavigation</a>, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a1498d17429aee5bf0549460ececc8538">sub_ip_</a> =</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="classTaskBuoyInnerClass.html#a65effd0ffd4ccee0f8f6ca003c54dc55">nh_</a>.subscribe&lt;std_msgs::Float64MultiArray&gt;(<span class="stringliteral">&quot;/varun/ip/buoy&quot;</span>, 1000, &amp;<a class="code" href="classTaskBuoyInnerClass.html#ae7da72a871d348a8900625846d32cef4">TaskBuoyInnerClass::buoyNavigation</a>, <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a1d7b85bebb9bf78c541542fac0fb56a8">yaw_sub_</a> = <a class="code" href="classTaskBuoyInnerClass.html#a65effd0ffd4ccee0f8f6ca003c54dc55">nh_</a>.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/sensors/imu/yaw&quot;</span>, 1000, &amp;<a class="code" href="classTaskBuoyInnerClass.html#a2b41f5c6e6e39d479e30e26538694abd">TaskBuoyInnerClass::yawCB</a>, <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.start();</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  }</div>
@@ -369,7 +369,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 9 2016 12:26:11 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 23 2016 00:42:55 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

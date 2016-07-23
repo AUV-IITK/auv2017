@@ -21,7 +21,7 @@ var searchData=
   ['linedetectedlistener',['lineDetectedListener',['../classTaskLineDetectionInnerClass.html#a5367258e7e4fcda6ce0a928282cac562',1,'TaskLineDetectionInnerClass::lineDetectedListener()'],['../buoy__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812',1,'lineDetectedListener():&#160;buoy_detection.cpp']]],
   ['linethresh',['lineThresh',['../line__angle_8cpp.html#a463e2ef0dea8e5012442db3fd47ff11c',1,'line_angle.cpp']]],
   ['load',['Load',['../classgazebo_1_1VarunMotionPlugin.html#a0dcc84e8efd1885703db0c7964e9ff9f',1,'gazebo::VarunMotionPlugin']]],
-  ['loop',['loop',['../arduino__node_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;arduino_node.cpp'],['../arduino__test__calib_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;arduino_test_calib.cpp'],['../testing__arduino__node_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;testing_arduino_node.cpp']]],
+  ['loop',['loop',['../arduino__node_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'loop():&#160;testing_arduino_node.cpp']]],
   ['looprate',['loopRate',['../classTaskLineFollowingInnerClass.html#a95d49ae083f12a0eabf9fb38ff3af079',1,'TaskLineFollowingInnerClass']]],
   ['lowh',['LowH',['../line__angle_8cpp.html#aab7e318a33e12402d7111aba3fa2644f',1,'line_angle.cpp']]],
   ['lows',['LowS',['../line__angle_8cpp.html#a7327bdf8364bb05cca2878c4ca24460d',1,'line_angle.cpp']]],

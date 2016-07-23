@@ -1,6 +1,0 @@
-<map id="btd099" name="btd099">
-<area shape="rect" id="node2" href="$arduino__test__calib_8cpp.html#a944e26b7801dd12b5adb236b219cdeb5" title="thrusterWest" alt="" coords="115,31,213,57"/>
-<area shape="rect" id="node3" href="$arduino__test__calib_8cpp.html#a0911ab71d49fb01b45b4de7eaee40d52" title="PWMCbForward" alt="" coords="262,5,381,32"/>
-<area shape="rect" id="node5" href="$arduino__test__calib_8cpp.html#a42c75c7d4fc2656e6035ea12a1d6001a" title="PWMCbTurn" alt="" coords="272,56,371,83"/>
-<area shape="rect" id="node4" href="$arduino__test__calib_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="430,31,485,57"/>
-</map>

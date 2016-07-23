@@ -1,5 +1,0 @@
-<map id="thrusterWest" name="thrusterWest">
-<area shape="rect" id="node2" href="$arduino__test__calib_8cpp.html#a0911ab71d49fb01b45b4de7eaee40d52" title="PWMCbForward" alt="" coords="153,5,271,32"/>
-<area shape="rect" id="node4" href="$arduino__test__calib_8cpp.html#a42c75c7d4fc2656e6035ea12a1d6001a" title="PWMCbTurn" alt="" coords="163,56,261,83"/>
-<area shape="rect" id="node3" href="$arduino__test__calib_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="321,31,375,57"/>
-</map>

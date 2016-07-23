@@ -177,8 +177,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  ros::NodeHandle <a class="code" href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a>;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="comment">// Subscribing to feedback from ActionServer</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  ros::Subscriber sub_ = nh.subscribe&lt;motion_commons::UpwardActionFeedback&gt;(<span class="stringliteral">&quot;/upward/feedback&quot;</span>, 1000, &amp;<a class="code" href="upwardTest_8cpp.html#a88b35fc23678dc0b12baae21fafcea33">upwardCb</a>);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  ros::Subscriber pressure_data_sub = nh.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/sensors/pressure_sensor/depth&quot;</span>, 1000,</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;                                      &amp;<a class="code" href="upwardTest_8cpp.html#aa8c0fd89b9d3fb0ec4af9a74d8b9e27b">pressure_data_callback</a>);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  ros::Subscriber pressure_data_sub =</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      nh.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/sensors/pressure_sensor/depth&quot;</span>, 1000, &amp;<a class="code" href="upwardTest_8cpp.html#aa8c0fd89b9d3fb0ec4af9a74d8b9e27b">pressure_data_callback</a>);</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <a class="code" href="upwardTest_8cpp.html#a0b780a324d96ad08b6e832b895079970">pressure_data_pub</a> = nh.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/z_distance&quot;</span>, 1000);</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="comment">// Declaring a new ActionClient</span></div>
@@ -219,7 +219,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 9 2016 12:26:10 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 23 2016 00:42:55 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

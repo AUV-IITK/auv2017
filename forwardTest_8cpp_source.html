@@ -190,33 +190,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  ros::NodeHandle <a class="code" href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a>;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="comment">// Subscribing to feedback from ActionServer</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  ros::Subscriber sub_ = nh.subscribe&lt;motion_commons::ForwardActionFeedback&gt;(<span class="stringliteral">&quot;/forward/feedback&quot;</span>, 1000, &amp;<a class="code" href="forwardTest_8cpp.html#a1e80124b793f024d8a41429bca88b725">forwardCb</a>);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  ros::Subscriber ip_data_sub = nh.subscribe&lt;std_msgs::Float64MultiArray&gt;(<span class="stringliteral">&quot;/varun/ip/buoy&quot;</span>, 1000,</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                                &amp;<a class="code" href="forwardTest_8cpp.html#a2d4a072cc553cf3518c9110999a6be39">ip_data_callback</a>);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a2f420c3c06cfe4824adf9b26966ede2a">ip_data_pub</a> = nh.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/x_distance&quot;</span>, 1000);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <a class="code" href="forwardTest_8cpp.html#ad12775a3652040f4cdf2b7095b259839">ip_switch</a> = nh.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;buoy_detection_switch&quot;</span>, 1000);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="comment">// Declaring a new ActionClient</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> forwardTestClient(<span class="stringliteral">&quot;forward&quot;</span>);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="comment">// Saving pointer to use across threads</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a52cf879fdeb1b14c8fb15ac182ac946c">clientPointer</a> = &amp;forwardTestClient;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="comment">// Waiting for action server to start</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for action server to start.&quot;</span>);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  forwardTestClient.waitForServer();</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="comment">// register dynamic reconfig server.</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  dynamic_reconfigure::Server&lt;motion_forward::forwardConfig&gt; server;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  dynamic_reconfigure::Server&lt;motion_forward::forwardConfig&gt;::CallbackType f;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  f = boost::bind(&amp;<a class="code" href="forwardTest_8cpp.html#ad8fd45d47b8f290c3e57b6888430f846">callback</a>, _1, _2);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  server.setCallback(f);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  motion_forward::forwardConfig config;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  config.bool_param = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <a class="code" href="forwardTest_8cpp.html#ad8fd45d47b8f290c3e57b6888430f846">callback</a>(config, 0);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  <span class="comment">// waiting for goal</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  ros::spin();</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  ros::Subscriber ip_data_sub = nh.subscribe&lt;std_msgs::Float64MultiArray&gt;(<span class="stringliteral">&quot;/varun/ip/buoy&quot;</span>, 1000, &amp;<a class="code" href="forwardTest_8cpp.html#a2d4a072cc553cf3518c9110999a6be39">ip_data_callback</a>);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a2f420c3c06cfe4824adf9b26966ede2a">ip_data_pub</a> = nh.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/x_distance&quot;</span>, 1000);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <a class="code" href="forwardTest_8cpp.html#ad12775a3652040f4cdf2b7095b259839">ip_switch</a> = nh.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;buoy_detection_switch&quot;</span>, 1000);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="comment">// Declaring a new ActionClient</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> forwardTestClient(<span class="stringliteral">&quot;forward&quot;</span>);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  <span class="comment">// Saving pointer to use across threads</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a52cf879fdeb1b14c8fb15ac182ac946c">clientPointer</a> = &amp;forwardTestClient;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  <span class="comment">// Waiting for action server to start</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for action server to start.&quot;</span>);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  forwardTestClient.waitForServer();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="comment">// register dynamic reconfig server.</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  dynamic_reconfigure::Server&lt;motion_forward::forwardConfig&gt; server;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  dynamic_reconfigure::Server&lt;motion_forward::forwardConfig&gt;::CallbackType f;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  f = boost::bind(&amp;<a class="code" href="forwardTest_8cpp.html#ad8fd45d47b8f290c3e57b6888430f846">callback</a>, _1, _2);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  server.setCallback(f);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  motion_forward::forwardConfig config;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  config.bool_param = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <a class="code" href="forwardTest_8cpp.html#ad8fd45d47b8f290c3e57b6888430f846">callback</a>(config, 0);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <span class="comment">// waiting for goal</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  ros::spin();</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
 <div class="ttc" id="forwardTest_8cpp_html_a7960f9c558f9ee2c3d4a8fdea096fb56"><div class="ttname"><a href="forwardTest_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56">success</a></div><div class="ttdeci">bool success</div><div class="ttdef"><b>Definition:</b> <a href="forwardTest_8cpp_source.html#l00023">forwardTest.cpp:23</a></div></div>
 <div class="ttc" id="forwardTest_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="forwardTest_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="forwardTest_8cpp_source.html#l00094">forwardTest.cpp:94</a></div></div>
 <div class="ttc" id="forwardTest_8cpp_html_a7accf1f4e38117db922ecca2ebccfc94"><div class="ttname"><a href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::ForwardAction &gt; Client</div><div class="ttdef"><b>Definition:</b> <a href="forwardTest_8cpp_source.html#l00015">forwardTest.cpp:15</a></div></div>
@@ -233,7 +232,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Jul 9 2016 12:26:10 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jul 23 2016 00:42:55 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
