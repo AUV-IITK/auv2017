@@ -99,45 +99,57 @@ int main(int argc, char *argv[])
 
   while (1)
   {
+    std_msgs::Float64MultiArray array;
+    loop_rate.sleep();
+
+    if (frame.empty())
+    {
+      std::cout << "empty frame \n";
+      ros::spinOnce();
+      continue;
+    }
+
+    if (video)
+      output_cap.write(frame);
+
+    // get the image data
+    height = frame.rows;
+    width = frame.cols;
+    step = frame.step;
+
+    // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
+    cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
+    cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
+    cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
+    // Filter out colors which are out of range.
+    cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);
+    // Split image into its 3 one dimensional images
+    cv::Mat thresholded_hsv[3];
+    cv::split(hsv_frame, thresholded_hsv);
+
+    // Filter out colors which are out of range.
+    cv::inRange(thresholded_hsv[0], cv::Scalar(t1min, 0, 0, 0), cv::Scalar(t1max, 0, 0, 0), thresholded_hsv[0]);
+    cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
+    cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
+    cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
+    cv::imshow("F1", thresholded_hsv[0]);
+
+    if (flag)
+    {
+      cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
+      cv::imshow("F1", thresholded_hsv[0]);              // individual filters
+      cv::imshow("F2", thresholded_hsv[1]);
+      cv::imshow("F3", thresholded_hsv[2]);
+    }
+
+    if ((cvWaitKey(10) & 255) == 27) break;
+
     if (!IP)
     {
-      std_msgs::Float64MultiArray array;
-      loop_rate.sleep();
-
-      if (frame.empty())
-      {
-        std::cout << "empty frame \n";
-        ros::spinOnce();
-        continue;
-      }
-
-      if (video)
-        output_cap.write(frame);
-
-      // get the image data
-      height = frame.rows;
-      width = frame.cols;
-      step = frame.step;
-
-      // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
-      cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
-      cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
-      cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-      // Filter out colors which are out of range.
-      cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);
-      // Split image into its 3 one dimensional images
-      cv::Mat thresholded_hsv[3];
-      cv::split(hsv_frame, thresholded_hsv);
-
-      // Filter out colors which are out of range.
-      cv::inRange(thresholded_hsv[0], cv::Scalar(t1min, 0, 0, 0), cv::Scalar(t1max, 0, 0, 0), thresholded_hsv[0]);
-      cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
-      cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
-      cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
-
       // find contours
       std::vector<std::vector<cv::Point> > contours;
-      cv::Mat thresholded_Mat = thresholded;
+      cv::Mat thresholded_Mat;
+      thresholded.copyTo(thresholded_Mat);
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
       if (contours.empty())
@@ -148,13 +160,7 @@ int main(int argc, char *argv[])
         array.data.push_back(0);
         array.data.push_back(0);
         array.data.push_back(0);
-        if (flag)
-        {
-          cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
-          cv::imshow("F1", thresholded_hsv[0]);              // individual filters
-          cv::imshow("F2", thresholded_hsv[1]);
-          cv::imshow("F3", thresholded_hsv[2]);
-        }
+
         pub.publish(array);
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
@@ -206,10 +212,6 @@ int main(int argc, char *argv[])
 
       if (flag)
       {
-        cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
-        cv::imshow("F1", thresholded_hsv[0]);              // individual filters
-        cv::imshow("F2", thresholded_hsv[1]);
-        cv::imshow("F3", thresholded_hsv[2]);
         cv::imshow("circle", circles);            // Original stream with detected ball overlay
         cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
       }
