@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
       circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
       array.data.push_back(radius[0]);                                        // publish radius
       array.data.push_back((320 - center[0].x));
-      array.data.push_back((240 - center[0].y));
+      array.data.push_back(-(240 - center[0].y));
       array.data.push_back(distance);
       if (((320 - center[0].x > -5) && (320 - center[0].x < 5)) &&
           ((240 - center[0].y > -5) && (240 - center[0].y) < 5))
