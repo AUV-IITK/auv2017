@@ -289,7 +289,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            <span class="comment">// center of screen</span></div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;      array.data.push_back(radius[0]);                                        <span class="comment">// publish radius</span></div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;      array.data.push_back((320 - center[0].x));</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;      array.data.push_back((240 - center[0].y));</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;      array.data.push_back(-(240 - center[0].y));</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;      array.data.push_back(distance);</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;      <span class="keywordflow">if</span> (((320 - center[0].x &gt; -5) &amp;&amp; (320 - center[0].x &lt; 5)) &amp;&amp;</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;          ((240 - center[0].y &gt; -5) &amp;&amp; (240 - center[0].y) &lt; 5))</div>
@@ -339,7 +339,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 27 2016 19:06:32 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jul 28 2016 16:51:39 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
