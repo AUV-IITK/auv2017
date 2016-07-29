@@ -8,7 +8,6 @@ var searchData=
   ['imgsmooth',['imgSmooth',['../line__angle_8cpp.html#a5c1705fb8775279342686c6c5b0739c8',1,'line_angle.cpp']]],
   ['imgthresholded',['imgThresholded',['../line__angle_8cpp.html#a857517229569000e8ce6f3c708de1b88',1,'line_angle.cpp']]],
   ['imu_5fdata_5fpub',['imu_data_pub',['../turningXYTest_8cpp.html#ab1c78e6beac7d142f9cf9bb97eedf973',1,'turningXYTest.cpp']]],
-  ['infront',['Infront',['../classTaskBuoyInnerClass.html#a9d18643492ec5488039d4e8d1f554c44',1,'TaskBuoyInnerClass']]],
   ['initdata',['initData',['../forward_8cpp.html#a5857eb60203beb77f04690dc0248daa6',1,'initData():&#160;forward.cpp'],['../sideward_8cpp.html#a5857eb60203beb77f04690dc0248daa6',1,'initData():&#160;sideward.cpp'],['../turningXY_8cpp.html#a5857eb60203beb77f04690dc0248daa6',1,'initData():&#160;turningXY.cpp'],['../upward_8cpp.html#a5857eb60203beb77f04690dc0248daa6',1,'initData():&#160;upward.cpp']]],
   ['intidata',['intiData',['../classTaskLineFollowingInnerClass.html#a50128744fc1221b30724be510b7bbdb5',1,'TaskLineFollowingInnerClass']]],
   ['ip',['IP',['../buoy__detection_8cpp.html#a31312a6881a1fcac1c757c95025214c5',1,'buoy_detection.cpp']]],
