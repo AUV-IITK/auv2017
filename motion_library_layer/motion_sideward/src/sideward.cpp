@@ -93,7 +93,7 @@ public:
       output = (p * error) + (i * integral) + (d * derivative);
       sidewardOutputPWMMapping(output);
 
-      if (error < 5 && error > -5)
+      if (pwm.data < 2 && pwm.data > -2)
       {
         reached = true;
         pwm.data = 0;
