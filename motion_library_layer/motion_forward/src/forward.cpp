@@ -87,7 +87,7 @@ public:
 
     while (!forwardServer_.isPreemptRequested() && ros::ok() && count < goal->loop)
     {
-      error = finalForwardPosition - presentForwardPosition;
+      error = presentForwardPosition - finalForwardPosition;
       integral += (error * dt);
       derivative = (presentForwardPosition - previousForwardPosition) / dt;
       output = (p * error) + (i * integral) + (d * derivative);
