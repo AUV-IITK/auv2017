@@ -50,7 +50,7 @@ private:
   motion_commons::SidewardGoal sidewardgoal;
   motion_commons::UpwardGoal upwardgoal;
   motion_commons::TurnGoal turngoal;
-  bool success, Infront, heightCenter, sideCenter;
+  bool success, heightCenter, sideCenter;
 
 public:
   TaskBuoyInnerClass(std::string name, std::string node, std::string node1, std::string node2, std::string node3)
@@ -86,10 +86,6 @@ public:
 
   void buoyNavigation(std_msgs::Float64MultiArray array)
   {
-    if (array.data[4])
-    {
-      Infront = true;
-    }
     std_msgs::Float64 data1;
     std_msgs::Float64 data2;
     std_msgs::Float64 data3;
@@ -142,7 +138,6 @@ public:
   void analysisCB(const task_commons::buoyGoalConstPtr goal)
   {
     ROS_INFO("Inside analysisCB");
-    Infront = false;
     heightCenter = false;
     sideCenter = false;
     ros::Rate looprate(12);
@@ -184,7 +179,7 @@ public:
         break;
       }
       looprate.sleep();
-      if (Infront && heightCenter && sideCenter)
+      if (heightCenter && sideCenter)
       {
         break;
       }
