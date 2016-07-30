@@ -4,23 +4,19 @@
     <param name="i_param" type="double" value="0.0" />
     <param name="d_param" type="double" value="0.0" />
   </node>
-  <node name="forwardTest" pkg="motion_forward" type="forwardTest" respawn="true"  output="screen"/>
   <node name="sideward" pkg="motion_sideward" type="sideward" respawn="true"  output="screen">
     <param name="p_param" type="double" value="10.0" />
     <param name="i_param" type="double" value="0.0" />
     <param name="d_param" type="double" value="0.0" />
   </node>
-  <node name="sidewardTest" pkg="motion_sideward" type="sidewardTest" respawn="true"  output="screen"/>
   <node name="turningXY" pkg="motion_turn" type="turningXY" respawn="true"  output="screen">
     <param name="p_param" type="double" value="10.0" />
     <param name="i_param" type="double" value="0.0" />
     <param name="d_param" type="double" value="0.0" />
   </node>
-  <node name="turningXYTest" pkg="motion_turn" type="turningXYTest" respawn="true"  output="screen"/>
   <node name="upward" pkg="motion_upward" type="upward" respawn="true"  output="screen">
     <param name="p_param" type="double" value="10.0" />
     <param name="i_param" type="double" value="0.0" />
     <param name="d_param" type="double" value="0.0" />
   </node>
-  <node name="upwardTest" pkg="motion_upward" type="upwardTest" respawn="true"  output="screen"/>
 </launch>
