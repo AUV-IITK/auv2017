@@ -9,13 +9,13 @@ var searchData=
   ['finalforwardposition',['finalForwardPosition',['../forward_8cpp.html#a093edcb1e86e027d1bb0834d346fbbc5',1,'forward.cpp']]],
   ['finalsideposition',['finalSidePosition',['../sideward_8cpp.html#a3ca9174bdf5743bede143545c8bf6c66',1,'sideward.cpp']]],
   ['firstdata',['firstData',['../classTaskLineFollowingInnerClass.html#a9ced1e52cb9e54fd0296332910084e4a',1,'TaskLineFollowingInnerClass']]],
-  ['flag',['flag',['../buoy__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'buoy_detection.cpp']]],
+  ['flag',['flag',['../buoy__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;gate_detection.cpp']]],
   ['forward',['forward',['../namespaceremote__gui.html#a7ecda5a1677b14d4e4faa60404346aa6',1,'remote_gui']]],
   ['forward_5fmotion',['forward_motion',['../namespaceremote__gui.html#af08496c97784a7542eaca2eb93d76477',1,'remote_gui']]],
   ['forwardclient_5f',['ForwardClient_',['../classTaskBuoyInnerClass.html#a6d6ad6c0a0f3c316f74a2a97f83acbc9',1,'TaskBuoyInnerClass::ForwardClient_()'],['../classTaskLineDetectionInnerClass.html#ae97f4b8d253ae95919e685e20d8a2137',1,'TaskLineDetectionInnerClass::ForwardClient_()']]],
   ['forwardgoal',['forwardgoal',['../classTaskBuoyInnerClass.html#a404cba6df7c6dec51b74c87ac3e1191f',1,'TaskBuoyInnerClass::forwardgoal()'],['../classTaskLineDetectionInnerClass.html#ac92f9b61436e9364e9ab1cfaa8939636',1,'TaskLineDetectionInnerClass::forwardgoal()'],['../masterAlternate_8cpp.html#aa7c85a023cf3cf60204b4cd066e867e4',1,'forwardgoal():&#160;masterAlternate.cpp']]],
   ['forwardserver_5f',['forwardServer_',['../classinnerActionClass.html#ae783d9a0800f3c8085bf1182704d3545',1,'innerActionClass']]],
   ['forwardsuccess',['forwardSuccess',['../masterAlternate_8cpp.html#a2bc74ef7e23736b9d57de94f762011e5',1,'masterAlternate.cpp']]],
-  ['frame',['frame',['../buoy__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'buoy_detection.cpp']]],
+  ['frame',['frame',['../buoy__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;gate_detection.cpp']]],
   ['full_5fforce',['FULL_FORCE',['../varun__motion__plugin_8cpp.html#a042c06aadefed8554f95464205dececc',1,'varun_motion_plugin.cpp']]]
 ];

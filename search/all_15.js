@@ -12,6 +12,6 @@ var searchData=
   ['varunmotionplugin',['VarunMotionPlugin',['../classgazebo_1_1VarunMotionPlugin.html#a81756b81d64ee6901ff9c8792fe65ca8',1,'gazebo::VarunMotionPlugin']]],
   ['vid_5fpub_2ecpp',['vid_pub.cpp',['../vid__pub_8cpp.html',1,'']]],
   ['vidcheck',['vidCheck',['../line__angle_8cpp.html#abc73eaca3381b8d9437c7a8355734314',1,'line_angle.cpp']]],
-  ['video',['video',['../buoy__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a',1,'buoy_detection.cpp']]],
+  ['video',['video',['../buoy__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a',1,'video():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a',1,'video():&#160;gate_detection.cpp']]],
   ['voltage',['voltage',['../arduino__node_8cpp.html#ac744a7815a231d355ebd64089c33f32f',1,'arduino_node.cpp']]]
 ];

@@ -10,5 +10,6 @@ var searchData=
   ['clientpointer',['clientPointer',['../forwardTest_8cpp.html#a52cf879fdeb1b14c8fb15ac182ac946c',1,'clientPointer():&#160;forwardTest.cpp'],['../sidewardTest_8cpp.html#a52cf879fdeb1b14c8fb15ac182ac946c',1,'clientPointer():&#160;sidewardTest.cpp'],['../turningXYTest_8cpp.html#a52cf879fdeb1b14c8fb15ac182ac946c',1,'clientPointer():&#160;turningXYTest.cpp'],['../upwardTest_8cpp.html#a52cf879fdeb1b14c8fb15ac182ac946c',1,'clientPointer():&#160;upwardTest.cpp']]],
   ['clockwisefront',['clockwiseFront',['../namespaceremote__gui.html#a3ecae3e023bd0c7f7e2a9bc1526096a4',1,'remote_gui']]],
   ['clockwisesway',['clockwiseSway',['../namespaceremote__gui.html#a5b26ab7ad0190e57fcd8b6f39d4f00bf',1,'remote_gui']]],
-  ['count',['count',['../arduino__node_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;arduino_node.cpp'],['../buoy__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;buoy_detection.cpp']]]
+  ['count',['count',['../arduino__node_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;arduino_node.cpp'],['../buoy__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;gate_detection.cpp']]],
+  ['count_5favg',['count_avg',['../gate__detection_8cpp.html#a2d043c356e83ee5dde583a82999bef8b',1,'gate_detection.cpp']]]
 ];

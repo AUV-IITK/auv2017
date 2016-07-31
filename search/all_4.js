@@ -21,5 +21,6 @@ var searchData=
   ['clockwisesway',['clockwiseSway',['../namespaceremote__gui.html#a5b26ab7ad0190e57fcd8b6f39d4f00bf',1,'remote_gui']]],
   ['computemean',['computeMean',['../line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf',1,'line_angle.cpp']]],
   ['computemode',['computeMode',['../line__angle_8cpp.html#af8b5cbf8f6c14e5b72a685aa01d4a7fb',1,'line_angle.cpp']]],
-  ['count',['count',['../arduino__node_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;arduino_node.cpp'],['../buoy__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;buoy_detection.cpp']]]
+  ['count',['count',['../arduino__node_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;arduino_node.cpp'],['../buoy__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'count():&#160;gate_detection.cpp']]],
+  ['count_5favg',['count_avg',['../gate__detection_8cpp.html#a2d043c356e83ee5dde583a82999bef8b',1,'gate_detection.cpp']]]
 ];
