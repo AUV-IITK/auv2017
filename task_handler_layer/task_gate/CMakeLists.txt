@@ -112,11 +112,11 @@ find_package( OpenCV REQUIRED )
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-  sensor_msgs
-)
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+#   sensor_msgs
+# )
 
 catkin_package(
   #  INCLUDE_DIRS include
