@@ -32,7 +32,7 @@ var searchData=
   ['stop_5ffront',['Stop_front',['../namespaceremote__gui.html#a7454783be0b8ba2bd63c0d9fa10d0aa7',1,'remote_gui.Stop_front()'],['../namespaceremote__gui.html#af9fdd8fcbcfca44de25f1b5d01d00299',1,'remote_gui.stop_front']]],
   ['stop_5fsway',['stop_sway',['../namespaceremote__gui.html#a9275994742fc5a94ee6555cb4060f194',1,'remote_gui.stop_sway'],['../namespaceremote__gui.html#ada4d0f6139fb896d1cb6bc8d7c4f25b4',1,'remote_gui.Stop_sway()']]],
   ['stop_5fturn',['Stop_turn',['../namespaceremote__gui.html#aae6c007aad6e7f7bbcd3ffc6816a2e82',1,'remote_gui.Stop_turn()'],['../namespaceremote__gui.html#ab0036619c8dfaafef5d9001f8d57c54e',1,'remote_gui.stop_turn']]],
-  ['stop_5fvertical',['stop_vertical',['../namespaceremote__gui.html#a6b372c2558c3f320b4237f58184e6bb3',1,'remote_gui.stop_vertical'],['../namespaceremote__gui.html#ae75b9a6a7a49efd9e62d37d4da156e2d',1,'remote_gui.Stop_vertical()']]],
+  ['stop_5fvertical',['Stop_vertical',['../namespaceremote__gui.html#ae75b9a6a7a49efd9e62d37d4da156e2d',1,'remote_gui.Stop_vertical()'],['../namespaceremote__gui.html#a6b372c2558c3f320b4237f58184e6bb3',1,'remote_gui.stop_vertical']]],
   ['stopip',['stopIP',['../classTaskBuoyInnerClass.html#a1968f7f3003139e44ce35ef0e4264f73',1,'TaskBuoyInnerClass::stopIP()'],['../classTaskLineDetectionInnerClass.html#a712c827120ad01ccab2aa89baf500ed7',1,'TaskLineDetectionInnerClass::stopIP()'],['../classTaskLineFollowingInnerClass.html#af3dccfd5cf6d37ab59d24e802c6a5227',1,'TaskLineFollowingInnerClass::stopIP()']]],
   ['stretchcontrast',['StretchContrast',['../line__angle_8cpp.html#a400fe86a6ff00fff42f64cc88c418d70',1,'line_angle.cpp']]],
   ['stype',['stype',['../line__angle_8cpp.html#a7a3571abbb82c94deec7b424bd079fdf',1,'line_angle.cpp']]],
