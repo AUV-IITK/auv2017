@@ -21,12 +21,17 @@
 bool IP = true;
 bool flag = false;
 bool video = false;
-int t1min = 177, t1max = 190, t2min = 229, t2max = 260, t3min = 228, t3max = 260;  // Default Params
+int t1min = 22, t1max = 48, t2min = 68, t2max = 189, t3min = 135, t3max = 200;  // Default Params
 
 cv::Mat frame;
 cv::Mat newframe;
-int count = 0;
+int count = 0, count_avg = 0;
 
+float mod(float x, float y)
+{
+  if (x - y > 0) return x;
+  else return y;
+}
 void lineDetectedListener(std_msgs::Bool msg)
 {
   IP = msg.data;
@@ -74,15 +79,15 @@ int main(int argc, char *argv[])
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
+  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
+  cvNamedWindow("circle", CV_WINDOW_NORMAL);
+  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
+
   if (flag)
   {
-    cvNamedWindow("Contours", CV_WINDOW_NORMAL);
     cvNamedWindow("F1", CV_WINDOW_NORMAL);
-    cvNamedWindow("circle", CV_WINDOW_NORMAL);
     cvNamedWindow("F2", CV_WINDOW_NORMAL);
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
-
-    cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
 
     cvCreateTrackbar("t1min", "F1", &t1min, 260, NULL);
     cvCreateTrackbar("t1max", "F1", &t1max, 260, NULL);
@@ -96,8 +101,12 @@ int main(int argc, char *argv[])
   CvSize size = cvSize(width, height);
 
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
+  float r[5];
 
-  while (1)
+  for (int i; i++; i < 5)
+    r[i] = 0;
+
+  while (ros::ok())
   {
     std_msgs::Float64MultiArray array;
     loop_rate.sleep();
@@ -132,11 +141,10 @@ int main(int argc, char *argv[])
     cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
     cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
     cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
-    cv::imshow("F1", thresholded_hsv[0]);
+    cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
 
     if (flag)
     {
-      cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
       cv::imshow("F1", thresholded_hsv[0]);              // individual filters
       cv::imshow("F2", thresholded_hsv[1]);
       cv::imshow("F3", thresholded_hsv[2]);
@@ -145,7 +153,7 @@ int main(int argc, char *argv[])
     if ((cvWaitKey(10) & 255) == 27)
       break;
 
-    if (!IP)
+    if ((!IP) && (r[0] < 420))
     {
       // find contours
       std::vector<std::vector<cv::Point> > contours;
@@ -186,7 +194,24 @@ int main(int argc, char *argv[])
 
       std::vector<cv::Point2f> center(1);
       std::vector<float> radius(1);
+      std::vector<cv::Point2f> center_ideal(1);
       cv::minEnclosingCircle(contours[largest_contour_index], center[0], radius[0]);
+
+      float r_avg = (r[0] + r[1] + r[2] + r[3] + r[4])/5;
+      if ((radius[0] < (r_avg + 10)) || (count == 5))
+      {
+         r[4] = r[3];
+         r[3] = r[2];
+         r[2] = r[1];
+         r[1] = r[0];
+         r[0] = radius[0];
+         count = 0;
+         center_ideal[0] = center[0];
+      }
+      else
+      {
+         count++;
+      }
 
       cv::Mat circles = frame;
       cv::Point2f pt;
@@ -196,26 +221,17 @@ int main(int argc, char *argv[])
       float *p;                                     // array to publish
       distance = pow(radius[0] / 7526.5, -.92678);  // function found using experiment
 
-      circle(circles, center[0], radius[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
-      circle(circles, center[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
+      circle(circles, center_ideal[0], r[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
+      circle(circles, center_ideal[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
       circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
-      array.data.push_back(radius[0]);                                        // publish radius
-      array.data.push_back((320 - center[0].x));
-      array.data.push_back(-(240 - center[0].y));
+      array.data.push_back(r[0]);                                        // publish radius
+      array.data.push_back((320 - center_ideal[0].x));
+      array.data.push_back(-(240 - center_ideal[0].y));
       array.data.push_back(distance);
-      if (((320 - center[0].x > -5) && (320 - center[0].x < 5)) &&
-          ((240 - center[0].y > -5) && (240 - center[0].y) < 5))
-        array.data.push_back(1);
-      else
-        array.data.push_back(0);  // telling we are in line of center of ball
-
       pub.publish(array);
 
-      if (flag)
-      {
-        cv::imshow("circle", circles);            // Original stream with detected ball overlay
-        cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
-      }
+      cv::imshow("circle", circles);            // Original stream with detected ball overlay
+      cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
 
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
