@@ -69,6 +69,7 @@ add_action_files(
   align.action
   buoy.action
   orange.action
+  gate.action
 )
 
 ## Generate added messages and services with any dependencies listed here
