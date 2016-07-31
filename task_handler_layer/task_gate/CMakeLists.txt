@@ -1,22 +1,30 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(task_commons)
+project(task_gate)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  actionlib
-  dynamic_reconfigure
-  actionlib_msgs
-  message_generation
-  message_runtime
+  roslint
   roscpp
   rospy
   std_msgs
+  sensor_msgs
+  actionlib
+  actionlib_msgs
+  message_generation
+  task_commons
+  motion_commons
+  cv_bridge
+  image_transport
 )
 
+## Check for lint errors
+roslint_cpp()
+
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
+find_package( OpenCV REQUIRED )
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -63,20 +71,17 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate actions in the 'action' folder
-add_action_files(
-  DIRECTORY action
-  FILES
-  align.action
-  buoy.action
-  orange.action
-  gate.action
-)
+# add_action_files(
+#   FILES
+#   Action1.action
+#   Action2.action
+# )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  actionlib_msgs std_msgs
-)
+# generate_messages(
+#   DEPENDENCIES
+#   actionlib_msgs#   std_msgs
+# )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -92,6 +97,12 @@ generate_messages(
 ##   * uncomment the "generate_dynamic_reconfigure_options" section below
 ##     and list every .cfg file to be processed
 
+## Generate dynamic reconfigure parameters in the 'cfg' folder
+# generate_dynamic_reconfigure_options(
+#   cfg/DynReconf1.cfg
+#   cfg/DynReconf2.cfg
+# )
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -101,10 +112,16 @@ generate_messages(
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  sensor_msgs
+)
+
 catkin_package(
   #  INCLUDE_DIRS include
-  #  LIBRARIES task_commons
-  CATKIN_DEPENDS actionlib actionlib_msgs
+  #  LIBRARIES task_gate
+  CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation task_commons motion_commons
   #  DEPENDS system_lib
 )
 
@@ -115,26 +132,38 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
+include_directories(include
+  ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
+)
+
+add_executable(gate_detection src/gate_detection.cpp)
+# add_executable(gate_server src/gate_server.cpp)
+# add_executable(gate_client src/gate_client.cpp)
+target_link_libraries(gate_detection ${OpenCV_LIBS} )
+target_link_libraries(gate_detection ${catkin_LIBRARIES})
+# target_link_libraries(gate_server ${catkin_LIBRARIES})
+# target_link_libraries(gate_client ${catkin_LIBRARIES})
 
 ## Declare a C++ library
-# add_library(task_commons
-#   src/${PROJECT_NAME}/task_commons.cpp
+# add_library(task_gate
+#   src/${PROJECT_NAME}/task_gate.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(task_commons ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(task_gate ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(task_commons_node src/task_commons_node.cpp)
+# add_executable(task_gate_node src/task_gate_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(task_commons_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(task_gate_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(task_commons_node
+# target_link_libraries(task_gate_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -153,7 +182,7 @@ catkin_package(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS task_commons task_commons_node
+# install(TARGETS task_gate task_gate_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -178,7 +207,7 @@ catkin_package(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_task_commons.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_task_gate.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

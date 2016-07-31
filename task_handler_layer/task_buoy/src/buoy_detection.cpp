@@ -142,7 +142,8 @@ int main(int argc, char *argv[])
       cv::imshow("F3", thresholded_hsv[2]);
     }
 
-    if ((cvWaitKey(10) & 255) == 27) break;
+    if ((cvWaitKey(10) & 255) == 27)
+      break;
 
     if (!IP)
     {

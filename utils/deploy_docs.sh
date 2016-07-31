@@ -9,9 +9,9 @@ function doCompile {
 
 # Pull requests and commits to other branches shouldn't try to deploy, just build to verify
 if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" != "master" ]; then
-    echo "Skipping deploy; just doing a build."
-    doCompile
-    exit 0
+  echo "Skipping deploy; just doing a build."
+  doCompile
+  exit 0
 fi
 
 # Clone the existing gh-pages for this repo into html/

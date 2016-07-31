@@ -15,7 +15,8 @@ def varun_height(data):
     index = names.index('varun')
     pose = data.pose[index]
     z_position = pose.position.z
-    depth = -(WATER_HEIGHT - z_position)  # negative because convention is to take upward direction as positive
+    # negative because convention is to take upward direction as positive
+    depth = -(WATER_HEIGHT - z_position)
 
 
 def mock_pressure_sensor():
