@@ -12,7 +12,6 @@ var searchData=
   ['taskbuoyinnerclass',['TaskBuoyInnerClass',['../classTaskBuoyInnerClass.html',1,'TaskBuoyInnerClass'],['../classTaskBuoyInnerClass.html#a853d40aeb34758e6fb968ed7cd7003ae',1,'TaskBuoyInnerClass::TaskBuoyInnerClass()']]],
   ['tasklinedetectioninnerclass',['TaskLineDetectionInnerClass',['../classTaskLineDetectionInnerClass.html',1,'TaskLineDetectionInnerClass'],['../classTaskLineDetectionInnerClass.html#af6436e1d432b7c57c4d99a641c7ce95d',1,'TaskLineDetectionInnerClass::TaskLineDetectionInnerClass()']]],
   ['tasklinefollowinginnerclass',['TaskLineFollowingInnerClass',['../classTaskLineFollowingInnerClass.html',1,'TaskLineFollowingInnerClass'],['../classTaskLineFollowingInnerClass.html#a7df5427ddb6caa71c8ff3bd1f21bfcea',1,'TaskLineFollowingInnerClass::TaskLineFollowingInnerClass()']]],
-  ['test_5fbuoy_5fdetection_2ecpp',['test_buoy_detection.cpp',['../test__buoy__detection_8cpp.html',1,'']]],
   ['testing_5farduino_5fnode_2ecpp',['testing_arduino_node.cpp',['../testing__arduino__node_8cpp.html',1,'']]],
   ['thruster_5fforce',['THRUSTER_FORCE',['../varun__motion__plugin_8cpp.html#aff087f961d159a0133c7a4d5f592b5d2',1,'varun_motion_plugin.cpp']]],
   ['thrustereast',['thrusterEast',['../arduino__node_8cpp.html#a42684f18e9bce80a0243bd94d324219c',1,'thrusterEast(int pwm, int isForward):&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a42684f18e9bce80a0243bd94d324219c',1,'thrusterEast(int pwm, int isForward):&#160;testing_arduino_node.cpp']]],
