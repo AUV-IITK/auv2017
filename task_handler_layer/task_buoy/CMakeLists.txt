@@ -102,11 +102,11 @@ find_package( OpenCV REQUIRED )
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-generate_messages(
-  DEPENDENCIES
-  std_msgs
-  sensor_msgs
-)
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+#   sensor_msgs
+# )
 
 catkin_package(
   #  INCLUDE_DIRS include
@@ -128,13 +128,10 @@ include_directories(include
 )
 
 add_executable(buoy_detection src/buoy_detection.cpp)
-add_executable(test_buoy_detection src/test_buoy_detection.cpp)
 add_executable(buoy_server src/buoy_server.cpp)
 add_executable(buoy_client src/buoy_client.cpp)
 target_link_libraries(buoy_detection ${OpenCV_LIBS} )
 target_link_libraries(buoy_detection ${catkin_LIBRARIES})
-target_link_libraries(test_buoy_detection ${OpenCV_LIBS} )
-target_link_libraries(test_buoy_detection ${catkin_LIBRARIES})
 target_link_libraries(buoy_server ${catkin_LIBRARIES})
 target_link_libraries(buoy_client ${catkin_LIBRARIES})
 
