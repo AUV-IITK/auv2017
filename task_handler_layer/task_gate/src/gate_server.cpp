@@ -8,7 +8,7 @@
 #include <std_msgs/Float64MultiArray.h>
 #include <actionlib/server/simple_action_server.h>
 #include <actionlib/client/simple_action_client.h>
-#include <task_commons/buoyAction.h>
+#include <task_commons/gateAction.h>
 #include <motion_commons/ForwardAction.h>
 #include <motion_commons/TurnAction.h>
 #include <motion_commons/SidewardAction.h>
@@ -21,20 +21,20 @@
 #include <motion_commons/SidewardActionResult.h>
 #include <string>
 
-typedef actionlib::SimpleActionServer<task_commons::buoyAction> Server;
+typedef actionlib::SimpleActionServer<task_commons::gateAction> Server;
 typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> ClientForward;
 typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> ClientSideward;
 typedef actionlib::SimpleActionClient<motion_commons::UpwardAction> ClientUpward;
 typedef actionlib::SimpleActionClient<motion_commons::TurnAction> ClientTurn;
 
-class TaskBuoyInnerClass
+class TaskGateInnerClass
 {
 private:
   ros::NodeHandle nh_;
-  Server buoy_server_;
+  Server gate_server_;
   std::string action_name_;
-  task_commons::buoyFeedback feedback_;
-  task_commons::buoyResult result_;
+  task_commons::gateFeedback feedback_;
+  task_commons::gateResult result_;
   ros::Subscriber sub_ip_;
   ros::Subscriber yaw_sub_;
   ros::Publisher off_pub_;
@@ -53,8 +53,8 @@ private:
   bool success, heightCenter, sideCenter;
 
 public:
-  TaskBuoyInnerClass(std::string name, std::string node, std::string node1, std::string node2, std::string node3)
-    : buoy_server_(nh_, name, boost::bind(&TaskBuoyInnerClass::analysisCB, this, _1), false)
+  TaskGateInnerClass(std::string name, std::string node, std::string node1, std::string node2, std::string node3)
+    : gate_server_(nh_, name, boost::bind(&TaskGateInnerClass::analysisCB, this, _1), false)
     , action_name_(name)
     , ForwardClient_(node)
     , SidewardClient_(node1)
@@ -62,20 +62,20 @@ public:
     , TurnClient_(node3)
   {
     ROS_INFO("inside constructor");
-    buoy_server_.registerPreemptCallback(boost::bind(&TaskBuoyInnerClass::preemptCB, this));
+    gate_server_.registerPreemptCallback(boost::bind(&TaskGateInnerClass::preemptCB, this));
 
-    off_pub_ = nh_.advertise<std_msgs::Bool>("buoy_detection_switch", 1000);
+    off_pub_ = nh_.advertise<std_msgs::Bool>("gate_detection_switch", 1000);
     present_X_ = nh_.advertise<std_msgs::Float64>("/varun/motion/y_distance", 1000);
     present_Y_ = nh_.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
     present_distance_ = nh_.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
     yaw_pub_ = nh_.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
     sub_ip_ =
-        nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000, &TaskBuoyInnerClass::buoyNavigation, this);
-    yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskBuoyInnerClass::yawCB, this);
-    buoy_server_.start();
+        nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/gate", 1000, &TaskGateInnerClass::gateNavigation, this);
+    yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskGateInnerClass::yawCB, this);
+    gate_server_.start();
   }
 
-  ~TaskBuoyInnerClass(void)
+  ~TaskGateInnerClass(void)
   {
   }
 
@@ -84,17 +84,14 @@ public:
     yaw_pub_.publish(imu_data);
   }
 
-  void buoyNavigation(std_msgs::Float64MultiArray array)
+  void gateNavigation(std_msgs::Float64MultiArray array)
   {
     std_msgs::Float64 data1;
     std_msgs::Float64 data2;
-    std_msgs::Float64 data3;
-    data1.data = array.data[1];
-    data2.data = array.data[2];
-    data3.data = array.data[3];
+    data1.data = array.data[0];
+    data2.data = array.data[1];
     present_X_.publish(data1);
     present_Y_.publish(data2);
-    present_distance_.publish(data3);
   }
 
   void preemptCB(void)
@@ -135,13 +132,13 @@ public:
     }
   }
 
-  void analysisCB(const task_commons::buoyGoalConstPtr goal)
+  void analysisCB(const task_commons::gateGoalConstPtr goal)
   {
     ROS_INFO("Inside analysisCB");
     heightCenter = false;
     sideCenter = false;
     ros::Rate looprate(12);
-    if (!buoy_server_.isActive())
+    if (!gate_server_.isActive())
       return;
 
     ROS_INFO("Waiting for Forward server to start.");
@@ -150,12 +147,12 @@ public:
     UpwardClient_.waitForServer();
     TurnClient_.waitForServer();
 
-    TaskBuoyInnerClass::startIP();
+    TaskGateInnerClass::startIP();
 
     sidewardgoal.Goal = 0;
     sidewardgoal.loop = 10;
     SidewardClient_.sendGoal(sidewardgoal);
-    boost::thread spin_thread_sideward(&TaskBuoyInnerClass::spinThreadSideward, this);
+    boost::thread spin_thread_sideward(&TaskGateInnerClass::spinThreadSideward, this);
 
     // Stabilization of yaw
     turngoal.AngleToTurn = 0;
@@ -165,15 +162,15 @@ public:
     upwardgoal.Goal = 0;
     upwardgoal.loop = 10;
     UpwardClient_.sendGoal(upwardgoal);
-    boost::thread spin_thread_upward(&TaskBuoyInnerClass::spinThreadUpward, this);
+    boost::thread spin_thread_upward(&TaskGateInnerClass::spinThreadUpward, this);
 
     while (goal->order)
     {
-      if (buoy_server_.isPreemptRequested() || !ros::ok())
+      if (gate_server_.isPreemptRequested() || !ros::ok())
       {
         ROS_INFO("%s: Preempted", action_name_.c_str());
         // set the action state to preempted
-        buoy_server_.setPreempted();
+        gate_server_.setPreempted();
         success = false;
         break;
       }
@@ -184,7 +181,7 @@ public:
       }
       // publish the feedback
       feedback_.nosignificance = false;
-      buoy_server_.publishFeedback(feedback_);
+      gate_server_.publishFeedback(feedback_);
       ROS_INFO("timeSpent");
       ros::spinOnce();
     }
@@ -199,7 +196,7 @@ public:
       result_.MotionCompleted = success;
       ROS_INFO("%s: Succeeded", action_name_.c_str());
       // set the action state to succeeded
-      buoy_server_.setSucceeded(result_);
+      gate_server_.setSucceeded(result_);
     }
   }
 
@@ -220,9 +217,9 @@ public:
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "buoy_server");
+  ros::init(argc, argv, "gate_server");
   ROS_INFO("Waiting for Goal");
-  TaskBuoyInnerClass taskBuoyObject(ros::this_node::getName(), "forward", "sideward", "upward", "turningXY");
+  TaskGateInnerClass taskGateObject(ros::this_node::getName(), "forward", "sideward", "upward", "turningXY");
   ros::spin();
   return 0;
 }

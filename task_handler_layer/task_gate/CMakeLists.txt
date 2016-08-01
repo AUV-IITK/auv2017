@@ -138,12 +138,12 @@ include_directories(include
 )
 
 add_executable(gate_detection src/gate_detection.cpp)
-# add_executable(gate_server src/gate_server.cpp)
-# add_executable(gate_client src/gate_client.cpp)
+add_executable(gate_server src/gate_server.cpp)
+add_executable(gate_client src/gate_client.cpp)
 target_link_libraries(gate_detection ${OpenCV_LIBS} )
 target_link_libraries(gate_detection ${catkin_LIBRARIES})
-# target_link_libraries(gate_server ${catkin_LIBRARIES})
-# target_link_libraries(gate_client ${catkin_LIBRARIES})
+target_link_libraries(gate_server ${catkin_LIBRARIES})
+target_link_libraries(gate_client ${catkin_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(task_gate
