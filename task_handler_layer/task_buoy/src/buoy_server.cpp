@@ -150,7 +150,6 @@ public:
     UpwardClient_.waitForServer();
     TurnClient_.waitForServer();
 
-    boost::thread vision_thread(&TaskBuoyInnerClass::startIP, this);
     TaskBuoyInnerClass::startIP();
 
     sidewardgoal.Goal = 0;

@@ -88,13 +88,10 @@ public:
   {
     std_msgs::Float64 data1;
     std_msgs::Float64 data2;
-    std_msgs::Float64 data3;
-    data1.data = array.data[1];
-    data2.data = array.data[2];
-    data3.data = array.data[3];
+    data1.data = array.data[0];
+    data2.data = array.data[1];
     present_X_.publish(data1);
     present_Y_.publish(data2);
-    present_distance_.publish(data3);
   }
 
   void preemptCB(void)
@@ -150,7 +147,6 @@ public:
     UpwardClient_.waitForServer();
     TurnClient_.waitForServer();
 
-    boost::thread vision_thread(&TaskGateInnerClass::startIP, this);
     TaskGateInnerClass::startIP();
 
     sidewardgoal.Goal = 0;
