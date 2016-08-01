@@ -151,7 +151,7 @@ public:
     TurnClient_.waitForServer();
 
     boost::thread vision_thread(&TaskGateInnerClass::startIP, this);
-    TaskgateInnerClass::startIP();
+    TaskGateInnerClass::startIP();
 
     sidewardgoal.Goal = 0;
     sidewardgoal.loop = 10;
