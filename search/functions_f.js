@@ -1,6 +1,7 @@
 var searchData=
 [
   ['taskbuoyinnerclass',['TaskBuoyInnerClass',['../classTaskBuoyInnerClass.html#a853d40aeb34758e6fb968ed7cd7003ae',1,'TaskBuoyInnerClass']]],
+  ['taskgateinnerclass',['TaskGateInnerClass',['../classTaskGateInnerClass.html#a731ee8134d9479c6d47c836571969a36',1,'TaskGateInnerClass']]],
   ['tasklinedetectioninnerclass',['TaskLineDetectionInnerClass',['../classTaskLineDetectionInnerClass.html#af6436e1d432b7c57c4d99a641c7ce95d',1,'TaskLineDetectionInnerClass']]],
   ['tasklinefollowinginnerclass',['TaskLineFollowingInnerClass',['../classTaskLineFollowingInnerClass.html#a7df5427ddb6caa71c8ff3bd1f21bfcea',1,'TaskLineFollowingInnerClass']]],
   ['thrustereast',['thrusterEast',['../arduino__node_8cpp.html#a42684f18e9bce80a0243bd94d324219c',1,'thrusterEast(int pwm, int isForward):&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a42684f18e9bce80a0243bd94d324219c',1,'thrusterEast(int pwm, int isForward):&#160;testing_arduino_node.cpp']]],
