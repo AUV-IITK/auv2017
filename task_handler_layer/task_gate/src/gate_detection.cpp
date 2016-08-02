@@ -203,8 +203,13 @@ int main(int argc, char* argv[])
       drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
 
       cv::Mat frame_mat = frame;
+      cv::Point2f screen_center;
+      screen_center.x = 320;  // size of my screen
+      screen_center.y = 240;
+
       circle(frame_mat, center, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
       rectangle(frame_mat, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);
+      circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
 
       array.data.push_back((320 - center.x));
       array.data.push_back(-(240 - center.y));
