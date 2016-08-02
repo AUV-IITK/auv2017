@@ -92,7 +92,7 @@ public:
       output = (p * error) + (i * integral) + (d * derivative);
       upwardOutputPWMMapping(output);
 
-      if (pwm.data < 2 && pwm.data > -2)
+      if (pwm.data <= 2 && pwm.data >= -2)
       {
         reached = true;
         pwm.data = 0;
