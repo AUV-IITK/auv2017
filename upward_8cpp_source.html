@@ -183,7 +183,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <a class="code" href="upward_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a> = (<a class="code" href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">p</a> * <a class="code" href="upward_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a>) + (<a class="code" href="classinnerActionClass.html#a46a1d6d7e70b93785b564e9d029d25a2">i</a> * integral) + (<a class="code" href="classinnerActionClass.html#a3f3483cf8443e2a2247e6de745fc13d6">d</a> * derivative);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <a class="code" href="classinnerActionClass.html#ae5d4f44236fb4add0928f565d741675a">upwardOutputPWMMapping</a>(<a class="code" href="upward_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a>);</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="upward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data &lt; 2 &amp;&amp; <a class="code" href="upward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data &gt; -2)</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="upward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data &lt;= 2 &amp;&amp; <a class="code" href="upward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data &gt;= -2)</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      {</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        reached = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <a class="code" href="upward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data = 0;</div>
@@ -333,7 +333,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 1 2016 11:35:11 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 2 2016 18:51:26 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
