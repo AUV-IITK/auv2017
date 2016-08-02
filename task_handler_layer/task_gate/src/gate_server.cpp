@@ -177,6 +177,9 @@ public:
       looprate.sleep();
       if (heightCenter && sideCenter)
       {
+        std_msgs::Float64 init_data;
+        init_data.data = 50;
+        present_distance_.publish(init_data);
         break;
       }
       // publish the feedback

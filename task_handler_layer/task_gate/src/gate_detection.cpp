@@ -12,11 +12,10 @@
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
-#include "std_msgs/Float32MultiArray.h"
+#include "std_msgs/Float64MultiArray.h"
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
 #include <string>
-#include "std_msgs/Float64MultiArray.h"
 
 bool IP = true;
 bool flag = false;
@@ -68,7 +67,7 @@ int main(int argc, char* argv[])
   ros::init(argc, argv, "gate_detection");
   ros::NodeHandle n;
 
-  ros::Publisher pub = n.advertise<std_msgs::Float32MultiArray>("/varun/ip/gate", 1000);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/gate", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("gate_detection_switch", 1000, &gateListener);
   ros::Rate loop_rate(10);
 
@@ -103,7 +102,7 @@ int main(int argc, char* argv[])
 
   while (ros::ok())
   {
-    std_msgs::Float32MultiArray array;
+    std_msgs::Float64MultiArray array;
     loop_rate.sleep();
 
     // Get one frame
@@ -204,8 +203,13 @@ int main(int argc, char* argv[])
       drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
 
       cv::Mat frame_mat = frame;
+      cv::Point2f screen_center;
+      screen_center.x = 320;  // size of my screen
+      screen_center.y = 240;
+
       circle(frame_mat, center, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
       rectangle(frame_mat, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);
+      circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
 
       array.data.push_back((320 - center.x));
       array.data.push_back(-(240 - center.y));
