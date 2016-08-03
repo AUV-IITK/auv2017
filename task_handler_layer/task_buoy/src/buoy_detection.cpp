@@ -5,6 +5,8 @@
 #include "std_msgs/String.h"
 #include "std_msgs/Int8.h"
 #include <fstream>
+#include <dynamic_reconfigure/server.h>
+#include <task_buoy/buoyConfig.h>
 #include <vector>
 #include <std_msgs/Bool.h>
 #include <opencv2/core/core.hpp>
@@ -22,6 +24,17 @@ bool IP = true;
 bool flag = false;
 bool video = false;
 int t1min = 22, t1max = 48, t2min = 68, t2max = 189, t3min = 135, t3max = 200;  // Default Params
+
+void callback(task_buoy::buoyConfig &config, uint32_t level)
+{
+  t1min = config.t1min_param;
+  t1max = config.t1max_param;
+  t2min = config.t2min_param;
+  t2max = config.t2max_param;
+  t3min = config.t3min_param;
+  t3max = config.t3max_param;
+  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
+}
 
 cv::Mat frame;
 cv::Mat newframe;
@@ -83,18 +96,16 @@ int main(int argc, char *argv[])
   cvNamedWindow("circle", CV_WINDOW_NORMAL);
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
 
+  dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
+  dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
+  f = boost::bind(&callback, _1, _2);
+  server.setCallback(f);
+
   if (flag)
   {
     cvNamedWindow("F1", CV_WINDOW_NORMAL);
     cvNamedWindow("F2", CV_WINDOW_NORMAL);
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
-
-    cvCreateTrackbar("t1min", "F1", &t1min, 260, NULL);
-    cvCreateTrackbar("t1max", "F1", &t1max, 260, NULL);
-    cvCreateTrackbar("t2min", "F2", &t2min, 260, NULL);
-    cvCreateTrackbar("t2max", "F2", &t2max, 260, NULL);
-    cvCreateTrackbar("t3min", "F3", &t3min, 260, NULL);
-    cvCreateTrackbar("t3max", "F3", &t3max, 260, NULL);
   }
 
   // capture size -

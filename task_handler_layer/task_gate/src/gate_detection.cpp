@@ -9,6 +9,8 @@
 #include <std_msgs/Bool.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <dynamic_reconfigure/server.h>
+#include <task_gate/gateConfig.h>
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
@@ -25,6 +27,18 @@ int t1min = 0, t1max = 130, t2min = 0, t2max = 100, t3min = 150, t3max = 260;  /
 cv::Mat frame;
 cv::Mat newframe;
 int count = 0, count_avg = 0;
+
+void callback(task_gate::gateConfig &config, uint32_t level)
+{
+  t1min = config.t1min_param;
+  t1max = config.t1max_param;
+  t2min = config.t2min_param;
+  t2max = config.t2max_param;
+  t3min = config.t3min_param;
+  t3max = config.t3max_param;
+  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
+}
+
 
 void gateListener(std_msgs::Bool msg)
 {
@@ -74,6 +88,11 @@ int main(int argc, char* argv[])
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
+  dynamic_reconfigure::Server<task_gate::gateConfig> server;
+  dynamic_reconfigure::Server<task_gate::gateConfig>::CallbackType f;
+  f = boost::bind(&callback, _1, _2);
+  server.setCallback(f);
+
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
   cvNamedWindow("RealPic", CV_WINDOW_NORMAL);
@@ -83,13 +102,6 @@ int main(int argc, char* argv[])
     cvNamedWindow("F1", CV_WINDOW_NORMAL);
     cvNamedWindow("F2", CV_WINDOW_NORMAL);
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
-
-    cvCreateTrackbar("t1min", "F1", &t1min, 260, NULL);
-    cvCreateTrackbar("t1max", "F1", &t1max, 260, NULL);
-    cvCreateTrackbar("t2min", "F2", &t2min, 260, NULL);
-    cvCreateTrackbar("t2max", "F2", &t2max, 260, NULL);
-    cvCreateTrackbar("t3min", "F3", &t3min, 260, NULL);
-    cvCreateTrackbar("t3max", "F3", &t3max, 260, NULL);
   }
 
 
