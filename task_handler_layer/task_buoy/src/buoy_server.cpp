@@ -33,6 +33,9 @@ private:
   ros::NodeHandle nh_;
   Server buoy_server_;
   std::string action_name_;
+  std_msgs::Float64 data_X_;
+  std_msgs::Float64 data_Y_;
+  std_msgs::Float64 data_distance_;
   task_commons::buoyFeedback feedback_;
   task_commons::buoyResult result_;
   ros::Subscriber sub_ip_;
@@ -86,15 +89,12 @@ public:
 
   void buoyNavigation(std_msgs::Float64MultiArray array)
   {
-    std_msgs::Float64 data1;
-    std_msgs::Float64 data2;
-    std_msgs::Float64 data3;
-    data1.data = array.data[1];
-    data2.data = array.data[2];
-    data3.data = array.data[3];
-    present_X_.publish(data1);
-    present_Y_.publish(data2);
-    present_distance_.publish(data3);
+    data_X_.data = array.data[1];
+    data_Y_.data = array.data[2];
+    data_distance_.data = array.data[3];
+    present_X_.publish(data_X_);
+    present_Y_.publish(data_Y_);
+    present_distance_.publish(data_distance_);
   }
 
   void preemptCB(void)
@@ -185,7 +185,7 @@ public:
       // publish the feedback
       feedback_.nosignificance = false;
       buoy_server_.publishFeedback(feedback_);
-      ROS_INFO("timeSpent");
+      ROS_INFO("x = %f, y = %f, front distance = %f", data_X_.data, data_Y_.data, data_distance_.data);
       ros::spinOnce();
     }
 
