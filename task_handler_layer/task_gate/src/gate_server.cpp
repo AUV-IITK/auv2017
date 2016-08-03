@@ -33,6 +33,8 @@ private:
   ros::NodeHandle nh_;
   Server gate_server_;
   std::string action_name_;
+  std_msgs::Float64 data_X_;
+  std_msgs::Float64 data_Y_;
   task_commons::gateFeedback feedback_;
   task_commons::gateResult result_;
   ros::Subscriber sub_ip_;
@@ -86,12 +88,10 @@ public:
 
   void gateNavigation(std_msgs::Float64MultiArray array)
   {
-    std_msgs::Float64 data1;
-    std_msgs::Float64 data2;
-    data1.data = array.data[0];
-    data2.data = array.data[1];
-    present_X_.publish(data1);
-    present_Y_.publish(data2);
+    data_X_.data = array.data[0];
+    data_Y_.data = array.data[1];
+    present_X_.publish(data_X_);
+    present_Y_.publish(data_Y_);
   }
 
   void preemptCB(void)
@@ -185,7 +185,7 @@ public:
       // publish the feedback
       feedback_.nosignificance = false;
       gate_server_.publishFeedback(feedback_);
-      ROS_INFO("timeSpent");
+      ROS_INFO("x = %f, y = %f", data_X_.data, data_Y_.data);
       ros::spinOnce();
     }
 
