@@ -218,7 +218,7 @@ public:
       if (IP_stopped)
       {
         success = true;
-        ROS_INFO("Waiting for hitting the buoy...")
+        ROS_INFO("Waiting for hitting the buoy...");
         sleep(2);
         break;
       }
