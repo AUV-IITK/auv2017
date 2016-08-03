@@ -16,7 +16,9 @@ find_package(catkin REQUIRED COMPONENTS
   task_commons
   motion_commons
   cv_bridge
+  sensor_msgs
   image_transport
+  dynamic_reconfigure
 )
 
 ## Check for lint errors
@@ -98,10 +100,9 @@ find_package( OpenCV REQUIRED )
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
+ generate_dynamic_reconfigure_options(
+   cfg/gate.cfg   
+ )
 
 ###################################
 ## catkin specific configuration ##
