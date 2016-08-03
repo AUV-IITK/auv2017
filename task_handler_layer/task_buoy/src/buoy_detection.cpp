@@ -96,27 +96,16 @@ int main(int argc, char *argv[])
   cvNamedWindow("circle", CV_WINDOW_NORMAL);
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
 
-  //*************************************************************************//
-  // setting callback for various parameters DYNAMIC RECONFIGURE
   dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
   dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
-  //*************************************************************************//
-
 
   if (flag)
   {
     cvNamedWindow("F1", CV_WINDOW_NORMAL);
     cvNamedWindow("F2", CV_WINDOW_NORMAL);
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
-
-    // cvCreateTrackbar("t1min", "F1", &t1min, 260, NULL);
-    // cvCreateTrackbar("t1max", "F1", &t1max, 260, NULL);
-    // cvCreateTrackbar("t2min", "F2", &t2min, 260, NULL);
-    // cvCreateTrackbar("t2max", "F2", &t2max, 260, NULL);
-    // cvCreateTrackbar("t3min", "F3", &t3min, 260, NULL);
-    // cvCreateTrackbar("t3max", "F3", &t3max, 260, NULL);
   }
 
   // capture size -
