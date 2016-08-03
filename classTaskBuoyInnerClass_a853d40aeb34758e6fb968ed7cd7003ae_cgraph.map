@@ -1,5 +1,6 @@
 <map id="TaskBuoyInnerClass::TaskBuoyInnerClass" name="TaskBuoyInnerClass::TaskBuoyInnerClass">
 <area shape="rect" id="node2" href="$classTaskBuoyInnerClass.html#af6400b5be5c38d768124d6b88f554cb5" title="TaskBuoyInnerClass\l::preemptCB" alt="" coords="205,5,349,46"/>
 <area shape="rect" id="node3" href="$classTaskBuoyInnerClass.html#ae7da72a871d348a8900625846d32cef4" title="TaskBuoyInnerClass\l::buoyNavigation" alt="" coords="205,70,349,111"/>
-<area shape="rect" id="node4" href="$classTaskBuoyInnerClass.html#a2b41f5c6e6e39d479e30e26538694abd" title="TaskBuoyInnerClass\l::yawCB" alt="" coords="205,135,349,177"/>
+<area shape="rect" id="node5" href="$classTaskBuoyInnerClass.html#a2b41f5c6e6e39d479e30e26538694abd" title="TaskBuoyInnerClass\l::yawCB" alt="" coords="205,135,349,177"/>
+<area shape="rect" id="node4" href="$classTaskBuoyInnerClass.html#a1968f7f3003139e44ce35ef0e4264f73" title="TaskBuoyInnerClass\l::stopIP" alt="" coords="397,70,541,111"/>
 </map>
