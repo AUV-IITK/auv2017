@@ -53,7 +53,7 @@ private:
   motion_commons::SidewardGoal sidewardgoal;
   motion_commons::UpwardGoal upwardgoal;
   motion_commons::TurnGoal turngoal;
-  bool success, heightCenter, sideCenter;
+  bool success, heightCenter, sideCenter, IP_stopped;
 
 public:
   TaskBuoyInnerClass(std::string name, std::string node, std::string node1, std::string node2, std::string node3)
@@ -94,7 +94,15 @@ public:
     data_distance_.data = array.data[3];
     present_X_.publish(data_X_);
     present_Y_.publish(data_Y_);
-    present_distance_.publish(data_distance_);
+
+    if (data_distance_.data > 0)
+      present_distance_.publish(data_distance_);
+
+    else
+    {
+      stopIP();
+      ROS_INFO("Bot is in front of buoy, IP stopped.");
+    }
   }
 
   void preemptCB(void)
@@ -140,6 +148,7 @@ public:
     ROS_INFO("Inside analysisCB");
     heightCenter = false;
     sideCenter = false;
+    success = false;
     ros::Rate looprate(12);
     if (!buoy_server_.isActive())
       return;
@@ -189,10 +198,36 @@ public:
       ros::spinOnce();
     }
 
-    forwardgoal.Goal = 10;
+    ROS_INFO("Bot is in center of buoy");
+    forwardgoal.Goal = 0;
     forwardgoal.loop = 10;
-    ForwardClient_.sendGoal(forwardgoal);  // stop motion here
-    stopIP();
+    ForwardClient_.sendGoal(forwardgoal);
+
+    while (goal->order)
+    {
+      if (buoy_server_.isPreemptRequested() || !ros::ok())
+      {
+        ROS_INFO("%s: Preempted", action_name_.c_str());
+        // set the action state to preempted
+        buoy_server_.setPreempted();
+        success = false;
+        break;
+      }
+      looprate.sleep();
+
+      if (IP_stopped)
+      {
+        success = true;
+        ROS_INFO("Waiting for hitting the buoy...")
+        sleep(2);
+        break;
+      }
+
+      feedback_.nosignificance = false;
+      buoy_server_.publishFeedback(feedback_);
+      ROS_INFO("x = %f, y = %f, front distance = %f", data_X_.data, data_Y_.data, data_distance_.data);
+      ros::spinOnce();
+    }
 
     if (success)
     {
