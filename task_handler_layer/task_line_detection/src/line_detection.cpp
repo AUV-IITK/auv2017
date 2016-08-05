@@ -78,8 +78,8 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "line_detection");
   ros::NodeHandle n;
-  ros::Publisher robot_pub = n.advertise<std_msgs::Bool>("linedetected", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("orangeoff", 1000, &offCallback);
+  ros::Publisher robot_pub = n.advertise<std_msgs::Bool>("lineDetection", 1000);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_detection_switch", 1000, &offCallback);
   ros::Rate loop_rate(12);  // this rate should be same as the rate of camera
                             // input. and in the case of other sensors , this
                             // rate should be same as there rate of data

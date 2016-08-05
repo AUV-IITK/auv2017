@@ -37,9 +37,9 @@ public:
   {
     ROS_INFO("inside constructor");
     line_detection_server_.registerPreemptCallback(boost::bind(&TaskLineDetectionInnerClass::preemptCB, this));
-    off_pub_ = nh_.advertise<std_msgs::Bool>("orangeoff", 1000);
+    off_pub_ = nh_.advertise<std_msgs::Bool>("line_detection_switch", 1000);
     sub_ =
-        nh_.subscribe<std_msgs::Bool>("linedetected", 1000, &TaskLineDetectionInnerClass::lineDetectedListener, this);
+        nh_.subscribe<std_msgs::Bool>("lineDetection", 1000, &TaskLineDetectionInnerClass::lineDetectedListener, this);
     line_detection_server_.start();
   }
 
