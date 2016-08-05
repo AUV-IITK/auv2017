@@ -98,7 +98,7 @@ public:
     if (data_distance_.data > 0)
       present_distance_.publish(data_distance_);
 
-    else
+    else if (data_distance_.data < 0)
     {
       stopIP();
       ROS_INFO("Bot is in front of buoy, IP stopped.");

@@ -23,7 +23,7 @@
 bool IP = true;
 bool flag = false;
 bool video = false;
-int t1min = 22, t1max = 48, t2min = 68, t2max = 189, t3min = 135, t3max = 200;  // Default Params
+int t1min = 178, t1max = 179, t2min = 234, t2max = 256, t3min = 228, t3max = 255;  // Default Params
 
 void callback(task_buoy::buoyConfig &config, uint32_t level)
 {
@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
     if ((cvWaitKey(10) & 255) == 27)
       break;
 
-    if ((!IP) && (r[0] < 420))
+    if ((!IP))
     {
       // find contours
       std::vector<std::vector<cv::Point> > contours;
@@ -174,8 +174,6 @@ int main(int argc, char *argv[])
       double largest_area = 0, largest_contour_index = 0;
       if (contours.empty())
       {
-        array.data.push_back(0);
-        array.data.push_back(0);
         array.data.push_back(0);
         array.data.push_back(0);
         array.data.push_back(0);
@@ -208,47 +206,64 @@ int main(int argc, char *argv[])
       std::vector<cv::Point2f> center_ideal(1);
       cv::minEnclosingCircle(contours[largest_contour_index], center[0], radius[0]);
 
+      cv::Point2f pt;
+      pt.x = 320;  // size of my screen
+      pt.y = 240;
+
       float r_avg = (r[0] + r[1] + r[2] + r[3] + r[4])/5;
-      if ((radius[0] < (r_avg + 10)) || (count == 5))
+      if ((radius[0] < (r_avg + 10)) && (count_avg >= 5))
       {
          r[4] = r[3];
          r[3] = r[2];
          r[2] = r[1];
          r[1] = r[0];
          r[0] = radius[0];
-         count = 0;
+         count_avg++;
          center_ideal[0] = center[0];
       }
       else
       {
-         count++;
+        r[count_avg] = radius[0];
+         count_avg++;
       }
 
       cv::Mat circles = frame;
-      cv::Point2f pt;
-      pt.x = 320;  // size of my screen
-      pt.y = 240;
-      float distance;
-      float *p;                                     // array to publish
-      distance = pow(radius[0] / 7526.5, -.92678);  // function found using experiment
-
       circle(circles, center_ideal[0], r[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
       circle(circles, center_ideal[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
       circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
-      array.data.push_back(r[0]);                                        // publish radius
-      array.data.push_back((320 - center_ideal[0].x));
-      array.data.push_back(-(240 - center_ideal[0].y));
-      array.data.push_back(distance);
-      pub.publish(array);
 
+      if (r[0] > 220)
+      {
+        array.data.push_back(-1);
+        array.data.push_back(-1);
+        array.data.push_back(-1);
+        array.data.push_back(-1);
+      }
+      else
+      {
+        float distance;
+        distance = pow(radius[0] / 7526.5, -.92678);  // function found using experiment
+        array.data.push_back(r[0]);                                        // publish radius
+        array.data.push_back((320 - center_ideal[0].x));
+        array.data.push_back(-(240 - center_ideal[0].y));
+        array.data.push_back(distance);
+      }
       cv::imshow("circle", circles);            // Original stream with detected ball overlay
-      cv::imshow("Contours", thresholded_Mat);  // The stream after color filterin
+      cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
+      pub.publish(array);
 
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
         break;
+    }
+    else if (r[0] > 220)
+    {
+       array.data.push_back(-1);
+       array.data.push_back(-1);
+       array.data.push_back(-1);
+       array.data.push_back(-1);
     }
     else
     {
