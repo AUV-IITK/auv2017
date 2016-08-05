@@ -19,5 +19,5 @@ var searchData=
   ['ip_5fstopped',['IP_stopped',['../classTaskBuoyInnerClass.html#a547ab9e2e716cc1191cd97499d13c658',1,'TaskBuoyInnerClass']]],
   ['ip_5fswitch',['ip_switch',['../forwardTest_8cpp.html#ad12775a3652040f4cdf2b7095b259839',1,'ip_switch():&#160;forwardTest.cpp'],['../sidewardTest_8cpp.html#ad12775a3652040f4cdf2b7095b259839',1,'ip_switch():&#160;sidewardTest.cpp']]],
   ['ismovingforward',['isMovingForward',['../arduino__node_8cpp.html#a1e64e74146308a35a60f7a2abeadab21',1,'isMovingForward():&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a1e64e74146308a35a60f7a2abeadab21',1,'isMovingForward():&#160;testing_arduino_node.cpp']]],
-  ['isorange',['isOrange',['../classTaskLineDetectionInnerClass.html#aba6b5d22ef2e78868efe432e39d9cae4',1,'TaskLineDetectionInnerClass']]]
+  ['isorange',['isOrange',['../classTaskGateInnerClass.html#a5b6a199dc590a4b9a1de9bb1816d1a4e',1,'TaskGateInnerClass::isOrange()'],['../classTaskLineDetectionInnerClass.html#aba6b5d22ef2e78868efe432e39d9cae4',1,'TaskLineDetectionInnerClass::isOrange()']]]
 ];

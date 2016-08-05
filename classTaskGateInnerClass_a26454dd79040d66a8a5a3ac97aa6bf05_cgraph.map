@@ -1,6 +1,8 @@
 <map id="TaskGateInnerClass::analysisCB" name="TaskGateInnerClass::analysisCB">
-<area shape="rect" id="node2" href="$classTaskGateInnerClass.html#a945e8be85173747cf49f52fb723e9fb1" title="TaskGateInnerClass\l::startIP" alt="" coords="201,5,343,46"/>
+<area shape="rect" id="node2" href="$classTaskGateInnerClass.html#ac0b6d023536c97a1c81262196974e010" title="TaskGateInnerClass\l::startGateDetection" alt="" coords="201,5,343,46"/>
 <area shape="rect" id="node3" href="$classTaskGateInnerClass.html#a916bc3ca663f30d8796379f1710366f5" title="TaskGateInnerClass\l::spinThreadSideward" alt="" coords="198,70,346,111"/>
 <area shape="rect" id="node4" href="$classTaskGateInnerClass.html#ac4fe81ff9b51c3236b6ead6dc9d6a65a" title="TaskGateInnerClass\l::spinThreadUpward" alt="" coords="201,135,343,177"/>
-<area shape="rect" id="node5" href="$classTaskGateInnerClass.html#a90ed74e2c6df9b0ecb0957aeb5eab075" title="TaskGateInnerClass\l::stopIP" alt="" coords="201,201,343,242"/>
+<area shape="rect" id="node5" href="$classTaskGateInnerClass.html#a7b67b2918451be8034e12a1c5c0714fd" title="TaskGateInnerClass\l::stopGateDetection" alt="" coords="201,201,343,242"/>
+<area shape="rect" id="node6" href="$classTaskGateInnerClass.html#a41821912062449c19940245f8ff3b83f" title="TaskGateInnerClass\l::startLineDetection" alt="" coords="201,266,343,307"/>
+<area shape="rect" id="node7" href="$classTaskGateInnerClass.html#ae599437d6096c192dc8254065b4dbd77" title="TaskGateInnerClass\l::stopLineDetection" alt="" coords="201,331,343,373"/>
 </map>
