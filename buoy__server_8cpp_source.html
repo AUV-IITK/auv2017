@@ -189,7 +189,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classTaskBuoyInnerClass.html#a692a7d4a61862c947eac2c04872a4e88">data_distance_</a>.data &gt; 0)</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#a1570a7dceb1538c51ebc8fda202af90d">present_distance_</a>.publish(<a class="code" href="classTaskBuoyInnerClass.html#a692a7d4a61862c947eac2c04872a4e88">data_distance_</a>);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="classTaskBuoyInnerClass.html#a692a7d4a61862c947eac2c04872a4e88">data_distance_</a>.data &lt; 0)</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    {</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#a1968f7f3003139e44ce35ef0e4264f73">stopIP</a>();</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Bot is in front of buoy, IP stopped.&quot;</span>);</div>
@@ -401,7 +401,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 3 2016 19:56:47 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 5 2016 15:31:35 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
