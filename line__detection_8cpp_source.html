@@ -169,8 +169,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;{</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;line_detection&quot;</span>);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  ros::NodeHandle n;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  ros::Publisher robot_pub = n.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;linedetected&quot;</span>, 1000);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;orangeoff&quot;</span>, 1000, &amp;<a class="code" href="line__detection_8cpp.html#a254fabd0679307a50a2ae8ddf60fc1c1">offCallback</a>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  ros::Publisher robot_pub = n.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;lineDetection&quot;</span>, 1000);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_detection_switch&quot;</span>, 1000, &amp;<a class="code" href="line__detection_8cpp.html#a254fabd0679307a50a2ae8ddf60fc1c1">offCallback</a>);</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  ros::Rate loop_rate(12);  <span class="comment">// this rate should be same as the rate of camera</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                            <span class="comment">// input. and in the case of other sensors , this</span></div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                            <span class="comment">// rate should be same as there rate of data</span></div>
@@ -221,7 +221,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 5 2016 15:31:36 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 5 2016 20:44:17 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

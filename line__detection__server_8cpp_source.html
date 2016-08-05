@@ -128,9 +128,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  {</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;inside constructor&quot;</span>);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classTaskLineDetectionInnerClass.html#ac54a4616dcb9ae50dce9eddcadbecfae">line_detection_server_</a>.registerPreemptCallback(boost::bind(&amp;<a class="code" href="classTaskLineDetectionInnerClass.html#af1e53a6ac8bc54e62eea61ee5e8f5948">TaskLineDetectionInnerClass::preemptCB</a>, <span class="keyword">this</span>));</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classTaskLineDetectionInnerClass.html#aff9a4225cdeeb5e5a81d4d6472576de1">off_pub_</a> = <a class="code" href="classTaskLineDetectionInnerClass.html#a5dc9c3d55b5fe97de4654b7c11e4d566">nh_</a>.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;orangeoff&quot;</span>, 1000);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classTaskLineDetectionInnerClass.html#aff9a4225cdeeb5e5a81d4d6472576de1">off_pub_</a> = <a class="code" href="classTaskLineDetectionInnerClass.html#a5dc9c3d55b5fe97de4654b7c11e4d566">nh_</a>.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_detection_switch&quot;</span>, 1000);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="classTaskLineDetectionInnerClass.html#acf95d43c70e8c94c0ebc50b098e1d0a1">sub_</a> =</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classTaskLineDetectionInnerClass.html#a5dc9c3d55b5fe97de4654b7c11e4d566">nh_</a>.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;linedetected&quot;</span>, 1000, &amp;<a class="code" href="classTaskLineDetectionInnerClass.html#a5367258e7e4fcda6ce0a928282cac562">TaskLineDetectionInnerClass::lineDetectedListener</a>, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classTaskLineDetectionInnerClass.html#a5dc9c3d55b5fe97de4654b7c11e4d566">nh_</a>.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;lineDetection&quot;</span>, 1000, &amp;<a class="code" href="classTaskLineDetectionInnerClass.html#a5367258e7e4fcda6ce0a928282cac562">TaskLineDetectionInnerClass::lineDetectedListener</a>, <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="classTaskLineDetectionInnerClass.html#ac54a4616dcb9ae50dce9eddcadbecfae">line_detection_server_</a>.start();</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  }</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
@@ -253,7 +253,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 5 2016 15:31:36 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Aug 5 2016 20:44:17 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

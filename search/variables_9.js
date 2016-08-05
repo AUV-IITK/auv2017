@@ -2,6 +2,7 @@ var searchData=
 [
   ['height',['height',['../namespaceremote__gui.html#ab56538ef096108ce65caffcb4fb2fb4d',1,'remote_gui']]],
   ['heightcenter',['heightCenter',['../classTaskBuoyInnerClass.html#a1992f402d4d228344e724e406468b337',1,'TaskBuoyInnerClass::heightCenter()'],['../classTaskGateInnerClass.html#a6fea6e518b8651bd2e577cf8044c43b2',1,'TaskGateInnerClass::heightCenter()']]],
+  ['heightgoal',['heightGoal',['../classTaskBuoyInnerClass.html#a794fc8edd7787d1706bffe1a86aea3a4',1,'TaskBuoyInnerClass']]],
   ['highh',['HighH',['../line__angle_8cpp.html#aa38e9d255a999cd6d195e8e9c33e4879',1,'line_angle.cpp']]],
   ['highs',['HighS',['../line__angle_8cpp.html#a38e4f18320e2e898968ad566b9ab5a62',1,'line_angle.cpp']]],
   ['highv',['HighV',['../line__angle_8cpp.html#ac986a1f679ce7605c225fc9d7040ffa6',1,'line_angle.cpp']]],
