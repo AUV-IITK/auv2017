@@ -37,9 +37,11 @@ private:
   std_msgs::Float64 data_Y_;
   task_commons::gateFeedback feedback_;
   task_commons::gateResult result_;
-  ros::Subscriber sub_ip_;
+  ros::Subscriber sub_gate_;
+  ros::Subscriber sub_line_;
   ros::Subscriber yaw_sub_;
-  ros::Publisher off_pub_;
+  ros::Publisher switch_gate_detection;
+  ros::Publisher switch_line_detection;
   ros::Publisher yaw_pub_;
   ros::Publisher present_distance_;
   ros::Publisher present_X_;
@@ -52,7 +54,7 @@ private:
   motion_commons::SidewardGoal sidewardgoal;
   motion_commons::UpwardGoal upwardgoal;
   motion_commons::TurnGoal turngoal;
-  bool success, heightCenter, sideCenter;
+  bool success_gate, heightCenter, sideCenter, isOrange, success_line;
 
 public:
   TaskGateInnerClass(std::string name, std::string node, std::string node1, std::string node2, std::string node3)
@@ -66,14 +68,17 @@ public:
     ROS_INFO("inside constructor");
     gate_server_.registerPreemptCallback(boost::bind(&TaskGateInnerClass::preemptCB, this));
 
-    off_pub_ = nh_.advertise<std_msgs::Bool>("gate_detection_switch", 1000);
+    switch_gate_detection = nh_.advertise<std_msgs::Bool>("gate_detection_switch", 1000);
+    switch_line_detection = nh_.advertise<std_msgs::Bool>("line_detection_switch", 1000);
     present_X_ = nh_.advertise<std_msgs::Float64>("/varun/motion/y_distance", 1000);
     present_Y_ = nh_.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
     present_distance_ = nh_.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
     yaw_pub_ = nh_.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
-    sub_ip_ =
+    sub_gate_ =
         nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/gate", 1000, &TaskGateInnerClass::gateNavigation, this);
     yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskGateInnerClass::yawCB, this);
+    sub_line_ =
+        nh_.subscribe<std_msgs::Bool>("lineDetection", 1000, &TaskGateInnerClass::lineDetectedListener, this);
     gate_server_.start();
   }
 
@@ -92,6 +97,14 @@ public:
     data_Y_.data = array.data[1];
     present_X_.publish(data_X_);
     present_Y_.publish(data_Y_);
+  }
+
+  void lineDetectedListener(std_msgs::Bool msg)
+  {
+    if (msg.data)
+      isOrange = true;
+    else
+      isOrange = false;
   }
 
   void preemptCB(void)
@@ -137,6 +150,9 @@ public:
     ROS_INFO("Inside analysisCB");
     heightCenter = false;
     sideCenter = false;
+    isOrange = false;
+    success_line = false;
+    success_gate = false;
     ros::Rate looprate(12);
     if (!gate_server_.isActive())
       return;
@@ -147,7 +163,7 @@ public:
     UpwardClient_.waitForServer();
     TurnClient_.waitForServer();
 
-    TaskGateInnerClass::startIP();
+    TaskGateInnerClass::startGateDetection();
 
     sidewardgoal.Goal = 0;
     sidewardgoal.loop = 10;
@@ -171,12 +187,13 @@ public:
         ROS_INFO("%s: Preempted", action_name_.c_str());
         // set the action state to preempted
         gate_server_.setPreempted();
-        success = false;
+        success_gate = false;
         break;
       }
       looprate.sleep();
       if (heightCenter && sideCenter)
       {
+        success_gate = true;
         std_msgs::Float64 init_data;
         init_data.data = 50;
         present_distance_.publish(init_data);
@@ -192,29 +209,68 @@ public:
     forwardgoal.Goal = 10;
     forwardgoal.loop = 10;
     ForwardClient_.sendGoal(forwardgoal);  // stop motion here
-    stopIP();
+    TaskGateInnerClass::stopGateDetection();
 
-    if (success)
+    TaskGateInnerClass::startLineDetection();
+
+    while (goal->order)
     {
-      result_.MotionCompleted = success;
-      ROS_INFO("%s: Succeeded", action_name_.c_str());
-      // set the action state to succeeded
-      gate_server_.setSucceeded(result_);
+      if (gate_server_.isPreemptRequested() || !ros::ok())
+      {
+        ROS_INFO("%s: Preempted", action_name_.c_str());
+        // set the action state to preempted
+        gate_server_.setPreempted();
+        success_gate = false;
+        break;
+      }
+      looprate.sleep();
+      if (isOrange)
+      {
+        success_line = true;
+        break;
+      }
+      // publish the feedback
+      feedback_.nosignificance = false;
+      gate_server_.publishFeedback(feedback_);
+      ROS_INFO("x = %f, y = %f", data_X_.data, data_Y_.data);
+      ros::spinOnce();
     }
+
+    ForwardClient_.cancelGoal();  // stop motion here
+    TaskGateInnerClass::stopLineDetection();
+
+    result_.MotionCompleted = success_gate && success_line;
+    ROS_INFO("%s: Succeeded", action_name_.c_str());
+    // set the action state to succeeded
+    gate_server_.setSucceeded(result_);
   }
 
-  void startIP()
+  void startGateDetection()
   {
     std_msgs::Bool msg;
     msg.data = false;
-    off_pub_.publish(msg);
+    switch_gate_detection.publish(msg);
   }
 
-  void stopIP()
+  void stopGateDetection()
   {
     std_msgs::Bool msg;
     msg.data = true;
-    off_pub_.publish(msg);
+    switch_gate_detection.publish(msg);
+  }
+
+  void startLineDetection()
+  {
+    std_msgs::Bool msg;
+    msg.data = false;
+    switch_line_detection.publish(msg);
+  }
+
+  void stopLineDetection()
+  {
+    std_msgs::Bool msg;
+    msg.data = true;
+    switch_line_detection.publish(msg);
   }
 };
 
