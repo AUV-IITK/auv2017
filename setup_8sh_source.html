@@ -149,14 +149,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;rosrun rosserial_arduino make_libraries.py .</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;# udev rules <a class="code" href="arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> <span class="keywordflow">for</span> imu</div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="setup_8sh.html#afd1321d9fe0cafd134707ef8ccf75c81">   61</a></span>&#160;echo <span class="stringliteral">&#39;SUBSYSTEM==&quot;tty&quot;, ATTRS{idVendor}==&quot;26ac&quot;, ATTRS{serial}==&quot;0&quot;, ATTRS{idProduct}==&quot;0010&quot;, SYMLINK+=&quot;navstik&quot;&#39;</span> &gt; /etc/udev/rules.d/99-usb-serial.rules</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="setup_8sh.html#afd1321d9fe0cafd134707ef8ccf75c81">   61</a></span>&#160;echo <span class="stringliteral">&#39;SUBSYSTEM==&quot;tty&quot;, ATTRS{idVendor}==&quot;26ac&quot;, ATTRS{serial}==&quot;0&quot;, ATTRS{idProduct}==&quot;0010&quot;, SYMLINK+=&quot;navstik&quot;&#39;</span> &gt; /etc/udev/rules.d/99-imu-serial.rules</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor"># suggest to setup environment variables</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span>echo <span class="stringliteral">&quot;Please add these to your ~/.bashrc file&quot;</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;echo <span class="stringliteral">&quot;source /opt/ros/$ROS_DISTRO/setup.sh&quot;</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;echo <span class="stringliteral">&quot;source /usr/share/gazebo-7/setup.sh&quot;</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;echo <span class="stringliteral">&quot;For using gazebosim on your system plz install by running #curl -ssL http://get.gazebosim.org | sh&quot;</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;echo <span class="stringliteral">&quot;and configure these settings #export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH/home/$USER/catkin_ws/src/auv/debug_layer/:/home/$USER/catkin_ws/src/auv/debug_layer/varun_gazebo/models/:&quot;</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor"># udev rules setup for arduino</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span>echo <span class="stringliteral">&#39;ACTION==&quot;add&quot;, ATTRS{idVendor}==&quot;05e3&quot;, ATTRS{idProduct}==&quot;0610&quot;, SYMLINK+=&quot;arduino&quot;&#39;</span> &gt; /etc/udev/rules.d/100-arduino-serial.rules</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"># suggest to setup environment variables</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor"></span>echo <span class="stringliteral">&quot;Please add these to your ~/.bashrc file&quot;</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;echo <span class="stringliteral">&quot;source /opt/ros/$ROS_DISTRO/setup.sh&quot;</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;echo <span class="stringliteral">&quot;source /usr/share/gazebo-7/setup.sh&quot;</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;echo <span class="stringliteral">&quot;For using gazebosim on your system plz install by running #curl -ssL http://get.gazebosim.org | sh&quot;</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;echo <span class="stringliteral">&quot;and configure these settings #export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH/home/$USER/catkin_ws/src/auv/debug_layer/:/home/$USER/catkin_ws/src/auv/debug_layer/varun_gazebo/models/:&quot;</span></div>
 <div class="ttc" id="namespaceremote__gui_html_a4ff197857bc8f7f107bdae979f9a393b"><div class="ttname"><a href="namespaceremote__gui.html#a4ff197857bc8f7f107bdae979f9a393b">remote_gui.up</a></div><div class="ttdeci">tuple up</div><div class="ttdef"><b>Definition:</b> <a href="remote__gui_8py_source.html#l00133">remote_gui.py:133</a></div></div>
 <div class="ttc" id="format__xml_8sh_html_a41d174d95285559246e87526c675fb54"><div class="ttname"><a href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a></div><div class="ttdeci">cd(dirname&quot;$0&quot;)&quot; find ../ -type f -iname &quot;*.xml&quot; -o -iname &quot;*.world&quot; -o -iname &quot;*.config&quot; -o -iname &quot;*.urfg&quot; -o -iname &quot;*.sdf&quot; -o -iname &quot;*.dae&quot; | xargs -I '</div><div class="ttdef"><b>Definition:</b> <a href="format__xml_8sh_source.html#l00003">format_xml.sh:3</a></div></div>
 <div class="ttc" id="setup_8sh_html_a430a38d74e3af7bfb3da15093a4971ff"><div class="ttname"><a href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a></div><div class="ttdeci">ROS_DISTRO</div><div class="ttdef"><b>Definition:</b> <a href="setup_8sh_source.html#l00005">setup.sh:5</a></div></div>
@@ -165,7 +168,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 7 2016 10:19:36 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Aug 13 2016 22:01:50 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
