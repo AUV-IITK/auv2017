@@ -1,16 +1,13 @@
 // Copyright 2016 AUV-IITK
 #include <ros/ros.h>
-#include <task_commons/alignAction.h>
-#include <task_commons/alignActionFeedback.h>
-#include <task_commons/alignActionResult.h>
 
 #include <motion_commons/ForwardAction.h>
 #include <motion_commons/ForwardActionFeedback.h>
 #include <motion_commons/ForwardActionResult.h>
 
-#include <task_commons/orangeAction.h>
-#include <task_commons/orangeActionFeedback.h>
-#include <task_commons/orangeActionResult.h>
+#include <task_commons/lineAction.h>
+#include <task_commons/lineActionFeedback.h>
+#include <task_commons/lineActionResult.h>
 
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
@@ -18,16 +15,13 @@
 using std::cout;
 using std::endl;
 
-typedef actionlib::SimpleActionClient<task_commons::orangeAction> orange;
-typedef actionlib::SimpleActionClient<task_commons::alignAction> align;
+typedef actionlib::SimpleActionClient<task_commons::lineAction> line;
 typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> forward;
 
-task_commons::orangeGoal orangegoal;
-task_commons::alignGoal aligngoal;
+task_commons::lineGoal linegoal;
 motion_commons::ForwardGoal forwardgoal;
 
-bool orangeSuccess = false;
-bool alignSuccess = false;
+bool lineSuccess = false;
 bool forwardSuccess = false;
 
 void spinThread()
@@ -35,13 +29,9 @@ void spinThread()
   ros::spin();
 }
 
-void forwardCb(task_commons::orangeActionFeedback msg)
+void forwardCb(task_commons::lineActionFeedback msg)
 {
-  ROS_INFO("feedback recieved %d", msg.feedback.nosignificance);
-}
-void alignCb(task_commons::alignActionFeedback msg)
-{
-  ROS_INFO("feedback recieved %fsec remaining ", msg.feedback.AngleRemaining);
+  ROS_INFO("feedback recieved %f", msg.feedback.AngleRemaining);
 }
 
 int main(int argc, char **argv)
@@ -57,51 +47,33 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "TheMasterNode");
   ros::NodeHandle nh;
   // here task_commonsserver is the name of the node of the actionserver.
-  ros::Subscriber subOrange =
-      nh.subscribe<task_commons::orangeActionFeedback>("/task_commonsserver/feedback", 1000, &forwardCb);
-  ros::Subscriber subalign = nh.subscribe<task_commons::alignActionFeedback>("/align/feedback", 1000, &alignCb);
+  ros::Subscriber subline =
+      nh.subscribe<task_commons::lineActionFeedback>("/task_commonsserver/feedback", 1000, &forwardCb);
 
-  orange orangeClient("task_commonsserver");
-
-  align alignClient("align");
+  line lineClient("task_line");
 
   forward forwardClient("forward");
 
   ROS_INFO("Waiting for task_commons server to start.");
-  orangeClient.waitForServer();
+  lineClient.waitForServer();
   ROS_INFO("task_commons server started");
-
-  ROS_INFO("Waiting for align server to start.");
-  alignClient.waitForServer();
-  ROS_INFO("align server started.");
 
   boost::thread spin_thread(&spinThread);
 
   while (ros::ok())
   {
-    orangegoal.order = true;
-    orangeClient.sendGoal(orangegoal);
-    ROS_INFO("Orange detection started");
-    orangeClient.waitForResult();
-    orangeSuccess = (*(orangeClient.getResult())).MotionCompleted;
-    if (orangeSuccess)
+    linegoal.order = true;
+    lineClient.sendGoal(linegoal);
+    ROS_INFO("line detection started");
+    lineClient.waitForResult();
+    lineSuccess = (*(lineClient.getResult())).MotionCompleted;
+    if (lineSuccess)
     {
-      ROS_INFO("orange colour detected");
+      ROS_INFO("line colour detected");
     }
     else
-      ROS_INFO("orange not detected");
+      ROS_INFO("line not detected");
 
-    aligngoal.StartDetection = true;
-    alignClient.sendGoal(aligngoal);
-    ROS_INFO("alignment started");
-    alignClient.waitForResult();
-    alignSuccess = (*(orangeClient.getResult())).MotionCompleted;
-    if (alignSuccess)
-    {
-      ROS_INFO("alignment successful");
-    }
-    else
-      ROS_INFO("alignment failed");
     forwardgoal.Goal = forwardTime;
     forwardClient.sendGoal(forwardgoal);
     ROS_INFO("Moving forward");
