@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(task_line_detection)
+project(task_line)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roslint
-  dynamic_reconfigure
   roscpp
   rospy
   std_msgs
@@ -16,6 +15,9 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   task_commons
   motion_commons
+  cv_bridge
+  dynamic_reconfigure
+  image_transport
 )
 
 ## Check for lint errors

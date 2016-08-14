@@ -3,7 +3,6 @@
 #include <std_msgs/Float32.h>
 #include <task_commons/lineAction.h>
 #include <task_commons/lineActionFeedback.h>
-#include <task_commons/orangeActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
@@ -32,7 +31,7 @@ void spinThread()
 // specified
 void forwardCb(task_commons::lineActionFeedback msg)
 {
-  ROS_INFO("feedback recieved %d", msg.feedback.nosignificance);
+  ROS_INFO("feedback recieved %f", msg.feedback.AngleRemaining);
 }
 
 int main(int argc, char **argv)
@@ -44,7 +43,7 @@ int main(int argc, char **argv)
   ros::Subscriber sub_ =
       nh.subscribe<task_commons::lineActionFeedback>("/task_line_server/feedback", 1000, &forwardCb);
 
-  Client testClient("task_line_server");
+  Client testClient("line_server");
   ptrClient = &testClient;
 
   ROS_INFO("Waiting for action server to start.");
