@@ -56,7 +56,6 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 // callback for off switch.
 int detect(cv::Mat image)
 {
-
   cv::Size size(640, 480);  // the dst image size,e.g.100x100
   cv::Mat resizeimage;      // dst image
   cv::Mat bgr_image;
@@ -77,7 +76,7 @@ int detect(cv::Mat image)
                                       // has red color, Note : here the size of
                                       // image is 640X480 = 307200.
     return 1;
- 
+
   return 0;
 }
 
@@ -85,7 +84,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "line_detection");
   ros::NodeHandle n;
-  ros::Publisher robot_pub = n.advertise<std_msgs::Bool>("linedetected", 1000);
+  ros::Publisher robot_pub = n.advertise<std_msgs::Bool>("/varun/ip/line_detection", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_detection_switch", 1000, &lineDetectedListener);
 
   image_transport::ImageTransport it(n);
@@ -97,7 +96,7 @@ int main(int argc, char **argv)
 
   while (ros::ok())
   {
-  	if (!frame.data)  // Check for invalid input
+    if (!frame.data)  // Check for invalid input
     {
       std::cout << "Could not open or find the image" << std::endl;
       ros::spinOnce();
@@ -105,8 +104,8 @@ int main(int argc, char **argv)
       // TODO(shikherverma) : for now I am resetting the video but later we need to handle this
       // camera not available error properly
     }
-    if(!IP)
-    {  
+    if (!IP)
+    {
       int alert = detect(frame);
       if (alert == 1)
       {
@@ -128,7 +127,7 @@ int main(int argc, char **argv)
       }
       ros::spinOnce();
       loop_rate.sleep();
-    }  
+    }
     ros::spinOnce();
     loop_rate.sleep();
   }
