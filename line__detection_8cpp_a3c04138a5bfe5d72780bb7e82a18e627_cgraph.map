@@ -1,5 +1,5 @@
 <map id="main" name="main">
-<area shape="rect" id="node2" href="$line__detection_8cpp.html#a254fabd0679307a50a2ae8ddf60fc1c1" title="offCallback" alt="" coords="104,5,192,32"/>
-<area shape="rect" id="node3" href="$line__detection_8cpp.html#acfa0346feb87fa4dc78ccf6e63ecce83" title="callback" alt="" coords="113,56,183,83"/>
-<area shape="rect" id="node4" href="$line__detection_8cpp.html#a685feeb05f3ba649ebe281ffeaa54007" title="detect" alt="" coords="119,107,177,133"/>
+<area shape="rect" id="node2" href="$line__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812" title="lineDetectedListener" alt="" coords="104,5,245,32"/>
+<area shape="rect" id="node3" href="$line__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1" title="imageCallback" alt="" coords="121,56,229,83"/>
+<area shape="rect" id="node4" href="$line__detection_8cpp.html#af213473e3f4fd759285abd77395edb7b" title="detect" alt="" coords="145,107,204,133"/>
 </map>

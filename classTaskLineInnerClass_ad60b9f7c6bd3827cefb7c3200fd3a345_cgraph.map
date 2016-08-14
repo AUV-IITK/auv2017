@@ -1,0 +1,9 @@
+<map id="TaskLineInnerClass::analysisCB" name="TaskLineInnerClass::analysisCB">
+<area shape="rect" id="node2" href="$classTaskLineInnerClass.html#a196c7a18e88a27bf727ce68df3e50bd3" title="TaskLineInnerClass\l::detection_switch_on" alt="" coords="215,5,364,46"/>
+<area shape="rect" id="node3" href="$classTaskLineInnerClass.html#acc1c7357342276415f428d1948b28af8" title="TaskLineInnerClass\l::detection_switch_off" alt="" coords="214,70,365,111"/>
+<area shape="rect" id="node4" href="$classTaskLineInnerClass.html#a888642542a13bc21bfe0d387472548fd" title="TaskLineInnerClass\l::centralize_switch_on" alt="" coords="213,135,365,177"/>
+<area shape="rect" id="node5" href="$classTaskLineInnerClass.html#ae07eb165184873c268556b940a8aa7ba" title="TaskLineInnerClass\l::spinThreadSidewardCamera" alt="" coords="192,201,387,242"/>
+<area shape="rect" id="node6" href="$classTaskLineInnerClass.html#a51db394798f796493568d62db8b3aa83" title="TaskLineInnerClass\l::spinThreadForwardCamera" alt="" coords="196,266,383,307"/>
+<area shape="rect" id="node7" href="$classTaskLineInnerClass.html#ae9b668844b226c17307a08f720d9ced3" title="TaskLineInnerClass\l::centralize_switch_off" alt="" coords="213,331,366,373"/>
+<area shape="rect" id="node8" href="$classTaskLineInnerClass.html#a41ec4a9e7262affadb1cb4c092656b81" title="TaskLineInnerClass\l::angle_switch_on" alt="" coords="220,397,359,438"/>
+</map>

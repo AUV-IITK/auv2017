@@ -94,15 +94,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;ros/ros.h&gt;</code><br/>
-<code>#include &lt;task_commons/alignAction.h&gt;</code><br/>
-<code>#include &lt;task_commons/alignActionFeedback.h&gt;</code><br/>
-<code>#include &lt;task_commons/alignActionResult.h&gt;</code><br/>
 <code>#include &lt;motion_commons/ForwardAction.h&gt;</code><br/>
 <code>#include &lt;motion_commons/ForwardActionFeedback.h&gt;</code><br/>
 <code>#include &lt;motion_commons/ForwardActionResult.h&gt;</code><br/>
-<code>#include &lt;task_commons/orangeAction.h&gt;</code><br/>
-<code>#include &lt;task_commons/orangeActionFeedback.h&gt;</code><br/>
-<code>#include &lt;task_commons/orangeActionResult.h&gt;</code><br/>
+<code>#include &lt;task_commons/lineAction.h&gt;</code><br/>
+<code>#include &lt;task_commons/lineActionFeedback.h&gt;</code><br/>
+<code>#include &lt;task_commons/lineActionResult.h&gt;</code><br/>
 <code>#include &lt;actionlib/client/simple_action_client.h&gt;</code><br/>
 <code>#include &lt;actionlib/client/terminal_state.h&gt;</code><br/>
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -119,14 +116,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ae9ddf28ba3184155888b55b0ec7dfda0"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
+<tr class="memitem:a2fbc4cadeb0c52cc1ae0e99c790ee86c"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
 actionlib::SimpleActionClient<br class="typebreak"/>
-&lt; task_commons::orangeAction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#ae9ddf28ba3184155888b55b0ec7dfda0">orange</a></td></tr>
-<tr class="separator:ae9ddf28ba3184155888b55b0ec7dfda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fac81b155e7afd442e724b4e24da515"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
-actionlib::SimpleActionClient<br class="typebreak"/>
-&lt; task_commons::alignAction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a5fac81b155e7afd442e724b4e24da515">align</a></td></tr>
-<tr class="separator:a5fac81b155e7afd442e724b4e24da515"><td class="memSeparator" colspan="2">&#160;</td></tr>
+&lt; task_commons::lineAction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a></td></tr>
+<tr class="separator:a2fbc4cadeb0c52cc1ae0e99c790ee86c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae88284796ab95b93409abe7ac8fea3a4"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
 actionlib::SimpleActionClient<br class="typebreak"/>
 &lt; motion_commons::ForwardAction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#ae88284796ab95b93409abe7ac8fea3a4">forward</a></td></tr>
@@ -136,43 +129,23 @@ actionlib::SimpleActionClient<br class="typebreak"/>
 Functions</h2></td></tr>
 <tr class="memitem:ac57ed3683dbd1741af9bf0f9adf1c91f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">spinThread</a> ()</td></tr>
 <tr class="separator:ac57ed3683dbd1741af9bf0f9adf1c91f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c13f353cf9bdd00e3b8881d2b4a4300"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a6c13f353cf9bdd00e3b8881d2b4a4300">forwardCb</a> (task_commons::orangeActionFeedback msg)</td></tr>
-<tr class="separator:a6c13f353cf9bdd00e3b8881d2b4a4300"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e2891e7740a9a97baa507b521b42741"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a6e2891e7740a9a97baa507b521b42741">alignCb</a> (task_commons::alignActionFeedback msg)</td></tr>
-<tr class="separator:a6e2891e7740a9a97baa507b521b42741"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e0bee838f341a1f94f1a22c11a55ea3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a2e0bee838f341a1f94f1a22c11a55ea3">forwardCb</a> (task_commons::lineActionFeedback msg)</td></tr>
+<tr class="separator:a2e0bee838f341a1f94f1a22c11a55ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a67bd6369d14ad9d1e8376595c6e8486c"><td class="memItemLeft" align="right" valign="top">task_commons::orangeGoal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a67bd6369d14ad9d1e8376595c6e8486c">orangegoal</a></td></tr>
-<tr class="separator:a67bd6369d14ad9d1e8376595c6e8486c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cdd1d6b25f743537a6344dec719d475"><td class="memItemLeft" align="right" valign="top">task_commons::alignGoal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a3cdd1d6b25f743537a6344dec719d475">aligngoal</a></td></tr>
-<tr class="separator:a3cdd1d6b25f743537a6344dec719d475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af55ce9f358e8b5c12ce0a2634d9714dd"><td class="memItemLeft" align="right" valign="top">task_commons::lineGoal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#af55ce9f358e8b5c12ce0a2634d9714dd">linegoal</a></td></tr>
+<tr class="separator:af55ce9f358e8b5c12ce0a2634d9714dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7c85a023cf3cf60204b4cd066e867e4"><td class="memItemLeft" align="right" valign="top">motion_commons::ForwardGoal&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#aa7c85a023cf3cf60204b4cd066e867e4">forwardgoal</a></td></tr>
 <tr class="separator:aa7c85a023cf3cf60204b4cd066e867e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaabd158bafbd19097a3848697ef1c10a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#aaabd158bafbd19097a3848697ef1c10a">orangeSuccess</a> = false</td></tr>
-<tr class="separator:aaabd158bafbd19097a3848697ef1c10a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4171f7a94b0535f1cdc3e499ff3e4ce7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a4171f7a94b0535f1cdc3e499ff3e4ce7">alignSuccess</a> = false</td></tr>
-<tr class="separator:a4171f7a94b0535f1cdc3e499ff3e4ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43970f049f49d9d78f18ce00b68ab365"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a43970f049f49d9d78f18ce00b68ab365">lineSuccess</a> = false</td></tr>
+<tr class="separator:a43970f049f49d9d78f18ce00b68ab365"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bc74ef7e23736b9d57de94f762011e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="masterAlternate_8cpp.html#a2bc74ef7e23736b9d57de94f762011e5">forwardSuccess</a> = false</td></tr>
 <tr class="separator:a2bc74ef7e23736b9d57de94f762011e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="a5fac81b155e7afd442e724b4e24da515"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef actionlib::SimpleActionClient&lt;task_commons::alignAction&gt; <a class="el" href="master_8cpp.html#a5fac81b155e7afd442e724b4e24da515">align</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00022">22</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="ae88284796ab95b93409abe7ac8fea3a4"></a>
 <div class="memitem">
 <div class="memproto">
@@ -183,77 +156,48 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00023">23</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00019">19</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae9ddf28ba3184155888b55b0ec7dfda0"></a>
+<a class="anchor" id="a2fbc4cadeb0c52cc1ae0e99c790ee86c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef actionlib::SimpleActionClient&lt;task_commons::orangeAction&gt; <a class="el" href="master_8cpp.html#ae9ddf28ba3184155888b55b0ec7dfda0">orange</a></td>
+          <td class="memname">typedef actionlib::SimpleActionClient&lt;task_commons::lineAction&gt; <a class="el" href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00021">21</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00018">18</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a6e2891e7740a9a97baa507b521b42741"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alignCb </td>
-          <td>(</td>
-          <td class="paramtype">task_commons::alignActionFeedback&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00042">42</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
-
-<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="masterAlternate_8cpp_a6e2891e7740a9a97baa507b521b42741_icgraph.png" border="0" usemap="#masterAlternate_8cpp_a6e2891e7740a9a97baa507b521b42741_icgraph" alt=""/></div>
-<map name="masterAlternate_8cpp_a6e2891e7740a9a97baa507b521b42741_icgraph" id="masterAlternate_8cpp_a6e2891e7740a9a97baa507b521b42741_icgraph">
-<area shape="rect" id="node2" href="masterAlternate_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="120,5,171,32"/></map>
-</div>
-</p>
-
-</div>
-</div>
-<a class="anchor" id="a6c13f353cf9bdd00e3b8881d2b4a4300"></a>
+<a class="anchor" id="a2e0bee838f341a1f94f1a22c11a55ea3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void forwardCb </td>
           <td>(</td>
-          <td class="paramtype">task_commons::orangeActionFeedback&#160;</td>
+          <td class="paramtype">task_commons::lineActionFeedback&#160;</td>
           <td class="paramname"><em>msg</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00038">38</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00032">32</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
 
-<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="masterAlternate_8cpp_a6c13f353cf9bdd00e3b8881d2b4a4300_icgraph.png" border="0" usemap="#masterAlternate_8cpp_a6c13f353cf9bdd00e3b8881d2b4a4300_icgraph" alt=""/></div>
-<map name="masterAlternate_8cpp_a6c13f353cf9bdd00e3b8881d2b4a4300_icgraph" id="masterAlternate_8cpp_a6c13f353cf9bdd00e3b8881d2b4a4300_icgraph">
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="masterAlternate_8cpp_a2e0bee838f341a1f94f1a22c11a55ea3_icgraph.png" border="0" usemap="#masterAlternate_8cpp_a2e0bee838f341a1f94f1a22c11a55ea3_icgraph" alt=""/></div>
+<map name="masterAlternate_8cpp_a2e0bee838f341a1f94f1a22c11a55ea3_icgraph" id="masterAlternate_8cpp_a2e0bee838f341a1f94f1a22c11a55ea3_icgraph">
 <area shape="rect" id="node2" href="masterAlternate_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="136,5,187,32"/></map>
 </div>
 </p>
@@ -284,16 +228,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00047">47</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00037">37</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
 
-<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="masterAlternate_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph.png" border="0" usemap="#masterAlternate_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" alt=""/></div>
 <map name="masterAlternate_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" id="masterAlternate_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph">
-<area shape="rect" id="node2" href="masterAlternate_8cpp.html#a6c13f353cf9bdd00e3b8881d2b4a4300" title="forwardCb" alt="" coords="107,5,189,32"/><area shape="rect" id="node3" href="masterAlternate_8cpp.html#a6e2891e7740a9a97baa507b521b42741" title="alignCb" alt="" coords="115,56,181,83"/><area shape="rect" id="node4" href="masterAlternate_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f" title="spinThread" alt="" coords="105,107,191,133"/></map>
+<area shape="rect" id="node2" href="masterAlternate_8cpp.html#a2e0bee838f341a1f94f1a22c11a55ea3" title="forwardCb" alt="" coords="107,5,189,32"/><area shape="rect" id="node3" href="masterAlternate_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f" title="spinThread" alt="" coords="105,56,191,83"/></map>
 </div>
 </p>
 
@@ -312,13 +256,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00033">33</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00027">27</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
 
-<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="masterAlternate_8cpp_ac57ed3683dbd1741af9bf0f9adf1c91f_icgraph.png" border="0" usemap="#masterAlternate_8cpp_ac57ed3683dbd1741af9bf0f9adf1c91f_icgraph" alt=""/></div>
 <map name="masterAlternate_8cpp_ac57ed3683dbd1741af9bf0f9adf1c91f_icgraph" id="masterAlternate_8cpp_ac57ed3683dbd1741af9bf0f9adf1c91f_icgraph">
 <area shape="rect" id="node2" href="masterAlternate_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="141,5,192,32"/></map>
@@ -328,34 +272,6 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a3cdd1d6b25f743537a6344dec719d475"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">task_commons::alignGoal aligngoal</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00026">26</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4171f7a94b0535f1cdc3e499ff3e4ce7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool alignSuccess = false</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00030">30</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="aa7c85a023cf3cf60204b4cd066e867e4"></a>
 <div class="memitem">
 <div class="memproto">
@@ -366,7 +282,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00027">27</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00022">22</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
 
 </div>
 </div>
@@ -380,42 +296,42 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00031">31</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a67bd6369d14ad9d1e8376595c6e8486c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">task_commons::orangeGoal orangegoal</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
 <p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00025">25</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aaabd158bafbd19097a3848697ef1c10a"></a>
+<a class="anchor" id="af55ce9f358e8b5c12ce0a2634d9714dd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool orangeSuccess = false</td>
+          <td class="memname">task_commons::lineGoal linegoal</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00029">29</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
+<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00021">21</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a43970f049f49d9d78f18ce00b68ab365"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool lineSuccess = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="masterAlternate_8cpp_source.html#l00024">24</a> of file <a class="el" href="masterAlternate_8cpp_source.html">masterAlternate.cpp</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 14 2016 00:34:04 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 14 2016 11:10:41 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

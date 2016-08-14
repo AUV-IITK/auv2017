@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['master_2ecpp',['master.cpp',['../master_8cpp.html',1,'']]],
   ['master_5fnodes_2elaunch',['master_nodes.launch',['../master__nodes_8launch.html',1,'']]],
   ['masteralternate_2ecpp',['masterAlternate.cpp',['../masterAlternate_8cpp.html',1,'']]],
   ['mock_5fimu_5feular_2epy',['mock_imu_eular.py',['../mock__imu__eular_8py.html',1,'']]],

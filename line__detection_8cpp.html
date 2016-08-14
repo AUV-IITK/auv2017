@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>AUV: task_handler_layer/task_line_detection/src/line_detection.cpp File Reference</title>
+<title>AUV: task_handler_layer/task_line/src/line_detection.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_906375e60fc313c035dd756bf46dff3a.html">task_handler_layer</a></li><li class="navelem"><a class="el" href="dir_501f6b4e4c6f20ca8cd01171ee33320b.html">task_line_detection</a></li><li class="navelem"><a class="el" href="dir_c402e919f4ad6fe42a865dc3c099d30d.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_906375e60fc313c035dd756bf46dff3a.html">task_handler_layer</a></li><li class="navelem"><a class="el" href="dir_c0966e14a5ac7fa771ea9a19b3eea446.html">task_line</a></li><li class="navelem"><a class="el" href="dir_0360061f158648bc4359412c5ed7cf44.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -92,25 +92,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">line_detection.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;ros/ros.h&quot;</code><br/>
+<div class="textblock"><code>#include &lt;cv.h&gt;</code><br/>
+<code>#include &lt;highgui.h&gt;</code><br/>
+<code>#include &lt;ros/ros.h&gt;</code><br/>
 <code>#include &quot;std_msgs/String.h&quot;</code><br/>
+<code>#include &quot;std_msgs/Int8.h&quot;</code><br/>
+<code>#include &lt;fstream&gt;</code><br/>
+<code>#include &lt;vector&gt;</code><br/>
 <code>#include &lt;std_msgs/Bool.h&gt;</code><br/>
-<code>#include &lt;sstream&gt;</code><br/>
-<code>#include &lt;dynamic_reconfigure/server.h&gt;</code><br/>
-<code>#include &lt;task_line_detection/orangeConfig.h&gt;</code><br/>
 <code>#include &lt;opencv2/core/core.hpp&gt;</code><br/>
 <code>#include &lt;opencv2/highgui/highgui.hpp&gt;</code><br/>
-<code>#include &lt;iostream&gt;</code><br/>
 <code>#include &lt;opencv2/opencv.hpp&gt;</code><br/>
 <code>#include &lt;opencv/highgui.h&gt;</code><br/>
-<code>#include &lt;ctime&gt;</code><br/>
+<code>#include &lt;image_transport/image_transport.h&gt;</code><br/>
+<code>#include &quot;std_msgs/Float64MultiArray.h&quot;</code><br/>
+<code>#include &lt;cv_bridge/cv_bridge.h&gt;</code><br/>
+<code>#include &lt;sstream&gt;</code><br/>
+<code>#include &lt;string&gt;</code><br/>
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for line_detection.cpp:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="line__detection_8cpp__incl.png" border="0" usemap="#task__handler__layer_2task__line__detection_2src_2line__detection_8cpp" alt=""/></div>
-<map name="task__handler__layer_2task__line__detection_2src_2line__detection_8cpp" id="task__handler__layer_2task__line__detection_2src_2line__detection_8cpp">
+<div class="center"><img src="line__detection_8cpp__incl.png" border="0" usemap="#task__handler__layer_2task__line_2src_2line__detection_8cpp" alt=""/></div>
+<map name="task__handler__layer_2task__line_2src_2line__detection_8cpp" id="task__handler__layer_2task__line_2src_2line__detection_8cpp">
 </map>
 </div>
 </div>
@@ -118,12 +123,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:acfa0346feb87fa4dc78ccf6e63ecce83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#acfa0346feb87fa4dc78ccf6e63ecce83">callback</a> (task_line_detection::orangeConfig &amp;config, int level)</td></tr>
-<tr class="separator:acfa0346feb87fa4dc78ccf6e63ecce83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a254fabd0679307a50a2ae8ddf60fc1c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#a254fabd0679307a50a2ae8ddf60fc1c1">offCallback</a> (std_msgs::Bool msg)</td></tr>
-<tr class="separator:a254fabd0679307a50a2ae8ddf60fc1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a685feeb05f3ba649ebe281ffeaa54007"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#a685feeb05f3ba649ebe281ffeaa54007">detect</a> (Mat image)</td></tr>
-<tr class="separator:a685feeb05f3ba649ebe281ffeaa54007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a374d7aaa964993d6dfc64ee492979812"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812">lineDetectedListener</a> (std_msgs::Bool msg)</td></tr>
+<tr class="separator:a374d7aaa964993d6dfc64ee492979812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d7dfd9133ce1e6b48bfdc8249db33d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a> (const sensor_msgs::ImageConstPtr &amp;msg)</td></tr>
+<tr class="separator:a0d7dfd9133ce1e6b48bfdc8249db33d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af213473e3f4fd759285abd77395edb7b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#af213473e3f4fd759285abd77395edb7b">detect</a> (cv::Mat image)</td></tr>
+<tr class="separator:af213473e3f4fd759285abd77395edb7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -131,71 +136,102 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:a2f4f51c5a35082684ccbbcae8dd4dc25"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#a2f4f51c5a35082684ccbbcae8dd4dc25">percentage</a> = 20</td></tr>
 <tr class="separator:a2f4f51c5a35082684ccbbcae8dd4dc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31312a6881a1fcac1c757c95025214c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a> = false</td></tr>
+<tr class="separator:a31312a6881a1fcac1c757c95025214c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b3ab54ed3e81c69863d65e4e6c424a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a> = false</td></tr>
+<tr class="separator:a8b3ab54ed3e81c69863d65e4e6c424a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb12876cf5ceaeef805d9553c935730a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a> = false</td></tr>
+<tr class="separator:adb12876cf5ceaeef805d9553c935730a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22bf1f49f906224b1a4b38010110e929"><td class="memItemLeft" align="right" valign="top">cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a></td></tr>
+<tr class="separator:a22bf1f49f906224b1a4b38010110e929"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfa06e3fe6169ecfb3a176aa2f8194fc"><td class="memItemLeft" align="right" valign="top">cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a></td></tr>
+<tr class="separator:adfa06e3fe6169ecfb3a176aa2f8194fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad43c3812e6d13e0518d9f8b8f463ffcf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0</td></tr>
+<tr class="separator:ad43c3812e6d13e0518d9f8b8f463ffcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="acfa0346feb87fa4dc78ccf6e63ecce83"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void callback </td>
-          <td>(</td>
-          <td class="paramtype">task_line_detection::orangeConfig &amp;&#160;</td>
-          <td class="paramname"><em>config</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>level</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00025">25</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
-
-<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="line__detection_8cpp_acfa0346feb87fa4dc78ccf6e63ecce83_icgraph.png" border="0" usemap="#line__detection_8cpp_acfa0346feb87fa4dc78ccf6e63ecce83_icgraph" alt=""/></div>
-<map name="line__detection_8cpp_acfa0346feb87fa4dc78ccf6e63ecce83_icgraph" id="line__detection_8cpp_acfa0346feb87fa4dc78ccf6e63ecce83_icgraph">
-<area shape="rect" id="node2" href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="125,5,176,32"/></map>
-</div>
-</p>
-
-</div>
-</div>
-<a class="anchor" id="a685feeb05f3ba649ebe281ffeaa54007"></a>
+<a class="anchor" id="af213473e3f4fd759285abd77395edb7b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int detect </td>
           <td>(</td>
-          <td class="paramtype">Mat&#160;</td>
+          <td class="paramtype">cv::Mat&#160;</td>
           <td class="paramname"><em>image</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00041">41</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00057">57</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="line__detection_8cpp_af213473e3f4fd759285abd77395edb7b_icgraph.png" border="0" usemap="#line__detection_8cpp_af213473e3f4fd759285abd77395edb7b_icgraph" alt=""/></div>
+<map name="line__detection_8cpp_af213473e3f4fd759285abd77395edb7b_icgraph" id="line__detection_8cpp_af213473e3f4fd759285abd77395edb7b_icgraph">
+<area shape="rect" id="node2" href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="112,5,163,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a0d7dfd9133ce1e6b48bfdc8249db33d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void imageCallback </td>
+          <td>(</td>
+          <td class="paramtype">const sensor_msgs::ImageConstPtr &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00037">37</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
 
 <p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="line__detection_8cpp_a685feeb05f3ba649ebe281ffeaa54007_icgraph.png" border="0" usemap="#line__detection_8cpp_a685feeb05f3ba649ebe281ffeaa54007_icgraph" alt=""/></div>
-<map name="line__detection_8cpp_a685feeb05f3ba649ebe281ffeaa54007_icgraph" id="line__detection_8cpp_a685feeb05f3ba649ebe281ffeaa54007_icgraph">
-<area shape="rect" id="node2" href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="112,5,163,32"/></map>
+<div class="center"><img src="line__detection_8cpp_a0d7dfd9133ce1e6b48bfdc8249db33d1_icgraph.png" border="0" usemap="#line__detection_8cpp_a0d7dfd9133ce1e6b48bfdc8249db33d1_icgraph" alt=""/></div>
+<map name="line__detection_8cpp_a0d7dfd9133ce1e6b48bfdc8249db33d1_icgraph" id="line__detection_8cpp_a0d7dfd9133ce1e6b48bfdc8249db33d1_icgraph">
+<area shape="rect" id="node2" href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="163,5,213,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a374d7aaa964993d6dfc64ee492979812"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lineDetectedListener </td>
+          <td>(</td>
+          <td class="paramtype">std_msgs::Bool&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00032">32</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="line__detection_8cpp_a374d7aaa964993d6dfc64ee492979812_icgraph.png" border="0" usemap="#line__detection_8cpp_a374d7aaa964993d6dfc64ee492979812_icgraph" alt=""/></div>
+<map name="line__detection_8cpp_a374d7aaa964993d6dfc64ee492979812_icgraph" id="line__detection_8cpp_a374d7aaa964993d6dfc64ee492979812_icgraph">
+<area shape="rect" id="node2" href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="195,5,245,32"/></map>
 </div>
 </p>
 
@@ -225,51 +261,92 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00077">77</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
-
-<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="line__detection_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph.png" border="0" usemap="#line__detection_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" alt=""/></div>
-<map name="line__detection_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" id="line__detection_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph">
-<area shape="rect" id="node2" href="line__detection_8cpp.html#a254fabd0679307a50a2ae8ddf60fc1c1" title="offCallback" alt="" coords="104,5,192,32"/><area shape="rect" id="node3" href="line__detection_8cpp.html#acfa0346feb87fa4dc78ccf6e63ecce83" title="callback" alt="" coords="113,56,183,83"/><area shape="rect" id="node4" href="line__detection_8cpp.html#a685feeb05f3ba649ebe281ffeaa54007" title="detect" alt="" coords="119,107,177,133"/></map>
-</div>
-</p>
-
-</div>
-</div>
-<a class="anchor" id="a254fabd0679307a50a2ae8ddf60fc1c1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void offCallback </td>
-          <td>(</td>
-          <td class="paramtype">std_msgs::Bool&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00032">32</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00083">83</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
 
 <p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-4-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="line__detection_8cpp_a254fabd0679307a50a2ae8ddf60fc1c1_icgraph.png" border="0" usemap="#line__detection_8cpp_a254fabd0679307a50a2ae8ddf60fc1c1_icgraph" alt=""/></div>
-<map name="line__detection_8cpp_a254fabd0679307a50a2ae8ddf60fc1c1_icgraph" id="line__detection_8cpp_a254fabd0679307a50a2ae8ddf60fc1c1_icgraph">
-<area shape="rect" id="node2" href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="141,5,192,32"/></map>
+<div class="center"><img src="line__detection_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph.png" border="0" usemap="#line__detection_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" alt=""/></div>
+<map name="line__detection_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" id="line__detection_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph">
+<area shape="rect" id="node2" href="line__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812" title="lineDetectedListener" alt="" coords="104,5,245,32"/><area shape="rect" id="node3" href="line__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1" title="imageCallback" alt="" coords="121,56,229,83"/><area shape="rect" id="node4" href="line__detection_8cpp.html#af213473e3f4fd759285abd77395edb7b" title="detect" alt="" coords="145,107,204,133"/></map>
 </div>
 </p>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="ad43c3812e6d13e0518d9f8b8f463ffcf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int count = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00031">31</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8b3ab54ed3e81c69863d65e4e6c424a0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool flag = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00026">26</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a22bf1f49f906224b1a4b38010110e929"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cv::Mat frame</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00029">29</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a31312a6881a1fcac1c757c95025214c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool IP = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00025">25</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adfa06e3fe6169ecfb3a176aa2f8194fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cv::Mat newframe</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00030">30</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a2f4f51c5a35082684ccbbcae8dd4dc25"></a>
 <div class="memitem">
 <div class="memproto">
@@ -284,10 +361,24 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="adb12876cf5ceaeef805d9553c935730a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool video = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="line__detection_8cpp_source.html#l00027">27</a> of file <a class="el" href="line__detection_8cpp_source.html">line_detection.cpp</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 14 2016 00:34:04 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 14 2016 11:10:41 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

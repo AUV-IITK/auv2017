@@ -1,12 +1,6 @@
 var searchData=
 [
-  ['m1',['m1',['../namespaceremote__gui.html#a202acebb35dcc553b5d849b7951cd72f',1,'remote_gui']]],
-  ['m2',['m2',['../namespaceremote__gui.html#ae041bd63bbd26961b249b92d2db81ac9',1,'remote_gui']]],
-  ['m3',['m3',['../namespaceremote__gui.html#ac0971a23f35e0607963caff6d051a5e5',1,'remote_gui']]],
-  ['m4',['m4',['../namespaceremote__gui.html#a1f82501afce20d16c59309aa646de159',1,'remote_gui']]],
-  ['main',['main',['../namespaceremote__gui.html#a8cd8c1dbd14d5a0140a04368d6626935',1,'remote_gui']]],
-  ['maxlinegap',['maxLineGap',['../line__angle_8cpp.html#a001242156c78872a9c28278f6660b471',1,'line_angle.cpp']]],
-  ['mindeviation',['minDeviation',['../line__angle_8cpp.html#abde676b8fcb59f927b1aed637c6f244e',1,'line_angle.cpp']]],
-  ['minlinelength',['minLineLength',['../line__angle_8cpp.html#a80056fe52eb002e0f6a24b2fc95fccc2',1,'line_angle.cpp']]],
-  ['moving',['moving',['../forwardTest_8cpp.html#afdd7df977b812f9a8192fab08773efca',1,'moving():&#160;forwardTest.cpp'],['../sidewardTest_8cpp.html#afdd7df977b812f9a8192fab08773efca',1,'moving():&#160;sidewardTest.cpp'],['../upwardTest_8cpp.html#afdd7df977b812f9a8192fab08773efca',1,'moving():&#160;upwardTest.cpp']]]
+  ['newframe',['newframe',['../buoy__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc',1,'newframe():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc',1,'newframe():&#160;gate_detection.cpp'],['../line__centralize_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc',1,'newframe():&#160;line_centralize.cpp'],['../line__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc',1,'newframe():&#160;line_detection.cpp']]],
+  ['nh',['nh',['../arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d',1,'nh():&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d',1,'nh():&#160;testing_arduino_node.cpp']]],
+  ['nh_5f',['nh_',['../classinnerActionClass.html#a8a384670f40e16bdcf2dffcb54910a63',1,'innerActionClass::nh_()'],['../classTaskBuoyInnerClass.html#a65effd0ffd4ccee0f8f6ca003c54dc55',1,'TaskBuoyInnerClass::nh_()'],['../classTaskGateInnerClass.html#a7fcbff7dd2d23e3ae32c618847715a88',1,'TaskGateInnerClass::nh_()'],['../classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5',1,'TaskLineInnerClass::nh_()']]]
 ];

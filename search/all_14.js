@@ -1,16 +1,16 @@
 var searchData=
 [
-  ['unspecified',['unspecified',['../debug__layer_2remote__control_2package_8xml.html#a836f5c2e9eb07bcde38e8eb838c4d639',1,'package.xml']]],
-  ['up',['up',['../namespaceremote__gui.html#a4ff197857bc8f7f107bdae979f9a393b',1,'remote_gui']]],
-  ['upclicked',['upClicked',['../namespaceremote__gui.html#aadb271f58dda8cb07c0eb7211b17cbbd',1,'remote_gui']]],
-  ['upward_2eaction',['Upward.action',['../Upward_8action.html',1,'']]],
-  ['upward_2ecfg',['upward.cfg',['../upward_8cfg.html',1,'']]],
-  ['upward_2ecpp',['upward.cpp',['../upward_8cpp.html',1,'']]],
-  ['upward_5fmotion',['Upward_motion',['../namespaceremote__gui.html#a9c558237809c3ab37d45cea1d51cc999',1,'remote_gui']]],
-  ['upwardcb',['upwardCb',['../upwardTest_8cpp.html#a88b35fc23678dc0b12baae21fafcea33',1,'upwardTest.cpp']]],
-  ['upwardclient_5f',['UpwardClient_',['../classTaskBuoyInnerClass.html#a750945da7a74421ab620e267d079c9fc',1,'TaskBuoyInnerClass::UpwardClient_()'],['../classTaskGateInnerClass.html#a6a5120da4620d131db6fd2460ed40598',1,'TaskGateInnerClass::UpwardClient_()']]],
-  ['upwardgoal',['upwardgoal',['../classTaskBuoyInnerClass.html#a8086e1cdc93d8110611efdb16082f61b',1,'TaskBuoyInnerClass::upwardgoal()'],['../classTaskGateInnerClass.html#a9b71083434efdf822c71abbdaad5df92',1,'TaskGateInnerClass::upwardgoal()']]],
-  ['upwardoutputpwmmapping',['upwardOutputPWMMapping',['../classinnerActionClass.html#ae5d4f44236fb4add0928f565d741675a',1,'innerActionClass']]],
-  ['upwardserver_5f',['upwardServer_',['../classinnerActionClass.html#ad6cedebf1fa5de0c4d8fa32d64720271',1,'innerActionClass']]],
-  ['upwardtest_2ecpp',['upwardTest.cpp',['../upwardTest_8cpp.html',1,'']]]
+  ['v',['v',['../arduino__node_8cpp.html#a48d9522e58fa05906c6dba23e5745a72',1,'arduino_node.cpp']]],
+  ['varun_5fhardware_2elaunch',['varun_hardware.launch',['../varun__hardware_8launch.html',1,'']]],
+  ['varun_5fheight',['varun_height',['../namespacemock__pressure__sensor.html#ae41e9ba3a214b6a5d7061ac7f89cf745',1,'mock_pressure_sensor']]],
+  ['varun_5fimu',['varun_imu',['../namespacemock__imu__eular.html#af742f9134bfd50b38e0fa1e445494cbe',1,'mock_imu_eular']]],
+  ['varun_5fmotion_5fplugin_2ecpp',['varun_motion_plugin.cpp',['../varun__motion__plugin_8cpp.html',1,'']]],
+  ['varun_5fsideward_5flength',['VARUN_SIDEWARD_LENGTH',['../varun__motion__plugin_8cpp.html#a2427b97b5bbff83ebd79c3d68edd227f',1,'varun_motion_plugin.cpp']]],
+  ['varun_5fsimulator_2elaunch',['varun_simulator.launch',['../varun__simulator_8launch.html',1,'']]],
+  ['varun_5fworld_2elaunch',['varun_world.launch',['../varun__world_8launch.html',1,'']]],
+  ['varunmotionplugin',['VarunMotionPlugin',['../classgazebo_1_1VarunMotionPlugin.html',1,'gazebo']]],
+  ['varunmotionplugin',['VarunMotionPlugin',['../classgazebo_1_1VarunMotionPlugin.html#a81756b81d64ee6901ff9c8792fe65ca8',1,'gazebo::VarunMotionPlugin']]],
+  ['vid_5fpub_2ecpp',['vid_pub.cpp',['../vid__pub_8cpp.html',1,'']]],
+  ['video',['video',['../buoy__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a',1,'video():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a',1,'video():&#160;gate_detection.cpp'],['../line__centralize_8cpp.html#adb12876cf5ceaeef805d9553c935730a',1,'video():&#160;line_centralize.cpp'],['../line__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a',1,'video():&#160;line_detection.cpp']]],
+  ['voltage',['voltage',['../arduino__node_8cpp.html#ac744a7815a231d355ebd64089c33f32f',1,'arduino_node.cpp']]]
 ];
