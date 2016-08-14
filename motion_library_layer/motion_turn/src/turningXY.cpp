@@ -130,7 +130,7 @@ public:
     }
     if (reached)
     {
-      result_.MotionCompleted = reached;
+      result_.Result = reached;
       ROS_INFO("%s: Succeeded", action_name_.c_str());
       // set the action state to succeeded
       turnServer_.setSucceeded(result_);

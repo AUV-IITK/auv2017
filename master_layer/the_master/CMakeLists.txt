@@ -126,9 +126,6 @@ include_directories(include
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(master src/master.cpp)
-target_link_libraries(master ${catkin_LIBRARIES})
-
 add_executable(masterAlternate src/masterAlternate.cpp)
 target_link_libraries(masterAlternate ${catkin_LIBRARIES})
 ## Declare a C++ library

@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(task_line_detection)
+project(task_line)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roslint
-  dynamic_reconfigure
   roscpp
   rospy
   std_msgs
@@ -16,6 +15,9 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   task_commons
   motion_commons
+  cv_bridge
+  dynamic_reconfigure
+  image_transport
 )
 
 ## Check for lint errors
@@ -128,8 +130,10 @@ include_directories(include
 ## Declare a cpp executable
 # add_executable(task_line_detection_node src/task_line_detection_node.cpp)
 add_executable(line_detection src/line_detection.cpp)
-add_executable(line_detection_server src/line_detection_server.cpp)
-add_executable(line_detection_client src/line_detection_client.cpp)
+add_executable(line_angle src/line_angle.cpp)
+add_executable(line_centralize src/line_centralize.cpp)
+add_executable(line_server src/line_server.cpp)
+add_executable(line_client src/line_client.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -140,9 +144,14 @@ add_executable(line_detection_client src/line_detection_client.cpp)
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(line_detection ${catkin_LIBRARIES})
+target_link_libraries(line_angle ${OpenCV_LIBS})
+target_link_libraries(line_angle ${catkin_LIBRARIES})
+target_link_libraries(line_centralize ${OpenCV_LIBS})
+target_link_libraries(line_centralize ${catkin_LIBRARIES})
 target_link_libraries(line_detection ${OpenCV_LIBS})
-target_link_libraries(line_detection_server ${catkin_LIBRARIES})
-target_link_libraries(line_detection_client ${catkin_LIBRARIES})
+target_link_libraries(line_server ${catkin_LIBRARIES})
+target_link_libraries(line_client ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############

@@ -1,16 +1,15 @@
 // Copyright 2016 AUV-IITK
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
-#include <task_commons/orangeAction.h>
-#include <task_commons/orangeActionFeedback.h>
-#include <task_commons/orangeActionResult.h>
+#include <task_commons/lineAction.h>
+#include <task_commons/lineActionFeedback.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
-typedef actionlib::SimpleActionClient<task_commons::orangeAction> Client;
+typedef actionlib::SimpleActionClient<task_commons::lineAction> Client;
 
 Client *ptrClient;
-task_commons::orangeGoal goal;
+task_commons::lineGoal goal;
 
 bool success = false;
 
@@ -30,21 +29,21 @@ void spinThread()
 
 // never ever put the argument of the callback function anything other then the
 // specified
-void forwardCb(task_commons::orangeActionFeedback msg)
+void forwardCb(task_commons::lineActionFeedback msg)
 {
-  ROS_INFO("feedback recieved %d", msg.feedback.nosignificance);
+  ROS_INFO("feedback recieved %f", msg.feedback.AngleRemaining);
 }
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "line_detection_client");
+  ros::init(argc, argv, "line_client");
 
   ros::NodeHandle nh;
-  // here line_detection_server is the name of the node of the actionserver.
+  // here line_server is the name of the node of the actionserver.
   ros::Subscriber sub_ =
-      nh.subscribe<task_commons::orangeActionFeedback>("/task_line_detection_server/feedback", 1000, &forwardCb);
+      nh.subscribe<task_commons::lineActionFeedback>("/task_line_server/feedback", 1000, &forwardCb);
 
-  Client testClient("task_line_detection_server");
+  Client testClient("line_server");
   ptrClient = &testClient;
 
   ROS_INFO("Waiting for action server to start.");
@@ -52,7 +51,7 @@ int main(int argc, char **argv)
   goal.order = true;
   ROS_INFO("Action server started, sending goal.");
 
-  // Client &can = *ptrClient;
+  // Client &ca = *ptrClient;
   // can.cancelGoal();
   // ROS_INFO("Goal Cancelled");
   Client &can = *ptrClient;

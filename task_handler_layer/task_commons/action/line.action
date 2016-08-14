@@ -1,8 +1,8 @@
 #goal definition
-bool StartDetection
+bool order
 ---
 #result definition
-bool Aligned
+bool MotionCompleted
 ---
 #feedback definition
 float32 AngleRemaining
