@@ -16,11 +16,9 @@
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
 #include "std_msgs/Float64MultiArray.h"
-#include "std_msgs/Float64.h"
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
 #include <string>
-#include "std_msgs/Float64MultiArray.h"
 #include "std_msgs/Header.h"
 using cv::Mat;
 using cv::split;
