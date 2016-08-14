@@ -106,22 +106,374 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;opencv2/opencv.hpp&gt;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;opencv/highgui.h&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;image_transport/image_transport.h&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;std_msgs/Float32MultiArray.h&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;std_msgs/Float64MultiArray.h&quot;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;cv_bridge/cv_bridge.h&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;std_msgs/Float64MultiArray.h&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;std_msgs/Header.h&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">   25</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="comment">// ***************HAS TO BE WRITTEN BY SIDDSAX***************************//</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
-<div class="ttc" id="line__angle_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="line__angle_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00025">line_angle.cpp:25</a></div></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;std_msgs/Header.h&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">using</span> cv::Mat;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">using</span> cv::split;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">using</span> cv::Size;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">using</span> cv::Scalar;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">using</span> cv::normalize;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">using</span> cv::Point;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">using</span> cv::VideoCapture;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">using</span> cv::NORM_MINMAX;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">using</span> cv::MORPH_ELLIPSE;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">using</span> cv::COLOR_BGR2HSV;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">using</span> cv::destroyAllWindows;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">using</span> cv::getStructuringElement;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">using</span> cv::Vec4i;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">using</span> cv::namedWindow;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">using</span> std::vector;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">using</span> std::endl;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">using</span> std::cout;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a14f94e529dff0b8bfba8e16fbe9755d6">   43</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#aac374e320caaadeca4874add33b62af2">w</a> = -2, <a class="code" href="line__angle_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = -2, <a class="code" href="line__angle_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> = -2, <a class="code" href="line__angle_8cpp.html#a14f94e529dff0b8bfba8e16fbe9755d6">z</a> = -2;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a31312a6881a1fcac1c757c95025214c5">   44</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="line__angle_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">   45</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#adb12876cf5ceaeef805d9553c935730a">   46</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="line__angle_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">   47</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a> = 0, <a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a> = 88, <a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a> = 89, <a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a> = 251, <a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a> = 0, <a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a> = 255, <a class="code" href="line__angle_8cpp.html#addc99401340ecb10778277e17c36c77d">lineCount</a> = 0;  <span class="comment">// Default Params</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">   49</a></span>&#160;std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">// parameters in param file should be nearly the same as the commented values</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">// params for an orange strip</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#aab7e318a33e12402d7111aba3fa2644f">   52</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#aab7e318a33e12402d7111aba3fa2644f">LowH</a> = 0;   <span class="comment">// 0</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#aa38e9d255a999cd6d195e8e9c33e4879">   53</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#aa38e9d255a999cd6d195e8e9c33e4879">HighH</a> = 88;  <span class="comment">// 88</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a7327bdf8364bb05cca2878c4ca24460d">   55</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#a7327bdf8364bb05cca2878c4ca24460d">LowS</a> = 0;   <span class="comment">// 0</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a38e4f18320e2e898968ad566b9ab5a62">   56</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#a38e4f18320e2e898968ad566b9ab5a62">HighS</a> = 251;  <span class="comment">// 251</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#ad7381be61d65d5f6568cb88a9a0baa0e">   58</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#ad7381be61d65d5f6568cb88a9a0baa0e">LowV</a> = 0;   <span class="comment">// 0</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#ac986a1f679ce7605c225fc9d7040ffa6">   59</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#ac986a1f679ce7605c225fc9d7040ffa6">HighV</a> = 255;  <span class="comment">// 255</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">// params for hough line transform</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a463e2ef0dea8e5012442db3fd47ff11c">   62</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#a463e2ef0dea8e5012442db3fd47ff11c">lineThresh</a> = 60;     <span class="comment">// 60</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a80056fe52eb002e0f6a24b2fc95fccc2">   63</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#a80056fe52eb002e0f6a24b2fc95fccc2">minLineLength</a> = 70;  <span class="comment">// 70</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a001242156c78872a9c28278f6660b471">   64</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#a001242156c78872a9c28278f6660b471">maxLineGap</a> = 10;     <span class="comment">// 10</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a47e5cb4d7343ee96fb2f1173ce2c3376">   65</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#a47e5cb4d7343ee96fb2f1173ce2c3376">houghThresh</a> = 15;    <span class="comment">// 15</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a3ed57096651b587c2bf716fa78048153">   67</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="line__angle_8cpp.html#a3ed57096651b587c2bf716fa78048153">rho</a> = 0.1;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">   68</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> = -1;</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#abde676b8fcb59f927b1aed637c6f244e">   69</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="line__angle_8cpp.html#abde676b8fcb59f927b1aed637c6f244e">minDeviation</a> = 0.02;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">   72</a></span>&#160;cv::Mat <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a3d97c374036ee59cc995dea181e330cd">   73</a></span>&#160;cv::Mat <a class="code" href="line__angle_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a>, <a class="code" href="line__angle_8cpp.html#a3d97c374036ee59cc995dea181e330cd">sent_to_callback</a>, <a class="code" href="line__angle_8cpp.html#acfcbbafabf2739cf26e31eb19a578e4f">imgLines</a>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a2d043c356e83ee5dde583a82999bef8b">   74</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0, <a class="code" href="line__angle_8cpp.html#a2d043c356e83ee5dde583a82999bef8b">count_avg</a> = 0;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf">   77</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf">computeMean</a>(vector&lt;double&gt; &amp;newAngles)</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;{</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">double</span> <a class="code" href="arduino__node_8cpp.html#a930b83edda39ee8cfa78dd4574a50bc3">sum</a> = 0;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; newAngles.size(); i++)</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    sum = sum + newAngles[i];</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordflow">return</span> sum / newAngles.size();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">// called when few lines are detected</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">// to remove errors due to any stray results</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#af8b5cbf8f6c14e5b72a685aa01d4a7fb">   88</a></span>&#160;<span class="keywordtype">double</span> <a class="code" href="line__angle_8cpp.html#af8b5cbf8f6c14e5b72a685aa01d4a7fb">computeMode</a>(vector&lt;double&gt; &amp;newAngles)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;{</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordtype">double</span> mode = newAngles[0];</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordtype">int</span> freq = 1;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">int</span> tempFreq;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordtype">double</span> diff;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; newAngles.size(); i++)</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    tempFreq = 1;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = i + 1; j &lt; newAngles.size(); j++)</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      diff = newAngles[j] - newAngles[i] &gt; 0.0 ? newAngles[j] - newAngles[i] : newAngles[i] - newAngles[j];</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      <span class="keywordflow">if</span> (diff &lt;= <a class="code" href="line__angle_8cpp.html#abde676b8fcb59f927b1aed637c6f244e">minDeviation</a>)</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        tempFreq++;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        newAngles.erase(newAngles.begin() + j);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        j = j - 1;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">if</span> (tempFreq &gt;= freq)</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      mode = newAngles[i];</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      freq = tempFreq;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    }</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  }</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keywordflow">return</span> mode;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3">  119</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3">callback</a>(<span class="keywordtype">int</span>, <span class="keywordtype">void</span> *)</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;{</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  vector&lt;Vec4i&gt; lines;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  HoughLinesP(<a class="code" href="line__angle_8cpp.html#a3d97c374036ee59cc995dea181e330cd">sent_to_callback</a>, lines, 1, CV_PI / 180, <a class="code" href="line__angle_8cpp.html#a463e2ef0dea8e5012442db3fd47ff11c">lineThresh</a>, <a class="code" href="line__angle_8cpp.html#a80056fe52eb002e0f6a24b2fc95fccc2">minLineLength</a>, <a class="code" href="line__angle_8cpp.html#a001242156c78872a9c28278f6660b471">maxLineGap</a>);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.copyTo(<a class="code" href="line__angle_8cpp.html#acfcbbafabf2739cf26e31eb19a578e4f">imgLines</a>);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  <a class="code" href="line__angle_8cpp.html#acfcbbafabf2739cf26e31eb19a578e4f">imgLines</a> = Scalar(0, 0, 0);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  vector&lt;double&gt; angles(lines.size());</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <a class="code" href="line__angle_8cpp.html#addc99401340ecb10778277e17c36c77d">lineCount</a> = lines.size();</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordtype">int</span> j = 0;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; lines.size(); i++)</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;  {</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    Vec4i l = lines[i];</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <a class="code" href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a>(<a class="code" href="line__angle_8cpp.html#acfcbbafabf2739cf26e31eb19a578e4f">imgLines</a>, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 255, 0), 1, CV_AA);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">if</span> ((l[2] == l[0]) || (l[1] == l[3])) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    angles[j] = atan(static_cast&lt;double&gt;(l[2] - l[0]) / (l[1] - l[3]));</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    j++;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  imshow(<span class="stringliteral">&quot;LINES&quot;</span>, <a class="code" href="line__angle_8cpp.html#acfcbbafabf2739cf26e31eb19a578e4f">imgLines</a> + <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="comment">// if num of lines are large than one or two stray lines won&#39;t affect the mean</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <span class="comment">// much</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="comment">// but if they are small in number than mode has to be taken to save the error</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  <span class="comment">// due to those stray line</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  <span class="keywordflow">if</span> (lines.size() &gt; 0 &amp;&amp; lines.size() &lt; 10)</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> = <a class="code" href="line__angle_8cpp.html#af8b5cbf8f6c14e5b72a685aa01d4a7fb">computeMode</a>(angles);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (lines.size() &gt; 0)</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> = <a class="code" href="line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf">computeMean</a>(angles);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;}</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">  152</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;{</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  <a class="code" href="line__angle_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a> = msg.data;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;}</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">  157</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>(<span class="keyword">const</span> sensor_msgs::ImageConstPtr &amp;<a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;{</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  <span class="keywordflow">try</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  {</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <a class="code" href="line__angle_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a>++;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <a class="code" href="line__angle_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a> = cv_bridge::toCvShare(msg, <span class="stringliteral">&quot;bgr8&quot;</span>)-&gt;image;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;newframe&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <a class="code" href="line__angle_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a>.copyTo(<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    cv::imshow(<span class="stringliteral">&quot;newframe&quot;</span>, <a class="code" href="line__angle_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a>);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  }</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keywordflow">catch</span> (cv_bridge::Exception &amp;e)</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    ROS_ERROR(<span class="stringliteral">&quot;Could not convert from &#39;%s&#39; to &#39;bgr8&#39;.&quot;</span>, msg-&gt;encoding.c_str());</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  }</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;}</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">  175</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__angle_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[])</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;{</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keywordtype">int</span> <a class="code" href="namespaceremote__gui.html#ab56538ef096108ce65caffcb4fb2fb4d">height</a>, width, step, channels;  <span class="comment">// parameters of the image we are working on</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  std::string Video_Name = <span class="stringliteral">&quot;Random_Video&quot;</span>;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  <span class="keywordflow">if</span> (argc &gt;= 2)</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <a class="code" href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keywordflow">if</span> (argc == 3)</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  {</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <a class="code" href="line__angle_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    std::string avi = <span class="stringliteral">&quot;.avi&quot;</span>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    Video_Name = (argv[2]) + avi;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  }</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  cv::VideoWriter output_cap(Video_Name, CV_FOURCC(<span class="charliteral">&#39;D&#39;</span>, <span class="charliteral">&#39;I&#39;</span>, <span class="charliteral">&#39;V&#39;</span>, <span class="charliteral">&#39;X&#39;</span>), 9, cv::Size(640, 480));</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;gate_detection&quot;</span>);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  ros::NodeHandle n;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  ros::Publisher pub = n.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/ip/lineAngle&quot;</span>, 1000);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;gate_detection_switch&quot;</span>, 1000, &amp;<a class="code" href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a>);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  ros::Rate loop_rate(10);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  image_transport::ImageTransport it(n);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>, 1, <a class="code" href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;After Color Filtering&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;Contours&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;LINES&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a>)</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  {</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F1&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F2&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F3&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t1min&quot;</span>, <span class="stringliteral">&quot;F1&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, 260, NULL);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t1max&quot;</span>, <span class="stringliteral">&quot;F1&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, 260, NULL);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t2min&quot;</span>, <span class="stringliteral">&quot;F2&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, 260, NULL);</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t2max&quot;</span>, <span class="stringliteral">&quot;F2&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, 260, NULL);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t3min&quot;</span>, <span class="stringliteral">&quot;F3&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, 260, NULL);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t3max&quot;</span>, <span class="stringliteral">&quot;F3&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>, 260, NULL);</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  }</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="comment">// capture size -</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  CvSize size = cvSize(width, height);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="comment">// Initialize different images that are going to be used in the program</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  <span class="comment">// image converted to HSV plane</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="comment">// asking for the minimum distance where bwe fire torpedo</span></div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="keywordflow">while</span> (ros::ok())</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  {</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    loop_rate.sleep();</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="comment">// Get one frame</span></div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.empty())</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    {</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;empty frame \n&quot;</span>;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    }</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a>)</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      output_cap.write(<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="comment">// get the image data</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    height = <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.rows;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    width = <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.cols;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    step = <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.step;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    <span class="comment">// Covert color space to HSV as it is much easier to filter colors in the HSV color-space.</span></div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    cv::cvtColor(<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>, hsv_frame, CV_BGR2HSV);</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    cv::Scalar hsv_min = cv::Scalar(<a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, 0);</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    cv::Scalar hsv_max = cv::Scalar(<a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>, 0);</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    <span class="comment">// Filter out colors which are out of range.</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="comment">// Split image into its 3 one dimensional images</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    cv::Mat thresholded_hsv[3];</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    cv::split(hsv_frame, thresholded_hsv);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="comment">// Filter out colors which are out of range.</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    cv::inRange(thresholded_hsv[0], cv::Scalar(<a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, 0, 0, 0), cv::Scalar(<a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, 0, 0, 0), thresholded_hsv[0]);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    cv::inRange(thresholded_hsv[1], cv::Scalar(<a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, 0, 0, 0), cv::Scalar(<a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, 0, 0, 0), thresholded_hsv[1]);</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    cv::inRange(thresholded_hsv[2], cv::Scalar(<a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, 0, 0, 0), cv::Scalar(<a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>, 0, 0, 0), thresholded_hsv[2]);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    cv::imshow(<span class="stringliteral">&quot;After Color Filtering&quot;</span>, thresholded);  <span class="comment">// The stream after color filtering</span></div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a>)</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    {</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F1&quot;</span>, thresholded_hsv[0]);              <span class="comment">// individual filters</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F2&quot;</span>, thresholded_hsv[1]);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F3&quot;</span>, thresholded_hsv[2]);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    }</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 27)</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a>)</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    {</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      <span class="comment">// find contours</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      std::vector&lt;std::vector&lt;cv::Point&gt; &gt; contours;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      cv::Mat thresholded_Mat = thresholded;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  <span class="comment">// Find the contours in the image</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;      <span class="keywordtype">double</span> largest_area = 0, largest_contour_index = 0;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;      <span class="keywordflow">if</span> (contours.empty())</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      {</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>.data = -<a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> * (180 / 3.14)+90;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        pub.publish(<a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        ros::spinOnce();</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="comment">// If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),</span></div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        <span class="comment">// remove higher bits using AND operator</span></div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 27)</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;          <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      }</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; contours.size(); i++)  <span class="comment">// iterate through each contour.</span></div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      {</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keywordtype">double</span> a = contourArea(contours[i], <span class="keyword">false</span>);  <span class="comment">//  Find the area of contour</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keywordflow">if</span> (a &gt; largest_area)</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        {</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;          largest_area = a;</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;          largest_contour_index = i;  <span class="comment">// Store the index of largest contour</span></div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        }</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      }</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      <span class="comment">// Convex HULL</span></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      std::vector&lt;std::vector&lt;cv::Point&gt; &gt; hull(contours.size());</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      cv::Mat Drawing(thresholded_Mat.rows, thresholded_Mat.cols, CV_8UC1, cv::Scalar::all(0));</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      std::vector&lt;cv::Vec4i&gt; hierarchy;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      cv::Scalar color(255, 255, 255);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      cv::imshow(<span class="stringliteral">&quot;Contours&quot;</span>, Drawing);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;      std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;      Drawing.copyTo(<a class="code" href="line__angle_8cpp.html#a3d97c374036ee59cc995dea181e330cd">sent_to_callback</a>);</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;      <span class="comment">/*</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;<span class="comment">      msg.data never takes positive 90</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="comment">      when the angle is 90 it will show -90</span></div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="comment">      -------------TO BE CORRECTED-------------</span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="comment">      */</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;      msg.data = -<a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> * (180 / 3.14)+90;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#addc99401340ecb10778277e17c36c77d">lineCount</a> &gt; 0)</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      {</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        pub.publish(msg);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;      }</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;      <a class="code" href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3">callback</a>(0, 0);        <span class="comment">// for displaying the thresholded image initially</span></div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      <span class="comment">// loop_rate.sleep();</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;      <span class="comment">// If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      <span class="comment">// remove higher bits using AND operator</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 27)</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    }</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    {</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;       std::cout &lt;&lt; <span class="stringliteral">&quot;waiting\n&quot;</span>;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;       ros::spinOnce();</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    }</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  }</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  output_cap.release();</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;}</div>
+<div class="ttc" id="line__angle_8cpp_html_a80056fe52eb002e0f6a24b2fc95fccc2"><div class="ttname"><a href="line__angle_8cpp.html#a80056fe52eb002e0f6a24b2fc95fccc2">minLineLength</a></div><div class="ttdeci">int minLineLength</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00063">line_angle.cpp:63</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="line__angle_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00175">line_angle.cpp:175</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00049">line_angle.cpp:49</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a001242156c78872a9c28278f6660b471"><div class="ttname"><a href="line__angle_8cpp.html#a001242156c78872a9c28278f6660b471">maxLineGap</a></div><div class="ttdeci">int maxLineGap</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00064">line_angle.cpp:64</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_ade44e788b0f1c920c3e9175b4d9d9264"><div class="ttname"><a href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a></div><div class="ttdeci">int t2max</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00047">line_angle.cpp:47</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a22bf1f49f906224b1a4b38010110e929"><div class="ttname"><a href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a></div><div class="ttdeci">cv::Mat frame</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00072">line_angle.cpp:72</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_aa38e9d255a999cd6d195e8e9c33e4879"><div class="ttname"><a href="line__angle_8cpp.html#aa38e9d255a999cd6d195e8e9c33e4879">HighH</a></div><div class="ttdeci">int HighH</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00053">line_angle.cpp:53</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a47e5cb4d7343ee96fb2f1173ce2c3376"><div class="ttname"><a href="line__angle_8cpp.html#a47e5cb4d7343ee96fb2f1173ce2c3376">houghThresh</a></div><div class="ttdeci">int houghThresh</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00065">line_angle.cpp:65</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a2ade67c5771e2cb04c8d9be363dc19d1"><div class="ttname"><a href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a></div><div class="ttdeci">double finalAngle</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00068">line_angle.cpp:68</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_af1aa22880cc9c13f6bcd0753a95dcdbf"><div class="ttname"><a href="line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf">computeMean</a></div><div class="ttdeci">double computeMean(vector&lt; double &gt; &amp;newAngles)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00077">line_angle.cpp:77</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_aed7983d3e2d03188fff7eaf758bfd3e5"><div class="ttname"><a href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a></div><div class="ttdeci">int t3max</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00047">line_angle.cpp:47</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_aac374e320caaadeca4874add33b62af2"><div class="ttname"><a href="line__angle_8cpp.html#aac374e320caaadeca4874add33b62af2">w</a></div><div class="ttdeci">int w</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00043">line_angle.cpp:43</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_acfcbbafabf2739cf26e31eb19a578e4f"><div class="ttname"><a href="line__angle_8cpp.html#acfcbbafabf2739cf26e31eb19a578e4f">imgLines</a></div><div class="ttdeci">cv::Mat imgLines</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00073">line_angle.cpp:73</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_abde676b8fcb59f927b1aed637c6f244e"><div class="ttname"><a href="line__angle_8cpp.html#abde676b8fcb59f927b1aed637c6f244e">minDeviation</a></div><div class="ttdeci">double minDeviation</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00069">line_angle.cpp:69</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a3d97c374036ee59cc995dea181e330cd"><div class="ttname"><a href="line__angle_8cpp.html#a3d97c374036ee59cc995dea181e330cd">sent_to_callback</a></div><div class="ttdeci">cv::Mat sent_to_callback</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00073">line_angle.cpp:73</a></div></div>
+<div class="ttc" id="masterAlternate_8cpp_html_a2fbc4cadeb0c52cc1ae0e99c790ee86c"><div class="ttname"><a href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; task_commons::lineAction &gt; line</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00018">masterAlternate.cpp:18</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a31ba5784b0e1d1d0451a1142764519dd"><div class="ttname"><a href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a></div><div class="ttdeci">int t2min</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00047">line_angle.cpp:47</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a7327bdf8364bb05cca2878c4ca24460d"><div class="ttname"><a href="line__angle_8cpp.html#a7327bdf8364bb05cca2878c4ca24460d">LowS</a></div><div class="ttdeci">int LowS</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00055">line_angle.cpp:55</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_aab7e318a33e12402d7111aba3fa2644f"><div class="ttname"><a href="line__angle_8cpp.html#aab7e318a33e12402d7111aba3fa2644f">LowH</a></div><div class="ttdeci">int LowH</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00052">line_angle.cpp:52</a></div></div>
+<div class="ttc" id="namespaceremote__gui_html_ab56538ef096108ce65caffcb4fb2fb4d"><div class="ttname"><a href="namespaceremote__gui.html#ab56538ef096108ce65caffcb4fb2fb4d">remote_gui.height</a></div><div class="ttdeci">int height</div><div class="ttdef"><b>Definition:</b> <a href="remote__gui_8py_source.html#l00106">remote_gui.py:106</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a6150e0515f7202e2fb518f7206ed97dc"><div class="ttname"><a href="line__angle_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a></div><div class="ttdeci">int x</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00043">line_angle.cpp:43</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a0a2f84ed7838f07779ae24c5a9086d33"><div class="ttname"><a href="line__angle_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a></div><div class="ttdeci">int y</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00043">line_angle.cpp:43</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a3ed57096651b587c2bf716fa78048153"><div class="ttname"><a href="line__angle_8cpp.html#a3ed57096651b587c2bf716fa78048153">rho</a></div><div class="ttdeci">double rho</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00067">line_angle.cpp:67</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_ad7381be61d65d5f6568cb88a9a0baa0e"><div class="ttname"><a href="line__angle_8cpp.html#ad7381be61d65d5f6568cb88a9a0baa0e">LowV</a></div><div class="ttdeci">int LowV</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00058">line_angle.cpp:58</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a873b8202a3128894f1e085b2e301d9df"><div class="ttname"><a href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a></div><div class="ttdeci">int t1max</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00047">line_angle.cpp:47</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_af8b5cbf8f6c14e5b72a685aa01d4a7fb"><div class="ttname"><a href="line__angle_8cpp.html#af8b5cbf8f6c14e5b72a685aa01d4a7fb">computeMode</a></div><div class="ttdeci">double computeMode(vector&lt; double &gt; &amp;newAngles)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00088">line_angle.cpp:88</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a46f6551ea6d690e0cbb8d33ad39f61da"><div class="ttname"><a href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a></div><div class="ttdeci">int t3min</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00047">line_angle.cpp:47</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a463e2ef0dea8e5012442db3fd47ff11c"><div class="ttname"><a href="line__angle_8cpp.html#a463e2ef0dea8e5012442db3fd47ff11c">lineThresh</a></div><div class="ttdeci">int lineThresh</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00062">line_angle.cpp:62</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_addc99401340ecb10778277e17c36c77d"><div class="ttname"><a href="line__angle_8cpp.html#addc99401340ecb10778277e17c36c77d">lineCount</a></div><div class="ttdeci">int lineCount</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00047">line_angle.cpp:47</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a8b3ab54ed3e81c69863d65e4e6c424a0"><div class="ttname"><a href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a></div><div class="ttdeci">bool flag</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00045">line_angle.cpp:45</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a29640ad74517ae3023b67a75773c3f9a"><div class="ttname"><a href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a></div><div class="ttdeci">int t1min</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00047">line_angle.cpp:47</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a1ea063dec9d8d7f164bbcf2caf62a8e3"><div class="ttname"><a href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3">callback</a></div><div class="ttdeci">void callback(int, void *)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00119">line_angle.cpp:119</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_ad43c3812e6d13e0518d9f8b8f463ffcf"><div class="ttname"><a href="line__angle_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a></div><div class="ttdeci">int count</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00074">line_angle.cpp:74</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_ac986a1f679ce7605c225fc9d7040ffa6"><div class="ttname"><a href="line__angle_8cpp.html#ac986a1f679ce7605c225fc9d7040ffa6">HighV</a></div><div class="ttdeci">int HighV</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00059">line_angle.cpp:59</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a2d043c356e83ee5dde583a82999bef8b"><div class="ttname"><a href="line__angle_8cpp.html#a2d043c356e83ee5dde583a82999bef8b">count_avg</a></div><div class="ttdeci">int count_avg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00074">line_angle.cpp:74</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a38e4f18320e2e898968ad566b9ab5a62"><div class="ttname"><a href="line__angle_8cpp.html#a38e4f18320e2e898968ad566b9ab5a62">HighS</a></div><div class="ttdeci">int HighS</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00056">line_angle.cpp:56</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_adfa06e3fe6169ecfb3a176aa2f8194fc"><div class="ttname"><a href="line__angle_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a></div><div class="ttdeci">cv::Mat newframe</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00073">line_angle.cpp:73</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a31312a6881a1fcac1c757c95025214c5"><div class="ttname"><a href="line__angle_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a></div><div class="ttdeci">bool IP</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00044">line_angle.cpp:44</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a0d7dfd9133ce1e6b48bfdc8249db33d1"><div class="ttname"><a href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a></div><div class="ttdeci">void imageCallback(const sensor_msgs::ImageConstPtr &amp;msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00157">line_angle.cpp:157</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_a14f94e529dff0b8bfba8e16fbe9755d6"><div class="ttname"><a href="line__angle_8cpp.html#a14f94e529dff0b8bfba8e16fbe9755d6">z</a></div><div class="ttdeci">int z</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00043">line_angle.cpp:43</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_ace8491b7fae4075d5dba360be2af8c16"><div class="ttname"><a href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a></div><div class="ttdeci">void gateListener(std_msgs::Bool msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00152">line_angle.cpp:152</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_adb12876cf5ceaeef805d9553c935730a"><div class="ttname"><a href="line__angle_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a></div><div class="ttdeci">bool video</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00046">line_angle.cpp:46</a></div></div>
+<div class="ttc" id="arduino__node_8cpp_html_a930b83edda39ee8cfa78dd4574a50bc3"><div class="ttname"><a href="arduino__node_8cpp.html#a930b83edda39ee8cfa78dd4574a50bc3">sum</a></div><div class="ttdeci">int sum</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00044">arduino_node.cpp:44</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 14 2016 11:10:40 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 14 2016 20:52:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

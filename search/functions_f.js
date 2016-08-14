@@ -9,6 +9,7 @@ var searchData=
   ['thrustersouthsway',['thrusterSouthSway',['../arduino__node_8cpp.html#a26ba31bae93400833d49b39d7242c5c6',1,'thrusterSouthSway(int pwm, int isRight):&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a26ba31bae93400833d49b39d7242c5c6',1,'thrusterSouthSway(int pwm, int isRight):&#160;testing_arduino_node.cpp']]],
   ['thrustersouthup',['thrusterSouthUp',['../arduino__node_8cpp.html#a23850229952a66df1045f65e08e69903',1,'thrusterSouthUp(int pwm, int isUpward):&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a23850229952a66df1045f65e08e69903',1,'thrusterSouthUp(int pwm, int isUpward):&#160;testing_arduino_node.cpp']]],
   ['thrusterwest',['thrusterWest',['../arduino__node_8cpp.html#a944e26b7801dd12b5adb236b219cdeb5',1,'thrusterWest(int pwm, int isForward):&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a944e26b7801dd12b5adb236b219cdeb5',1,'thrusterWest(int pwm, int isForward):&#160;testing_arduino_node.cpp']]],
+  ['torpedolistener',['torpedoListener',['../cupid__detection_8cpp.html#a7c0ebfe6b31c897994082445bc9820b8',1,'cupid_detection.cpp']]],
   ['turncb',['turnCb',['../turningXYTest_8cpp.html#aa0d489af03addff074bfda4df2c5b0df',1,'turningXYTest.cpp']]],
   ['turningoutputpwmmapping',['turningOutputPWMMapping',['../classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66',1,'innerActionClass']]]
 ];

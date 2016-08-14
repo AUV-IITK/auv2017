@@ -124,7 +124,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  ros::NodeHandle <a class="code" href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a>;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  ros::Publisher chatter_pub = nh.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/sensors/imu/yaw&quot;</span>, 1000);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  sensor_msgs::Imu imu_msg;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  std_msgs::Float64 msg;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// Read sensors, init DCM algorithm</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  removegyrooff();</div>
@@ -192,6 +192,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    loopRate.sleep();</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
+<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00049">line_angle.cpp:49</a></div></div>
 <div class="ttc" id="namespacemock__imu__eular_html_ac97cc167218d6c5e6230215c23e5157d"><div class="ttname"><a href="namespacemock__imu__eular.html#ac97cc167218d6c5e6230215c23e5157d">mock_imu_eular.roll</a></div><div class="ttdeci">float roll</div><div class="ttdef"><b>Definition:</b> <a href="mock__imu__eular_8py_source.html#l00007">mock_imu_eular.py:7</a></div></div>
 <div class="ttc" id="yawDirect_8cpp_html_aee9ce76a3496550d4abf9f8e8979beec"><div class="ttname"><a href="yawDirect_8cpp.html#aee9ce76a3496550d4abf9f8e8979beec">read_sensors</a></div><div class="ttdeci">void read_sensors()</div><div class="ttdef"><b>Definition:</b> <a href="yawDirect_8cpp_source.html#l00012">yawDirect.cpp:12</a></div></div>
 <div class="ttc" id="arduino__node_8cpp_html_a8c8f15207982b3e185f86e1b4968e70d"><div class="ttname"><a href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a></div><div class="ttdeci">ros::NodeHandle nh</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00048">arduino_node.cpp:48</a></div></div>
@@ -203,7 +204,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 14 2016 11:10:39 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 14 2016 20:52:13 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

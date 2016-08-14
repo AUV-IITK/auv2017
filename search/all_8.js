@@ -6,7 +6,7 @@ var searchData=
   ['gate_5fdetection_2ecpp',['gate_detection.cpp',['../gate__detection_8cpp.html',1,'']]],
   ['gate_5fserver_2ecpp',['gate_server.cpp',['../gate__server_8cpp.html',1,'']]],
   ['gate_5fserver_5f',['gate_server_',['../classTaskGateInnerClass.html#a0e935c0dd2dac8d86cdaefe485406737',1,'TaskGateInnerClass']]],
-  ['gatelistener',['gateListener',['../gate__detection_8cpp.html#ace8491b7fae4075d5dba360be2af8c16',1,'gate_detection.cpp']]],
+  ['gatelistener',['gateListener',['../gate__detection_8cpp.html#ace8491b7fae4075d5dba360be2af8c16',1,'gateListener(std_msgs::Bool msg):&#160;gate_detection.cpp'],['../line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16',1,'gateListener(std_msgs::Bool msg):&#160;line_angle.cpp']]],
   ['gatenavigation',['gateNavigation',['../classTaskGateInnerClass.html#ae315d8da46a88319401587122466c0ad',1,'TaskGateInnerClass']]],
   ['gazebo',['gazebo',['../namespacegazebo.html',1,'']]],
   ['generate_5fdocs_2esh',['generate_docs.sh',['../generate__docs_8sh.html',1,'']]],

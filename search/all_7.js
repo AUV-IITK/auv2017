@@ -1,11 +1,12 @@
 var searchData=
 [
   ['feedback_5f',['feedback_',['../classinnerActionClass.html#aa0cb2ade2bab681d9aa87d6b98d7f334',1,'innerActionClass::feedback_()'],['../classinnerActionClass.html#a9898211d029ad5aafbd58958cba2b9d8',1,'innerActionClass::feedback_()'],['../classinnerActionClass.html#a4796f128b7c7e23ed5b5db0612bfdbb1',1,'innerActionClass::feedback_()'],['../classinnerActionClass.html#af4288416220e7b0c65f2f8feae398a6c',1,'innerActionClass::feedback_()'],['../classTaskBuoyInnerClass.html#a0db4b5ebb7f98052d51e636dd2bab741',1,'TaskBuoyInnerClass::feedback_()'],['../classTaskGateInnerClass.html#a193c66be65a0be716447689628fea817',1,'TaskGateInnerClass::feedback_()'],['../classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14',1,'TaskLineInnerClass::feedback_()']]],
+  ['finalangle',['finalAngle',['../line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1',1,'line_angle.cpp']]],
   ['finalangularposition',['finalAngularPosition',['../turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3',1,'turningXY.cpp']]],
   ['finaldepth',['finalDepth',['../upward_8cpp.html#a309e8371bf51387a280e72728e343ffa',1,'upward.cpp']]],
   ['finalforwardposition',['finalForwardPosition',['../forward_8cpp.html#a093edcb1e86e027d1bb0834d346fbbc5',1,'forward.cpp']]],
   ['finalsideposition',['finalSidePosition',['../sideward_8cpp.html#a3ca9174bdf5743bede143545c8bf6c66',1,'sideward.cpp']]],
-  ['flag',['flag',['../buoy__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;gate_detection.cpp'],['../line__centralize_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;line_centralize.cpp'],['../line__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;line_detection.cpp']]],
+  ['flag',['flag',['../buoy__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;gate_detection.cpp'],['../line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;line_angle.cpp'],['../line__centralize_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;line_centralize.cpp'],['../line__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;line_detection.cpp'],['../cupid__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0',1,'flag():&#160;cupid_detection.cpp']]],
   ['format_5fall_2esh',['format_all.sh',['../format__all_8sh.html',1,'']]],
   ['format_5fbash_2esh',['format_bash.sh',['../format__bash_8sh.html',1,'']]],
   ['format_5fcmakelist_2esh',['format_cmakelist.sh',['../format__cmakelist_8sh.html',1,'']]],
@@ -25,7 +26,7 @@ var searchData=
   ['forwardserver_5f',['forwardServer_',['../classinnerActionClass.html#ae783d9a0800f3c8085bf1182704d3545',1,'innerActionClass']]],
   ['forwardsuccess',['forwardSuccess',['../masterAlternate_8cpp.html#a2bc74ef7e23736b9d57de94f762011e5',1,'masterAlternate.cpp']]],
   ['forwardtest_2ecpp',['forwardTest.cpp',['../forwardTest_8cpp.html',1,'']]],
-  ['frame',['frame',['../buoy__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;gate_detection.cpp'],['../line__centralize_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;line_centralize.cpp'],['../line__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;line_detection.cpp']]],
+  ['frame',['frame',['../buoy__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;buoy_detection.cpp'],['../gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;gate_detection.cpp'],['../line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;line_angle.cpp'],['../line__centralize_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;line_centralize.cpp'],['../line__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;line_detection.cpp'],['../cupid__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929',1,'frame():&#160;cupid_detection.cpp']]],
   ['frontcenter',['FrontCenter',['../classTaskLineInnerClass.html#ad5293972040c956454c3fa3857e14cf2',1,'TaskLineInnerClass']]],
   ['full_5fforce',['FULL_FORCE',['../varun__motion__plugin_8cpp.html#a042c06aadefed8554f95464205dececc',1,'varun_motion_plugin.cpp']]]
 ];

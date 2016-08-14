@@ -185,7 +185,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad3a40ff59b53acb92bf53f6d8739fca0">yaw_pub_</a>.publish(imu_data);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed">   97</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed">lineDetectedListener</a>(std_msgs::Bool msg)</div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed">   97</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed">lineDetectedListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  {</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">if</span> (msg.data)</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#ab05dd6a3432c2bec5c4ecb6c80ad678d">isOrange</a> = <span class="keyword">true</span>;</div>
@@ -201,7 +201,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a977b9dc415cc21cf6246abb4e51e5750">present_Y_</a>.publish(<a class="code" href="classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc">data_Y_</a>);</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  }</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7">  113</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7">lineAngleListener</a>(std_msgs::Float64 msg)</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7">  113</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7">lineAngleListener</a>(std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  {</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data = msg.data;</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  }</div>
@@ -404,42 +404,42 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
 <div class="line"><a name="l00314"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a196c7a18e88a27bf727ce68df3e50bd3">  314</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a196c7a18e88a27bf727ce68df3e50bd3">detection_switch_on</a>()</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;  {</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a00cbb3db5c2420b2891a5f2983ad88e0">switch_detection</a>.publish(msg);</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  }</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;</div>
 <div class="line"><a name="l00321"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#acc1c7357342276415f428d1948b28af8">  321</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#acc1c7357342276415f428d1948b28af8">detection_switch_off</a>()</div>
 <div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;  {</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a00cbb3db5c2420b2891a5f2983ad88e0">switch_detection</a>.publish(msg);</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  }</div>
 <div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
 <div class="line"><a name="l00328"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a41ec4a9e7262affadb1cb4c092656b81">  328</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a41ec4a9e7262affadb1cb4c092656b81">angle_switch_on</a>()</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  {</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a29ea58ef7091bd7af9285886a91f2843">switch_angle</a>.publish(msg);</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  }</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
 <div class="line"><a name="l00335"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#aa83dce2e31d0109c119828ddc401df6d">  335</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#aa83dce2e31d0109c119828ddc401df6d">angle_switch_off</a>()</div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  {</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a29ea58ef7091bd7af9285886a91f2843">switch_angle</a>.publish(msg);</div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  }</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;</div>
 <div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a888642542a13bc21bfe0d387472548fd">  342</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a888642542a13bc21bfe0d387472548fd">centralize_switch_on</a>()</div>
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  {</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120">switch_centralize</a>.publish(msg);</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  }</div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;</div>
 <div class="line"><a name="l00349"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ae9b668844b226c17307a08f720d9ced3">  349</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#ae9b668844b226c17307a08f720d9ced3">centralize_switch_off</a>()</div>
 <div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  {</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120">switch_centralize</a>.publish(msg);</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  }</div>
@@ -461,6 +461,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classTaskLineInnerClass_html_a3e167551112a32f8666a54f4d04d98b7"><div class="ttname"><a href="classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7">TaskLineInnerClass::lineAngleListener</a></div><div class="ttdeci">void lineAngleListener(std_msgs::Float64 msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00113">line_server.cpp:113</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html_a1d55a176f3640caec242edc3174b87d9"><div class="ttname"><a href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">TaskLineInnerClass::success</a></div><div class="ttdeci">bool success</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00056">line_server.cpp:56</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html_ac0bdb40884c7d8792a37f5a8c818e1a0"><div class="ttname"><a href="classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0">TaskLineInnerClass::lineCentralizeListener</a></div><div class="ttdeci">void lineCentralizeListener(std_msgs::Float64MultiArray array)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00105">line_server.cpp:105</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00049">line_angle.cpp:49</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html_ad3a40ff59b53acb92bf53f6d8739fca0"><div class="ttname"><a href="classTaskLineInnerClass.html#ad3a40ff59b53acb92bf53f6d8739fca0">TaskLineInnerClass::yaw_pub_</a></div><div class="ttdeci">ros::Publisher yaw_pub_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00046">line_server.cpp:46</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html_ad5aa1a7c17a7315d6b03f250c804fcb9"><div class="ttname"><a href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">TaskLineInnerClass::line_server_</a></div><div class="ttdeci">Server line_server_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00033">line_server.cpp:33</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html_a0175ab0e22c0e775b8bb81f9011e47cf"><div class="ttname"><a href="classTaskLineInnerClass.html#a0175ab0e22c0e775b8bb81f9011e47cf">TaskLineInnerClass::result_</a></div><div class="ttdeci">task_commons::lineResult result_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00036">line_server.cpp:36</a></div></div>
@@ -515,7 +516,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 14 2016 11:10:41 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 14 2016 20:52:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
