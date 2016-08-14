@@ -22,7 +22,7 @@
 bool IP = true;
 bool flag = false;
 bool video = false;
-int t1min = 0, t1max = 130, t2min = 0, t2max = 100, t3min = 150, t3max = 260;  // Default Params
+int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
 
 cv::Mat frame;
 cv::Mat newframe;
@@ -84,6 +84,22 @@ int main(int argc, char* argv[])
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/gate", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("gate_detection_switch", 1000, &gateListener);
   ros::Rate loop_rate(10);
+
+  int t1minParam, t1maxParam, t2minParam, t2maxParam, t3minParam, t3maxParam;
+
+  n.getParam("buoy_detection/t1maxParam", t1maxParam);
+  n.getParam("buoy_detection/t1minParam", t1minParam);
+  n.getParam("buoy_detection/t2maxParam", t2maxParam);
+  n.getParam("buoy_detection/t2minParam", t2minParam);
+  n.getParam("buoy_detection/t3maxParam", t3maxParam);
+  n.getParam("buoy_detection/t3minParam", t3minParam);
+
+  t1min = t1minParam;
+  t1max = t1maxParam;
+  t2min = t2minParam;
+  t2max = t2maxParam;
+  t3min = t3minParam;
+  t3max = t3maxParam;
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
