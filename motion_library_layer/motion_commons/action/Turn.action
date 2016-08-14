@@ -3,7 +3,7 @@ float32 AngleToTurn
 int32 loop
 ---
 #result definition
-bool MotionCompleted
+bool Result
 ---
 #feedback
 float32 AngleRemaining
