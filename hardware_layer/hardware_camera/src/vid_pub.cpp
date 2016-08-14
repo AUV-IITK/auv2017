@@ -4,6 +4,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>  // for converting the command line parameter to integer
+#include  <string>
 
 /*! \file
 * \brief super short description
@@ -14,18 +15,20 @@
 /*! member description */
 int main(int argc, char **argv)
 {
-  // Check if video source has been passed as a parameter
-  if (argv[1] == NULL)
-    return 1;
-
   ros::init(argc, argv, "image_publisher");
-  ros::NodeHandle nh;
+  ros::NodeHandle nh("~");
+  std::string topic_name, node_name, camera_number;
+  nh.getParam("node_name", node_name);
+  nh.getParam("topic_name", topic_name);
+  nh.getParam("camera_number", camera_number);
+  // Check if video source has been passed as a parameter
+
   image_transport::ImageTransport it(nh);
-  image_transport::Publisher pub = it.advertise("/varun/sensors/front_camera/image_raw", 1);
+  image_transport::Publisher pub = it.advertise(topic_name, 1);
 
   // Convert the passed as command line parameter index for the video device to
   // an integer
-  std::istringstream video_sourceCmd(argv[1]);
+  std::istringstream video_sourceCmd(camera_number);
   int video_source;
   // Check if it is indeed a number
   if (!(video_sourceCmd >> video_source))

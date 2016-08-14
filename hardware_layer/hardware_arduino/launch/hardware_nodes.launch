@@ -1,7 +1,14 @@
 <launch>
-  <node name="yawDirect" pkg="hardware_imu" type="yawDirect" respawn="true">
-      <remap from="/varun/sensors/imu/yaw" to="/varun/motion/yaw"/>
-  </node>
-  <node name="serial_node" pkg="rosserial_python" type="serial_node.py" args="/dev/arduino" respawn="true" >
-   </node>
+    <node name="yawDirect" pkg="hardware_imu" respawn="true" type="yawDirect"/>
+    <node name="serial_node" pkg="hardware_arduino" respawn="true" type="serial_node.sh"/>
+    <node name="bottom_camera" output="screen" pkg="hardware_camera" respawn="true" type="vid_pub">
+        <param name="topic_name" type="string" value="/varun/sensors/bottom_camera/image_raw"/>
+        <param name="node_name" type="string" value="bottom_camera"/>
+        <param name="camera_number" type="string" value="0"/>
+    </node>
+    <node name="forward_camera" output="screen" pkg="hardware_camera" respawn="true" type="vid_pub">
+        <param name="topic_name" type="string" value="/varun/sensors/forward_camera/image_raw"/>
+        <param name="node_name" type="string" value="forward_camera"/>
+        <param name="camera_number" type="string" value="1"/>
+    </node>
 </launch>
