@@ -141,16 +141,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="buoy__client_8cpp.html#ad9440159d345147328a3423995cc5112">goal</a>.order = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Action server started, sending goal.&quot;</span>);</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="comment">// Client &amp;can = *ptrClient;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">// can.cancelGoal();</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="comment">// ROS_INFO(&quot;Goal Cancelled&quot;);</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> &amp;can = *<a class="code" href="buoy__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">ptrClient</a>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="comment">// send goal</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  can.sendGoal(<a class="code" href="buoy__client_8cpp.html#ad9440159d345147328a3423995cc5112">goal</a>);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  boost::thread spin_thread(&amp;<a class="code" href="buoy__client_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">spinThread</a>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  ros::spin();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> &amp;can = *<a class="code" href="buoy__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">ptrClient</a>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">// send goal</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  can.sendGoal(<a class="code" href="buoy__client_8cpp.html#ad9440159d345147328a3423995cc5112">goal</a>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  boost::thread spin_thread(&amp;<a class="code" href="buoy__client_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">spinThread</a>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  ros::spin();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
 <div class="ttc" id="buoy__client_8cpp_html_ad9440159d345147328a3423995cc5112"><div class="ttname"><a href="buoy__client_8cpp.html#ad9440159d345147328a3423995cc5112">goal</a></div><div class="ttdeci">task_commons::buoyGoal goal</div><div class="ttdef"><b>Definition:</b> <a href="buoy__client_8cpp_source.html#l00013">buoy_client.cpp:13</a></div></div>
 <div class="ttc" id="forwardTest_8cpp_html_a7accf1f4e38117db922ecca2ebccfc94"><div class="ttname"><a href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::ForwardAction &gt; Client</div><div class="ttdef"><b>Definition:</b> <a href="forwardTest_8cpp_source.html#l00015">forwardTest.cpp:15</a></div></div>
 <div class="ttc" id="arduino__node_8cpp_html_a8c8f15207982b3e185f86e1b4968e70d"><div class="ttname"><a href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a></div><div class="ttdeci">ros::NodeHandle nh</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00048">arduino_node.cpp:48</a></div></div>
@@ -163,7 +160,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 14 2016 00:14:18 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 14 2016 00:23:19 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
