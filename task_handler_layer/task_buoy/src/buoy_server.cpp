@@ -136,7 +136,6 @@ public:
     else
     {
       ROS_INFO("Bot is not at height center, something went wrong");
-      ros::shutdown();
     }
   }
 
@@ -152,7 +151,6 @@ public:
     else
     {
       ROS_INFO("Bot is not at desired height, something went wrong");
-      ros::shutdown();
     }
   }
 
@@ -168,7 +166,6 @@ public:
     else
     {
       ROS_INFO("Bot is not at side center, something went wrong");
-      ros::shutdown();
     }
   }
 

@@ -50,9 +50,6 @@ int main(int argc, char **argv)
   goal.order = true;
   ROS_INFO("Action server started, sending goal.");
 
-  // Client &can = *ptrClient;
-  // can.cancelGoal();
-  // ROS_INFO("Goal Cancelled");
   Client &can = *ptrClient;
   // send goal
   can.sendGoal(goal);
