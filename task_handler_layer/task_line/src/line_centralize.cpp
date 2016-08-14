@@ -16,7 +16,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
 #include <string>
-#include "std_msgs/Float64MultiArray.h"
+#include <std_msgs/Float64MultiArray.h>
 
 bool IP = true;
 bool flag = false;
@@ -32,7 +32,7 @@ float mod(float x, float y)
   if (x - y > 0) return x;
   else return y;
 }
-void lineDetectedListener(std_msgs::Bool msg)
+void Switch_callback(std_msgs::Bool msg)
 {
   IP = msg.data;
 }
@@ -72,10 +72,10 @@ int main(int argc, char *argv[])
 
   cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
 
-  ros::init(argc, argv, "buoy_detection");
+  ros::init(argc, argv, "line_centralize");
   ros::NodeHandle n;
-  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/line", 1000);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_centralize_switch", 1000, &Switch_callback);
   ros::Rate loop_rate(10);
 
   image_transport::ImageTransport it(n);
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
   cvNamedWindow("COM", CV_WINDOW_NORMAL);
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
-  
+
   if (flag)
   {
     cvNamedWindow("F1", CV_WINDOW_NORMAL);
@@ -167,8 +167,6 @@ int main(int argc, char *argv[])
       {
         array.data.push_back(0);
         array.data.push_back(0);
-        array.data.push_back(0);
-        array.data.push_back(0);
 
         pub.publish(array);
         ros::spinOnce();
@@ -191,16 +189,16 @@ int main(int argc, char *argv[])
       // Convex HULL
       cv::Mat Drawing(thresholded.rows, thresholded.cols, CV_8UC1, cv::Scalar::all(0));
       std::vector<std::vector<cv::Point> >hull(1);
-      cv::convexHull(cv::Mat(contours[largest_contour_index]), hull[0], false);     
+      cv::convexHull(cv::Mat(contours[largest_contour_index]), hull[0], false);
       cv::Moments mu;
-      std::vector<cv::Vec4i> hierarchy;      
-      mu = cv::moments( hull[0], false );
+      std::vector<cv::Vec4i> hierarchy;
+      mu = cv::moments(hull[0], false);
       cv::Point2f center_of_mass;
-      center_of_mass = cv::Point2f( mu.m10/mu.m00 , mu.m01/mu.m00 );
+      center_of_mass = cv::Point2f(mu.m10/mu.m00 , mu.m01/mu.m00);
       cv::drawContours(Drawing, hull, 0, color, 2, 8, hierarchy);
       cv::circle(frame, center_of_mass, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
-      cv::imshow("COM",frame);
-      cv::imshow("Contours",Drawing);
+      cv::imshow("COM", frame);
+      cv::imshow("Contours", Drawing);
       cv::Point2f pt;
       pt.x = 320;  // size of my screen
       pt.y = 240;
@@ -212,7 +210,7 @@ int main(int argc, char *argv[])
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
         break;
-    }  
+    }
     else
     {
       std::cout << "waiting\n";
