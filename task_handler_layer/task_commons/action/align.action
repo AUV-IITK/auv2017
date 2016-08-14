@@ -1,8 +1,0 @@
-#goal definition
-bool StartDetection
----
-#result definition
-bool Aligned
----
-#feedback definition
-float32 AngleRemaining
