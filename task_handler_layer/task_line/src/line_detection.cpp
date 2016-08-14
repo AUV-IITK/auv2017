@@ -76,7 +76,6 @@ int detect(cv::Mat image)
                                       // has red color, Note : here the size of
                                       // image is 640X480 = 307200.
     return 1;
-
   return 0;
 }
 

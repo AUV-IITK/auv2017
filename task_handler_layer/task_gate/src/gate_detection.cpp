@@ -19,6 +19,7 @@
 #include <sstream>
 #include <string>
 
+int w = -2, x = -2, y = -2, z = -2;
 bool IP = true;
 bool flag = false;
 bool video = false;
@@ -239,15 +240,33 @@ int main(int argc, char* argv[])
       rectangle(frame_mat, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);
       circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
 
+      cv::imshow("Contours", Drawing);
+      cv::imshow("RealPic", frame_mat);
+
+      w = (boundRect[0].br()).x;
+      x = (boundRect[0].br()).y;
+      y = (boundRect[0].tl()).y;
+      z = (boundRect[0].tl()).x;
+      if (w == (frame.rows)-1 || x == (frame.cols)-1 || y == 1 || z == 1)
+      {
+        if ( y == 1)
+           array.data.push_back(-1);  //  hits top
+        if ( z == 1)
+          array.data.push_back(-2);  //  hits left
+        if ( w == frame.rows-1)
+          array.data.push_back(-3);  //  hits bottom
+        if ( x == frame.cols-1)
+          array.data.push_back(-4);  //  hits right
+        ros::spinOnce();
+        continue;
+      }
+      std::cout << w << " " << x << " " << y << " " << z << "\n" << frame.cols << "  frame  " << frame.rows << "\n";
+
       array.data.push_back((320 - center.x));
       array.data.push_back(-(240 - center.y));
       pub.publish(array);
 
-      cv::imshow("Contours", Drawing);
-      cv::imshow("RealPic", frame_mat);
-
       ros::spinOnce();
-      // loop_rate.sleep();
 
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator

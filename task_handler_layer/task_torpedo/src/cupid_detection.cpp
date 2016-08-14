@@ -1,17 +1,16 @@
 // Copyright 2016 AUV-IITK
-#include <iostream>
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
-#include "ros/ros.h"
-#include "std_msgs/Float64.h"
-#include <fstream>
-#include <vector>
 #include <cv.h>
 #include <highgui.h>
+#include <ros/ros.h>
 #include "std_msgs/String.h"
 #include "std_msgs/Int8.h"
+#include <fstream>
+#include <vector>
 #include <std_msgs/Bool.h>
 #include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <dynamic_reconfigure/server.h>
+#include <task_torpedo/torpedoConfig.h>
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
@@ -19,137 +18,35 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
 #include <string>
-#include "std_msgs/Header.h"
-using cv::Mat;
-using cv::split;
-using cv::Size;
-using cv::Scalar;
-using cv::normalize;
-using cv::Point;
-using cv::VideoCapture;
-using cv::NORM_MINMAX;
-using cv::MORPH_ELLIPSE;
-using cv::COLOR_BGR2HSV;
-using cv::destroyAllWindows;
-using cv::getStructuringElement;
-using cv::Vec4i;
-using cv::namedWindow;
-using std::vector;
-using std::endl;
-using std::cout;
-
-
 
 int w = -2, x = -2, y = -2, z = -2;
 bool IP = true;
 bool flag = false;
 bool video = false;
-int t1min = 0, t1max = 88, t2min = 89, t2max = 251, t3min = 0, t3max = 255, lineCount = 0;  // Default Params
-
-std_msgs::Float64 msg;
-// parameters in param file should be nearly the same as the commented values
-// params for an orange strip
-int LowH = 0;   // 0
-int HighH = 88;  // 88
-
-int LowS = 0;   // 0
-int HighS = 251;  // 251
-
-int LowV = 0;   // 0
-int HighV = 255;  // 255
-
-// params for hough line transform
-int lineThresh = 60;     // 60
-int minLineLength = 70;  // 70
-int maxLineGap = 10;     // 10
-int houghThresh = 15;    // 15
-
-double rho = 0.1;
-double finalAngle = -1;
-double minDeviation = 0.02;
-
+int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
 
 cv::Mat frame;
-cv::Mat newframe, sent_to_callback, imgLines;
+cv::Mat newframe;
 int count = 0, count_avg = 0;
 
-
-double computeMean(vector<double> &newAngles)
+float mod(float a)
 {
-  double sum = 0;
-  for (size_t i = 0; i < newAngles.size(); i++)
-  {
-    sum = sum + newAngles[i];
-  }
-  return sum / newAngles.size();
+  if (a > 0) return a;
+  else return - a;
 }
-// called when few lines are detected
-// to remove errors due to any stray results
-double computeMode(vector<double> &newAngles)
+void callback(task_torpedo::torpedoConfig &config, uint32_t level)
 {
-  double mode = newAngles[0];
-  int freq = 1;
-  int tempFreq;
-  double diff;
-  for (int i = 0; i < newAngles.size(); i++)
-  {
-    tempFreq = 1;
-
-    for (int j = i + 1; j < newAngles.size(); j++)
-    {
-      diff = newAngles[j] - newAngles[i] > 0.0 ? newAngles[j] - newAngles[i] : newAngles[i] - newAngles[j];
-      if (diff <= minDeviation)
-      {
-        tempFreq++;
-        newAngles.erase(newAngles.begin() + j);
-        j = j - 1;
-      }
-    }
-
-    if (tempFreq >= freq)
-    {
-      mode = newAngles[i];
-      freq = tempFreq;
-    }
-  }
-
-  return mode;
+  t1min = config.t1min_param;
+  t1max = config.t1max_param;
+  t2min = config.t2min_param;
+  t2max = config.t2max_param;
+  t3min = config.t3min_param;
+  t3max = config.t3max_param;
+  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
-void callback(int, void *)
-{
-  vector<Vec4i> lines;
-  HoughLinesP(sent_to_callback, lines, 1, CV_PI / 180, lineThresh, minLineLength, maxLineGap);
 
-  frame.copyTo(imgLines);
-  imgLines = Scalar(0, 0, 0);
-  vector<double> angles(lines.size());
-
-  lineCount = lines.size();
-  int j = 0;
-  for (size_t i = 0; i < lines.size(); i++)
-  {
-    Vec4i l = lines[i];
-    line(imgLines, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 255, 0), 1, CV_AA);
-    if ((l[2] == l[0]) || (l[1] == l[3])) continue;
-    angles[j] = atan(static_cast<double>(l[2] - l[0]) / (l[1] - l[3]));
-    j++;
-  }
-
-  imshow("LINES", imgLines + frame);
-
-  // if num of lines are large than one or two stray lines won't affect the mean
-  // much
-  // but if they are small in number than mode has to be taken to save the error
-  // due to those stray line
-
-  if (lines.size() > 0 && lines.size() < 10)
-    finalAngle = computeMode(angles);
-  else if (lines.size() > 0)
-    finalAngle = computeMean(angles);
-}
-
-void gateListener(std_msgs::Bool msg)
+void torpedoListener(std_msgs::Bool msg)
 {
   IP = msg.data;
 }
@@ -187,33 +84,49 @@ int main(int argc, char* argv[])
 
   cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
 
-  ros::init(argc, argv, "gate_detection");
+  ros::init(argc, argv, "cupid_detection");
   ros::NodeHandle n;
 
-  ros::Publisher pub = n.advertise<std_msgs::Float64>("/varun/ip/lineAngle", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("gate_detection_switch", 1000, &gateListener);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/torpedo", 1000);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("cupid_detection_switch", 1000, &torpedoListener);
   ros::Rate loop_rate(10);
+
+  int t1minParam, t1maxParam, t2minParam, t2maxParam, t3minParam, t3maxParam;
+
+  n.getParam("cupid_detection/t1maxParam", t1maxParam);
+  n.getParam("cupid_detection/t1minParam", t1minParam);
+  n.getParam("cupid_detection/t2maxParam", t2maxParam);
+  n.getParam("cupid_detection/t2minParam", t2minParam);
+  n.getParam("cupid_detection/t3maxParam", t3maxParam);
+  n.getParam("cupid_detection/t3minParam", t3minParam);
+
+  t1min = t1minParam;
+  t1max = t1maxParam;
+  t2min = t2minParam;
+  t2max = t2maxParam;
+  t3min = t3minParam;
+  t3max = t3maxParam;
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
+  dynamic_reconfigure::Server<task_torpedo::torpedoConfig> server;
+  dynamic_reconfigure::Server<task_torpedo::torpedoConfig>::CallbackType f;
+  f = boost::bind(&callback, _1, _2);
+  server.setCallback(f);
+
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("LINES", CV_WINDOW_NORMAL);
+  cvNamedWindow("RealPic", CV_WINDOW_NORMAL);
 
   if (flag)
   {
     cvNamedWindow("F1", CV_WINDOW_NORMAL);
     cvNamedWindow("F2", CV_WINDOW_NORMAL);
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
-
-    cvCreateTrackbar("t1min", "F1", &t1min, 260, NULL);
-    cvCreateTrackbar("t1max", "F1", &t1max, 260, NULL);
-    cvCreateTrackbar("t2min", "F2", &t2min, 260, NULL);
-    cvCreateTrackbar("t2max", "F2", &t2max, 260, NULL);
-    cvCreateTrackbar("t3min", "F3", &t3min, 260, NULL);
-    cvCreateTrackbar("t3max", "F3", &t3max, 260, NULL);
   }
+
+
   // capture size -
   CvSize size = cvSize(width, height);
 
@@ -223,7 +136,9 @@ int main(int argc, char* argv[])
 
   while (ros::ok())
   {
+    std_msgs::Float64MultiArray array;
     loop_rate.sleep();
+
     // Get one frame
     if (frame.empty())
     {
@@ -270,17 +185,20 @@ int main(int argc, char* argv[])
     if ((cvWaitKey(10) & 255) == 27)
       break;
 
-    if (IP)
+    if (!IP)
     {
       // find contours
       std::vector<std::vector<cv::Point> > contours;
       cv::Mat thresholded_Mat = thresholded;
       findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours in the image
       double largest_area = 0, largest_contour_index = 0;
+
       if (contours.empty())
       {
-        msg.data = -finalAngle * (180 / 3.14)+90;
-        pub.publish(msg);
+        array.data.push_back(0);
+        array.data.push_back(0);
+
+        pub.publish(array);
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
         // remove higher bits using AND operator
@@ -305,25 +223,41 @@ int main(int argc, char* argv[])
       cv::Mat Drawing(thresholded_Mat.rows, thresholded_Mat.cols, CV_8UC1, cv::Scalar::all(0));
       std::vector<cv::Vec4i> hierarchy;
       cv::Scalar color(255, 255, 255);
+
+      std::vector<cv::Rect> boundRect(1);
+
+      boundRect[0] = boundingRect(cv::Mat(contours[largest_contour_index]));
+
+      rectangle(Drawing, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);
+
+      cv::Point center;
+      center.x = ((boundRect[0].br()).x + (boundRect[0].tl()).x) / 2;
+      center.y = ((boundRect[0].tl()).y + (boundRect[0].br()).y) / 2;
+
       drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
+
+      cv::Mat frame_mat = frame;
+      cv::Point2f screen_center;
+      screen_center.x = 320;  // size of my screen
+      screen_center.y = 240;
+
+      circle(frame_mat, center, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
+      rectangle(frame_mat, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);
+      circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
+
       cv::imshow("Contours", Drawing);
+      cv::imshow("RealPic", frame_mat);
 
-      std_msgs::Float64 msg;
-      Drawing.copyTo(sent_to_callback);
-      /*
-      msg.data never takes positive 90
-      when the angle is 90 it will show -90
-      -------------TO BE CORRECTED-------------
-      */
-      msg.data = -finalAngle * (180 / 3.14)+90;
-      if (lineCount > 0)
-      {
-        pub.publish(msg);
-      }
-      callback(0, 0);        // for displaying the thresholded image initially
+      w = (boundRect[0].br()).x;
+      x = (boundRect[0].br()).y;
+      y = (boundRect[0].tl()).y;
+      z = (boundRect[0].tl()).x;
+      array.data.push_back((320 - center.x));
+      array.data.push_back(-(240 - center.y));
+      int side = mod(w-z);
+      array.data.push_back(side);
+      pub.publish(array);
       ros::spinOnce();
-      // loop_rate.sleep();
-
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
