@@ -1,0 +1,10 @@
+<launch>
+  <node name="torpedo_detection" pkg="task_torpedo" type="torpedo_detection" respawn="true"  output="screen">
+    <param name="t1minParam" type="int" value="0" />
+    <param name="t1maxParam" type="int" value="130" />
+    <param name="t2minParam" type="int" value="0" />
+    <param name="t2maxParam" type="int" value="100" />
+    <param name="t3minParam" type="int" value="150" />
+    <param name="t3maxParam" type="int" value="260" />
+  </node>
+</launch>
