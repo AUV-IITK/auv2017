@@ -3,6 +3,7 @@
 #include <std_msgs/Float32.h>
 #include <task_commons/lineAction.h>
 #include <task_commons/lineActionFeedback.h>
+#include <task_commons/lineActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
@@ -27,8 +28,7 @@ void spinThread()
   ros::shutdown();
 }
 
-// never ever put the argument of the callback function anything other then the
-// specified
+// never ever put the argument of the callback function anything other then the specified
 void forwardCb(task_commons::lineActionFeedback msg)
 {
   ROS_INFO("feedback recieved %f", msg.feedback.AngleRemaining);
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
   // here line_server is the name of the node of the actionserver.
   ros::Subscriber sub_ =
-      nh.subscribe<task_commons::lineActionFeedback>("/task_line_server/feedback", 1000, &forwardCb);
+      nh.subscribe<task_commons::lineActionFeedback>("/line_server/feedback", 1000, &forwardCb);
 
   Client testClient("line_server");
   ptrClient = &testClient;
