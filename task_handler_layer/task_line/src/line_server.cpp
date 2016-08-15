@@ -69,9 +69,9 @@ public:
     line_server_.registerPreemptCallback(boost::bind(&TaskLineInnerClass::preemptCB, this));
     present_X_ = nh_.advertise<std_msgs::Float64>("/varun/motion/y_distance", 1000);
     present_Y_ = nh_.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
-    switch_detection = nh_.advertise<std_msgs::Float64>("line_detection_switch", 1000);
-    switch_angle = nh_.advertise<std_msgs::Float64>("line_angle_switch", 1000);
-    switch_centralize = nh_.advertise<std_msgs::Float64>("line_centralize_switch", 1000);
+    switch_detection = nh_.advertise<std_msgs::Bool>("line_detection_switch", 1000);
+    switch_angle = nh_.advertise<std_msgs::Bool>("line_angle_switch", 1000);
+    switch_centralize = nh_.advertise<std_msgs::Bool>("line_centralize_switch", 1000);
     yaw_pub_ = nh_.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
 
     detection_data = nh_.subscribe<std_msgs::Bool>("/varun/ip/line_detection", 1000,
