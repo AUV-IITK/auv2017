@@ -6,7 +6,7 @@
 #include "std_msgs/Int8.h"
 #include <fstream>
 #include <dynamic_reconfigure/server.h>
-#include <task_buoy/buoyConfig.h>
+#include <task_octagon/octagonConfig.h>
 #include <vector>
 #include <std_msgs/Bool.h>
 #include <opencv2/core/core.hpp>
@@ -14,21 +14,18 @@
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
-#include "std_msgs/Float64MultiArray.h"
+#include "std_msgs/Float32MultiArray.h"
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
 #include <string>
+#include "std_msgs/Float64MultiArray.h"
 
-bool IP = false;
+bool IP = true;
 bool flag = false;
 bool video = false;
 int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
 
-cv::Mat frame;
-cv::Mat newframe;
-int count = 0, count_avg = 0;
-
-void callback(task_buoy::buoyConfig &config, uint32_t level)
+void callback(task_octagon::octagonConfig &config, uint32_t level)
 {
   t1min = config.t1min_param;
   t1max = config.t1max_param;
@@ -39,6 +36,15 @@ void callback(task_buoy::buoyConfig &config, uint32_t level)
   ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
+cv::Mat frame;
+cv::Mat newframe;
+int count = 0, count_avg = 0;
+
+float mod(float x, float y)
+{
+  if (x - y > 0) return x;
+  else return y;
+}
 void lineDetectedListener(std_msgs::Bool msg)
 {
   IP = msg.data;
@@ -62,7 +68,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
   std::string Video_Name = "Random_Video";
@@ -77,19 +83,19 @@ int main(int argc, char* argv[])
 
   cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
 
-  ros::init(argc, argv, "buoy_detection");
+  ros::init(argc, argv, "circle_detection");
   ros::NodeHandle n;
-  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/octagon", 1000);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("circle_detection_switch", 1000, &lineDetectedListener);
   ros::Rate loop_rate(10);
   int t1minParam, t1maxParam, t2minParam, t2maxParam, t3minParam, t3maxParam;
 
-  n.getParam("buoy_detection/t1maxParam", t1maxParam);
-  n.getParam("buoy_detection/t1minParam", t1minParam);
-  n.getParam("buoy_detection/t2maxParam", t2maxParam);
-  n.getParam("buoy_detection/t2minParam", t2minParam);
-  n.getParam("buoy_detection/t3maxParam", t3maxParam);
-  n.getParam("buoy_detection/t3minParam", t3minParam);
+  n.getParam("circle_detection/t1maxParam", t1maxParam);
+  n.getParam("circle_detection/t1minParam", t1minParam);
+  n.getParam("circle_detection/t2maxParam", t2maxParam);
+  n.getParam("circle_detection/t2minParam", t2minParam);
+  n.getParam("circle_detection/t3maxParam", t3maxParam);
+  n.getParam("circle_detection/t3minParam", t3minParam);
 
   t1min = t1minParam;
   t1max = t1maxParam;
@@ -105,8 +111,8 @@ int main(int argc, char* argv[])
   cvNamedWindow("circle", CV_WINDOW_NORMAL);
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
 
-  dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
-  dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
+  dynamic_reconfigure::Server<task_octagon::octagonConfig> server;
+  dynamic_reconfigure::Server<task_octagon::octagonConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
 
@@ -123,14 +129,14 @@ int main(int argc, char* argv[])
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
   float r[5];
 
-  for (int m=0; m++; m < 5)
-    r[m] = 0;
+  for (int i; i++; i < 5)
+    r[i] = 0;
 
-  while (ros::ok())
+  while (1)
   {
+    printf("137\n");
     std_msgs::Float64MultiArray array;
-    loop_rate.sleep();
-
+printf("139\n");
     if (frame.empty())
     {
       std::cout << "empty frame \n";
@@ -145,7 +151,7 @@ int main(int argc, char* argv[])
     height = frame.rows;
     width = frame.cols;
     step = frame.step;
-
+printf("154\n" );
     // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
     cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
     cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
@@ -160,6 +166,7 @@ int main(int argc, char* argv[])
     cv::inRange(thresholded_hsv[0], cv::Scalar(t1min, 0, 0, 0), cv::Scalar(t1max, 0, 0, 0), thresholded_hsv[0]);
     cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
     cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
+    printf("169\n");
     cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
     cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
 
@@ -173,19 +180,22 @@ int main(int argc, char* argv[])
     if ((cvWaitKey(10) & 255) == 27)
       break;
 
-    if (!IP)
+    if ((!IP))
     {
       // find contours
       std::vector<std::vector<cv::Point> > contours;
-      cv::Mat thresholded_Mat = thresholded;
-      findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
+      cv::Mat thresholded_Mat;
+      thresholded.copyTo(thresholded_Mat);
+      cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
+printf("190\n");
       if (contours.empty())
       {
         array.data.push_back(0);
         array.data.push_back(0);
         array.data.push_back(0);
         array.data.push_back(0);
+
         pub.publish(array);
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
@@ -216,72 +226,44 @@ int main(int argc, char* argv[])
       cv::Point2f pt;
       pt.x = 320;  // size of my screen
       pt.y = 240;
-
-      float r_avg = (r[0] + r[1] + r[2] + r[3] + r[4])/5;
-      if ((radius[0] < (r_avg + 10)) && (count_avg >= 5))
-      {
-         r[4] = r[3];
-         r[3] = r[2];
-         r[2] = r[1];
-         r[1] = r[0];
-         r[0] = radius[0];
-         count_avg++;
-         center_ideal[0] = center[0];
-      }
-      else if (count_avg<=5)
-      {
-        r[count_avg] = radius[0];
-         count_avg++;
-      }
-      else
-      {
-         count_avg=0;
-      }
-
+printf("228\n");
+printf("245\n");
       cv::Mat circles = frame;
-      circle(circles, center_ideal[0], r[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
-      circle(circles, center_ideal[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
+      circle(circles, center[0], radius[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
+      circle(circles, center[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
       circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
 
-      if (r[0] > 220)
-      {
-        array.data.push_back(-1);
-        array.data.push_back(-1);
-        array.data.push_back(-1);
-        array.data.push_back(-1);
-      }
-      else
-      {
-        float distance;
-        distance = pow(radius[0] / 7526.5, -.92678);  // function found using experiment
-        array.data.push_back(r[0]);                                        // publish radius
-        array.data.push_back((320 - center_ideal[0].x));
-        array.data.push_back(-(240 - center_ideal[0].y));
-        array.data.push_back(distance);
-      }
+     
+      array.data.push_back(r[0]);                                        // publish radius
+      array.data.push_back((320 - center_ideal[0].x));
+      array.data.push_back(-(240 - center_ideal[0].y));
+
       cv::imshow("circle", circles);            // Original stream with detected ball overlay
       cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
       pub.publish(array);
-
+printf("259\n");
       ros::spinOnce();
+printf("262\n");      
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
+      {  
+        printf("266\n");
         break;
-    }
-    else if (r[0] > 220)
-    {
-       array.data.push_back(-1);
-       array.data.push_back(-1);
-       array.data.push_back(-1);
-       array.data.push_back(-1);
+      }  
+      printf("270\n");
+      printf("271\n");
+      printf("272\n");
     }
     else
     {
+      printf("271\n");
       std::cout << "waiting\n";
       ros::spinOnce();
     }
+    printf("278\n");
   }
+  printf("280\n");
   output_cap.release();
   return 0;
 }
