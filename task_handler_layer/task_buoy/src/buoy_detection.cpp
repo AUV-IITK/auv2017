@@ -228,14 +228,14 @@ int main(int argc, char* argv[])
          count_avg++;
          center_ideal[0] = center[0];
       }
-      else if (count_avg<=5)
+      else if (count_avg <= 5)
       {
         r[count_avg] = radius[0];
          count_avg++;
       }
       else
       {
-         count_avg=0;
+         count_avg = 0;
       }
 
       cv::Mat circles = frame;
