@@ -176,7 +176,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_detection_switch&quot;</span>, 1000, &amp;<a class="code" href="line__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812">lineDetectedListener</a>);</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  image_transport::ImageTransport it(n);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>, 1, <a class="code" href="line__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/bottom_camera/image_raw&quot;</span>, 1, <a class="code" href="line__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>);</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  ros::Rate loop_rate(12);  <span class="comment">// this rate should be same as the rate of camera</span></div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                            <span class="comment">// input. and in the case of other sensors , this</span></div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                            <span class="comment">// rate should be same as there rate of data</span></div>
@@ -236,7 +236,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 15 2016 06:17:03 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 15 2016 17:02:28 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

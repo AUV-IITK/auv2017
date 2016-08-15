@@ -279,12 +279,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;gate_detection&quot;</span>);</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  ros::NodeHandle n;</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  ros::Publisher pub = n.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/ip/lineAngle&quot;</span>, 1000);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;gate_detection_switch&quot;</span>, 1000, &amp;<a class="code" href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a>);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  ros::Publisher pub = n.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/ip/line_angle&quot;</span>, 1000);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_angle_switch&quot;</span>, 1000, &amp;<a class="code" href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a>);</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  ros::Rate loop_rate(10);</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  image_transport::ImageTransport it(n);</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>, 1, <a class="code" href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/bottom_camera/image_raw&quot;</span>, 1, <a class="code" href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>);</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;After Color Filtering&quot;</span>, CV_WINDOW_NORMAL);</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;Contours&quot;</span>, CV_WINDOW_NORMAL);</div>
@@ -473,7 +473,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 15 2016 06:17:03 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 15 2016 17:02:28 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
