@@ -14,10 +14,10 @@
 
 #define pwmPinNorthSway 5
 #define pwmPinSouthSway 4
-#define directionPinNorthSway1 26
-#define directionPinNorthSway2 27
-#define directionPinSouthSway1 28
-#define directionPinSouthSway2 29
+#define directionPinNorthSway1 27
+#define directionPinNorthSway2 26
+#define directionPinSouthSway1 29
+#define directionPinSouthSway2 28
 
 #define pwmPinNorthUp 6
 #define pwmPinSouthUp 7
