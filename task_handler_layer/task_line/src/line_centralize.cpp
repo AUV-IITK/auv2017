@@ -21,7 +21,7 @@
 bool IP = true;
 bool flag = false;
 bool video = false;
-int t1min = 22, t1max = 48, t2min = 68, t2max = 189, t3min = 135, t3max = 200;  // Default Params
+int t1min = 1, t1max = 25, t2min = 95, t2max = 183, t3min = 195, t3max = 230;  // Default Params
 
 cv::Mat frame;
 cv::Mat newframe;
