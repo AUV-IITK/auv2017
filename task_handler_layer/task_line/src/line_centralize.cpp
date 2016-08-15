@@ -74,12 +74,12 @@ int main(int argc, char *argv[])
 
   ros::init(argc, argv, "line_centralize");
   ros::NodeHandle n;
-  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/line", 1000);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/line_centralize", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_centralize_switch", 1000, &Switch_callback);
   ros::Rate loop_rate(10);
 
   image_transport::ImageTransport it(n);
-  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
 
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
   cvNamedWindow("COM", CV_WINDOW_NORMAL);

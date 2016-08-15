@@ -190,12 +190,12 @@ int main(int argc, char* argv[])
   ros::init(argc, argv, "gate_detection");
   ros::NodeHandle n;
 
-  ros::Publisher pub = n.advertise<std_msgs::Float64>("/varun/ip/lineAngle", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("gate_detection_switch", 1000, &gateListener);
+  ros::Publisher pub = n.advertise<std_msgs::Float64>("/varun/ip/line_angle", 1000);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_angle_switch", 1000, &gateListener);
   ros::Rate loop_rate(10);
 
   image_transport::ImageTransport it(n);
-  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
 
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
