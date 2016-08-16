@@ -2,6 +2,7 @@ var searchData=
 [
   ['read_5ffile',['read_file',['../classbeautify__bash_1_1BeautifyBash.html#ac75b1bd3fe6449a00451947a256d613e',1,'beautify_bash::BeautifyBash']]],
   ['read_5fsensors',['read_sensors',['../yawDirect_8cpp.html#aee9ce76a3496550d4abf9f8e8979beec',1,'yawDirect.cpp']]],
+  ['red_5fhue_5fimage',['red_hue_image',['../line__detection_8cpp.html#afffefc71bd2ff1a09c9a079c5d9425c4',1,'line_detection.cpp']]],
   ['remote_5fgui',['remote_gui',['../namespaceremote__gui.html',1,'']]],
   ['remote_5fgui_2epy',['remote_gui.py',['../remote__gui_8py.html',1,'']]],
   ['reset',['reset',['../namespaceremote__gui.html#ac2a3fe38664a26d17e892fbae0d820fb',1,'remote_gui']]],
