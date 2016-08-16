@@ -270,7 +270,7 @@ int main(int argc, char* argv[])
     if ((cvWaitKey(10) & 255) == 27)
       break;
 
-    if (IP)
+    if (!IP)
     {
       // find contours
       std::vector<std::vector<cv::Point> > contours;
