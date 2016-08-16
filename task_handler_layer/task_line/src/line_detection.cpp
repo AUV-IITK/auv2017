@@ -18,14 +18,14 @@
 #include <string>
 
 
-int percentage = 20;  // used for how much percent of the screen should be orange
+int percentage = 5;  // used for how much percent of the screen should be orange
                       // before deciding that a line is below. Used in
                       // dynamic_reconfig
 // callback for change the percent of orange before saying there is a line below
 bool IP = false;
 bool flag = false;
 bool video = false;
-
+cv::Mat red_hue_image;
 cv::Mat frame;
 cv::Mat newframe;
 int count = 0;
@@ -67,7 +67,6 @@ int detect(cv::Mat image)
   cv::Mat hsv_image;
   cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);
   // keep only red color
-  cv::Mat red_hue_image;
   inRange(hsv_image, cv::Scalar(0, 100, 100), cv::Scalar(179, 255, 255), red_hue_image);
   GaussianBlur(red_hue_image, red_hue_image, cv::Size(9, 9), 2, 2);  // gaussian blur to remove false positives
   int nonzero = countNonZero(red_hue_image);
@@ -92,7 +91,11 @@ int main(int argc, char **argv)
                             // input. and in the case of other sensors , this
                             // rate should be same as there rate of data
                             // generation
-
+  if (argc == 2)
+  {
+    cvNamedWindow("F3", CV_WINDOW_NORMAL);
+    cvCreateTrackbar("percentage", "red_hue_image", &percentage, 100, NULL);
+  }
   while (ros::ok())
   {
     if (!frame.data)  // Check for invalid input
@@ -106,6 +109,7 @@ int main(int argc, char **argv)
     if (!IP)
     {
       int alert = detect(frame);
+      cv::imshow("red_hue_image", red_hue_image);
       if (alert == 1)
       {
         std_msgs::Bool msg;

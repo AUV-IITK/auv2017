@@ -76,7 +76,7 @@ public:
 
     detection_data = nh_.subscribe<std_msgs::Bool>("/varun/ip/line_detection", 1000,
                                                    &TaskLineInnerClass::lineDetectedListener, this);
-    yaw_sub = nh_.subscribe<std_msgs::Float64>("/varun/motion/yaw", 1000, &TaskLineInnerClass::yawCB, this);
+    yaw_sub = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskLineInnerClass::yawCB, this);
     centralize_data = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/line_centralize", 1000,
                                                                  &TaskLineInnerClass::lineCentralizeListener, this);
     angle_data =
@@ -267,6 +267,7 @@ public:
     turngoal.AngleToTurn = angle_goal.data;
     turngoal.loop = 10;
     TurnClient_.sendGoal(turngoal);
+    boost::thread spin_thread_turn_camera(&TaskLineInnerClass::spinThreadTurnCamera, this);
 
     while (goal->order)
     {
@@ -357,7 +358,7 @@ public:
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "task_server");
+  ros::init(argc, argv, "line_server");
 
   ROS_INFO("Waiting for Goal");
 
