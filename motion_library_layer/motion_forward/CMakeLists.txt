@@ -87,8 +87,8 @@ roslint_cpp()
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
-  cfg/forward.cfg
   cfg/pid.cfg
+  cfg/forward.cfg
 )
 
 ###################################
