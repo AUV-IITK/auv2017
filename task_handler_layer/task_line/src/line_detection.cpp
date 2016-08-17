@@ -22,7 +22,7 @@ int percentage = 5;  // used for how much percent of the screen should be orange
                       // before deciding that a line is below. Used in
                       // dynamic_reconfig
 // callback for change the percent of orange before saying there is a line below
-bool IP = false;
+bool IP = true;
 bool flag = false;
 bool video = false;
 cv::Mat red_hue_image;
