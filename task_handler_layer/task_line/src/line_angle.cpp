@@ -149,7 +149,7 @@ void callback(int, void *)
     finalAngle = computeMean(angles);
 }
 
-void gateListener(std_msgs::Bool msg)
+void lineAngleListener(std_msgs::Bool msg)
 {
   IP = msg.data;
 }
@@ -191,7 +191,7 @@ int main(int argc, char* argv[])
   ros::NodeHandle n;
 
   ros::Publisher pub = n.advertise<std_msgs::Float64>("/varun/ip/line_angle", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_angle_switch", 1000, &gateListener);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_angle_switch", 1000, &lineAngleListener);
   ros::Rate loop_rate(10);
 
   image_transport::ImageTransport it(n);
@@ -315,7 +315,7 @@ int main(int argc, char* argv[])
       when the angle is 90 it will show -90
       -------------TO BE CORRECTED-------------
       */
-      msg.data = -finalAngle * (180 / 3.14)+90;
+      msg.data = -finalAngle * (180 / 3.14);
       if (lineCount > 0)
       {
         pub.publish(msg);
