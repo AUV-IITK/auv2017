@@ -16,7 +16,7 @@ var searchData=
   ['line_5fserver_2ecpp',['line_server.cpp',['../line__server_8cpp.html',1,'']]],
   ['line_5fserver_5f',['line_server_',['../classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9',1,'TaskLineInnerClass']]],
   ['linealign',['LineAlign',['../classTaskLineInnerClass.html#ac564a672a843010916cd9189635cf783',1,'TaskLineInnerClass']]],
-  ['lineanglelistener',['lineAngleListener',['../classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7',1,'TaskLineInnerClass']]],
+  ['lineanglelistener',['lineAngleListener',['../classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7',1,'TaskLineInnerClass::lineAngleListener()'],['../line__angle_8cpp.html#aeaa8c4a4967534eb353c231a3b21e5e3',1,'lineAngleListener():&#160;line_angle.cpp']]],
   ['linecentralizelistener',['lineCentralizeListener',['../classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0',1,'TaskLineInnerClass']]],
   ['linecount',['lineCount',['../line__angle_8cpp.html#addc99401340ecb10778277e17c36c77d',1,'line_angle.cpp']]],
   ['linedetectedlistener',['lineDetectedListener',['../classTaskGateInnerClass.html#a8687724faed1666d0c722dad006567ee',1,'TaskGateInnerClass::lineDetectedListener()'],['../classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed',1,'TaskLineInnerClass::lineDetectedListener()'],['../buoy__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812',1,'lineDetectedListener(std_msgs::Bool msg):&#160;buoy_detection.cpp'],['../line__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812',1,'lineDetectedListener(std_msgs::Bool msg):&#160;line_detection.cpp'],['../circle__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812',1,'lineDetectedListener(std_msgs::Bool msg):&#160;circle_detection.cpp']]],

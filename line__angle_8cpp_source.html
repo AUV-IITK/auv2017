@@ -240,7 +240,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> = <a class="code" href="line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf">computeMean</a>(angles);</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;}</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
-<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">  152</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#aeaa8c4a4967534eb353c231a3b21e5e3">  152</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="line__angle_8cpp.html#aeaa8c4a4967534eb353c231a3b21e5e3">lineAngleListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;{</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  <a class="code" href="line__angle_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a> = msg.data;</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;}</div>
@@ -280,7 +280,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  ros::NodeHandle n;</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  ros::Publisher pub = n.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/ip/line_angle&quot;</span>, 1000);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_angle_switch&quot;</span>, 1000, &amp;<a class="code" href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a>);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_angle_switch&quot;</span>, 1000, &amp;<a class="code" href="line__angle_8cpp.html#aeaa8c4a4967534eb353c231a3b21e5e3">lineAngleListener</a>);</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  ros::Rate loop_rate(10);</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  image_transport::ImageTransport it(n);</div>
@@ -404,7 +404,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="comment">      when the angle is 90 it will show -90</span></div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="comment">      -------------TO BE CORRECTED-------------</span></div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="comment">      */</span></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;      msg.data = -<a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> * (180 / 3.14)+90;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;      msg.data = -<a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> * (180 / 3.14);</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#addc99401340ecb10778277e17c36c77d">lineCount</a> &gt; 0)</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      {</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        pub.publish(msg);</div>
@@ -441,6 +441,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="line__angle_8cpp_html_aac374e320caaadeca4874add33b62af2"><div class="ttname"><a href="line__angle_8cpp.html#aac374e320caaadeca4874add33b62af2">w</a></div><div class="ttdeci">int w</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00043">line_angle.cpp:43</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_acfcbbafabf2739cf26e31eb19a578e4f"><div class="ttname"><a href="line__angle_8cpp.html#acfcbbafabf2739cf26e31eb19a578e4f">imgLines</a></div><div class="ttdeci">cv::Mat imgLines</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00073">line_angle.cpp:73</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_abde676b8fcb59f927b1aed637c6f244e"><div class="ttname"><a href="line__angle_8cpp.html#abde676b8fcb59f927b1aed637c6f244e">minDeviation</a></div><div class="ttdeci">double minDeviation</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00069">line_angle.cpp:69</a></div></div>
+<div class="ttc" id="line__angle_8cpp_html_aeaa8c4a4967534eb353c231a3b21e5e3"><div class="ttname"><a href="line__angle_8cpp.html#aeaa8c4a4967534eb353c231a3b21e5e3">lineAngleListener</a></div><div class="ttdeci">void lineAngleListener(std_msgs::Bool msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00152">line_angle.cpp:152</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_a3d97c374036ee59cc995dea181e330cd"><div class="ttname"><a href="line__angle_8cpp.html#a3d97c374036ee59cc995dea181e330cd">sent_to_callback</a></div><div class="ttdeci">cv::Mat sent_to_callback</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00073">line_angle.cpp:73</a></div></div>
 <div class="ttc" id="masterAlternate_8cpp_html_a2fbc4cadeb0c52cc1ae0e99c790ee86c"><div class="ttname"><a href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; task_commons::lineAction &gt; line</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00018">masterAlternate.cpp:18</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_a31ba5784b0e1d1d0451a1142764519dd"><div class="ttname"><a href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a></div><div class="ttdeci">int t2min</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00047">line_angle.cpp:47</a></div></div>
@@ -467,13 +468,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="line__angle_8cpp_html_a31312a6881a1fcac1c757c95025214c5"><div class="ttname"><a href="line__angle_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a></div><div class="ttdeci">bool IP</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00044">line_angle.cpp:44</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_a0d7dfd9133ce1e6b48bfdc8249db33d1"><div class="ttname"><a href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a></div><div class="ttdeci">void imageCallback(const sensor_msgs::ImageConstPtr &amp;msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00157">line_angle.cpp:157</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_a14f94e529dff0b8bfba8e16fbe9755d6"><div class="ttname"><a href="line__angle_8cpp.html#a14f94e529dff0b8bfba8e16fbe9755d6">z</a></div><div class="ttdeci">int z</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00043">line_angle.cpp:43</a></div></div>
-<div class="ttc" id="line__angle_8cpp_html_ace8491b7fae4075d5dba360be2af8c16"><div class="ttname"><a href="line__angle_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a></div><div class="ttdeci">void gateListener(std_msgs::Bool msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00152">line_angle.cpp:152</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_adb12876cf5ceaeef805d9553c935730a"><div class="ttname"><a href="line__angle_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a></div><div class="ttdeci">bool video</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00046">line_angle.cpp:46</a></div></div>
 <div class="ttc" id="arduino__node_8cpp_html_a930b83edda39ee8cfa78dd4574a50bc3"><div class="ttname"><a href="arduino__node_8cpp.html#a930b83edda39ee8cfa78dd4574a50bc3">sum</a></div><div class="ttdeci">int sum</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00044">arduino_node.cpp:44</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 16 2016 20:00:00 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Aug 17 2016 20:03:27 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
