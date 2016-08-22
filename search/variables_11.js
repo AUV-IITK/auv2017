@@ -20,7 +20,7 @@ var searchData=
   ['sub_5fip_5f',['sub_ip_',['../classTaskBuoyInnerClass.html#a1498d17429aee5bf0549460ececc8538',1,'TaskBuoyInnerClass']]],
   ['sub_5fline_5f',['sub_line_',['../classTaskGateInnerClass.html#ab8adcf69350f5e980d9ddbfdf08f449b',1,'TaskGateInnerClass']]],
   ['subsystem',['SUBSYSTEM',['../setup_8sh.html#afd1321d9fe0cafd134707ef8ccf75c81',1,'setup.sh']]],
-  ['success',['success',['../classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9',1,'TaskLineInnerClass::success()'],['../forwardTest_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;forwardTest.cpp'],['../sidewardTest_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;sidewardTest.cpp'],['../upwardTest_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;upwardTest.cpp'],['../buoy__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;buoy_client.cpp'],['../gate__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;gate_client.cpp'],['../line__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;line_client.cpp']]],
+  ['success',['success',['../classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9',1,'TaskLineInnerClass::success()'],['../forwardTest_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;forwardTest.cpp'],['../sidewardTest_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;sidewardTest.cpp'],['../upwardTest_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;upwardTest.cpp'],['../buoy__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;buoy_client.cpp'],['../gate__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;gate_client.cpp'],['../line__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;line_client.cpp'],['../torpedo__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56',1,'success():&#160;torpedo_client.cpp']]],
   ['success_5fgate',['success_gate',['../classTaskGateInnerClass.html#a2beec99b91353c1155d953851d2e68ee',1,'TaskGateInnerClass']]],
   ['success_5fline',['success_line',['../classTaskGateInnerClass.html#adfadce6a59ee1313e23f577e3fc30696',1,'TaskGateInnerClass']]],
   ['successbuoy',['successBuoy',['../classTaskBuoyInnerClass.html#a6b0bf971d9d0c4c48ab1ed4736a629d4',1,'TaskBuoyInnerClass']]],
@@ -30,5 +30,6 @@ var searchData=
   ['switch_5fcentralize',['switch_centralize',['../classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120',1,'TaskLineInnerClass']]],
   ['switch_5fdetection',['switch_detection',['../classTaskLineInnerClass.html#a00cbb3db5c2420b2891a5f2983ad88e0',1,'TaskLineInnerClass']]],
   ['switch_5fgate_5fdetection',['switch_gate_detection',['../classTaskGateInnerClass.html#a43726195cdc1c4901d4d32a42e54ff01',1,'TaskGateInnerClass']]],
-  ['switch_5fline_5fdetection',['switch_line_detection',['../classTaskGateInnerClass.html#ad85be68818b90a2bad89602783d2ede1',1,'TaskGateInnerClass']]]
+  ['switch_5fline_5fdetection',['switch_line_detection',['../classTaskGateInnerClass.html#ad85be68818b90a2bad89602783d2ede1',1,'TaskGateInnerClass']]],
+  ['switch_5ftorpedo_5fdetection',['switch_torpedo_detection',['../classTaskBuoyInnerClass.html#a26c0ad2e7da892d351efbe1c5e7e5530',1,'TaskBuoyInnerClass']]]
 ];
