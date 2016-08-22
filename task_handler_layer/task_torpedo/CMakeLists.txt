@@ -9,7 +9,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  sensor_msgs
   actionlib
   actionlib_msgs
   message_generation
@@ -21,16 +20,12 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
 )
 
-
 ## Check for lint errors
 roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
 find_package( OpenCV REQUIRED )
-
-## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -141,9 +136,13 @@ include_directories(include
   ${OpenCV_INCLUDE_DIRS}
 )
 
-add_executable(cupid_detection src/cupid_detection.cpp)
-target_link_libraries(cupid_detection ${OpenCV_LIBS} )
-target_link_libraries(cupid_detection ${catkin_LIBRARIES})
+add_executable(torpedo_server src/torpedo_server.cpp)
+add_executable(torpedo_client src/torpedo_client.cpp)
+add_executable(torpedo_detection src/torpedo_detection.cpp)
+target_link_libraries(torpedo_detection ${OpenCV_LIBS} )
+target_link_libraries(torpedo_detection ${catkin_LIBRARIES})
+target_link_libraries(torpedo_server ${catkin_LIBRARIES})
+target_link_libraries(torpedo_client ${catkin_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(task_torpedo
