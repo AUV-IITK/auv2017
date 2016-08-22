@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
   ros::NodeHandle n;
 
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/torpedo", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("cupid_detection_switch", 1000, &torpedoListener);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("torpedo_detection_switch", 1000, &torpedoListener);
   ros::Rate loop_rate(10);
 
   int t1minParam, t1maxParam, t2minParam, t2maxParam, t3minParam, t3maxParam;
