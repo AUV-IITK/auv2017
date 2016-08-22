@@ -69,6 +69,7 @@ add_action_files(
   buoy.action
   gate.action
   line.action
+  torpedo.action
 )
 
 ## Generate added messages and services with any dependencies listed here
