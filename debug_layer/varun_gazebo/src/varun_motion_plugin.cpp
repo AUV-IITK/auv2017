@@ -82,7 +82,7 @@ public:
   {
     math::Vector3 torque;
     int pwm = msg.data;
-    torque.z = FULL_FORCE * (pwm / 255) * (VARUN_SIDEWARD_LENGTH / 2) * ERROR_FACTOR;
+    torque.z = FULL_FORCE * pwm / 255 * (VARUN_SIDEWARD_LENGTH / 2) * ERROR_FACTOR;
     _model->GetLink("body")->SetTorque(torque);
   }
 };

@@ -93,7 +93,7 @@ public:
       output = (p * error) + (i * integral) + (d * derivative);
       forwardOutputPWMMapping(output);
 
-      if (pwm.data <= 5 && pwm.data >= -5)
+      if (pwm.data <= 8 && pwm.data >= -8)
       {
         reached = true;
         pwm.data = 0;
