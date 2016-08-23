@@ -59,7 +59,6 @@ int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
   cv::Scalar color(255, 255, 255);
-
   std::string Video_Name = "Random_Video";
   if (argc >= 2)
     flag = true;
@@ -103,11 +102,6 @@ int main(int argc, char *argv[])
   CvSize size = cvSize(width, height);
 
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
-  float r[5];
-
-  for (int i; i++; i < 5)
-    r[i] = 0;
-
   while (ros::ok())
   {
     std_msgs::Float64MultiArray array;
