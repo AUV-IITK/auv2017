@@ -173,7 +173,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  {</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    math::Vector3 torque;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="forward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a> = msg.data;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    torque.z = <a class="code" href="varun__motion__plugin_8cpp.html#a042c06aadefed8554f95464205dececc">FULL_FORCE</a> * (pwm / 255) * (<a class="code" href="varun__motion__plugin_8cpp.html#a2427b97b5bbff83ebd79c3d68edd227f">VARUN_SIDEWARD_LENGTH</a> / 2) * <a class="code" href="varun__motion__plugin_8cpp.html#abbbcbfd88bda5cf0a6bb5934f323989f">ERROR_FACTOR</a>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    torque.z = <a class="code" href="varun__motion__plugin_8cpp.html#a042c06aadefed8554f95464205dececc">FULL_FORCE</a> * pwm / 255 * (<a class="code" href="varun__motion__plugin_8cpp.html#a2427b97b5bbff83ebd79c3d68edd227f">VARUN_SIDEWARD_LENGTH</a> / 2) * <a class="code" href="varun__motion__plugin_8cpp.html#abbbcbfd88bda5cf0a6bb5934f323989f">ERROR_FACTOR</a>;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="classgazebo_1_1VarunMotionPlugin.html#aba5d08a2e9c7c0637a1a73deff52c6a7">_model</a>-&gt;GetLink(<span class="stringliteral">&quot;body&quot;</span>)-&gt;SetTorque(torque);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;};</div>
@@ -202,7 +202,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 23 2016 17:19:30 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 23 2016 17:55:38 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
