@@ -14,16 +14,19 @@
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
-#include "std_msgs/Float32MultiArray.h"
+#include "std_msgs/Float64MultiArray.h"
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
 #include <string>
-#include "std_msgs/Float64MultiArray.h"
 
 bool IP = true;
 bool flag = false;
 bool video = false;
 int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
+
+cv::Mat frame;
+cv::Mat newframe;
+int count = 0, count_avg = 0, x = -1;
 
 void callback(task_buoy::buoyConfig &config, uint32_t level)
 {
@@ -36,15 +39,6 @@ void callback(task_buoy::buoyConfig &config, uint32_t level)
   ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
-cv::Mat frame;
-cv::Mat newframe;
-int count = 0, count_avg = 0;
-
-float mod(float x, float y)
-{
-  if (x - y > 0) return x;
-  else return y;
-}
 void lineDetectedListener(std_msgs::Bool msg)
 {
   IP = msg.data;
@@ -52,6 +46,7 @@ void lineDetectedListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
+  if (x == 32) return;
   try
   {
     count++;
@@ -68,7 +63,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
   std::string Video_Name = "Random_Video";
@@ -107,14 +102,14 @@ int main(int argc, char *argv[])
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
-  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("circle", CV_WINDOW_NORMAL);
-  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
-
   dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
   dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
+
+  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
+  cvNamedWindow("circle", CV_WINDOW_NORMAL);
+  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
 
   if (flag)
   {
@@ -129,14 +124,13 @@ int main(int argc, char *argv[])
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
   float r[5];
 
-  for (int i; i++; i < 5)
-    r[i] = 0;
+  for (int m=0; m++; m < 5)
+    r[m] = 0;
 
   while (ros::ok())
   {
     std_msgs::Float64MultiArray array;
     loop_rate.sleep();
-
     if (frame.empty())
     {
       std::cout << "empty frame \n";
@@ -146,7 +140,6 @@ int main(int argc, char *argv[])
 
     if (video)
       output_cap.write(frame);
-
     // get the image data
     height = frame.rows;
     width = frame.cols;
@@ -179,21 +172,20 @@ int main(int argc, char *argv[])
     if ((cvWaitKey(10) & 255) == 27)
       break;
 
-    if ((!IP))
+    if (!IP)
     {
       // find contours
       std::vector<std::vector<cv::Point> > contours;
-      cv::Mat thresholded_Mat;
-      thresholded.copyTo(thresholded_Mat);
-      cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
+      cv::Mat thresholded_Mat = thresholded;
+      findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
+
       if (contours.empty())
       {
         array.data.push_back(0);
         array.data.push_back(0);
         array.data.push_back(0);
         array.data.push_back(0);
-
         pub.publish(array);
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
@@ -236,10 +228,14 @@ int main(int argc, char *argv[])
          count_avg++;
          center_ideal[0] = center[0];
       }
-      else
+      else if (count_avg <= 5)
       {
         r[count_avg] = radius[0];
          count_avg++;
+      }
+      else
+      {
+         count_avg = 0;
       }
 
       cv::Mat circles = frame;
@@ -283,6 +279,12 @@ int main(int argc, char *argv[])
     else
     {
       std::cout << "waiting\n";
+      if ((cvWaitKey(10) & 255) == 32)
+      {
+        if (x == 32) x = -1;
+        else x = 32;
+      }
+      if (x == 32) printf("paused\n");
       ros::spinOnce();
     }
   }

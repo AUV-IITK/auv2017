@@ -19,6 +19,7 @@
 #include <sstream>
 #include <string>
 
+int w = -2, x = -2, y = -2, z = -2;
 bool IP = true;
 bool flag = false;
 bool video = false;
@@ -26,7 +27,7 @@ int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
 
 cv::Mat frame;
 cv::Mat newframe;
-int count = 0, count_avg = 0;
+int count = 0, count_avg = 0, p = -1;
 
 void callback(task_gate::gateConfig &config, uint32_t level)
 {
@@ -47,6 +48,7 @@ void gateListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
+  if (p == 32) return;
   try
   {
     count++;
@@ -80,11 +82,9 @@ int main(int argc, char* argv[])
 
   ros::init(argc, argv, "gate_detection");
   ros::NodeHandle n;
-
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/gate", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("gate_detection_switch", 1000, &gateListener);
   ros::Rate loop_rate(10);
-
   int t1minParam, t1maxParam, t2minParam, t2maxParam, t3minParam, t3maxParam;
 
   n.getParam("buoy_detection/t1maxParam", t1maxParam);
@@ -120,7 +120,6 @@ int main(int argc, char* argv[])
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
   }
 
-
   // capture size -
   CvSize size = cvSize(width, height);
 
@@ -132,7 +131,6 @@ int main(int argc, char* argv[])
   {
     std_msgs::Float64MultiArray array;
     loop_rate.sleep();
-
     // Get one frame
     if (frame.empty())
     {
@@ -143,7 +141,6 @@ int main(int argc, char* argv[])
 
     if (video)
       output_cap.write(frame);
-
     // get the image data
     height = frame.rows;
     width = frame.cols;
@@ -151,10 +148,8 @@ int main(int argc, char* argv[])
 
     // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
     cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
-
     cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
     cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-
     // Filter out colors which are out of range.
     cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);
     // Split image into its 3 one dimensional images
@@ -165,7 +160,6 @@ int main(int argc, char* argv[])
     cv::inRange(thresholded_hsv[0], cv::Scalar(t1min, 0, 0, 0), cv::Scalar(t1max, 0, 0, 0), thresholded_hsv[0]);
     cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
     cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
-
     cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
     cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
 
@@ -239,15 +233,33 @@ int main(int argc, char* argv[])
       rectangle(frame_mat, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);
       circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
 
+      cv::imshow("Contours", Drawing);
+      cv::imshow("RealPic", frame_mat);
+
+      w = (boundRect[0].br()).x;
+      x = (boundRect[0].br()).y;
+      y = (boundRect[0].tl()).y;
+      z = (boundRect[0].tl()).x;
+      if (w == (frame.rows)-1 || x == (frame.cols)-1 || y == 1 || z == 1)
+      {
+        if ( y == 1)
+           array.data.push_back(-1);  //  hits top
+        if ( z == 1)
+          array.data.push_back(-2);  //  hits left
+        if ( w == frame.rows-1)
+          array.data.push_back(-3);  //  hits bottom
+        if ( x == frame.cols-1)
+          array.data.push_back(-4);  //  hits right
+        ros::spinOnce();
+        continue;
+      }
+      std::cout << w << " " << x << " " << y << " " << z << "\n" << frame.cols << "  frame  " << frame.rows << "\n";
+
       array.data.push_back((320 - center.x));
       array.data.push_back(-(240 - center.y));
       pub.publish(array);
 
-      cv::imshow("Contours", Drawing);
-      cv::imshow("RealPic", frame_mat);
-
       ros::spinOnce();
-      // loop_rate.sleep();
 
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
@@ -256,8 +268,14 @@ int main(int argc, char* argv[])
     }
     else
     {
-       std::cout << "waiting\n";
-       ros::spinOnce();
+      std::cout << "waiting\n";
+      if ((cvWaitKey(10) & 255) == 32)
+      {
+        if (p == 32) p = -1;
+        else p = 32;
+      }
+      if (p == 32) printf("paused\n");
+      ros::spinOnce();
     }
   }
   output_cap.release();
