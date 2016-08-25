@@ -26,7 +26,7 @@ int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
 
 cv::Mat frame;
 cv::Mat newframe;
-int count = 0, count_avg = 0;
+int count = 0, count_avg = 0, x = -1;
 
 void callback(task_buoy::buoyConfig &config, uint32_t level)
 {
@@ -46,6 +46,7 @@ void lineDetectedListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
+  if (x == 32) return;
   try
   {
     count++;
@@ -101,14 +102,14 @@ int main(int argc, char* argv[])
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
-  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("circle", CV_WINDOW_NORMAL);
-  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
-
   dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
   dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
+
+  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
+  cvNamedWindow("circle", CV_WINDOW_NORMAL);
+  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
 
   if (flag)
   {
@@ -130,7 +131,6 @@ int main(int argc, char* argv[])
   {
     std_msgs::Float64MultiArray array;
     loop_rate.sleep();
-
     if (frame.empty())
     {
       std::cout << "empty frame \n";
@@ -140,7 +140,6 @@ int main(int argc, char* argv[])
 
     if (video)
       output_cap.write(frame);
-
     // get the image data
     height = frame.rows;
     width = frame.cols;
@@ -180,6 +179,7 @@ int main(int argc, char* argv[])
       cv::Mat thresholded_Mat = thresholded;
       findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
+
       if (contours.empty())
       {
         array.data.push_back(0);
@@ -279,6 +279,12 @@ int main(int argc, char* argv[])
     else
     {
       std::cout << "waiting\n";
+      if ((cvWaitKey(10) & 255) == 32)
+      {
+        if (x == 32) x = -1;
+        else x = 32;
+      }
+      if (x == 32) printf("paused\n");
       ros::spinOnce();
     }
   }
