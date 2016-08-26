@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 // VideoCapture cap(argv[1]);
 //***************************************************************************\\
 // Create a window in which the captured images will be presented
-    cvNamedWindow( "AAfter Color Filtering", CV_WINDOW_NORMAL );
+    cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
     cvNamedWindow("F1", CV_WINDOW_NORMAL);
     cvNamedWindow("RealPic", CV_WINDOW_NORMAL);
     cvNamedWindow("F2", CV_WINDOW_NORMAL);
