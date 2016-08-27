@@ -274,10 +274,10 @@ int main(int argc, char* argv[])
 
       if (r[0] > 220)
       {
-        array.data.push_back(-1);
-        array.data.push_back(-1);
-        array.data.push_back(-1);
-        array.data.push_back(-1);
+        array.data.push_back(-5);
+        array.data.push_back(-5);
+        array.data.push_back(-5);
+        array.data.push_back(-5);
       }
       else
       {
@@ -300,10 +300,10 @@ int main(int argc, char* argv[])
     }
     else if (r[0] > 220)
     {
-       array.data.push_back(-1);
-       array.data.push_back(-1);
-       array.data.push_back(-1);
-       array.data.push_back(-1);
+       array.data.push_back(-5);
+       array.data.push_back(-5);
+       array.data.push_back(-5);
+       array.data.push_back(-5);
     }
     else
     {

@@ -27,7 +27,7 @@ private:
   motion_commons::SidewardFeedback feedback_;
   motion_commons::SidewardResult result_;
   ros::Publisher PWM;
-  float p, i, d;
+  float p, i, d, band;
 
 public:
   // Constructor, called when new instance of class declared
@@ -93,7 +93,7 @@ public:
       output = (p * error) + (i * integral) + (d * derivative);
       sidewardOutputPWMMapping(output);
 
-      if (pwm.data <= 8 && pwm.data >= -8)
+      if (pwm.data <= band && pwm.data >= -band)
       {
         reached = true;
         pwm.data = 0;
@@ -119,7 +119,7 @@ public:
       feedback_.DistanceRemaining = error;
       sidewardServer_.publishFeedback(feedback_);
       PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino %d", pwm.data);
+      ROS_INFO("pwm send to arduino sideward %d", pwm.data);
 
       ros::spinOnce();
       loop_rate.sleep();
@@ -144,11 +144,12 @@ public:
     pwm.data = static_cast<int>(temp);
   }
 
-  void setPID(float new_p, float new_i, float new_d)
+  void setPID(float new_p, float new_i, float new_d, float new_band)
   {
     p = new_p;
     i = new_i;
     d = new_d;
+    band = new_band;
   }
 };
 innerActionClass *object;
@@ -156,8 +157,9 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_sideward::pidConfig &config, double level)
 {
-  ROS_INFO("SidewardServer: Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
-  object->setPID(config.p, config.i, config.d);
+  ROS_INFO("SidewardServer: Reconfigure Request: p= %f i= %f d=%f error band=%f", config.p, config.i, config.d,
+    config.band);
+  object->setPID(config.p, config.i, config.d, config.band);
 }
 
 void distanceCb(std_msgs::Float64 msg)
@@ -180,10 +182,11 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "sideward");
   ros::NodeHandle n;
-  double p_param, i_param, d_param;
+  double p_param, i_param, d_param, band_param;
   n.getParam("sideward/p_param", p_param);
   n.getParam("sideward/i_param", i_param);
   n.getParam("sideward/d_param", d_param);
+  n.getParam("sideward/band_param", band_param);
 
   ros::Subscriber yDistance = n.subscribe<std_msgs::Float64>("/varun/motion/y_distance", 1000, &distanceCb);
 
@@ -200,6 +203,7 @@ int main(int argc, char **argv)
   config.p = p_param;
   config.i = i_param;
   config.d = d_param;
+  config.band = band_param;
   callback(config, 0);
 
   ros::spin();

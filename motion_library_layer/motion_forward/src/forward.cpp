@@ -119,7 +119,7 @@ public:
       feedback_.DistanceRemaining = error;
       forwardServer_.publishFeedback(feedback_);
       PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino %d", pwm.data);
+      ROS_INFO("pwm send to arduino forward %d", pwm.data);
 
       ros::spinOnce();
       loop_rate.sleep();
