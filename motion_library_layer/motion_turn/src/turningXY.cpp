@@ -123,7 +123,7 @@ public:
       feedback_.AngleRemaining = error;
       turnServer_.publishFeedback(feedback_);
       PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino %d", pwm.data);
+      ROS_INFO("pwm send to arduino turn %d", pwm.data);
 
       ros::spinOnce();
       loop_rate.sleep();
