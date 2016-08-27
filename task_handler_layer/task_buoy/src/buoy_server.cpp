@@ -104,13 +104,16 @@ public:
     data_X_.data = array.data[1];
     data_Y_.data = array.data[2];
     data_distance_.data = array.data[3];
-    present_X_.publish(data_X_);
-    present_Y_.publish(data_Y_);
 
     if (data_distance_.data > 0)
+    {
       present_distance_.publish(data_distance_);
+      present_X_.publish(data_X_);
+      present_Y_.publish(data_Y_);
+    }
 
-    else if (data_distance_.data < 0)
+    // if distance is -1 to -4 then buoy is out of frame and the motion library will assume the last data.
+    else if (data_distance_.data == -5)
     {
       IP_stopped = true;
       stopBuoyDetection();
