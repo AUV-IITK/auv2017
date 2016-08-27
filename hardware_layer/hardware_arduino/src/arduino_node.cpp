@@ -45,7 +45,6 @@ const float s122 = -2.93;
 
 MS5837 sensor;
 
-int count, sum;
 bool isMovingForward = true;
 float v;
 std_msgs::Float64 voltage;
@@ -314,8 +313,8 @@ void setup()
   Wire.begin();
 
   sensor.init();
-  
-  sensor.setFluidDensity(997); // kg/m^3 (freshwater, 1029 for seawater)
+
+  sensor.setFluidDensity(997);  // kg/m^3 (freshwater, 1029 for seawater)
   pinMode(pwmPinEast, OUTPUT);
   pinMode(directionPinEast1, OUTPUT);
   pinMode(directionPinEast2, OUTPUT);
@@ -349,14 +348,13 @@ void setup()
   PWMCbSideward(msg);
   PWMCbUpward(msg);
   PWMCbTurn(msg);
-  count = 0;
-  sum = 0;
 }
 
 void loop()
 {
   sensor.read();
-  ps_voltage.publish(sensor.depth()*100);
+  voltage.data = sensor.depth()*100;
+  ps_voltage.publish(&voltage);
   delay(200);
   nh.spinOnce();
 }

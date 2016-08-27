@@ -57,6 +57,10 @@ cd ~/sketchbook/libraries
 rm -rf ros_lib
 rosrun rosserial_arduino make_libraries.py .
 
+# setup pressure sensor library
+cd ~/sketchbook/libraries
+git clone https://github.com/bluerobotics/BlueRobotics_MS5837_Library.git
+
 # udev rules setup for imu
 echo 'SUBSYSTEM=="tty", ATTRS{idVendor}=="26ac", ATTRS{serial}=="0", ATTRS{idProduct}=="0010", SYMLINK+="navstik"' > /etc/udev/rules.d/99-imu-serial.rules
 
