@@ -125,8 +125,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a53876ebc40305648c0918c3aace4a862"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bdae10c5cc1ed544f42f5fb6e2e4204"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a5bdae10c5cc1ed544f42f5fb6e2e4204">sidewardOutputPWMMapping</a> (float <a class="el" href="upward_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a>)</td></tr>
 <tr class="separator:a5bdae10c5cc1ed544f42f5fb6e2e4204"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e2b5f885e5db93e004fd010008827d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a5e2b5f885e5db93e004fd010008827d7">setPID</a> (float new_p, float new_i, float new_d)</td></tr>
-<tr class="separator:a5e2b5f885e5db93e004fd010008827d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5740559cbca269d86156cbe5d05546b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a5740559cbca269d86156cbe5d05546b0">setPID</a> (float new_p, float new_i, float new_d, float new_band)</td></tr>
+<tr class="separator:a5740559cbca269d86156cbe5d05546b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae76ed33eb87c7cb0d3cf4e418ba06704"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#ae76ed33eb87c7cb0d3cf4e418ba06704">innerActionClass</a> (std::string name)</td></tr>
 <tr class="separator:ae76ed33eb87c7cb0d3cf4e418ba06704"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d17548d84e3b7961c11c454b87dd24a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a0d17548d84e3b7961c11c454b87dd24a">~innerActionClass</a> (void)</td></tr>
@@ -178,6 +178,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a9898211d029ad5aafbd58958cba2b9d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0953ff117815ed4ae2776fc3d7b7f2ef"><td class="memItemLeft" align="right" valign="top">motion_commons::SidewardResult&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a0953ff117815ed4ae2776fc3d7b7f2ef">result_</a></td></tr>
 <tr class="separator:a0953ff117815ed4ae2776fc3d7b7f2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae30b2f596dbacb617cb97287295d47d6"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6">band</a></td></tr>
+<tr class="separator:ae30b2f596dbacb617cb97287295d47d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb75aefe2dea7879801c58c435ca0769"><td class="memItemLeft" align="right" valign="top"><a class="el" href="forward_8cpp.html#a1f23b0a8c53e091001b4c962a1347dae">Server</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a></td></tr>
 <tr class="separator:acb75aefe2dea7879801c58c435ca0769"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4796f128b7c7e23ed5b5db0612bfdbb1"><td class="memItemLeft" align="right" valign="top">motion_commons::TurnFeedback&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a4796f128b7c7e23ed5b5db0612bfdbb1">feedback_</a></td></tr>
@@ -790,7 +792,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5e2b5f885e5db93e004fd010008827d7"></a>
+<a class="anchor" id="a5740559cbca269d86156cbe5d05546b0"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -813,7 +815,13 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>new_d</em>&#160;</td>
+          <td class="paramname"><em>new_d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>new_band</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1050,6 +1058,28 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ae30b2f596dbacb617cb97287295d47d6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float innerActionClass::band</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="sideward_8cpp_source.html#l00030">30</a> of file <a class="el" href="sideward_8cpp_source.html">sideward.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a3f3483cf8443e2a2247e6de745fc13d6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1270,6 +1300,50 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a3368b7390f5330130441e3e3666c4138"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">motion_commons::UpwardResult innerActionClass::result_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="upward_8cpp_source.html#l00028">28</a> of file <a class="el" href="upward_8cpp_source.html">upward.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab711f9cd74f4d3d318508d246282566e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">motion_commons::ForwardResult innerActionClass::result_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="forward_8cpp_source.html#l00028">28</a> of file <a class="el" href="forward_8cpp_source.html">forward.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a0953ff117815ed4ae2776fc3d7b7f2ef"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1311,50 +1385,6 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00028">28</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab711f9cd74f4d3d318508d246282566e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">motion_commons::ForwardResult innerActionClass::result_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="forward_8cpp_source.html#l00028">28</a> of file <a class="el" href="forward_8cpp_source.html">forward.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3368b7390f5330130441e3e3666c4138"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">motion_commons::UpwardResult innerActionClass::result_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="upward_8cpp_source.html#l00028">28</a> of file <a class="el" href="upward_8cpp_source.html">upward.cpp</a>.</p>
 
 </div>
 </div>
@@ -1433,7 +1463,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 27 2016 15:43:41 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Aug 27 2016 17:24:46 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

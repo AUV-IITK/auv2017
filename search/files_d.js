@@ -2,6 +2,7 @@ var searchData=
 [
   ['task_5fbuoy_5fgazebo_2elaunch',['task_buoy_gazebo.launch',['../task__buoy_2launch_2task__buoy__gazebo_8launch.html',1,'']]],
   ['task_5fbuoy_5fgazebo_2elaunch',['task_buoy_gazebo.launch',['../task__octagon_2launch_2task__buoy__gazebo_8launch.html',1,'']]],
+  ['task_5fbuoy_5fvarun_2elaunch',['task_buoy_varun.launch',['../task__buoy__varun_8launch.html',1,'']]],
   ['task_5fgate_5fgazebo_2elaunch',['task_gate_gazebo.launch',['../task__gate_2launch_2task__gate__gazebo_8launch.html',1,'']]],
   ['task_5fgate_5fgazebo_2elaunch',['task_gate_gazebo.launch',['../task__torpedo_2launch_2task__gate__gazebo_8launch.html',1,'']]],
   ['task_5fnodes_2elaunch',['task_nodes.launch',['../task__nodes_8launch.html',1,'']]],

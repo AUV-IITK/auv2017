@@ -2,6 +2,7 @@ var searchData=
 [
   ['backward',['backward',['../namespaceremote__gui.html#ab9f4b10167331d0bd965cba904619fbf',1,'remote_gui']]],
   ['backwardclicked',['backwardClicked',['../namespaceremote__gui.html#ac822e0f872760bbd7f4a21eee05059b2',1,'remote_gui']]],
+  ['band',['band',['../classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6',1,'innerActionClass']]],
   ['beautify_5fbash',['beautify_bash',['../namespacebeautify__bash.html',1,'']]],
   ['beautify_5fbash_2epy',['beautify_bash.py',['../beautify__bash_8py.html',1,'']]],
   ['beautify_5ffile',['beautify_file',['../classbeautify__bash_1_1BeautifyBash.html#aa52e629666b6d246b58cc204b5ef4f9e',1,'beautify_bash::BeautifyBash']]],
