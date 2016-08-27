@@ -118,7 +118,7 @@ public:
       feedback_.DepthRemaining = error;
       upwardServer_.publishFeedback(feedback_);
       PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino %d", pwm.data);
+      ROS_INFO("pwm send to arduino upward %d", pwm.data);
 
       ros::spinOnce();
       loop_rate.sleep();
