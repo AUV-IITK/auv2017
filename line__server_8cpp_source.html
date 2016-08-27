@@ -193,7 +193,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#ab05dd6a3432c2bec5c4ecb6c80ad678d">isOrange</a> = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  }</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0">  105</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0">lineCentralizeListener</a>(std_msgs::Float64MultiArray array)</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0">  105</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0">lineCentralizeListener</a>(std_msgs::Float64MultiArray <a class="code" href="calibrate_8cpp.html#a4d9cf4a89ae43fecb41cf159390f74ce">array</a>)</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  {</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a51c740e5389b8268ca11287f67472291">data_X_</a>.data = array.data[0];</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc">data_Y_</a>.data = array.data[1];</div>
@@ -470,6 +470,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classTaskLineInnerClass_html_ad5293972040c956454c3fa3857e14cf2"><div class="ttname"><a href="classTaskLineInnerClass.html#ad5293972040c956454c3fa3857e14cf2">TaskLineInnerClass::FrontCenter</a></div><div class="ttdeci">bool FrontCenter</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00056">line_server.cpp:56</a></div></div>
 <div class="ttc" id="forward_8cpp_html_a1f23b0a8c53e091001b4c962a1347dae"><div class="ttname"><a href="forward_8cpp.html#a1f23b0a8c53e091001b4c962a1347dae">Server</a></div><div class="ttdeci">actionlib::SimpleActionServer&lt; motion_commons::ForwardAction &gt; Server</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00013">forward.cpp:13</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html_a2401f1eb4e10f35af34394ec91a3a8ec"><div class="ttname"><a href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">TaskLineInnerClass::action_name_</a></div><div class="ttdeci">std::string action_name_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00034">line_server.cpp:34</a></div></div>
+<div class="ttc" id="calibrate_8cpp_html_a4d9cf4a89ae43fecb41cf159390f74ce"><div class="ttname"><a href="calibrate_8cpp.html#a4d9cf4a89ae43fecb41cf159390f74ce">array</a></div><div class="ttdeci">std_msgs::Float32MultiArray array</div><div class="ttdef"><b>Definition:</b> <a href="calibrate_8cpp_source.html#l00017">calibrate.cpp:17</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html_af1f459398cf589de68b197126b91b4bc"><div class="ttname"><a href="classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc">TaskLineInnerClass::data_Y_</a></div><div class="ttdeci">std_msgs::Float64 data_Y_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00054">line_server.cpp:54</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html_aa83dce2e31d0109c119828ddc401df6d"><div class="ttname"><a href="classTaskLineInnerClass.html#aa83dce2e31d0109c119828ddc401df6d">TaskLineInnerClass::angle_switch_off</a></div><div class="ttdeci">void angle_switch_off()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00336">line_server.cpp:336</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html_a81f98e79f9e7c9e9f39ea3ed39406120"><div class="ttname"><a href="classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120">TaskLineInnerClass::switch_centralize</a></div><div class="ttdeci">ros::Publisher switch_centralize</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00041">line_server.cpp:41</a></div></div>
@@ -517,7 +518,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 25 2016 11:42:12 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Aug 27 2016 07:42:43 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

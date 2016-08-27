@@ -193,7 +193,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  <span class="comment">// image converted to HSV plane</span></div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordflow">while</span> (ros::ok())</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    std_msgs::Float64MultiArray array;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    std_msgs::Float64MultiArray <a class="code" href="calibrate_8cpp.html#a4d9cf4a89ae43fecb41cf159390f74ce">array</a>;</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    loop_rate.sleep();</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__centralize_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.empty())</div>
@@ -309,6 +309,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="line__centralize_8cpp_html_a2d043c356e83ee5dde583a82999bef8b"><div class="ttname"><a href="line__centralize_8cpp.html#a2d043c356e83ee5dde583a82999bef8b">count_avg</a></div><div class="ttdeci">int count_avg</div><div class="ttdef"><b>Definition:</b> <a href="line__centralize_8cpp_source.html#l00028">line_centralize.cpp:28</a></div></div>
 <div class="ttc" id="line__centralize_8cpp_html_adb12876cf5ceaeef805d9553c935730a"><div class="ttname"><a href="line__centralize_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a></div><div class="ttdeci">bool video</div><div class="ttdef"><b>Definition:</b> <a href="line__centralize_8cpp_source.html#l00023">line_centralize.cpp:23</a></div></div>
 <div class="ttc" id="buoy__detection_8cpp_html_a6150e0515f7202e2fb518f7206ed97dc"><div class="ttname"><a href="buoy__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a></div><div class="ttdeci">int x</div><div class="ttdef"><b>Definition:</b> <a href="buoy__detection_8cpp_source.html#l00029">buoy_detection.cpp:29</a></div></div>
+<div class="ttc" id="calibrate_8cpp_html_a4d9cf4a89ae43fecb41cf159390f74ce"><div class="ttname"><a href="calibrate_8cpp.html#a4d9cf4a89ae43fecb41cf159390f74ce">array</a></div><div class="ttdeci">std_msgs::Float32MultiArray array</div><div class="ttdef"><b>Definition:</b> <a href="calibrate_8cpp_source.html#l00017">calibrate.cpp:17</a></div></div>
 <div class="ttc" id="line__centralize_8cpp_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="line__centralize_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="line__centralize_8cpp_source.html#l00058">line_centralize.cpp:58</a></div></div>
 <div class="ttc" id="line__centralize_8cpp_html_a22bf1f49f906224b1a4b38010110e929"><div class="ttname"><a href="line__centralize_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a></div><div class="ttdeci">cv::Mat frame</div><div class="ttdef"><b>Definition:</b> <a href="line__centralize_8cpp_source.html#l00026">line_centralize.cpp:26</a></div></div>
 <div class="ttc" id="line__centralize_8cpp_html_aed7983d3e2d03188fff7eaf758bfd3e5"><div class="ttname"><a href="line__centralize_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a></div><div class="ttdeci">int t3max</div><div class="ttdef"><b>Definition:</b> <a href="line__centralize_8cpp_source.html#l00024">line_centralize.cpp:24</a></div></div>
@@ -327,7 +328,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 25 2016 11:42:12 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Aug 27 2016 07:42:43 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
