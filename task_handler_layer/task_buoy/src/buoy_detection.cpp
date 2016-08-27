@@ -120,6 +120,7 @@ int main(int argc, char* argv[])
 
   // capture size -
   CvSize size = cvSize(width, height);
+  std::vector<cv::Point2f> center_ideal(5);
 
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
   float r[5];
@@ -179,13 +180,38 @@ int main(int argc, char* argv[])
       cv::Mat thresholded_Mat = thresholded;
       findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
-
       if (contours.empty())
       {
-        array.data.push_back(0);
-        array.data.push_back(0);
-        array.data.push_back(0);
-        array.data.push_back(0);
+        int x_cord = 320 - center_ideal[0].x;
+        int y_cord = -240 + center_ideal[0].y;
+        if (x_cord < -270) 
+        {
+          array.data.push_back(-2);  //top
+          array.data.push_back(-2);
+          array.data.push_back(-2);
+          array.data.push_back(-2);
+        }  
+        else if (x_cord > 270)
+        {
+          array.data.push_back(-1);   //left_side
+          array.data.push_back(-1);
+          array.data.push_back(-1);
+          array.data.push_back(-1);
+        }  
+        else if (y_cord > 200)
+        {
+          array.data.push_back(-3);  //bottom
+          array.data.push_back(-3);
+          array.data.push_back(-3);
+          array.data.push_back(-3);
+        }
+        else if (y_cord < -200)
+        {
+          array.data.push_back(-4); //right_side
+          array.data.push_back(-4);
+          array.data.push_back(-4);
+          array.data.push_back(-4);
+        }  
         pub.publish(array);
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
@@ -210,9 +236,7 @@ int main(int argc, char* argv[])
 
       std::vector<cv::Point2f> center(1);
       std::vector<float> radius(1);
-      std::vector<cv::Point2f> center_ideal(1);
       cv::minEnclosingCircle(contours[largest_contour_index], center[0], radius[0]);
-
       cv::Point2f pt;
       pt.x = 320;  // size of my screen
       pt.y = 240;
@@ -225,12 +249,17 @@ int main(int argc, char* argv[])
          r[2] = r[1];
          r[1] = r[0];
          r[0] = radius[0];
-         count_avg++;
+         center_ideal[4] = center_ideal[3];
+         center_ideal[3] = center_ideal[2];
+         center_ideal[2] = center_ideal[1];
+         center_ideal[1] = center_ideal[0];
          center_ideal[0] = center[0];
+         count_avg++;
       }
       else if (count_avg <= 5)
       {
         r[count_avg] = radius[0];
+        center_ideal[count_avg]=center[0];
          count_avg++;
       }
       else
