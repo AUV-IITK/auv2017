@@ -184,34 +184,34 @@ int main(int argc, char* argv[])
       {
         int x_cord = 320 - center_ideal[0].x;
         int y_cord = -240 + center_ideal[0].y;
-        if (x_cord < -270) 
+        if (x_cord < -270)
         {
-          array.data.push_back(-2);  //top
+          array.data.push_back(-2);  // top
           array.data.push_back(-2);
           array.data.push_back(-2);
           array.data.push_back(-2);
-        }  
+        }
         else if (x_cord > 270)
         {
-          array.data.push_back(-1);   //left_side
+          array.data.push_back(-1);   // left_side
           array.data.push_back(-1);
           array.data.push_back(-1);
           array.data.push_back(-1);
-        }  
+        }
         else if (y_cord > 200)
         {
-          array.data.push_back(-3);  //bottom
+          array.data.push_back(-3);  // bottom
           array.data.push_back(-3);
           array.data.push_back(-3);
           array.data.push_back(-3);
         }
         else if (y_cord < -200)
         {
-          array.data.push_back(-4); //right_side
+          array.data.push_back(-4);  // right_side
           array.data.push_back(-4);
           array.data.push_back(-4);
           array.data.push_back(-4);
-        }  
+        }
         pub.publish(array);
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
@@ -259,7 +259,7 @@ int main(int argc, char* argv[])
       else if (count_avg <= 5)
       {
         r[count_avg] = radius[0];
-        center_ideal[count_avg]=center[0];
+        center_ideal[count_avg] = center[0];
          count_avg++;
       }
       else
