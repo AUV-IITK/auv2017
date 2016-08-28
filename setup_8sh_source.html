@@ -152,7 +152,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="setup_8sh.html#afd1321d9fe0cafd134707ef8ccf75c81">   61</a></span>&#160;echo <span class="stringliteral">&#39;SUBSYSTEM==&quot;tty&quot;, ATTRS{idVendor}==&quot;26ac&quot;, ATTRS{serial}==&quot;0&quot;, ATTRS{idProduct}==&quot;0010&quot;, SYMLINK+=&quot;navstik&quot;&#39;</span> &gt; /etc/udev/rules.d/99-imu-serial.rules</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor"># udev rules setup for arduino</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span>echo <span class="stringliteral">&#39;ACTION==&quot;add&quot;, ATTRS{idVendor}==&quot;05e3&quot;, ATTRS{idProduct}==&quot;0610&quot;, SYMLINK+=&quot;arduino&quot;&#39;</span> &gt; /etc/udev/rules.d/100-arduino-serial.rules</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span>echo <span class="stringliteral">&#39;SUBSYSTEM==&quot;tty&quot;, ATTRS{idVendor}==&quot;2341&quot;, ATTRS{idProduct}==&quot;0042&quot;, SYMLINK+=&quot;arduino&quot;&#39;</span> &gt; /etc/udev/rules.d/100-arduino-serial.rules</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"># suggest to setup environment variables</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor"></span>echo <span class="stringliteral">&quot;Please add these to your ~/.bashrc file&quot;</span></div>
@@ -170,7 +170,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 28 2016 11:55:06 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 28 2016 12:33:56 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

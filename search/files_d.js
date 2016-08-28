@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['task_5fbuoy_5fgazebo_2elaunch',['task_buoy_gazebo.launch',['../task__buoy_2launch_2task__buoy__gazebo_8launch.html',1,'']]],
-  ['task_5fbuoy_5fgazebo_2elaunch',['task_buoy_gazebo.launch',['../task__octagon_2launch_2task__buoy__gazebo_8launch.html',1,'']]],
+  ['task_5fbuoy_5fgazebo_2elaunch',['task_buoy_gazebo.launch',['../task__buoy__gazebo_8launch.html',1,'']]],
   ['task_5fbuoy_5fvarun_2elaunch',['task_buoy_varun.launch',['../task__buoy__varun_8launch.html',1,'']]],
-  ['task_5fgate_5fgazebo_2elaunch',['task_gate_gazebo.launch',['../task__gate_2launch_2task__gate__gazebo_8launch.html',1,'']]],
-  ['task_5fgate_5fgazebo_2elaunch',['task_gate_gazebo.launch',['../task__torpedo_2launch_2task__gate__gazebo_8launch.html',1,'']]],
+  ['task_5fgate_5fgazebo_2elaunch',['task_gate_gazebo.launch',['../task__gate__gazebo_8launch.html',1,'']]],
   ['task_5fnodes_2elaunch',['task_nodes.launch',['../task__nodes_8launch.html',1,'']]],
+  ['task_5foctagon_5fgazebo_2elaunch',['task_octagon_gazebo.launch',['../task__octagon__gazebo_8launch.html',1,'']]],
+  ['task_5ftorpedo_5fgazebo_2elaunch',['task_torpedo_gazebo.launch',['../task__torpedo__gazebo_8launch.html',1,'']]],
   ['testing_5farduino_5fnode_2ecpp',['testing_arduino_node.cpp',['../testing__arduino__node_8cpp.html',1,'']]],
   ['torpedo_2eaction',['torpedo.action',['../torpedo_8action.html',1,'']]],
   ['torpedo_2ecfg',['torpedo.cfg',['../torpedo_8cfg.html',1,'']]],
