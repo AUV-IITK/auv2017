@@ -25,16 +25,7 @@ int main(int argc, char* argv[])
     ros::Publisher pub = n.advertise<std_msgs::Float32MultiArray>("parameters", 1000);
     ros::Rate loop_rate(10);
     cv::Mat circles;
-    // Load the previous values of the threshold if they exist
-// *****  UNCOMMENT BELOW PART TO TAKE FEED FROM CAMERA AND COMMENT OUT PART AFTER THAT***********\\
-//    int camno = (**(argv+1)-'0');
-//    VideoCapture cap(camno);
-//   image_input = imread(argv[0], CV_LOAD_IMAGE_COLOR);
     image_input = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
-//**************************************************************************\\
-// VideoCapture cap(argv[1]);
-//***************************************************************************\\
-// Create a window in which the captured images will be presented
     cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
     cvNamedWindow("F1", CV_WINDOW_NORMAL);
     cvNamedWindow("RealPic", CV_WINDOW_NORMAL);
@@ -59,13 +50,6 @@ int main(int argc, char* argv[])
     cv::Mat  hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;
     while (ros::ok())
     {
-        // Get one frame
-//        if( !cap.isOpened() )
-//        {
-//          fprintf( stderr, "ERROR: frame is null...\n" );
-//          getchar();
-//          break;
-//        }
         cv::Mat frame;
         image_input.copyTo(frame);
         if (frame.empty())
