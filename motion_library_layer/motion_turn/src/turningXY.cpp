@@ -27,7 +27,7 @@ private:
   motion_commons::TurnFeedback feedback_;
   motion_commons::TurnResult result_;
   ros::Publisher PWM;
-  float p, i, d;
+  float p, i, d, band;
 
 public:
   // Constructor, called when new instance of class declared
@@ -97,7 +97,7 @@ public:
       output = (p * error) + (i * integral) + (d * derivative);
       turningOutputPWMMapping(output);
 
-      if (error < 2 && error > -2)
+      if (error < band && error > -band)
       {
         reached = true;
         pwm.data = 0;
@@ -148,11 +148,12 @@ public:
     pwm.data = static_cast<int>(temp);
   }
 
-  void setPID(float new_p, float new_i, float new_d)
+  void setPID(float new_p, float new_i, float new_d, float new_band)
   {
     p = new_p;
     i = new_i;
     d = new_d;
+    band = new_band;
   }
 };
 innerActionClass *object;
@@ -160,8 +161,9 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_turn::pidConfig &config, double level)
 {
-  ROS_INFO("TurnServer: Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
-  object->setPID(config.p, config.i, config.d);
+  ROS_INFO("TurnServer: Reconfigure Request: p= %f i= %f d=%f error band=%f", config.p, config.i, config.d,
+    config.band);
+  object->setPID(config.p, config.i, config.d, config.band);
 }
 
 void yawCb(std_msgs::Float64 msg)
@@ -184,10 +186,11 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "turningXY");
   ros::NodeHandle n;
-  double p_param, i_param, d_param;
+  double p_param, i_param, d_param, band_param;
   n.getParam("turningXY/p_param", p_param);
   n.getParam("turningXY/i_param", i_param);
   n.getParam("turningXY/d_param", d_param);
+  n.getParam("turningXY/band_param", band_param);
 
   ros::Subscriber yaw = n.subscribe<std_msgs::Float64>("/varun/motion/yaw", 1000, &yawCb);
 
@@ -204,6 +207,7 @@ int main(int argc, char **argv)
   config.p = p_param;
   config.i = i_param;
   config.d = d_param;
+  config.band = band_param;
   callback(config, 0);
 
   ros::spin();

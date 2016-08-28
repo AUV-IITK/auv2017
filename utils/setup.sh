@@ -61,7 +61,7 @@ rosrun rosserial_arduino make_libraries.py .
 echo 'SUBSYSTEM=="tty", ATTRS{idVendor}=="26ac", ATTRS{serial}=="0", ATTRS{idProduct}=="0010", SYMLINK+="navstik"' > /etc/udev/rules.d/99-imu-serial.rules
 
 # udev rules setup for arduino
-echo 'ACTION=="add", ATTRS{idVendor}=="05e3", ATTRS{idProduct}=="0610", SYMLINK+="arduino"' > /etc/udev/rules.d/100-arduino-serial.rules
+echo 'SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="0042", SYMLINK+="arduino"' > /etc/udev/rules.d/100-arduino-serial.rules
 
 # suggest to setup environment variables
 echo "Please add these to your ~/.bashrc file"

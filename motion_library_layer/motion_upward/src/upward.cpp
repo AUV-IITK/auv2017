@@ -27,7 +27,7 @@ private:
   motion_commons::UpwardFeedback feedback_;
   motion_commons::UpwardResult result_;
   ros::Publisher PWM;
-  float p, i, d;
+  float p, i, d, band;
 
 public:
   // Constructor, called when new instance of class declared
@@ -92,7 +92,7 @@ public:
       output = (p * error) + (i * integral) + (d * derivative);
       upwardOutputPWMMapping(output);
 
-      if (pwm.data <= 2 && pwm.data >= -2)
+      if (pwm.data <= band && pwm.data >= -band)
       {
         reached = true;
         pwm.data = 0;
@@ -144,11 +144,12 @@ public:
     pwm.data = static_cast<int>(temp);
   }
 
-  void setPID(float new_p, float new_i, float new_d)
+  void setPID(float new_p, float new_i, float new_d, float new_band)
   {
     p = new_p;
     i = new_i;
     d = new_d;
+    band = new_band;
   }
 };
 innerActionClass *object;
@@ -156,8 +157,9 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_upward::pidConfig &config, double level)
 {
-  ROS_INFO("UpwardServer: Reconfigure Request: p= %f i= %f d=%f", config.p, config.i, config.d);
-  object->setPID(config.p, config.i, config.d);
+  ROS_INFO("UpwardServer: Reconfigure Request: p= %f i= %f d=%f error band=%f", config.p, config.i, config.d,
+    config.band);
+  object->setPID(config.p, config.i, config.d, config.band);
 }
 
 void distanceCb(std_msgs::Float64 msg)
@@ -180,10 +182,11 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "upward");
   ros::NodeHandle n;
-  double p_param, i_param, d_param;
+  double p_param, i_param, d_param, band_param;
   n.getParam("upward/p_param", p_param);
   n.getParam("upward/i_param", i_param);
   n.getParam("upward/d_param", d_param);
+  n.getParam("upward/band_param", band_param);
 
   ros::Subscriber zDistance = n.subscribe<std_msgs::Float64>("/varun/motion/z_distance", 1000, &distanceCb);
 
@@ -200,6 +203,7 @@ int main(int argc, char **argv)
   config.p = p_param;
   config.i = i_param;
   config.d = d_param;
+  config.band = band_param;
   callback(config, 0);
 
   ros::spin();
