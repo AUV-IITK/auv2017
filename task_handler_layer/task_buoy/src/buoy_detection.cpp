@@ -83,21 +83,13 @@ int main(int argc, char* argv[])
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
   ros::Rate loop_rate(10);
-  int t1minParam, t1maxParam, t2minParam, t2maxParam, t3minParam, t3maxParam;
 
-  n.getParam("buoy_detection/t1maxParam", t1maxParam);
-  n.getParam("buoy_detection/t1minParam", t1minParam);
-  n.getParam("buoy_detection/t2maxParam", t2maxParam);
-  n.getParam("buoy_detection/t2minParam", t2minParam);
-  n.getParam("buoy_detection/t3maxParam", t3maxParam);
-  n.getParam("buoy_detection/t3minParam", t3minParam);
-
-  t1min = t1minParam;
-  t1max = t1maxParam;
-  t2min = t2minParam;
-  t2max = t2maxParam;
-  t3min = t3minParam;
-  t3max = t3maxParam;
+  n.getParam("buoy_detection/t1maxParam", t1max);
+  n.getParam("buoy_detection/t1minParam", t1min);
+  n.getParam("buoy_detection/t2maxParam", t2max);
+  n.getParam("buoy_detection/t2minParam", t2min);
+  n.getParam("buoy_detection/t3maxParam", t3max);
+  n.getParam("buoy_detection/t3minParam", t3min);
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
