@@ -15,6 +15,8 @@
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
+#include <task_line/lineConfig.h>
+#include <dynamic_reconfigure/server.h>
 #include "std_msgs/Float64MultiArray.h"
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
@@ -38,13 +40,22 @@ using std::vector;
 using std::endl;
 using std::cout;
 
-
-
 int w = -2, x = -2, y = -2, z = -2, m = -1;
 bool IP = true;
 bool flag = false;
 bool video = false;
-int t1min = 0, t1max = 88, t2min = 89, t2max = 251, t3min = 0, t3max = 255, lineCount = 0;  // Default Params
+int t1min, t1max, t2min, t2max, t3min, t3max, lineCount = 0;
+
+void callback_dyn(task_line::lineConfig &config, uint32_t level)
+{
+  t1min = config.t1min_param;
+  t1max = config.t1max_param;
+  t2min = config.t2min_param;
+  t2max = config.t2max_param;
+  t3min = config.t3min_param;
+  t3max = config.t3max_param;
+  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
+}
 
 std_msgs::Float64 msg;
 // parameters in param file should be nearly the same as the commented values
@@ -197,6 +208,11 @@ int main(int argc, char* argv[])
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
+
+  dynamic_reconfigure::Server<task_line::lineConfig> server;
+  dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
+  f = boost::bind(&callback_dyn, _1, _2);
+  server.setCallback(f);
 
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
