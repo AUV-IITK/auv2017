@@ -1,11 +1,11 @@
 <launch>
   <node name="buoy_detection" pkg="task_buoy" type="buoy_detection" respawn="true"  output="screen">
-    <param name="t1minParam" type="int" value="177" />
-    <param name="t1maxParam" type="int" value="260" />
-    <param name="t2minParam" type="int" value="234" />
-    <param name="t2maxParam" type="int" value="260" />
-    <param name="t3minParam" type="int" value="229" />
-    <param name="t3maxParam" type="int" value="260" />
+    <param name="t1minParam" type="int" value="0" />
+    <param name="t1maxParam" type="int" value="231" />
+    <param name="t2minParam" type="int" value="0" />
+    <param name="t2maxParam" type="int" value="120" />
+    <param name="t3minParam" type="int" value="0" />
+    <param name="t3maxParam" type="int" value="155" />
   </node>
   <node name="buoy_server" pkg="task_buoy" type="buoy_server" respawn="true"  output="screen">
   </node>
