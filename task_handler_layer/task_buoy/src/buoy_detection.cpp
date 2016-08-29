@@ -19,7 +19,7 @@
 #include <sstream>
 #include <string>
 
-bool IP = false;
+bool IP = true;
 bool flag = false;
 bool video = false;
 int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
@@ -291,7 +291,12 @@ int main(int argc, char* argv[])
       cv::imshow("circle", circles);            // Original stream with detected ball overlay
       cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
       pub.publish(array);
-
+      if ((cvWaitKey(10) & 255) == 32)
+      {
+        if (x == 32) x = -1;
+        else x = 32;
+      }
+      if (x == 32) printf("paused\n");
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
