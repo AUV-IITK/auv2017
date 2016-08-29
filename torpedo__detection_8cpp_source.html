@@ -180,12 +180,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;torpedo_detection_switch&quot;</span>, 1000, &amp;<a class="code" href="torpedo__detection_8cpp.html#a7c0ebfe6b31c897994082445bc9820b8">torpedoListener</a>);</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  ros::Rate loop_rate(10);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t1maxParam&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t1minParam&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t2maxParam&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t2minParam&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t3maxParam&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t3minParam&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t1max&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t1min&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t2max&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t2min&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t3max&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  n.getParam(<span class="stringliteral">&quot;cupid_detection/t3min&quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  image_transport::ImageTransport it(n);</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>, 1, <a class="code" href="torpedo__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>);</div>
@@ -380,7 +380,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 29 2016 15:24:23 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 29 2016 18:51:26 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

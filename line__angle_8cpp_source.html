@@ -298,165 +298,172 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  image_transport::ImageTransport it(n);</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>, 1, <a class="code" href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>);</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  dynamic_reconfigure::Server&lt;task_line::lineConfig&gt; server;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  dynamic_reconfigure::Server&lt;task_line::lineConfig&gt;::CallbackType f;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  f = boost::bind(&amp;<a class="code" href="line__angle_8cpp.html#a552d25c73cc82d337799b861b5ec9e3a">callback_dyn</a>, _1, _2);</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  server.setCallback(f);</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;After Color Filtering&quot;</span>, CV_WINDOW_NORMAL);</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;Contours&quot;</span>, CV_WINDOW_NORMAL);</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;LINES&quot;</span>, CV_WINDOW_NORMAL);</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a>)</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  {</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F1&quot;</span>, CV_WINDOW_NORMAL);</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F2&quot;</span>, CV_WINDOW_NORMAL);</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F3&quot;</span>, CV_WINDOW_NORMAL);</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t1min&quot;</span>, <span class="stringliteral">&quot;F1&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, 260, NULL);</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t1max&quot;</span>, <span class="stringliteral">&quot;F1&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, 260, NULL);</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t2min&quot;</span>, <span class="stringliteral">&quot;F2&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, 260, NULL);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t2max&quot;</span>, <span class="stringliteral">&quot;F2&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, 260, NULL);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t3min&quot;</span>, <span class="stringliteral">&quot;F3&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, 260, NULL);</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t3max&quot;</span>, <span class="stringliteral">&quot;F3&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>, 260, NULL);</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  }</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  <span class="comment">// capture size -</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  CvSize size = cvSize(width, height);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  <span class="comment">// Initialize different images that are going to be used in the program</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  <span class="comment">// image converted to HSV plane</span></div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  <span class="comment">// asking for the minimum distance where bwe fire torpedo</span></div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  <span class="keywordflow">while</span> (ros::ok())</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  {</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    loop_rate.sleep();</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="comment">// Get one frame</span></div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.empty())</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    {</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;empty frame \n&quot;</span>;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    }</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a>)</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;      output_cap.write(<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>);</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="comment">// get the image data</span></div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    height = <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.rows;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    width = <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.cols;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    step = <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.step;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="comment">// Covert color space to HSV as it is much easier to filter colors in the HSV color-space.</span></div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    cv::cvtColor(<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>, hsv_frame, CV_BGR2HSV);</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    cv::Scalar hsv_min = cv::Scalar(<a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, 0);</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    cv::Scalar hsv_max = cv::Scalar(<a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>, 0);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <span class="comment">// Filter out colors which are out of range.</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <span class="comment">// Split image into its 3 one dimensional images</span></div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    cv::Mat thresholded_hsv[3];</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    cv::split(hsv_frame, thresholded_hsv);</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="comment">// Filter out colors which are out of range.</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    cv::inRange(thresholded_hsv[0], cv::Scalar(<a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, 0, 0, 0), cv::Scalar(<a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, 0, 0, 0), thresholded_hsv[0]);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    cv::inRange(thresholded_hsv[1], cv::Scalar(<a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, 0, 0, 0), cv::Scalar(<a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, 0, 0, 0), thresholded_hsv[1]);</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    cv::inRange(thresholded_hsv[2], cv::Scalar(<a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, 0, 0, 0), cv::Scalar(<a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>, 0, 0, 0), thresholded_hsv[2]);</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    cv::imshow(<span class="stringliteral">&quot;After Color Filtering&quot;</span>, thresholded);  <span class="comment">// The stream after color filtering</span></div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a>)</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    {</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F1&quot;</span>, thresholded_hsv[0]);              <span class="comment">// individual filters</span></div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F2&quot;</span>, thresholded_hsv[1]);</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F3&quot;</span>, thresholded_hsv[2]);</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    }</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_angle/t1max&quot;</span>, <a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>);</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_angle/t1min&quot;</span>, <a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_angle/t2max&quot;</span>, <a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_angle/t2min&quot;</span>, <a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>);</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_angle/t3max&quot;</span>, <a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_angle/t3min&quot;</span>, <a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>);</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  dynamic_reconfigure::Server&lt;task_line::lineConfig&gt; server;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  dynamic_reconfigure::Server&lt;task_line::lineConfig&gt;::CallbackType f;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  f = boost::bind(&amp;<a class="code" href="line__angle_8cpp.html#a552d25c73cc82d337799b861b5ec9e3a">callback_dyn</a>, _1, _2);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  server.setCallback(f);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;After Color Filtering&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;Contours&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  cvNamedWindow(<span class="stringliteral">&quot;LINES&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a>)</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  {</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F1&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F2&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F3&quot;</span>, CV_WINDOW_NORMAL);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t1min&quot;</span>, <span class="stringliteral">&quot;F1&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, 260, NULL);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t1max&quot;</span>, <span class="stringliteral">&quot;F1&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, 260, NULL);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t2min&quot;</span>, <span class="stringliteral">&quot;F2&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, 260, NULL);</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t2max&quot;</span>, <span class="stringliteral">&quot;F2&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, 260, NULL);</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t3min&quot;</span>, <span class="stringliteral">&quot;F3&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, 260, NULL);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t3max&quot;</span>, <span class="stringliteral">&quot;F3&quot;</span>, &amp;<a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>, 260, NULL);</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  }</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  <span class="comment">// capture size -</span></div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  CvSize size = cvSize(width, height);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  <span class="comment">// Initialize different images that are going to be used in the program</span></div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  <span class="comment">// image converted to HSV plane</span></div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  <span class="comment">// asking for the minimum distance where bwe fire torpedo</span></div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  <span class="keywordflow">while</span> (ros::ok())</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  {</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    loop_rate.sleep();</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="comment">// Get one frame</span></div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.empty())</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    {</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;empty frame \n&quot;</span>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    }</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a>)</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      output_cap.write(<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <span class="comment">// get the image data</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    height = <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.rows;</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    width = <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.cols;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    step = <a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.step;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <span class="comment">// Covert color space to HSV as it is much easier to filter colors in the HSV color-space.</span></div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    cv::cvtColor(<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>, hsv_frame, CV_BGR2HSV);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    cv::Scalar hsv_min = cv::Scalar(<a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, 0);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    cv::Scalar hsv_max = cv::Scalar(<a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>, 0);</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="comment">// Filter out colors which are out of range.</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="comment">// Split image into its 3 one dimensional images</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    cv::Mat thresholded_hsv[3];</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    cv::split(hsv_frame, thresholded_hsv);</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="comment">// Filter out colors which are out of range.</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    cv::inRange(thresholded_hsv[0], cv::Scalar(<a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, 0, 0, 0), cv::Scalar(<a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, 0, 0, 0), thresholded_hsv[0]);</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    cv::inRange(thresholded_hsv[1], cv::Scalar(<a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, 0, 0, 0), cv::Scalar(<a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, 0, 0, 0), thresholded_hsv[1]);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    cv::inRange(thresholded_hsv[2], cv::Scalar(<a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, 0, 0, 0), cv::Scalar(<a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>, 0, 0, 0), thresholded_hsv[2]);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    cv::imshow(<span class="stringliteral">&quot;After Color Filtering&quot;</span>, thresholded);  <span class="comment">// The stream after color filtering</span></div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 27)</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="line__angle_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a>)</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    {</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;      <span class="comment">// find contours</span></div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      std::vector&lt;std::vector&lt;cv::Point&gt; &gt; contours;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;      cv::Mat thresholded_Mat = thresholded;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;      findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  <span class="comment">// Find the contours in the image</span></div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;      <span class="keywordtype">double</span> largest_area = 0, largest_contour_index = 0;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      <span class="keywordflow">if</span> (contours.empty())</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      {</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>.data = -<a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> * (180 / 3.14)+90;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        pub.publish(<a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>);</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        ros::spinOnce();</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <span class="comment">// If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),</span></div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        <span class="comment">// remove higher bits using AND operator</span></div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 27)</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;          <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      }</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; contours.size(); i++)  <span class="comment">// iterate through each contour.</span></div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;      {</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="keywordtype">double</span> a = contourArea(contours[i], <span class="keyword">false</span>);  <span class="comment">//  Find the area of contour</span></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        <span class="keywordflow">if</span> (a &gt; largest_area)</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        {</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;          largest_area = a;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;          largest_contour_index = i;  <span class="comment">// Store the index of largest contour</span></div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        }</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      }</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;      <span class="comment">// Convex HULL</span></div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;      std::vector&lt;std::vector&lt;cv::Point&gt; &gt; hull(contours.size());</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;      convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;      cv::Mat Drawing(thresholded_Mat.rows, thresholded_Mat.cols, CV_8UC1, cv::Scalar::all(0));</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;      std::vector&lt;cv::Vec4i&gt; hierarchy;</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;      cv::Scalar color(255, 255, 255);</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;      cv::imshow(<span class="stringliteral">&quot;Contours&quot;</span>, Drawing);</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;      std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      Drawing.copyTo(<a class="code" href="line__angle_8cpp.html#a3d97c374036ee59cc995dea181e330cd">sent_to_callback</a>);</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      <span class="comment">/*</span></div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="comment">      msg.data never takes positive 90</span></div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;<span class="comment">      when the angle is 90 it will show -90</span></div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="comment">      -------------TO BE CORRECTED-------------</span></div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="comment">      */</span></div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      msg.data = -<a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> * (180 / 3.14);</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#addc99401340ecb10778277e17c36c77d">lineCount</a> &gt; 0)</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      {</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        pub.publish(msg);</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;      }</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;      <a class="code" href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3">callback</a>(0, 0);        <span class="comment">// for displaying the thresholded image initially</span></div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      <span class="comment">// loop_rate.sleep();</span></div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      <span class="comment">// If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),</span></div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;      <span class="comment">// remove higher bits using AND operator</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 27)</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      {</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32) <a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> = -1;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        <span class="keywordflow">else</span> <a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> = 32;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      }</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32) printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    }</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    {</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;       std::cout &lt;&lt; <span class="stringliteral">&quot;waiting\n&quot;</span>;</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;       <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;       {</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32) <a class="code" href="line__angle_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = -1;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;         <span class="keywordflow">else</span> <a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> = 32;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;       }</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;       <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32) printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;       ros::spinOnce();</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    }</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;  }</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  output_cap.release();</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;}</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a>)</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    {</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F1&quot;</span>, thresholded_hsv[0]);              <span class="comment">// individual filters</span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F2&quot;</span>, thresholded_hsv[1]);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F3&quot;</span>, thresholded_hsv[2]);</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    }</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 27)</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="line__angle_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a>)</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    {</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      <span class="comment">// find contours</span></div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      std::vector&lt;std::vector&lt;cv::Point&gt; &gt; contours;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      cv::Mat thresholded_Mat = thresholded;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  <span class="comment">// Find the contours in the image</span></div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      <span class="keywordtype">double</span> largest_area = 0, largest_contour_index = 0;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      <span class="keywordflow">if</span> (contours.empty())</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      {</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>.data = -<a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> * (180 / 3.14)+90;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        pub.publish(<a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        ros::spinOnce();</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        <span class="comment">// If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        <span class="comment">// remove higher bits using AND operator</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;        <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 27)</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;          <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;      }</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; contours.size(); i++)  <span class="comment">// iterate through each contour.</span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;      {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        <span class="keywordtype">double</span> a = contourArea(contours[i], <span class="keyword">false</span>);  <span class="comment">//  Find the area of contour</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keywordflow">if</span> (a &gt; largest_area)</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        {</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;          largest_area = a;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;          largest_contour_index = i;  <span class="comment">// Store the index of largest contour</span></div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        }</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;      }</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;      <span class="comment">// Convex HULL</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;      std::vector&lt;std::vector&lt;cv::Point&gt; &gt; hull(contours.size());</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;      convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;      cv::Mat Drawing(thresholded_Mat.rows, thresholded_Mat.cols, CV_8UC1, cv::Scalar::all(0));</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;      std::vector&lt;cv::Vec4i&gt; hierarchy;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;      cv::Scalar color(255, 255, 255);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;      cv::imshow(<span class="stringliteral">&quot;Contours&quot;</span>, Drawing);</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      Drawing.copyTo(<a class="code" href="line__angle_8cpp.html#a3d97c374036ee59cc995dea181e330cd">sent_to_callback</a>);</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;      <span class="comment">/*</span></div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="comment">      msg.data never takes positive 90</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="comment">      when the angle is 90 it will show -90</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;<span class="comment">      -------------TO BE CORRECTED-------------</span></div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;<span class="comment">      */</span></div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;      msg.data = -<a class="code" href="line__angle_8cpp.html#a2ade67c5771e2cb04c8d9be363dc19d1">finalAngle</a> * (180 / 3.14);</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#addc99401340ecb10778277e17c36c77d">lineCount</a> &gt; 0)</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;      {</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        pub.publish(msg);</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;      }</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;      <a class="code" href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3">callback</a>(0, 0);        <span class="comment">// for displaying the thresholded image initially</span></div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;      <span class="comment">// loop_rate.sleep();</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;      <span class="comment">// If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      <span class="comment">// remove higher bits using AND operator</span></div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 27)</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;      {</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32) <a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> = -1;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        <span class="keywordflow">else</span> <a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> = 32;</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;      }</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32) printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    }</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    {</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;       std::cout &lt;&lt; <span class="stringliteral">&quot;waiting\n&quot;</span>;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;       <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;       {</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;         <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32) <a class="code" href="line__angle_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = -1;</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;         <span class="keywordflow">else</span> <a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> = 32;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;       }</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;       <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32) printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;       ros::spinOnce();</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    }</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;  }</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;  output_cap.release();</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;}</div>
 <div class="ttc" id="line__angle_8cpp_html_a80056fe52eb002e0f6a24b2fc95fccc2"><div class="ttname"><a href="line__angle_8cpp.html#a80056fe52eb002e0f6a24b2fc95fccc2">minLineLength</a></div><div class="ttdeci">int minLineLength</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00074">line_angle.cpp:74</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="line__angle_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00187">line_angle.cpp:187</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
@@ -505,7 +512,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 29 2016 15:24:23 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 29 2016 18:51:26 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
