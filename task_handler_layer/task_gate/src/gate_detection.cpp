@@ -86,12 +86,12 @@ int main(int argc, char* argv[])
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("gate_detection_switch", 1000, &gateListener);
   ros::Rate loop_rate(10);
 
-  n.getParam("buoy_detection/t1maxParam", t1max);
-  n.getParam("buoy_detection/t1minParam", t1min);
-  n.getParam("buoy_detection/t2maxParam", t2max);
-  n.getParam("buoy_detection/t2minParam", t2min);
-  n.getParam("buoy_detection/t3maxParam", t3max);
-  n.getParam("buoy_detection/t3minParam", t3min);
+  n.getParam("gate_detection/t1max", t1max);
+  n.getParam("gate_detection/t1min", t1min);
+  n.getParam("gate_detection/t2max", t2max);
+  n.getParam("gate_detection/t2min", t2min);
+  n.getParam("gate_detection/t3max", t3max);
+  n.getParam("gate_detection/t3min", t3min);
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);

@@ -101,6 +101,8 @@ int main(int argc, char **argv)
                             // input. and in the case of other sensors , this
                             // rate should be same as there rate of data
                             // generation
+
+  n.getParam("line_detection/percentage", percentage);
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
