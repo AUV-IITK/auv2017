@@ -9,6 +9,8 @@
 #include <std_msgs/Bool.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <dynamic_reconfigure/server.h>
+#include <task_line/lineConfig.h>
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
@@ -29,6 +31,13 @@ cv::Mat red_hue_image;
 cv::Mat frame;
 cv::Mat newframe;
 int count = 0;
+
+void callback(task_line::lineConfig &config, uint32_t level)
+{
+  percentage = config.orange_param;
+  ROS_INFO("Reconfigure Request : New parameters :%d", percentage);
+}
+
 void lineDetectedListener(std_msgs::Bool msg)
 {
   IP = msg.data;
@@ -92,6 +101,11 @@ int main(int argc, char **argv)
                             // input. and in the case of other sensors , this
                             // rate should be same as there rate of data
                             // generation
+  dynamic_reconfigure::Server<task_line::lineConfig> server;
+  dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
+  f = boost::bind(&callback, _1, _2);
+  server.setCallback(f);
+
   if (argc == 2)
   {
     cvNamedWindow("F3", CV_WINDOW_NORMAL);

@@ -12,6 +12,8 @@
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
+#include <dynamic_reconfigure/server.h>
+#include <task_line/lineConfig.h>
 #include "std_msgs/Float32MultiArray.h"
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
@@ -21,11 +23,21 @@
 bool IP = true;
 bool flag = false;
 bool video = false;
-int t1min = 1, t1max = 25, t2min = 95, t2max = 183, t3min = 195, t3max = 230;  // Default Params
-
 cv::Mat frame;
 cv::Mat newframe;
 int count = 0, count_avg = 0;
+int t1min, t1max, t2min, t2max, t3min, t3max;
+
+void callback(task_line::lineConfig &config, uint32_t level)
+{
+  t1min = config.t1min_param;
+  t1max = config.t1max_param;
+  t2min = config.t2min_param;
+  t2max = config.t2max_param;
+  t3min = config.t3min_param;
+  t3max = config.t3max_param;
+  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
+}
 
 float mod(float x, float y)
 {
@@ -79,6 +91,11 @@ int main(int argc, char *argv[])
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
+
+  dynamic_reconfigure::Server<task_line::lineConfig> server;
+  dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
+  f = boost::bind(&callback, _1, _2);
+  server.setCallback(f);
 
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
   cvNamedWindow("COM", CV_WINDOW_NORMAL);
