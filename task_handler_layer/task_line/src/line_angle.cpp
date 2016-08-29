@@ -209,6 +209,13 @@ int main(int argc, char* argv[])
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
+  n.getParam("line_angle/t1max", t1max);
+  n.getParam("line_angle/t1min", t1min);
+  n.getParam("line_angle/t2max", t2max);
+  n.getParam("line_angle/t2min", t2min);
+  n.getParam("line_angle/t3max", t3max);
+  n.getParam("line_angle/t3min", t3min);
+
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
   f = boost::bind(&callback_dyn, _1, _2);
