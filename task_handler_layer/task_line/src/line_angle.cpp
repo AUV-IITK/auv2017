@@ -40,7 +40,7 @@ using std::cout;
 
 
 
-int w = -2, x = -2, y = -2, z = -2;
+int w = -2, x = -2, y = -2, z = -2, m = -1;
 bool IP = true;
 bool flag = false;
 bool video = false;
@@ -156,6 +156,7 @@ void lineAngleListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
+  if (m == 32) return;
   try
   {
     count++;
@@ -195,7 +196,7 @@ int main(int argc, char* argv[])
   ros::Rate loop_rate(10);
 
   image_transport::ImageTransport it(n);
-  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
@@ -328,10 +329,23 @@ int main(int argc, char* argv[])
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
         break;
+      if ((cvWaitKey(10) & 255) == 32)
+      {
+        if (m == 32) m = -1;
+        else m = 32;
+      }
+      if (m == 32) printf("paused\n");
+      ros::spinOnce();
     }
     else
     {
        std::cout << "waiting\n";
+       if ((cvWaitKey(10) & 255) == 32)
+       {
+         if (m == 32) x = -1;
+         else m = 32;
+       }
+       if (m == 32) printf("paused\n");
        ros::spinOnce();
     }
   }
