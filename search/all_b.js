@@ -9,6 +9,7 @@ var searchData=
   ['leftclicked',['leftClicked',['../namespaceremote__gui.html#a999448d5879f615dda13f624556b9d0e',1,'remote_gui']]],
   ['line',['line',['../masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c',1,'masterAlternate.cpp']]],
   ['line_2eaction',['line.action',['../line_8action.html',1,'']]],
+  ['line_2ecfg',['line.cfg',['../line_8cfg.html',1,'']]],
   ['line_5fangle_2ecpp',['line_angle.cpp',['../line__angle_8cpp.html',1,'']]],
   ['line_5fcentralize_2ecpp',['line_centralize.cpp',['../line__centralize_8cpp.html',1,'']]],
   ['line_5fclient_2ecpp',['line_client.cpp',['../line__client_8cpp.html',1,'']]],

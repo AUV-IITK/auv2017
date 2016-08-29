@@ -108,6 +108,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;opencv2/opencv.hpp&gt;</code><br/>
 <code>#include &lt;opencv/highgui.h&gt;</code><br/>
 <code>#include &lt;image_transport/image_transport.h&gt;</code><br/>
+<code>#include &lt;task_line/lineConfig.h&gt;</code><br/>
+<code>#include &lt;dynamic_reconfigure/server.h&gt;</code><br/>
 <code>#include &quot;std_msgs/Float64MultiArray.h&quot;</code><br/>
 <code>#include &lt;cv_bridge/cv_bridge.h&gt;</code><br/>
 <code>#include &lt;sstream&gt;</code><br/>
@@ -127,6 +129,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a552d25c73cc82d337799b861b5ec9e3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#a552d25c73cc82d337799b861b5ec9e3a">callback_dyn</a> (task_line::lineConfig &amp;config, uint32_t level)</td></tr>
+<tr class="separator:a552d25c73cc82d337799b861b5ec9e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1aa22880cc9c13f6bcd0753a95dcdbf"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf">computeMean</a> (vector&lt; double &gt; &amp;newAngles)</td></tr>
 <tr class="separator:af1aa22880cc9c13f6bcd0753a95dcdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8b5cbf8f6c14e5b72a685aa01d4a7fb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#af8b5cbf8f6c14e5b72a685aa01d4a7fb">computeMode</a> (vector&lt; double &gt; &amp;newAngles)</td></tr>
@@ -158,17 +162,17 @@ Variables</h2></td></tr>
 <tr class="separator:a8b3ab54ed3e81c69863d65e4e6c424a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb12876cf5ceaeef805d9553c935730a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a> = false</td></tr>
 <tr class="separator:adb12876cf5ceaeef805d9553c935730a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29640ad74517ae3023b67a75773c3f9a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a> = 0</td></tr>
+<tr class="memitem:a29640ad74517ae3023b67a75773c3f9a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a></td></tr>
 <tr class="separator:a29640ad74517ae3023b67a75773c3f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a873b8202a3128894f1e085b2e301d9df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a> = 88</td></tr>
+<tr class="memitem:a873b8202a3128894f1e085b2e301d9df"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a></td></tr>
 <tr class="separator:a873b8202a3128894f1e085b2e301d9df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31ba5784b0e1d1d0451a1142764519dd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a> = 89</td></tr>
+<tr class="memitem:a31ba5784b0e1d1d0451a1142764519dd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a></td></tr>
 <tr class="separator:a31ba5784b0e1d1d0451a1142764519dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade44e788b0f1c920c3e9175b4d9d9264"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a> = 251</td></tr>
+<tr class="memitem:ade44e788b0f1c920c3e9175b4d9d9264"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a></td></tr>
 <tr class="separator:ade44e788b0f1c920c3e9175b4d9d9264"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46f6551ea6d690e0cbb8d33ad39f61da"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a> = 0</td></tr>
+<tr class="memitem:a46f6551ea6d690e0cbb8d33ad39f61da"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a></td></tr>
 <tr class="separator:a46f6551ea6d690e0cbb8d33ad39f61da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed7983d3e2d03188fff7eaf758bfd3e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a> = 255</td></tr>
+<tr class="memitem:aed7983d3e2d03188fff7eaf758bfd3e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a></td></tr>
 <tr class="separator:aed7983d3e2d03188fff7eaf758bfd3e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:addc99401340ecb10778277e17c36c77d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="line__angle_8cpp.html#addc99401340ecb10778277e17c36c77d">lineCount</a> = 0</td></tr>
 <tr class="separator:addc99401340ecb10778277e17c36c77d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -238,7 +242,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00119">119</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00130">130</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 <p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
@@ -264,6 +268,45 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a552d25c73cc82d337799b861b5ec9e3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void callback_dyn </td>
+          <td>(</td>
+          <td class="paramtype">task_line::lineConfig &amp;&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>level</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00049">49</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="line__angle_8cpp_a552d25c73cc82d337799b861b5ec9e3a_icgraph.png" border="0" usemap="#line__angle_8cpp_a552d25c73cc82d337799b861b5ec9e3a_icgraph" alt=""/></div>
+<map name="line__angle_8cpp_a552d25c73cc82d337799b861b5ec9e3a_icgraph" id="line__angle_8cpp_a552d25c73cc82d337799b861b5ec9e3a_icgraph">
+<area shape="rect" id="node2" href="line__angle_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="152,5,203,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="af1aa22880cc9c13f6bcd0753a95dcdbf"></a>
 <div class="memitem">
 <div class="memproto">
@@ -278,13 +321,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00077">77</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00088">88</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
-<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="line__angle_8cpp_af1aa22880cc9c13f6bcd0753a95dcdbf_icgraph.png" border="0" usemap="#line__angle_8cpp_af1aa22880cc9c13f6bcd0753a95dcdbf_icgraph" alt=""/></div>
 <map name="line__angle_8cpp_af1aa22880cc9c13f6bcd0753a95dcdbf_icgraph" id="line__angle_8cpp_af1aa22880cc9c13f6bcd0753a95dcdbf_icgraph">
 <area shape="rect" id="node2" href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3" title="callback" alt="" coords="158,5,229,32"/><area shape="rect" id="node3" href="line__angle_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="277,5,328,32"/></map>
@@ -307,13 +350,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00088">88</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00099">99</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
-<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="line__angle_8cpp_af8b5cbf8f6c14e5b72a685aa01d4a7fb_icgraph.png" border="0" usemap="#line__angle_8cpp_af8b5cbf8f6c14e5b72a685aa01d4a7fb_icgraph" alt=""/></div>
 <map name="line__angle_8cpp_af8b5cbf8f6c14e5b72a685aa01d4a7fb_icgraph" id="line__angle_8cpp_af8b5cbf8f6c14e5b72a685aa01d4a7fb_icgraph">
 <area shape="rect" id="node2" href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3" title="callback" alt="" coords="158,5,229,32"/><area shape="rect" id="node3" href="line__angle_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="277,5,328,32"/></map>
@@ -336,13 +379,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00157">157</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00168">168</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
-<p><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="line__angle_8cpp_a0d7dfd9133ce1e6b48bfdc8249db33d1_icgraph.png" border="0" usemap="#line__angle_8cpp_a0d7dfd9133ce1e6b48bfdc8249db33d1_icgraph" alt=""/></div>
 <map name="line__angle_8cpp_a0d7dfd9133ce1e6b48bfdc8249db33d1_icgraph" id="line__angle_8cpp_a0d7dfd9133ce1e6b48bfdc8249db33d1_icgraph">
 <area shape="rect" id="node2" href="line__angle_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="163,5,213,32"/></map>
@@ -365,13 +408,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00152">152</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00163">163</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
-<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="line__angle_8cpp_aeaa8c4a4967534eb353c231a3b21e5e3_icgraph.png" border="0" usemap="#line__angle_8cpp_aeaa8c4a4967534eb353c231a3b21e5e3_icgraph" alt=""/></div>
 <map name="line__angle_8cpp_aeaa8c4a4967534eb353c231a3b21e5e3_icgraph" id="line__angle_8cpp_aeaa8c4a4967534eb353c231a3b21e5e3_icgraph">
 <area shape="rect" id="node2" href="line__angle_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97" title="main" alt="" coords="176,5,227,32"/></map>
@@ -404,16 +447,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00176">176</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00187">187</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
-<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="line__angle_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph.png" border="0" usemap="#line__angle_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph" alt=""/></div>
 <map name="line__angle_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph" id="line__angle_8cpp_a0ddf1224851353fc92bfbff6f499fa97_cgraph">
-<area shape="rect" id="node2" href="line__angle_8cpp.html#aeaa8c4a4967534eb353c231a3b21e5e3" title="lineAngleListener" alt="" coords="105,5,226,32"/><area shape="rect" id="node3" href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1" title="imageCallback" alt="" coords="111,56,219,83"/><area shape="rect" id="node4" href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3" title="callback" alt="" coords="130,107,201,133"/><area shape="rect" id="node5" href="line__angle_8cpp.html#af8b5cbf8f6c14e5b72a685aa01d4a7fb" title="computeMode" alt="" coords="275,81,379,108"/><area shape="rect" id="node6" href="line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf" title="computeMean" alt="" coords="275,132,379,159"/></map>
+<area shape="rect" id="node2" href="line__angle_8cpp.html#aeaa8c4a4967534eb353c231a3b21e5e3" title="lineAngleListener" alt="" coords="105,5,226,32"/><area shape="rect" id="node3" href="line__angle_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1" title="imageCallback" alt="" coords="111,56,219,83"/><area shape="rect" id="node4" href="line__angle_8cpp.html#a552d25c73cc82d337799b861b5ec9e3a" title="callback_dyn" alt="" coords="116,107,215,133"/><area shape="rect" id="node5" href="line__angle_8cpp.html#a1ea063dec9d8d7f164bbcf2caf62a8e3" title="callback" alt="" coords="130,157,201,184"/><area shape="rect" id="node6" href="line__angle_8cpp.html#af8b5cbf8f6c14e5b72a685aa01d4a7fb" title="computeMode" alt="" coords="275,132,379,159"/><area shape="rect" id="node7" href="line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf" title="computeMean" alt="" coords="275,183,379,209"/></map>
 </div>
 </p>
 
@@ -430,7 +473,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00074">74</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00085">85</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -444,7 +487,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00074">74</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00085">85</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -458,7 +501,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00068">68</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00079">79</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -486,7 +529,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00072">72</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00083">83</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -500,7 +543,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00053">53</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00064">64</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -514,7 +557,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00056">56</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00067">67</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -528,7 +571,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00059">59</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00070">70</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -542,7 +585,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00065">65</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00076">76</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -556,7 +599,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00073">73</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00084">84</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -598,7 +641,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00062">62</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00073">73</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -612,7 +655,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00052">52</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00063">63</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -626,7 +669,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00055">55</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00066">66</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -640,7 +683,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00058">58</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00069">69</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -668,7 +711,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00064">64</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00075">75</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -682,7 +725,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00069">69</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00080">80</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -696,7 +739,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00063">63</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00074">74</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -710,7 +753,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00049">49</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00060">60</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -724,7 +767,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00073">73</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00084">84</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -738,7 +781,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00067">67</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00078">78</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -752,7 +795,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00073">73</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
+<p>Definition at line <a class="el" href="line__angle_8cpp_source.html#l00084">84</a> of file <a class="el" href="line__angle_8cpp_source.html">line_angle.cpp</a>.</p>
 
 </div>
 </div>
@@ -761,7 +804,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int t1max = 88</td>
+          <td class="memname">int t1max</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -775,7 +818,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int t1min = 0</td>
+          <td class="memname">int t1min</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -789,7 +832,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int t2max = 251</td>
+          <td class="memname">int t2max</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -803,7 +846,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int t2min = 89</td>
+          <td class="memname">int t2min</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -817,7 +860,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int t3max = 255</td>
+          <td class="memname">int t3max</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -831,7 +874,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int t3min = 0</td>
+          <td class="memname">int t3min</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -913,7 +956,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 29 2016 13:09:26 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Aug 29 2016 15:24:24 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
