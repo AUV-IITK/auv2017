@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## Check for lint errors
-roslint_cpp()
+roslint_cpp(src/arduino_node.cpp src/testing_arduino_node.cpp)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)

@@ -4,6 +4,8 @@
 #include <std_msgs/Int32.h>
 #include <std_msgs/Float64.h>
 #include <math.h>
+#include <Wire.h>
+#include "MS5837.h"
 
 #define pwmPinWest 3
 #define pwmPinEast 2
@@ -41,7 +43,8 @@ const float s117 = -3.03;
 const float c122 = 547.39;
 const float s122 = -2.93;
 
-int count, sum;
+MS5837 sensor;
+
 bool isMovingForward = true;
 float v;
 std_msgs::Float64 voltage;
@@ -307,7 +310,11 @@ ros::Publisher ps_voltage("/varun/sensors/pressure_sensor/depth", &voltage);
 void setup()
 {
   nh.initNode();
+  Wire.begin();
 
+  sensor.init();
+
+  sensor.setFluidDensity(997);  // kg/m^3 (freshwater, 1029 for seawater)
   pinMode(pwmPinEast, OUTPUT);
   pinMode(directionPinEast1, OUTPUT);
   pinMode(directionPinEast2, OUTPUT);
@@ -341,26 +348,13 @@ void setup()
   PWMCbSideward(msg);
   PWMCbUpward(msg);
   PWMCbTurn(msg);
-  count = 0;
-  sum = 0;
 }
 
 void loop()
 {
-  if (count == 100)
-  {
-    sum /= count;
-    voltage.data = -sum;  // negative because convention is to take upward direction as positive
-    ps_voltage.publish(&voltage);
-    sum = 0;
-    count = 0;
-  }
-  else
-  {
-    v = analogRead(analogPinPressureSensor);
-    sum += v;
-    count++;
-    delay(1);
-  }
+  sensor.read();
+  voltage.data = sensor.depth()*100;
+  ps_voltage.publish(&voltage);
+  delay(200);
   nh.spinOnce();
 }
