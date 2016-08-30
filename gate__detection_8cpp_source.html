@@ -131,15 +131,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Reconfigure Request : New parameters : %d %d %d %d %d %d &quot;</span>, <a class="code" href="gate__detection_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="gate__detection_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="gate__detection_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="gate__detection_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="gate__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, <a class="code" href="gate__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="gate__detection_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">   44</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gate__detection_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="gate__detection_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a> = msg.data;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="gate__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">   49</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gate__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>(<span class="keyword">const</span> sensor_msgs::ImageConstPtr &amp;<a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> == 32) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="gate__detection_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">   43</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gate__detection_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="gate__detection_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a> = msg.data;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="gate__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">   48</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gate__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>(<span class="keyword">const</span> sensor_msgs::ImageConstPtr &amp;<a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> == 32)</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">try</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  {</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="gate__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a>++;</div>
@@ -154,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  }</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="gate__detection_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">   68</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="gate__detection_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[])</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="gate__detection_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">   68</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="gate__detection_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordtype">int</span> <a class="code" href="namespaceremote__gui.html#ab56538ef096108ce65caffcb4fb2fb4d">height</a>, width, step, channels;  <span class="comment">// parameters of the image we are working on</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  std::string Video_Name = <span class="stringliteral">&quot;Random_Video&quot;</span>;</div>
@@ -246,7 +246,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a>)</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    {</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F1&quot;</span>, thresholded_hsv[0]);              <span class="comment">// individual filters</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F1&quot;</span>, thresholded_hsv[0]);  <span class="comment">// individual filters</span></div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F2&quot;</span>, thresholded_hsv[1]);</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      cv::imshow(<span class="stringliteral">&quot;F3&quot;</span>, thresholded_hsv[2]);</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    }</div>
@@ -312,7 +312,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      circle(frame_mat, center, 5, cv::Scalar(0, 250, 0), -1, 8, 1);</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      rectangle(frame_mat, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;      circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            <span class="comment">// center of screen</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;      circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);  <span class="comment">// center of screen</span></div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      cv::imshow(<span class="stringliteral">&quot;Contours&quot;</span>, Drawing);</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      cv::imshow(<span class="stringliteral">&quot;RealPic&quot;</span>, frame_mat);</div>
@@ -321,15 +321,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;      <a class="code" href="gate__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = (boundRect[0].br()).<a class="code" href="gate__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a>;</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      <a class="code" href="gate__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> = (boundRect[0].tl()).<a class="code" href="gate__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a>;</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      <a class="code" href="gate__detection_8cpp.html#a14f94e529dff0b8bfba8e16fbe9755d6">z</a> = (boundRect[0].tl()).<a class="code" href="gate__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a>;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#aac374e320caaadeca4874add33b62af2">w</a> == (<a class="code" href="gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.rows)-1 || <a class="code" href="gate__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == (<a class="code" href="gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.cols)-1 || <a class="code" href="gate__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> == 1 || <a class="code" href="gate__detection_8cpp.html#a14f94e529dff0b8bfba8e16fbe9755d6">z</a> == 1)</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#aac374e320caaadeca4874add33b62af2">w</a> == (<a class="code" href="gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.rows) - 1 || <a class="code" href="gate__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == (<a class="code" href="gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.cols) - 1 || <a class="code" href="gate__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> == 1 || <a class="code" href="gate__detection_8cpp.html#a14f94e529dff0b8bfba8e16fbe9755d6">z</a> == 1)</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      {</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="keywordflow">if</span> ( <a class="code" href="gate__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> == 1)</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;           array.data.push_back(-1);  <span class="comment">//  hits top</span></div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        <span class="keywordflow">if</span> ( <a class="code" href="gate__detection_8cpp.html#a14f94e529dff0b8bfba8e16fbe9755d6">z</a> == 1)</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> == 1)</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;          array.data.push_back(-1);  <span class="comment">//  hits top</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a14f94e529dff0b8bfba8e16fbe9755d6">z</a> == 1)</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;          array.data.push_back(-2);  <span class="comment">//  hits left</span></div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        <span class="keywordflow">if</span> ( <a class="code" href="gate__detection_8cpp.html#aac374e320caaadeca4874add33b62af2">w</a> == <a class="code" href="gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.rows-1)</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#aac374e320caaadeca4874add33b62af2">w</a> == <a class="code" href="gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.rows - 1)</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;          array.data.push_back(-3);  <span class="comment">//  hits bottom</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keywordflow">if</span> ( <a class="code" href="gate__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == <a class="code" href="gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.cols-1)</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == <a class="code" href="gate__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.cols - 1)</div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;          array.data.push_back(-4);  <span class="comment">//  hits right</span></div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        ros::spinOnce();</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        <span class="keywordflow">continue</span>;</div>
@@ -352,16 +352,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;waiting\n&quot;</span>;</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;      {</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> == 32) <a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> = -1;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keywordflow">else</span> <a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> = 32;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      }</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> == 32) printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    }</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  }</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  output_cap.release();</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;}</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> == 32)</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;          <a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> = -1;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;          <a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> = 32;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      }</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> == 32)</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  }</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  output_cap.release();</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;}</div>
 <div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
 <div class="ttc" id="gate__detection_8cpp_html_aac374e320caaadeca4874add33b62af2"><div class="ttname"><a href="gate__detection_8cpp.html#aac374e320caaadeca4874add33b62af2">w</a></div><div class="ttdeci">int w</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00022">gate_detection.cpp:22</a></div></div>
 <div class="ttc" id="gate__detection_8cpp_html_a29640ad74517ae3023b67a75773c3f9a"><div class="ttname"><a href="gate__detection_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a></div><div class="ttdeci">int t1min</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00026">gate_detection.cpp:26</a></div></div>
@@ -382,15 +385,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="gate__detection_8cpp_html_a31ba5784b0e1d1d0451a1142764519dd"><div class="ttname"><a href="gate__detection_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a></div><div class="ttdeci">int t2min</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00026">gate_detection.cpp:26</a></div></div>
 <div class="ttc" id="gate__detection_8cpp_html_a0a2f84ed7838f07779ae24c5a9086d33"><div class="ttname"><a href="gate__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a></div><div class="ttdeci">int y</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00022">gate_detection.cpp:22</a></div></div>
 <div class="ttc" id="gate__detection_8cpp_html_aed7983d3e2d03188fff7eaf758bfd3e5"><div class="ttname"><a href="gate__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a></div><div class="ttdeci">int t3max</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00026">gate_detection.cpp:26</a></div></div>
-<div class="ttc" id="gate__detection_8cpp_html_a0d7dfd9133ce1e6b48bfdc8249db33d1"><div class="ttname"><a href="gate__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a></div><div class="ttdeci">void imageCallback(const sensor_msgs::ImageConstPtr &amp;msg)</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00049">gate_detection.cpp:49</a></div></div>
+<div class="ttc" id="gate__detection_8cpp_html_a0d7dfd9133ce1e6b48bfdc8249db33d1"><div class="ttname"><a href="gate__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a></div><div class="ttdeci">void imageCallback(const sensor_msgs::ImageConstPtr &amp;msg)</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00048">gate_detection.cpp:48</a></div></div>
 <div class="ttc" id="gate__detection_8cpp_html_a46f6551ea6d690e0cbb8d33ad39f61da"><div class="ttname"><a href="gate__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a></div><div class="ttdeci">int t3min</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00026">gate_detection.cpp:26</a></div></div>
 <div class="ttc" id="gate__detection_8cpp_html_a2d043c356e83ee5dde583a82999bef8b"><div class="ttname"><a href="gate__detection_8cpp.html#a2d043c356e83ee5dde583a82999bef8b">count_avg</a></div><div class="ttdeci">int count_avg</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00030">gate_detection.cpp:30</a></div></div>
 <div class="ttc" id="gate__detection_8cpp_html_ad43c3812e6d13e0518d9f8b8f463ffcf"><div class="ttname"><a href="gate__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a></div><div class="ttdeci">int count</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00030">gate_detection.cpp:30</a></div></div>
-<div class="ttc" id="gate__detection_8cpp_html_ace8491b7fae4075d5dba360be2af8c16"><div class="ttname"><a href="gate__detection_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a></div><div class="ttdeci">void gateListener(std_msgs::Bool msg)</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00044">gate_detection.cpp:44</a></div></div>
+<div class="ttc" id="gate__detection_8cpp_html_ace8491b7fae4075d5dba360be2af8c16"><div class="ttname"><a href="gate__detection_8cpp.html#ace8491b7fae4075d5dba360be2af8c16">gateListener</a></div><div class="ttdeci">void gateListener(std_msgs::Bool msg)</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00043">gate_detection.cpp:43</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 29 2016 18:51:26 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 30 2016 15:46:22 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

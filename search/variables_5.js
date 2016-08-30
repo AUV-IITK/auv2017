@@ -1,6 +1,8 @@
 var searchData=
 [
   ['d',['d',['../classinnerActionClass.html#a3f3483cf8443e2a2247e6de745fc13d6',1,'innerActionClass']]],
+  ['d_5fstablize',['d_stablize',['../classinnerActionClass.html#a01ff43d040aea265dd7f845028a16b2f',1,'innerActionClass']]],
+  ['d_5fturn',['d_turn',['../classinnerActionClass.html#a3c1dd6dc66d3d230d6d25fe54751f463',1,'innerActionClass']]],
   ['data_5fdistance_5f',['data_distance_',['../classTaskBuoyInnerClass.html#a692a7d4a61862c947eac2c04872a4e88',1,'TaskBuoyInnerClass']]],
   ['data_5fx_5f',['data_X_',['../classTaskBuoyInnerClass.html#afa9053c5e3352ff2d5a3567af7b3f2a9',1,'TaskBuoyInnerClass::data_X_()'],['../classTaskGateInnerClass.html#a657bdaa6e4aff64a9ead0105e6757c5e',1,'TaskGateInnerClass::data_X_()'],['../classTaskLineInnerClass.html#a51c740e5389b8268ca11287f67472291',1,'TaskLineInnerClass::data_X_()']]],
   ['data_5fy_5f',['data_Y_',['../classTaskBuoyInnerClass.html#ae574112de5236ae30260bccd3414ea3f',1,'TaskBuoyInnerClass::data_Y_()'],['../classTaskGateInnerClass.html#a8a513a4fffbf6a0e0cb54881e6aa259b',1,'TaskGateInnerClass::data_Y_()'],['../classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc',1,'TaskLineInnerClass::data_Y_()']]],

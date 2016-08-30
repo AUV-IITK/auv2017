@@ -3,6 +3,8 @@ var searchData=
   ['backward',['backward',['../namespaceremote__gui.html#ab9f4b10167331d0bd965cba904619fbf',1,'remote_gui']]],
   ['backwardclicked',['backwardClicked',['../namespaceremote__gui.html#ac822e0f872760bbd7f4a21eee05059b2',1,'remote_gui']]],
   ['band',['band',['../classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6',1,'innerActionClass']]],
+  ['band_5fstablize',['band_stablize',['../classinnerActionClass.html#afbbd0532bad5181c5910a56da548432e',1,'innerActionClass']]],
+  ['band_5fturn',['band_turn',['../classinnerActionClass.html#aadef2ad6e26732f26a1a60751f6e72f3',1,'innerActionClass']]],
   ['beautify_5fbash',['beautify_bash',['../namespacebeautify__bash.html',1,'']]],
   ['beautify_5fbash_2epy',['beautify_bash.py',['../beautify__bash_8py.html',1,'']]],
   ['beautify_5ffile',['beautify_file',['../classbeautify__bash_1_1BeautifyBash.html#aa52e629666b6d246b58cc204b5ef4f9e',1,'beautify_bash::BeautifyBash']]],

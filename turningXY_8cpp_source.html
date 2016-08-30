@@ -118,7 +118,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#a4796f128b7c7e23ed5b5db0612bfdbb1">   27</a></span>&#160;  motion_commons::TurnFeedback <a class="code" href="classinnerActionClass.html#a4796f128b7c7e23ed5b5db0612bfdbb1">feedback_</a>;</div>
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#a8a8a23bb7404b7762a7a709a8de5394a">   28</a></span>&#160;  motion_commons::TurnResult <a class="code" href="classinnerActionClass.html#a8a8a23bb7404b7762a7a709a8de5394a">result_</a>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  ros::Publisher <a class="code" href="classinnerActionClass.html#a6517e8982fc147f83b6a0a1725e2be1d">PWM</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">p</a>, <a class="code" href="classinnerActionClass.html#a46a1d6d7e70b93785b564e9d029d25a2">i</a>, <a class="code" href="classinnerActionClass.html#a3f3483cf8443e2a2247e6de745fc13d6">d</a>, <a class="code" href="classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6">band</a>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#a6db9313fb7f631223102f88d79258d9d">   30</a></span>&#160;  <span class="keywordtype">float</span> <a class="code" href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">p</a>, <a class="code" href="classinnerActionClass.html#a46a1d6d7e70b93785b564e9d029d25a2">i</a>, <a class="code" href="classinnerActionClass.html#a3f3483cf8443e2a2247e6de745fc13d6">d</a>, <a class="code" href="classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6">band</a>, <a class="code" href="classinnerActionClass.html#a0c5c3ccc24bc8d9d98d48ad1c900c0a5">p_stablize</a>, <a class="code" href="classinnerActionClass.html#a16031d25afcedc420254d45844173bf7">i_stablize</a>, <a class="code" href="classinnerActionClass.html#a01ff43d040aea265dd7f845028a16b2f">d_stablize</a>, <a class="code" href="classinnerActionClass.html#a6db9313fb7f631223102f88d79258d9d">p_turn</a>, <a class="code" href="classinnerActionClass.html#afcb8116f9263184b9f7eef61050030bc">i_turn</a>, <a class="code" href="classinnerActionClass.html#a3c1dd6dc66d3d230d6d25fe54751f463">d_turn</a>, <a class="code" href="classinnerActionClass.html#afbbd0532bad5181c5910a56da548432e">band_stablize</a>, <a class="code" href="classinnerActionClass.html#aadef2ad6e26732f26a1a60751f6e72f3">band_turn</a>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="comment">// Constructor, called when new instance of class declared</span></div>
@@ -150,169 +150,206 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.setPreempted();</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">// called when new goal recieved; start motion and finish it, if not interupted</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#a2e59b1e97d29783cdb1806796eac2519">   63</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classinnerActionClass.html#a2e59b1e97d29783cdb1806796eac2519">analysisCB</a>(<span class="keyword">const</span> motion_commons::TurnGoalConstPtr <a class="code" href="forwardTest_8cpp.html#a900bebf5b52612aabe4b22507010e0c2">goal</a>)</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;Inside analysisCB&quot;</span>);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="arduino__node_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">int</span> loopRate = 10;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    ros::Rate loop_rate(loopRate);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">// waiting till we recieve the first value from IMU else it&#39;s useless to any calculations</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">while</span> (!<a class="code" href="turningXY_8cpp.html#a5857eb60203beb77f04690dc0248daa6">initData</a>)</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Waiting to get first input from IMU&quot;</span>);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      loop_rate.sleep();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a> + goal-&gt;AngleToTurn;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> &gt;= 180)</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> - 360;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> &lt;= -180)</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> + 360;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">float</span> derivative = 0, integral = 0, dt = 1.0 / loopRate;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">bool</span> reached = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data = 0;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.isActive())</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">while</span> (!<a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.isPreemptRequested() &amp;&amp; ros::ok() &amp;&amp; count &lt; goal-&gt;loop)</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      <a class="code" href="turningXY_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a> = <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> - <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a>;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      integral += (<a class="code" href="turningXY_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a> * dt);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      derivative = (presentAngularPosition - <a class="code" href="turningXY_8cpp.html#a2f7c1ff98fe8941f323d5a3158fdb8e3">previousAngularPosition</a>) / dt;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      <a class="code" href="turningXY_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a> = (<a class="code" href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">p</a> * <a class="code" href="turningXY_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a>) + (<a class="code" href="classinnerActionClass.html#a46a1d6d7e70b93785b564e9d029d25a2">i</a> * integral) + (<a class="code" href="classinnerActionClass.html#a3f3483cf8443e2a2247e6de745fc13d6">d</a> * derivative);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <a class="code" href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66">turningOutputPWMMapping</a>(<a class="code" href="turningXY_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a>);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <span class="keywordflow">if</span> (error &lt; band &amp;&amp; error &gt; -<a class="code" href="classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6">band</a>)</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;      {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        reached = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data = 0;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="classinnerActionClass.html#a6517e8982fc147f83b6a0a1725e2be1d">PWM</a>.publish(<a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;thrusters stopped&quot;</span>);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        count++;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      {</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        reached = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        count = 0;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      }</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.isPreemptRequested() || !ros::ok())</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      {</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, <a class="code" href="classinnerActionClass.html#ad2df40f097108a9fbc64df40d8c59091">action_name_</a>.c_str());</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="comment">// set the action state to preempted</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.setPreempted();</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        reached = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      <a class="code" href="classinnerActionClass.html#aa0cb2ade2bab681d9aa87d6b98d7f334">feedback_</a>.AngleRemaining = <a class="code" href="turningXY_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a>;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      <a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.publishFeedback(<a class="code" href="classinnerActionClass.html#aa0cb2ade2bab681d9aa87d6b98d7f334">feedback_</a>);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      <a class="code" href="classinnerActionClass.html#a6517e8982fc147f83b6a0a1725e2be1d">PWM</a>.publish(<a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;pwm send to arduino turn %d&quot;</span>, <a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      loop_rate.sleep();</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordflow">if</span> (reached)</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    {</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      <a class="code" href="classinnerActionClass.html#ab711f9cd74f4d3d318508d246282566e">result_</a>.Result = reached;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Succeeded&quot;</span>, <a class="code" href="classinnerActionClass.html#ad2df40f097108a9fbc64df40d8c59091">action_name_</a>.c_str());</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      <span class="comment">// set the action state to succeeded</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      <a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.setSucceeded(<a class="code" href="classinnerActionClass.html#ab711f9cd74f4d3d318508d246282566e">result_</a>);</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  }</div>
-<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66">  139</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66">turningOutputPWMMapping</a>(<span class="keywordtype">float</span> <a class="code" href="turningXY_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a>)</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  {</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="keywordtype">float</span> maxOutput = 1000, minOutput = -maxOutput;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordtype">float</span> scale = 255 / maxOutput;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordflow">if</span> (output &gt; maxOutput)</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      output = maxOutput;</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordflow">if</span> (output &lt; minOutput)</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      output = minOutput;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keywordtype">float</span> temp = output * scale;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(temp);</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  }</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#a5740559cbca269d86156cbe5d05546b0">  151</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classinnerActionClass.html#a5740559cbca269d86156cbe5d05546b0">setPID</a>(<span class="keywordtype">float</span> new_p, <span class="keywordtype">float</span> new_i, <span class="keywordtype">float</span> new_d, <span class="keywordtype">float</span> new_band)</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  {</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <a class="code" href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">p</a> = new_p;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <a class="code" href="classinnerActionClass.html#a46a1d6d7e70b93785b564e9d029d25a2">i</a> = new_i;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <a class="code" href="classinnerActionClass.html#a3f3483cf8443e2a2247e6de745fc13d6">d</a> = new_d;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <a class="code" href="classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6">band</a> = new_band;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  }</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;};</div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="turningXY_8cpp.html#a2c818deccb02008ff3151d0a88db6345">  159</a></span>&#160;<a class="code" href="classinnerActionClass.html">innerActionClass</a> *<a class="code" href="turningXY_8cpp.html#a2c818deccb02008ff3151d0a88db6345">object</a>;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">// dynamic reconfig</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">  162</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">callback</a>(motion_turn::pidConfig &amp;config, <span class="keywordtype">double</span> level)</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;{</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;TurnServer: Reconfigure Request: p= %f i= %f d=%f error band=%f&quot;</span>, config.p, config.i, config.d,</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    config.band);</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keywordtype">object</span>-&gt;setPID(config.p, config.i, config.d, config.band);</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">// called when new goal recieved; start motion and finish it, if not</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="comment">// interupted</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#a2e59b1e97d29783cdb1806796eac2519">   64</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classinnerActionClass.html#a2e59b1e97d29783cdb1806796eac2519">analysisCB</a>(<span class="keyword">const</span> motion_commons::TurnGoalConstPtr <a class="code" href="forwardTest_8cpp.html#a900bebf5b52612aabe4b22507010e0c2">goal</a>)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;Inside analysisCB&quot;</span>);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="arduino__node_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">int</span> loopRate = 10;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    ros::Rate loop_rate(loopRate);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="comment">// waiting till we recieve the first value from IMU else it&#39;s useless to any</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">// calculations</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">while</span> (!<a class="code" href="turningXY_8cpp.html#a5857eb60203beb77f04690dc0248daa6">initData</a>)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Waiting to get first input from IMU&quot;</span>);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      loop_rate.sleep();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a> + goal-&gt;AngleToTurn;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> &gt;= 180)</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> - 360;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> &lt;= -180)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> + 360;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">float</span> derivative = 0, integral = 0, dt = 1.0 / loopRate;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">bool</span> reached = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data = 0;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.isActive())</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordflow">while</span> (!<a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.isPreemptRequested() &amp;&amp; ros::ok() &amp;&amp; count &lt; goal-&gt;loop)</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      <span class="keywordflow">if</span> (goal-&gt;loop &gt; 10000)</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <a class="code" href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">p</a> = <a class="code" href="classinnerActionClass.html#a0c5c3ccc24bc8d9d98d48ad1c900c0a5">p_stablize</a>;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <a class="code" href="classinnerActionClass.html#a46a1d6d7e70b93785b564e9d029d25a2">i</a> = <a class="code" href="classinnerActionClass.html#a16031d25afcedc420254d45844173bf7">i_stablize</a>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="classinnerActionClass.html#a3f3483cf8443e2a2247e6de745fc13d6">d</a> = <a class="code" href="classinnerActionClass.html#a01ff43d040aea265dd7f845028a16b2f">d_stablize</a>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <a class="code" href="classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6">band</a> = <a class="code" href="classinnerActionClass.html#afbbd0532bad5181c5910a56da548432e">band_stablize</a>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <a class="code" href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">p</a> = <a class="code" href="classinnerActionClass.html#a6db9313fb7f631223102f88d79258d9d">p_turn</a>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <a class="code" href="classinnerActionClass.html#a46a1d6d7e70b93785b564e9d029d25a2">i</a> = <a class="code" href="classinnerActionClass.html#afcb8116f9263184b9f7eef61050030bc">i_turn</a>;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <a class="code" href="classinnerActionClass.html#a3f3483cf8443e2a2247e6de745fc13d6">d</a> = <a class="code" href="classinnerActionClass.html#a3c1dd6dc66d3d230d6d25fe54751f463">d_turn</a>;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6">band</a> = <a class="code" href="classinnerActionClass.html#aadef2ad6e26732f26a1a60751f6e72f3">band_turn</a>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <a class="code" href="turningXY_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a> = <a class="code" href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a> - <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      integral += (<a class="code" href="turningXY_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a> * dt);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      derivative = (presentAngularPosition - <a class="code" href="turningXY_8cpp.html#a2f7c1ff98fe8941f323d5a3158fdb8e3">previousAngularPosition</a>) / dt;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <a class="code" href="turningXY_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a> = (<a class="code" href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">p</a> * <a class="code" href="turningXY_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a>) + (<a class="code" href="classinnerActionClass.html#a46a1d6d7e70b93785b564e9d029d25a2">i</a> * integral) + (<a class="code" href="classinnerActionClass.html#a3f3483cf8443e2a2247e6de745fc13d6">d</a> * derivative);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <a class="code" href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66">turningOutputPWMMapping</a>(<a class="code" href="turningXY_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a>);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      <span class="keywordflow">if</span> (error &lt; band &amp;&amp; error &gt; -<a class="code" href="classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6">band</a>)</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        reached = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data = 0;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <a class="code" href="classinnerActionClass.html#a6517e8982fc147f83b6a0a1725e2be1d">PWM</a>.publish(<a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;thrusters stopped&quot;</span>);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        count++;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;      <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        reached = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        count = 0;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.isPreemptRequested() || !ros::ok())</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;      {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, <a class="code" href="classinnerActionClass.html#ad2df40f097108a9fbc64df40d8c59091">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="comment">// set the action state to preempted</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.setPreempted();</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        reached = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      }</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      <a class="code" href="classinnerActionClass.html#aa0cb2ade2bab681d9aa87d6b98d7f334">feedback_</a>.AngleRemaining = <a class="code" href="turningXY_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a>;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;      <a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.publishFeedback(<a class="code" href="classinnerActionClass.html#aa0cb2ade2bab681d9aa87d6b98d7f334">feedback_</a>);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;      <a class="code" href="classinnerActionClass.html#a6517e8982fc147f83b6a0a1725e2be1d">PWM</a>.publish(<a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>);</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;pwm send to arduino turn %d&quot;</span>, <a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      loop_rate.sleep();</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    }</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">if</span> (reached)</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    {</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      <a class="code" href="classinnerActionClass.html#ab711f9cd74f4d3d318508d246282566e">result_</a>.Result = reached;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Succeeded&quot;</span>, <a class="code" href="classinnerActionClass.html#ad2df40f097108a9fbc64df40d8c59091">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      <span class="comment">// set the action state to succeeded</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      <a class="code" href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">turnServer_</a>.setSucceeded(<a class="code" href="classinnerActionClass.html#ab711f9cd74f4d3d318508d246282566e">result_</a>);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    }</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  }</div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66">  157</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66">turningOutputPWMMapping</a>(<span class="keywordtype">float</span> <a class="code" href="turningXY_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a>)</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  {</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordtype">float</span> maxOutput = 1000, minOutput = -maxOutput;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keywordtype">float</span> scale = 255 / maxOutput;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordflow">if</span> (output &gt; maxOutput)</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      output = maxOutput;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordflow">if</span> (output &lt; minOutput)</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      output = minOutput;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">float</span> temp = output * scale;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <a class="code" href="turningXY_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(temp);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  }</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
-<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="turningXY_8cpp.html#abb93af21a0cbd2ef68fe82f71976cdbc">  169</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="turningXY_8cpp.html#abb93af21a0cbd2ef68fe82f71976cdbc">yawCb</a>(std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;{</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  <span class="comment">// this is used to set the final angle after getting the value of first intial position</span></div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="turningXY_8cpp.html#a5857eb60203beb77f04690dc0248daa6">initData</a> == <span class="keyword">false</span>)</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  {</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a> = msg.data;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <a class="code" href="turningXY_8cpp.html#a2f7c1ff98fe8941f323d5a3158fdb8e3">previousAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a>;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <a class="code" href="turningXY_8cpp.html#a5857eb60203beb77f04690dc0248daa6">initData</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  }</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  {</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <a class="code" href="turningXY_8cpp.html#a2f7c1ff98fe8941f323d5a3158fdb8e3">previousAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a>;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a> = msg.data;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;}</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="turningXY_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">  185</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="turningXY_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#aca3da3079f6286e7d307350e7140c94a">  169</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classinnerActionClass.html#aca3da3079f6286e7d307350e7140c94a">setPID</a>(<span class="keywordtype">float</span> new_p_stablize, <span class="keywordtype">float</span> new_p_turn, <span class="keywordtype">float</span> new_i_stablize, <span class="keywordtype">float</span> new_i_turn, <span class="keywordtype">float</span> new_d_stablize,</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;              <span class="keywordtype">float</span> new_d_turn, <span class="keywordtype">float</span> new_band_stablize, <span class="keywordtype">float</span> new_band_turn)</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <a class="code" href="classinnerActionClass.html#a0c5c3ccc24bc8d9d98d48ad1c900c0a5">p_stablize</a> = new_p_stablize;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <a class="code" href="classinnerActionClass.html#a6db9313fb7f631223102f88d79258d9d">p_turn</a> = new_p_turn;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <a class="code" href="classinnerActionClass.html#a16031d25afcedc420254d45844173bf7">i_stablize</a> = new_i_stablize;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <a class="code" href="classinnerActionClass.html#afcb8116f9263184b9f7eef61050030bc">i_turn</a> = new_i_turn;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <a class="code" href="classinnerActionClass.html#a01ff43d040aea265dd7f845028a16b2f">d_stablize</a> = new_d_stablize;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <a class="code" href="classinnerActionClass.html#a3c1dd6dc66d3d230d6d25fe54751f463">d_turn</a> = new_d_turn;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <a class="code" href="classinnerActionClass.html#afbbd0532bad5181c5910a56da548432e">band_stablize</a> = new_band_stablize;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <a class="code" href="classinnerActionClass.html#aadef2ad6e26732f26a1a60751f6e72f3">band_turn</a> = new_band_turn;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  }</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;};</div>
+<div class="line"><a name="l00182"></a><span class="lineno"><a class="line" href="turningXY_8cpp.html#a2c818deccb02008ff3151d0a88db6345">  182</a></span>&#160;<a class="code" href="classinnerActionClass.html">innerActionClass</a> *<a class="code" href="turningXY_8cpp.html#a2c818deccb02008ff3151d0a88db6345">object</a>;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="comment">// dynamic reconfig</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">  185</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">callback</a>(motion_turn::pidConfig &amp;config, <span class="keywordtype">double</span> level)</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;{</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;turningXY&quot;</span>);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  ros::NodeHandle n;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keywordtype">double</span> p_param, i_param, d_param, band_param;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/p_param&quot;</span>, p_param);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/i_param&quot;</span>, i_param);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/d_param&quot;</span>, d_param);</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/band_param&quot;</span>, band_param);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;TurnServer: Reconfigure Request: p_stablize=%f p_turn=%f &quot;</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;           <span class="stringliteral">&quot;i_stablize=%f i_turn=%f d_stablize=%f d_turn=%f error band_turn=%f&quot;</span>,</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;           config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;           config.band_turn);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="keywordtype">object</span>-&gt;setPID(config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                 config.band_stablize, config.band_turn);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;}</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  ros::Subscriber <a class="code" href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">yaw</a> = n.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/yaw&quot;</span>, 1000, &amp;<a class="code" href="turningXY_8cpp.html#abb93af21a0cbd2ef68fe82f71976cdbc">yawCb</a>);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for Goal&quot;</span>);</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  <span class="keywordtype">object</span> = <span class="keyword">new</span> <a class="code" href="classinnerActionClass.html">innerActionClass</a>(ros::this_node::getName());</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  <span class="comment">// register dynamic reconfig server.</span></div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  dynamic_reconfigure::Server&lt;motion_turn::pidConfig&gt; server;</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  dynamic_reconfigure::Server&lt;motion_turn::pidConfig&gt;::CallbackType f;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  f = boost::bind(&amp;<a class="code" href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">callback</a>, _1, _2);</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  server.setCallback(f);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="comment">// set launch file pid</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  motion_turn::pidConfig config;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  config.p = p_param;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  config.i = i_param;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  config.d = d_param;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  config.band = band_param;</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <a class="code" href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">callback</a>(config, 0);</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  ros::spin();</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;}</div>
+<div class="line"><a name="l00195"></a><span class="lineno"><a class="line" href="turningXY_8cpp.html#abb93af21a0cbd2ef68fe82f71976cdbc">  195</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="turningXY_8cpp.html#abb93af21a0cbd2ef68fe82f71976cdbc">yawCb</a>(std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;{</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="comment">// this is used to set the final angle after getting the value of first intial</span></div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  <span class="comment">// position</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="turningXY_8cpp.html#a5857eb60203beb77f04690dc0248daa6">initData</a> == <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  {</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a> = msg.data;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <a class="code" href="turningXY_8cpp.html#a2f7c1ff98fe8941f323d5a3158fdb8e3">previousAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a>;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <a class="code" href="turningXY_8cpp.html#a5857eb60203beb77f04690dc0248daa6">initData</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  }</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  {</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <a class="code" href="turningXY_8cpp.html#a2f7c1ff98fe8941f323d5a3158fdb8e3">previousAngularPosition</a> = <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a>;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <a class="code" href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a> = msg.data;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  }</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;}</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00212"></a><span class="lineno"><a class="line" href="turningXY_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">  212</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="turningXY_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;{</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;turningXY&quot;</span>);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  ros::NodeHandle n;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <span class="keywordtype">double</span> p_stablize, p_turn, i_stablize, i_turn, d_stablize, d_turn, band_stablize, band_turn;</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/p_stablize&quot;</span>, p_stablize);</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/p_turn&quot;</span>, p_turn);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/i_stablize&quot;</span>, i_stablize);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/i_turn&quot;</span>, i_turn);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/d_stablize&quot;</span>, d_stablize);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/d_turn&quot;</span>, d_turn);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/band_stablize&quot;</span>, band_stablize);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  n.getParam(<span class="stringliteral">&quot;turningXY/band_turn&quot;</span>, band_turn);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  ros::Subscriber <a class="code" href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">yaw</a> = n.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/yaw&quot;</span>, 1000, &amp;<a class="code" href="turningXY_8cpp.html#abb93af21a0cbd2ef68fe82f71976cdbc">yawCb</a>);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for Goal&quot;</span>);</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  <span class="keywordtype">object</span> = <span class="keyword">new</span> <a class="code" href="classinnerActionClass.html">innerActionClass</a>(ros::this_node::getName());</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  <span class="comment">// register dynamic reconfig server.</span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  dynamic_reconfigure::Server&lt;motion_turn::pidConfig&gt; server;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  dynamic_reconfigure::Server&lt;motion_turn::pidConfig&gt;::CallbackType f;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;  f = boost::bind(&amp;<a class="code" href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">callback</a>, _1, _2);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;  server.setCallback(f);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;  <span class="comment">// set launch file pid</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  motion_turn::pidConfig config;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  config.p_stablize = p_stablize;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;  config.p_turn = p_turn;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  config.i_stablize = i_stablize;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  config.i_turn = i_turn;</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  config.d_stablize = d_stablize;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;  config.d_turn = d_turn;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;  config.band_stablize = band_stablize;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;  config.band_turn = band_turn;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  <a class="code" href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">callback</a>(config, 0);</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  ros::spin();</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;}</div>
 <div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_afbbd0532bad5181c5910a56da548432e"><div class="ttname"><a href="classinnerActionClass.html#afbbd0532bad5181c5910a56da548432e">innerActionClass::band_stablize</a></div><div class="ttdeci">float band_stablize</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00030">turningXY.cpp:30</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_ae76ed33eb87c7cb0d3cf4e418ba06704"><div class="ttname"><a href="classinnerActionClass.html#ae76ed33eb87c7cb0d3cf4e418ba06704">innerActionClass::innerActionClass</a></div><div class="ttdeci">innerActionClass(std::string name)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00034">turningXY.cpp:34</a></div></div>
 <div class="ttc" id="turningXY_8cpp_html_ac18e6e4a0dc22ddf56e8815db2ff346b"><div class="ttname"><a href="turningXY_8cpp.html#ac18e6e4a0dc22ddf56e8815db2ff346b">presentAngularPosition</a></div><div class="ttdeci">float presentAngularPosition</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00014">turningXY.cpp:14</a></div></div>
-<div class="ttc" id="turningXY_8cpp_html_abb93af21a0cbd2ef68fe82f71976cdbc"><div class="ttname"><a href="turningXY_8cpp.html#abb93af21a0cbd2ef68fe82f71976cdbc">yawCb</a></div><div class="ttdeci">void yawCb(std_msgs::Float64 msg)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00169">turningXY.cpp:169</a></div></div>
-<div class="ttc" id="turningXY_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="turningXY_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00185">turningXY.cpp:185</a></div></div>
+<div class="ttc" id="turningXY_8cpp_html_abb93af21a0cbd2ef68fe82f71976cdbc"><div class="ttname"><a href="turningXY_8cpp.html#abb93af21a0cbd2ef68fe82f71976cdbc">yawCb</a></div><div class="ttdeci">void yawCb(std_msgs::Float64 msg)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00195">turningXY.cpp:195</a></div></div>
+<div class="ttc" id="turningXY_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="turningXY_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00212">turningXY.cpp:212</a></div></div>
 <div class="ttc" id="forward_8cpp_html_a1f23b0a8c53e091001b4c962a1347dae"><div class="ttname"><a href="forward_8cpp.html#a1f23b0a8c53e091001b4c962a1347dae">Server</a></div><div class="ttdeci">actionlib::SimpleActionServer&lt; motion_commons::ForwardAction &gt; Server</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00013">forward.cpp:13</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_aa0cb2ade2bab681d9aa87d6b98d7f334"><div class="ttname"><a href="classinnerActionClass.html#aa0cb2ade2bab681d9aa87d6b98d7f334">innerActionClass::feedback_</a></div><div class="ttdeci">motion_commons::ForwardFeedback feedback_</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00027">forward.cpp:27</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_a8a384670f40e16bdcf2dffcb54910a63"><div class="ttname"><a href="classinnerActionClass.html#a8a384670f40e16bdcf2dffcb54910a63">innerActionClass::nh_</a></div><div class="ttdeci">ros::NodeHandle nh_</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00024">forward.cpp:24</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_a4796f128b7c7e23ed5b5db0612bfdbb1"><div class="ttname"><a href="classinnerActionClass.html#a4796f128b7c7e23ed5b5db0612bfdbb1">innerActionClass::feedback_</a></div><div class="ttdeci">motion_commons::TurnFeedback feedback_</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00027">turningXY.cpp:27</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_a3c1dd6dc66d3d230d6d25fe54751f463"><div class="ttname"><a href="classinnerActionClass.html#a3c1dd6dc66d3d230d6d25fe54751f463">innerActionClass::d_turn</a></div><div class="ttdeci">float d_turn</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00030">turningXY.cpp:30</a></div></div>
 <div class="ttc" id="turningXY_8cpp_html_a1084d7e47a5571b229a33ad347cc9453"><div class="ttname"><a href="turningXY_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a></div><div class="ttdeci">float output</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00016">turningXY.cpp:16</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_a8a8a23bb7404b7762a7a709a8de5394a"><div class="ttname"><a href="classinnerActionClass.html#a8a8a23bb7404b7762a7a709a8de5394a">innerActionClass::result_</a></div><div class="ttdeci">motion_commons::TurnResult result_</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00028">turningXY.cpp:28</a></div></div>
 <div class="ttc" id="turningXY_8cpp_html_a5857eb60203beb77f04690dc0248daa6"><div class="ttname"><a href="turningXY_8cpp.html#a5857eb60203beb77f04690dc0248daa6">initData</a></div><div class="ttdeci">bool initData</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00017">turningXY.cpp:17</a></div></div>
@@ -320,9 +357,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classinnerActionClass_html_a43e28ed4ba4950b68d369fe23c990d9c"><div class="ttname"><a href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">innerActionClass::p</a></div><div class="ttdeci">float p</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00030">forward.cpp:30</a></div></div>
 <div class="ttc" id="arduino__node_8cpp_html_ad43c3812e6d13e0518d9f8b8f463ffcf"><div class="ttname"><a href="arduino__node_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a></div><div class="ttdeci">int count</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00044">arduino_node.cpp:44</a></div></div>
 <div class="ttc" id="turningXY_8cpp_html_a95cb46d9cf817eac7174ead52979b9a3"><div class="ttname"><a href="turningXY_8cpp.html#a95cb46d9cf817eac7174ead52979b9a3">finalAngularPosition</a></div><div class="ttdeci">float finalAngularPosition</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00016">turningXY.cpp:16</a></div></div>
-<div class="ttc" id="classinnerActionClass_html_a5740559cbca269d86156cbe5d05546b0"><div class="ttname"><a href="classinnerActionClass.html#a5740559cbca269d86156cbe5d05546b0">innerActionClass::setPID</a></div><div class="ttdeci">void setPID(float new_p, float new_i, float new_d, float new_band)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00151">turningXY.cpp:151</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_ad2df40f097108a9fbc64df40d8c59091"><div class="ttname"><a href="classinnerActionClass.html#ad2df40f097108a9fbc64df40d8c59091">innerActionClass::action_name_</a></div><div class="ttdeci">std::string action_name_</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00026">forward.cpp:26</a></div></div>
-<div class="ttc" id="turningXY_8cpp_html_a8b85c70871366d0e37ac24e186838fd2"><div class="ttname"><a href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">callback</a></div><div class="ttdeci">void callback(motion_turn::pidConfig &amp;config, double level)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00162">turningXY.cpp:162</a></div></div>
+<div class="ttc" id="turningXY_8cpp_html_a8b85c70871366d0e37ac24e186838fd2"><div class="ttname"><a href="turningXY_8cpp.html#a8b85c70871366d0e37ac24e186838fd2">callback</a></div><div class="ttdeci">void callback(motion_turn::pidConfig &amp;config, double level)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00185">turningXY.cpp:185</a></div></div>
 <div class="ttc" id="turningXY_8cpp_html_a26485ca98ee0ea8f4874eb95712e38af"><div class="ttname"><a href="turningXY_8cpp.html#a26485ca98ee0ea8f4874eb95712e38af">Server</a></div><div class="ttdeci">actionlib::SimpleActionServer&lt; motion_commons::TurnAction &gt; Server</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00013">turningXY.cpp:13</a></div></div>
 <div class="ttc" id="forwardTest_8cpp_html_a900bebf5b52612aabe4b22507010e0c2"><div class="ttname"><a href="forwardTest_8cpp.html#a900bebf5b52612aabe4b22507010e0c2">goal</a></div><div class="ttdeci">motion_commons::ForwardGoal goal</div><div class="ttdef"><b>Definition:</b> <a href="forwardTest_8cpp_source.html#l00018">forwardTest.cpp:18</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_aaa5e5743f8d8e09b322e7efb53f23613"><div class="ttname"><a href="classinnerActionClass.html#aaa5e5743f8d8e09b322e7efb53f23613">innerActionClass::analysisCB</a></div><div class="ttdeci">void analysisCB(const motion_commons::ForwardGoalConstPtr goal)</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00063">forward.cpp:63</a></div></div>
@@ -333,18 +369,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classinnerActionClass_html_a0d17548d84e3b7961c11c454b87dd24a"><div class="ttname"><a href="classinnerActionClass.html#a0d17548d84e3b7961c11c454b87dd24a">innerActionClass::~innerActionClass</a></div><div class="ttdeci">~innerActionClass(void)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00048">turningXY.cpp:48</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_a46a1d6d7e70b93785b564e9d029d25a2"><div class="ttname"><a href="classinnerActionClass.html#a46a1d6d7e70b93785b564e9d029d25a2">innerActionClass::i</a></div><div class="ttdeci">float i</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00030">forward.cpp:30</a></div></div>
 <div class="ttc" id="namespacemock__imu__eular_html_a120f94ded6c9687908d3cc7422f5317f"><div class="ttname"><a href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">mock_imu_eular.yaw</a></div><div class="ttdeci">float yaw</div><div class="ttdef"><b>Definition:</b> <a href="mock__imu__eular_8py_source.html#l00009">mock_imu_eular.py:9</a></div></div>
-<div class="ttc" id="turningXY_8cpp_html_a2c818deccb02008ff3151d0a88db6345"><div class="ttname"><a href="turningXY_8cpp.html#a2c818deccb02008ff3151d0a88db6345">object</a></div><div class="ttdeci">innerActionClass * object</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00159">turningXY.cpp:159</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_a0c5c3ccc24bc8d9d98d48ad1c900c0a5"><div class="ttname"><a href="classinnerActionClass.html#a0c5c3ccc24bc8d9d98d48ad1c900c0a5">innerActionClass::p_stablize</a></div><div class="ttdeci">float p_stablize</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00030">turningXY.cpp:30</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_a6db9313fb7f631223102f88d79258d9d"><div class="ttname"><a href="classinnerActionClass.html#a6db9313fb7f631223102f88d79258d9d">innerActionClass::p_turn</a></div><div class="ttdeci">float p_turn</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00030">turningXY.cpp:30</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_afcb8116f9263184b9f7eef61050030bc"><div class="ttname"><a href="classinnerActionClass.html#afcb8116f9263184b9f7eef61050030bc">innerActionClass::i_turn</a></div><div class="ttdeci">float i_turn</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00030">turningXY.cpp:30</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_a16031d25afcedc420254d45844173bf7"><div class="ttname"><a href="classinnerActionClass.html#a16031d25afcedc420254d45844173bf7">innerActionClass::i_stablize</a></div><div class="ttdeci">float i_stablize</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00030">turningXY.cpp:30</a></div></div>
+<div class="ttc" id="turningXY_8cpp_html_a2c818deccb02008ff3151d0a88db6345"><div class="ttname"><a href="turningXY_8cpp.html#a2c818deccb02008ff3151d0a88db6345">object</a></div><div class="ttdeci">innerActionClass * object</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00182">turningXY.cpp:182</a></div></div>
 <div class="ttc" id="classinnerActionClass_html"><div class="ttname"><a href="classinnerActionClass.html">innerActionClass</a></div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00021">forward.cpp:21</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_acb75aefe2dea7879801c58c435ca0769"><div class="ttname"><a href="classinnerActionClass.html#acb75aefe2dea7879801c58c435ca0769">innerActionClass::turnServer_</a></div><div class="ttdeci">Server turnServer_</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00025">turningXY.cpp:25</a></div></div>
 <div class="ttc" id="turningXY_8cpp_html_a7cfd13d282af770aaa971755fa092fca"><div class="ttname"><a href="turningXY_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a></div><div class="ttdeci">float error</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00016">turningXY.cpp:16</a></div></div>
-<div class="ttc" id="classinnerActionClass_html_a13bf4949022ccba3dfdfbff87b28ff66"><div class="ttname"><a href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66">innerActionClass::turningOutputPWMMapping</a></div><div class="ttdeci">void turningOutputPWMMapping(float output)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00139">turningXY.cpp:139</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_aca3da3079f6286e7d307350e7140c94a"><div class="ttname"><a href="classinnerActionClass.html#aca3da3079f6286e7d307350e7140c94a">innerActionClass::setPID</a></div><div class="ttdeci">void setPID(float new_p_stablize, float new_p_turn, float new_i_stablize, float new_i_turn, float new_d_stablize, float new_d_turn, float new_band_stablize, float new_band_turn)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00169">turningXY.cpp:169</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_aadef2ad6e26732f26a1a60751f6e72f3"><div class="ttname"><a href="classinnerActionClass.html#aadef2ad6e26732f26a1a60751f6e72f3">innerActionClass::band_turn</a></div><div class="ttdeci">float band_turn</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00030">turningXY.cpp:30</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_a01ff43d040aea265dd7f845028a16b2f"><div class="ttname"><a href="classinnerActionClass.html#a01ff43d040aea265dd7f845028a16b2f">innerActionClass::d_stablize</a></div><div class="ttdeci">float d_stablize</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00030">turningXY.cpp:30</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_a13bf4949022ccba3dfdfbff87b28ff66"><div class="ttname"><a href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66">innerActionClass::turningOutputPWMMapping</a></div><div class="ttdeci">void turningOutputPWMMapping(float output)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00157">turningXY.cpp:157</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_a6517e8982fc147f83b6a0a1725e2be1d"><div class="ttname"><a href="classinnerActionClass.html#a6517e8982fc147f83b6a0a1725e2be1d">innerActionClass::PWM</a></div><div class="ttdeci">ros::Publisher PWM</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00029">forward.cpp:29</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_ae30b2f596dbacb617cb97287295d47d6"><div class="ttname"><a href="classinnerActionClass.html#ae30b2f596dbacb617cb97287295d47d6">innerActionClass::band</a></div><div class="ttdeci">float band</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00030">forward.cpp:30</a></div></div>
-<div class="ttc" id="classinnerActionClass_html_a2e59b1e97d29783cdb1806796eac2519"><div class="ttname"><a href="classinnerActionClass.html#a2e59b1e97d29783cdb1806796eac2519">innerActionClass::analysisCB</a></div><div class="ttdeci">void analysisCB(const motion_commons::TurnGoalConstPtr goal)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00063">turningXY.cpp:63</a></div></div>
+<div class="ttc" id="classinnerActionClass_html_a2e59b1e97d29783cdb1806796eac2519"><div class="ttname"><a href="classinnerActionClass.html#a2e59b1e97d29783cdb1806796eac2519">innerActionClass::analysisCB</a></div><div class="ttdeci">void analysisCB(const motion_commons::TurnGoalConstPtr goal)</div><div class="ttdef"><b>Definition:</b> <a href="turningXY_8cpp_source.html#l00064">turningXY.cpp:64</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 29 2016 18:51:25 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 30 2016 15:46:21 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

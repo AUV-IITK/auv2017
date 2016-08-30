@@ -137,8 +137,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2e59b1e97d29783cdb1806796eac2519"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13bf4949022ccba3dfdfbff87b28ff66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66">turningOutputPWMMapping</a> (float <a class="el" href="upward_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a>)</td></tr>
 <tr class="separator:a13bf4949022ccba3dfdfbff87b28ff66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5740559cbca269d86156cbe5d05546b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a5740559cbca269d86156cbe5d05546b0">setPID</a> (float new_p, float new_i, float new_d, float new_band)</td></tr>
-<tr class="separator:a5740559cbca269d86156cbe5d05546b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca3da3079f6286e7d307350e7140c94a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#aca3da3079f6286e7d307350e7140c94a">setPID</a> (float new_p_stablize, float new_p_turn, float new_i_stablize, float new_i_turn, float new_d_stablize, float new_d_turn, float new_band_stablize, float new_band_turn)</td></tr>
+<tr class="separator:aca3da3079f6286e7d307350e7140c94a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae76ed33eb87c7cb0d3cf4e418ba06704"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#ae76ed33eb87c7cb0d3cf4e418ba06704">innerActionClass</a> (std::string name)</td></tr>
 <tr class="separator:ae76ed33eb87c7cb0d3cf4e418ba06704"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d17548d84e3b7961c11c454b87dd24a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a0d17548d84e3b7961c11c454b87dd24a">~innerActionClass</a> (void)</td></tr>
@@ -186,6 +186,22 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a4796f128b7c7e23ed5b5db0612bfdbb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a8a23bb7404b7762a7a709a8de5394a"><td class="memItemLeft" align="right" valign="top">motion_commons::TurnResult&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a8a8a23bb7404b7762a7a709a8de5394a">result_</a></td></tr>
 <tr class="separator:a8a8a23bb7404b7762a7a709a8de5394a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c5c3ccc24bc8d9d98d48ad1c900c0a5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a0c5c3ccc24bc8d9d98d48ad1c900c0a5">p_stablize</a></td></tr>
+<tr class="separator:a0c5c3ccc24bc8d9d98d48ad1c900c0a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16031d25afcedc420254d45844173bf7"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a16031d25afcedc420254d45844173bf7">i_stablize</a></td></tr>
+<tr class="separator:a16031d25afcedc420254d45844173bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01ff43d040aea265dd7f845028a16b2f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a01ff43d040aea265dd7f845028a16b2f">d_stablize</a></td></tr>
+<tr class="separator:a01ff43d040aea265dd7f845028a16b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6db9313fb7f631223102f88d79258d9d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a6db9313fb7f631223102f88d79258d9d">p_turn</a></td></tr>
+<tr class="separator:a6db9313fb7f631223102f88d79258d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcb8116f9263184b9f7eef61050030bc"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#afcb8116f9263184b9f7eef61050030bc">i_turn</a></td></tr>
+<tr class="separator:afcb8116f9263184b9f7eef61050030bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c1dd6dc66d3d230d6d25fe54751f463"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#a3c1dd6dc66d3d230d6d25fe54751f463">d_turn</a></td></tr>
+<tr class="separator:a3c1dd6dc66d3d230d6d25fe54751f463"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbbd0532bad5181c5910a56da548432e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#afbbd0532bad5181c5910a56da548432e">band_stablize</a></td></tr>
+<tr class="separator:afbbd0532bad5181c5910a56da548432e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadef2ad6e26732f26a1a60751f6e72f3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#aadef2ad6e26732f26a1a60751f6e72f3">band_turn</a></td></tr>
+<tr class="separator:aadef2ad6e26732f26a1a60751f6e72f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6cedebf1fa5de0c4d8fa32d64720271"><td class="memItemLeft" align="right" valign="top"><a class="el" href="forward_8cpp.html#a1f23b0a8c53e091001b4c962a1347dae">Server</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#ad6cedebf1fa5de0c4d8fa32d64720271">upwardServer_</a></td></tr>
 <tr class="separator:ad6cedebf1fa5de0c4d8fa32d64720271"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4288416220e7b0c65f2f8feae398a6c"><td class="memItemLeft" align="right" valign="top">motion_commons::UpwardFeedback&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classinnerActionClass.html#af4288416220e7b0c65f2f8feae398a6c">feedback_</a></td></tr>
@@ -487,43 +503,6 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2e59b1e97d29783cdb1806796eac2519"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void innerActionClass::analysisCB </td>
-          <td>(</td>
-          <td class="paramtype">const motion_commons::TurnGoalConstPtr&#160;</td>
-          <td class="paramname"><em>goal</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00063">63</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
-
-<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="classinnerActionClass_a2e59b1e97d29783cdb1806796eac2519_cgraph.png" border="0" usemap="#classinnerActionClass_a2e59b1e97d29783cdb1806796eac2519_cgraph" alt=""/></div>
-<map name="classinnerActionClass_a2e59b1e97d29783cdb1806796eac2519_cgraph" id="classinnerActionClass_a2e59b1e97d29783cdb1806796eac2519_cgraph">
-<area shape="rect" id="node2" href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66" title="innerActionClass::turning\lOutputPWMMapping" alt="" coords="251,5,419,46"/></map>
-</div>
-</p>
-
-</div>
-</div>
 <a class="anchor" id="a53876ebc40305648c0918c3aace4a862"></a>
 <div class="memitem">
 <div class="memproto">
@@ -548,11 +527,11 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="sideward_8cpp_source.html#l00063">63</a> of file <a class="el" href="sideward_8cpp_source.html">sideward.cpp</a>.</p>
 
-<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+<p><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classinnerActionClass_a53876ebc40305648c0918c3aace4a862_cgraph.png" border="0" usemap="#classinnerActionClass_a53876ebc40305648c0918c3aace4a862_cgraph" alt=""/></div>
 <map name="classinnerActionClass_a53876ebc40305648c0918c3aace4a862_cgraph" id="classinnerActionClass_a53876ebc40305648c0918c3aace4a862_cgraph">
 <area shape="rect" id="node2" href="classinnerActionClass.html#a5bdae10c5cc1ed544f42f5fb6e2e4204" title="innerActionClass::sideward\lOutputPWMMapping" alt="" coords="251,5,432,46"/></map>
@@ -585,14 +564,51 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="upward_8cpp_source.html#l00063">63</a> of file <a class="el" href="upward_8cpp_source.html">upward.cpp</a>.</p>
 
+<p><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="classinnerActionClass_a8226422b9e806cd18a8c1d768120d96e_cgraph.png" border="0" usemap="#classinnerActionClass_a8226422b9e806cd18a8c1d768120d96e_cgraph" alt=""/></div>
+<map name="classinnerActionClass_a8226422b9e806cd18a8c1d768120d96e_cgraph" id="classinnerActionClass_a8226422b9e806cd18a8c1d768120d96e_cgraph">
+<area shape="rect" id="node2" href="classinnerActionClass.html#ae5d4f44236fb4add0928f565d741675a" title="innerActionClass::upward\lOutputPWMMapping" alt="" coords="251,5,421,46"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a2e59b1e97d29783cdb1806796eac2519"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void innerActionClass::analysisCB </td>
+          <td>(</td>
+          <td class="paramtype">const motion_commons::TurnGoalConstPtr&#160;</td>
+          <td class="paramname"><em>goal</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00064">64</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
+
 <p><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-8-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="classinnerActionClass_a8226422b9e806cd18a8c1d768120d96e_cgraph.png" border="0" usemap="#classinnerActionClass_a8226422b9e806cd18a8c1d768120d96e_cgraph" alt=""/></div>
-<map name="classinnerActionClass_a8226422b9e806cd18a8c1d768120d96e_cgraph" id="classinnerActionClass_a8226422b9e806cd18a8c1d768120d96e_cgraph">
-<area shape="rect" id="node2" href="classinnerActionClass.html#ae5d4f44236fb4add0928f565d741675a" title="innerActionClass::upward\lOutputPWMMapping" alt="" coords="251,5,421,46"/></map>
+<div class="center"><img src="classinnerActionClass_a2e59b1e97d29783cdb1806796eac2519_cgraph.png" border="0" usemap="#classinnerActionClass_a2e59b1e97d29783cdb1806796eac2519_cgraph" alt=""/></div>
+<map name="classinnerActionClass_a2e59b1e97d29783cdb1806796eac2519_cgraph" id="classinnerActionClass_a2e59b1e97d29783cdb1806796eac2519_cgraph">
+<area shape="rect" id="node2" href="classinnerActionClass.html#a13bf4949022ccba3dfdfbff87b28ff66" title="innerActionClass::turning\lOutputPWMMapping" alt="" coords="251,5,419,46"/></map>
 </div>
 </p>
 
@@ -794,54 +810,6 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="upward_8cpp_source.html#l00147">147</a> of file <a class="el" href="upward_8cpp_source.html">upward.cpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a5740559cbca269d86156cbe5d05546b0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void innerActionClass::setPID </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>new_p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>new_i</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>new_d</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>new_band</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
 <p>Definition at line <a class="el" href="sideward_8cpp_source.html#l00147">147</a> of file <a class="el" href="sideward_8cpp_source.html">sideward.cpp</a>.</p>
 
 </div>
@@ -938,7 +906,79 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00151">151</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
+<p>Definition at line <a class="el" href="upward_8cpp_source.html#l00147">147</a> of file <a class="el" href="upward_8cpp_source.html">upward.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aca3da3079f6286e7d307350e7140c94a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void innerActionClass::setPID </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>new_p_stablize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>new_p_turn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>new_i_stablize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>new_i_turn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>new_d_stablize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>new_d_turn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>new_band_stablize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>new_band_turn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00169">169</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
 
 </div>
 </div>
@@ -1001,7 +1041,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00139">139</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00157">157</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
 
 <p><div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
@@ -1098,6 +1138,50 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="afbbd0532bad5181c5910a56da548432e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float innerActionClass::band_stablize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00030">30</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aadef2ad6e26732f26a1a60751f6e72f3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float innerActionClass::band_turn</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00030">30</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a3f3483cf8443e2a2247e6de745fc13d6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1117,6 +1201,50 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="forward_8cpp_source.html#l00030">30</a> of file <a class="el" href="forward_8cpp_source.html">forward.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a01ff43d040aea265dd7f845028a16b2f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float innerActionClass::d_stablize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00030">30</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3c1dd6dc66d3d230d6d25fe54751f463"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float innerActionClass::d_turn</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00030">30</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
 
 </div>
 </div>
@@ -1142,28 +1270,6 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af4288416220e7b0c65f2f8feae398a6c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">motion_commons::UpwardFeedback innerActionClass::feedback_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="upward_8cpp_source.html#l00027">27</a> of file <a class="el" href="upward_8cpp_source.html">upward.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a9898211d029ad5aafbd58958cba2b9d8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1183,6 +1289,28 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="sideward_8cpp_source.html#l00027">27</a> of file <a class="el" href="sideward_8cpp_source.html">sideward.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af4288416220e7b0c65f2f8feae398a6c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">motion_commons::UpwardFeedback innerActionClass::feedback_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="upward_8cpp_source.html#l00027">27</a> of file <a class="el" href="upward_8cpp_source.html">upward.cpp</a>.</p>
 
 </div>
 </div>
@@ -1252,6 +1380,50 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a16031d25afcedc420254d45844173bf7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float innerActionClass::i_stablize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00030">30</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afcb8116f9263184b9f7eef61050030bc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float innerActionClass::i_turn</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00030">30</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a8a384670f40e16bdcf2dffcb54910a63"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1293,6 +1465,50 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="forward_8cpp_source.html#l00030">30</a> of file <a class="el" href="forward_8cpp_source.html">forward.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0c5c3ccc24bc8d9d98d48ad1c900c0a5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float innerActionClass::p_stablize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00030">30</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6db9313fb7f631223102f88d79258d9d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float innerActionClass::p_turn</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="turningXY_8cpp_source.html#l00030">30</a> of file <a class="el" href="turningXY_8cpp_source.html">turningXY.cpp</a>.</p>
 
 </div>
 </div>
@@ -1340,28 +1556,6 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0953ff117815ed4ae2776fc3d7b7f2ef"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">motion_commons::SidewardResult innerActionClass::result_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="sideward_8cpp_source.html#l00028">28</a> of file <a class="el" href="sideward_8cpp_source.html">sideward.cpp</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a3368b7390f5330130441e3e3666c4138"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1403,6 +1597,28 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Definition at line <a class="el" href="forward_8cpp_source.html#l00028">28</a> of file <a class="el" href="forward_8cpp_source.html">forward.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0953ff117815ed4ae2776fc3d7b7f2ef"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">motion_commons::SidewardResult innerActionClass::result_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="sideward_8cpp_source.html#l00028">28</a> of file <a class="el" href="sideward_8cpp_source.html">sideward.cpp</a>.</p>
 
 </div>
 </div>
@@ -1481,7 +1697,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Aug 29 2016 18:51:26 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 30 2016 15:46:23 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
