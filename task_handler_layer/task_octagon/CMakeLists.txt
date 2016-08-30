@@ -17,7 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   cv_bridge
   sensor_msgs
   image_transport
-  dynamic_reconfigure)
+dynamic_reconfigure)
 
 ## Check for lint errors
 roslint_cpp()
@@ -103,9 +103,9 @@ find_package( OpenCV REQUIRED )
 #   cfg/DynReconf2.cfg
 # )
 
- generate_dynamic_reconfigure_options(
-   cfg/octagon.cfg
- )
+generate_dynamic_reconfigure_options(
+  cfg/octagon.cfg
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -117,10 +117,10 @@ find_package( OpenCV REQUIRED )
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES task_octagon
+  #  INCLUDE_DIRS include
+  #  LIBRARIES task_octagon
   CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation task_commons motion_commons
-#  DEPENDS system_lib
+  #  DEPENDS system_lib
 )
 
 ###########

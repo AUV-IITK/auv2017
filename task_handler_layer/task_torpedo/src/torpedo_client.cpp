@@ -40,7 +40,8 @@ int main(int argc, char **argv)
 
   ros::NodeHandle nh;
   // here torpedo_server is the name of the node of the actionserver.
-  ros::Subscriber sub_ = nh.subscribe<task_commons::torpedoActionFeedback>("/torpedo_server/feedback", 1000, &forwardCb);
+  ros::Subscriber sub_ =
+      nh.subscribe<task_commons::torpedoActionFeedback>("/torpedo_server/feedback", 1000, &forwardCb);
 
   Client testClient("torpedo_server");
   ptrClient = &testClient;

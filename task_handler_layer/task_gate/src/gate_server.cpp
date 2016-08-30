@@ -77,8 +77,7 @@ public:
     sub_gate_ =
         nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/gate", 1000, &TaskGateInnerClass::gateNavigation, this);
     yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskGateInnerClass::yawCB, this);
-    sub_line_ =
-        nh_.subscribe<std_msgs::Bool>("lineDetection", 1000, &TaskGateInnerClass::lineDetectedListener, this);
+    sub_line_ = nh_.subscribe<std_msgs::Bool>("lineDetection", 1000, &TaskGateInnerClass::lineDetectedListener, this);
     gate_server_.start();
   }
 

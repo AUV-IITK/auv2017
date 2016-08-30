@@ -105,9 +105,9 @@ find_package( OpenCV REQUIRED )
 # )
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
- generate_dynamic_reconfigure_options(
-   cfg/torpedo.cfg   
- )
+generate_dynamic_reconfigure_options(
+  cfg/torpedo.cfg
+)
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -118,10 +118,10 @@ find_package( OpenCV REQUIRED )
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES task_torpedo
+  #  INCLUDE_DIRS include
+  #  LIBRARIES task_torpedo
   CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation task_commons motion_commons
-#  DEPENDS system_lib
+  #  DEPENDS system_lib
 )
 
 ###########

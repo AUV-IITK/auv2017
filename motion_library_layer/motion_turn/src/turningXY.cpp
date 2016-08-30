@@ -27,7 +27,7 @@ private:
   motion_commons::TurnFeedback feedback_;
   motion_commons::TurnResult result_;
   ros::Publisher PWM;
-  float p, i, d, band;
+  float p, i, d, band, p_stablize, i_stablize, d_stablize, p_turn, i_turn, d_turn, band_stablize, band_turn;
 
 public:
   // Constructor, called when new instance of class declared
@@ -59,7 +59,8 @@ public:
     turnServer_.setPreempted();
   }
 
-  // called when new goal recieved; start motion and finish it, if not interupted
+  // called when new goal recieved; start motion and finish it, if not
+  // interupted
   void analysisCB(const motion_commons::TurnGoalConstPtr goal)
   {
     ROS_INFO("Inside analysisCB");
@@ -68,7 +69,8 @@ public:
     int loopRate = 10;
     ros::Rate loop_rate(loopRate);
 
-    // waiting till we recieve the first value from IMU else it's useless to any calculations
+    // waiting till we recieve the first value from IMU else it's useless to any
+    // calculations
     while (!initData)
     {
       ROS_INFO("Waiting to get first input from IMU");
@@ -91,6 +93,22 @@ public:
 
     while (!turnServer_.isPreemptRequested() && ros::ok() && count < goal->loop)
     {
+      if (goal->loop > 10000)
+      {
+        p = p_stablize;
+        i = i_stablize;
+        d = d_stablize;
+        band = band_stablize;
+      }
+
+      else
+      {
+        p = p_turn;
+        i = i_turn;
+        d = d_turn;
+        band = band_turn;
+      }
+
       error = finalAngularPosition - presentAngularPosition;
       integral += (error * dt);
       derivative = (presentAngularPosition - previousAngularPosition) / dt;
@@ -148,12 +166,17 @@ public:
     pwm.data = static_cast<int>(temp);
   }
 
-  void setPID(float new_p, float new_i, float new_d, float new_band)
+  void setPID(float new_p_stablize, float new_p_turn, float new_i_stablize, float new_i_turn, float new_d_stablize,
+              float new_d_turn, float new_band_stablize, float new_band_turn)
   {
-    p = new_p;
-    i = new_i;
-    d = new_d;
-    band = new_band;
+    p_stablize = new_p_stablize;
+    p_turn = new_p_turn;
+    i_stablize = new_i_stablize;
+    i_turn = new_i_turn;
+    d_stablize = new_d_stablize;
+    d_turn = new_d_turn;
+    band_stablize = new_band_stablize;
+    band_turn = new_band_turn;
   }
 };
 innerActionClass *object;
@@ -161,14 +184,18 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_turn::pidConfig &config, double level)
 {
-  ROS_INFO("TurnServer: Reconfigure Request: p= %f i= %f d=%f error band=%f", config.p, config.i, config.d,
-    config.band);
-  object->setPID(config.p, config.i, config.d, config.band);
+  ROS_INFO("TurnServer: Reconfigure Request: p_stablize=%f p_turn=%f "
+           "i_stablize=%f i_turn=%f d_stablize=%f d_turn=%f error band_turn=%f",
+           config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,
+           config.band_turn);
+  object->setPID(config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,
+                 config.band_stablize, config.band_turn);
 }
 
 void yawCb(std_msgs::Float64 msg)
 {
-  // this is used to set the final angle after getting the value of first intial position
+  // this is used to set the final angle after getting the value of first intial
+  // position
   if (initData == false)
   {
     presentAngularPosition = msg.data;
@@ -186,11 +213,15 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "turningXY");
   ros::NodeHandle n;
-  double p_param, i_param, d_param, band_param;
-  n.getParam("turningXY/p_param", p_param);
-  n.getParam("turningXY/i_param", i_param);
-  n.getParam("turningXY/d_param", d_param);
-  n.getParam("turningXY/band_param", band_param);
+  double p_stablize, p_turn, i_stablize, i_turn, d_stablize, d_turn, band_stablize, band_turn;
+  n.getParam("turningXY/p_stablize", p_stablize);
+  n.getParam("turningXY/p_turn", p_turn);
+  n.getParam("turningXY/i_stablize", i_stablize);
+  n.getParam("turningXY/i_turn", i_turn);
+  n.getParam("turningXY/d_stablize", d_stablize);
+  n.getParam("turningXY/d_turn", d_turn);
+  n.getParam("turningXY/band_stablize", band_stablize);
+  n.getParam("turningXY/band_turn", band_turn);
 
   ros::Subscriber yaw = n.subscribe<std_msgs::Float64>("/varun/motion/yaw", 1000, &yawCb);
 
@@ -204,10 +235,14 @@ int main(int argc, char **argv)
   server.setCallback(f);
   // set launch file pid
   motion_turn::pidConfig config;
-  config.p = p_param;
-  config.i = i_param;
-  config.d = d_param;
-  config.band = band_param;
+  config.p_stablize = p_stablize;
+  config.p_turn = p_turn;
+  config.i_stablize = i_stablize;
+  config.i_turn = i_turn;
+  config.d_stablize = d_stablize;
+  config.d_turn = d_turn;
+  config.band_stablize = band_stablize;
+  config.band_turn = band_turn;
   callback(config, 0);
 
   ros::spin();

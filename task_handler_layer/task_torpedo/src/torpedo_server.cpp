@@ -74,12 +74,11 @@ public:
     present_Y_ = nh_.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
     present_distance_ = nh_.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
     yaw_pub_ = nh_.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
-    sub_ip_ =
-        nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/torpedo", 1000, &TaskBuoyInnerClass::torpedoNavigation, this);
+    sub_ip_ = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/torpedo", 1000,
+                                                         &TaskBuoyInnerClass::torpedoNavigation, this);
     yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskBuoyInnerClass::yawCB, this);
-    pressure_sensor_sub =
-        nh_.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth",
-          1000, &TaskBuoyInnerClass::pressureCB, this);
+    pressure_sensor_sub = nh_.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth", 1000,
+                                                           &TaskBuoyInnerClass::pressureCB, this);
     torpedo_server_.start();
   }
 

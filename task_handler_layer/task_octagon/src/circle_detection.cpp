@@ -42,8 +42,10 @@ int count = 0, count_avg = 0;
 
 float mod(float x, float y)
 {
-  if (x - y > 0) return x;
-  else return y;
+  if (x - y > 0)
+    return x;
+  else
+    return y;
 }
 void lineDetectedListener(std_msgs::Bool msg)
 {
@@ -126,9 +128,8 @@ int main(int argc, char *argv[])
 
   while (1)
   {
-    printf("137\n");
     std_msgs::Float64MultiArray array;
-printf("139\n");
+
     if (frame.empty())
     {
       std::cout << "empty frame \n";
@@ -143,11 +144,12 @@ printf("139\n");
     height = frame.rows;
     width = frame.cols;
     step = frame.step;
-printf("154\n" );
+
     // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
     cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
     cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
     cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
+
     // Filter out colors which are out of range.
     cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);
     // Split image into its 3 one dimensional images
@@ -158,13 +160,12 @@ printf("154\n" );
     cv::inRange(thresholded_hsv[0], cv::Scalar(t1min, 0, 0, 0), cv::Scalar(t1max, 0, 0, 0), thresholded_hsv[0]);
     cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
     cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
-    printf("169\n");
     cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
     cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
 
     if (flag)
     {
-      cv::imshow("F1", thresholded_hsv[0]);              // individual filters
+      cv::imshow("F1", thresholded_hsv[0]);  // individual filters
       cv::imshow("F2", thresholded_hsv[1]);
       cv::imshow("F3", thresholded_hsv[2]);
     }
@@ -175,12 +176,13 @@ printf("154\n" );
     if ((!IP))
     {
       // find contours
-      std::vector<std::vector<cv::Point> > contours;
+      std::vector<std::vector<cv::Point>> contours;
       cv::Mat thresholded_Mat;
       thresholded.copyTo(thresholded_Mat);
+
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
-printf("190\n");
+
       if (contours.empty())
       {
         array.data.push_back(0);
@@ -218,44 +220,34 @@ printf("190\n");
       cv::Point2f pt;
       pt.x = 320;  // size of my screen
       pt.y = 240;
-printf("228\n");
-printf("245\n");
+
       cv::Mat circles = frame;
       circle(circles, center[0], radius[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
       circle(circles, center[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
       circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
 
-     
-      array.data.push_back(r[0]);                                        // publish radius
+      array.data.push_back(r[0]);  // publish radius
       array.data.push_back((320 - center_ideal[0].x));
       array.data.push_back(-(240 - center_ideal[0].y));
 
       cv::imshow("circle", circles);            // Original stream with detected ball overlay
       cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
+
       pub.publish(array);
-printf("259\n");
       ros::spinOnce();
-printf("262\n");      
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
-      {  
-        printf("266\n");
+      {
         break;
-      }  
-      printf("270\n");
-      printf("271\n");
-      printf("272\n");
+      }
     }
     else
     {
-      printf("271\n");
       std::cout << "waiting\n";
       ros::spinOnce();
     }
-    printf("278\n");
   }
-  printf("280\n");
   output_cap.release();
   return 0;
 }

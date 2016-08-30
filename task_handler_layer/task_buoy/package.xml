@@ -56,7 +56,6 @@
   <run_depend>motion_commons</run_depend>
   <run_depend>message_generation</run_depend>
   <run_depend>dynamic_reconfigure</run_depend>
-
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->

@@ -4,7 +4,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>  // for converting the command line parameter to integer
-#include  <string>
+#include <string>
 
 /*! \file
 * \brief super short description

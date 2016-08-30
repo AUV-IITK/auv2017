@@ -51,7 +51,8 @@ void imu_data_callback(std_msgs::Float64 msg)
   imu_data_pub.publish(msg);
 }
 
-// never ever put the argument of the callback function anything other then the specified
+// never ever put the argument of the callback function anything other then the
+// specified
 void turnCb(motion_commons::TurnActionFeedback msg)
 {
   ROS_INFO("feedback recieved, %f deg remaining ", msg.feedback.AngleRemaining);
@@ -68,7 +69,8 @@ int main(int argc, char **argv)
 
   Client TurnTestClient("turningXY");
   clientPointer = &TurnTestClient;
-  // this wait has to be implemented here so that we can wait for the server to start
+  // this wait has to be implemented here so that we can wait for the server to
+  // start
   ROS_INFO("Waiting for action server to start.");
   TurnTestClient.waitForServer();
   goal.AngleToTurn = 0;

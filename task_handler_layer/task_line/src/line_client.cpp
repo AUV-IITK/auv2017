@@ -40,8 +40,7 @@ int main(int argc, char **argv)
 
   ros::NodeHandle nh;
   // here line_server is the name of the node of the actionserver.
-  ros::Subscriber sub_ =
-      nh.subscribe<task_commons::lineActionFeedback>("/line_server/feedback", 1000, &forwardCb);
+  ros::Subscriber sub_ = nh.subscribe<task_commons::lineActionFeedback>("/line_server/feedback", 1000, &forwardCb);
 
   Client testClient("line_server");
   ptrClient = &testClient;
