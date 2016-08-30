@@ -27,7 +27,7 @@ private:
   motion_commons::TurnFeedback feedback_;
   motion_commons::TurnResult result_;
   ros::Publisher PWM;
-  float p, i, d, band, p_stablize, i_stablize, d_stablize, p_turn, i_turn, d_turn;
+  float p, i, d, band, p_stablize, i_stablize, d_stablize, p_turn, i_turn, d_turn, band_stablize, band_turn;
 
 public:
   // Constructor, called when new instance of class declared
@@ -98,6 +98,7 @@ public:
         p = p_stablize;
         i = i_stablize;
         d = d_stablize;
+        band = band_stablize;
       }
 
       else
@@ -105,6 +106,7 @@ public:
         p = p_turn;
         i = i_turn;
         d = d_turn;
+        band = band_turn;
       }
 
       error = finalAngularPosition - presentAngularPosition;
@@ -165,7 +167,7 @@ public:
   }
 
   void setPID(float new_p_stablize, float new_p_turn, float new_i_stablize, float new_i_turn, float new_d_stablize,
-              float new_d_turn, float new_band)
+              float new_d_turn, float new_band_stablize, float new_band_turn)
   {
     p_stablize = new_p_stablize;
     p_turn = new_p_turn;
@@ -173,7 +175,8 @@ public:
     i_turn = new_i_turn;
     d_stablize = new_d_stablize;
     d_turn = new_d_turn;
-    band = new_band;
+    band_stablize = new_band_stablize;
+    band_turn = new_band_turn;
   }
 };
 innerActionClass *object;
@@ -182,11 +185,11 @@ innerActionClass *object;
 void callback(motion_turn::pidConfig &config, double level)
 {
   ROS_INFO("TurnServer: Reconfigure Request: p_stablize=%f p_turn=%f "
-           "i_stablize=%f i_turn=%f d_stablize=%f d_turn=%f error band=%f",
+           "i_stablize=%f i_turn=%f d_stablize=%f d_turn=%f error band_turn=%f",
            config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,
-           config.band);
+           config.band_turn);
   object->setPID(config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,
-                 config.band);
+                 config.band_stablize, config.band_turn);
 }
 
 void yawCb(std_msgs::Float64 msg)
@@ -210,14 +213,15 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "turningXY");
   ros::NodeHandle n;
-  double p_stablize, p_turn, i_stablize, i_turn, d_stablize, d_turn, band;
+  double p_stablize, p_turn, i_stablize, i_turn, d_stablize, d_turn, band_stablize, band_turn;
   n.getParam("turningXY/p_stablize", p_stablize);
   n.getParam("turningXY/p_turn", p_turn);
   n.getParam("turningXY/i_stablize", i_stablize);
   n.getParam("turningXY/i_turn", i_turn);
   n.getParam("turningXY/d_stablize", d_stablize);
   n.getParam("turningXY/d_turn", d_turn);
-  n.getParam("turningXY/band_param", band);
+  n.getParam("turningXY/band_stablize", band_stablize);
+  n.getParam("turningXY/band_turn", band_turn);
 
   ros::Subscriber yaw = n.subscribe<std_msgs::Float64>("/varun/motion/yaw", 1000, &yawCb);
 
@@ -237,7 +241,8 @@ int main(int argc, char **argv)
   config.i_turn = i_turn;
   config.d_stablize = d_stablize;
   config.d_turn = d_turn;
-  config.band = band;
+  config.band_stablize = band_stablize;
+  config.band_turn = band_turn;
   callback(config, 0);
 
   ros::spin();
