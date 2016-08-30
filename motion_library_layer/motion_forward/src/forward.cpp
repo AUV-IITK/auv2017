@@ -158,7 +158,7 @@ innerActionClass *object;
 void callback(motion_forward::pidConfig &config, double level)
 {
   ROS_INFO("ForwardServer: Reconfigure Request: p= %f i= %f d=%f error band=%f", config.p, config.i, config.d,
-    config.band);
+           config.band);
   object->setPID(config.p, config.i, config.d, config.band);
 }
 
