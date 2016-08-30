@@ -10,12 +10,14 @@
     <param name="d_param" type="double" value="0.0" />
   </node>
   <node name="turningXY" pkg="motion_turn" type="turningXY" respawn="true"  output="screen">
-    <param name="p_stablize" type="double" value="10.0" />
+    <param name="p_stablize" type="double" value="5.0" />
     <param name="i_stablize" type="double" value="0.0" />
     <param name="d_stablize" type="double" value="0.0" />
-    <param name="p_turn" type="double" value="10.0" />
+    <param name="band_stablize" type="double" value="5.0" />
+    <param name="p_turn" type="double" value="2.5" />
     <param name="i_turn" type="double" value="0.0" />
     <param name="d_turn" type="double" value="0.0" />
+    <param name="band_turn" type="double" value="0.0" />
   </node>
   <node name="upward" pkg="motion_upward" type="upward" respawn="true"  output="screen">
     <param name="p_param" type="double" value="10.0" />
