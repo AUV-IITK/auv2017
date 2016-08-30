@@ -46,7 +46,8 @@ void lineDetectedListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  if (x == 32) return;
+  if (x == 32)
+    return;
   try
   {
     count++;
@@ -63,7 +64,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
   std::string Video_Name = "Random_Video";
@@ -117,7 +118,7 @@ int main(int argc, char* argv[])
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
   float r[5];
 
-  for (int m=0; m++; m < 5)
+  for (int m = 0; m++; m < 5)
     r[m] = 0;
 
   while (ros::ok())
@@ -157,7 +158,7 @@ int main(int argc, char* argv[])
 
     if (flag)
     {
-      cv::imshow("F1", thresholded_hsv[0]);              // individual filters
+      cv::imshow("F1", thresholded_hsv[0]);  // individual filters
       cv::imshow("F2", thresholded_hsv[1]);
       cv::imshow("F3", thresholded_hsv[2]);
     }
@@ -185,7 +186,7 @@ int main(int argc, char* argv[])
         }
         else if (x_cord > 270)
         {
-          array.data.push_back(-1);   // left_side
+          array.data.push_back(-1);  // left_side
           array.data.push_back(-1);
           array.data.push_back(-1);
           array.data.push_back(-1);
@@ -233,36 +234,36 @@ int main(int argc, char* argv[])
       pt.x = 320;  // size of my screen
       pt.y = 240;
 
-      float r_avg = (r[0] + r[1] + r[2] + r[3] + r[4])/5;
+      float r_avg = (r[0] + r[1] + r[2] + r[3] + r[4]) / 5;
       if ((radius[0] < (r_avg + 10)) && (count_avg >= 5))
       {
-         r[4] = r[3];
-         r[3] = r[2];
-         r[2] = r[1];
-         r[1] = r[0];
-         r[0] = radius[0];
-         center_ideal[4] = center_ideal[3];
-         center_ideal[3] = center_ideal[2];
-         center_ideal[2] = center_ideal[1];
-         center_ideal[1] = center_ideal[0];
-         center_ideal[0] = center[0];
-         count_avg++;
+        r[4] = r[3];
+        r[3] = r[2];
+        r[2] = r[1];
+        r[1] = r[0];
+        r[0] = radius[0];
+        center_ideal[4] = center_ideal[3];
+        center_ideal[3] = center_ideal[2];
+        center_ideal[2] = center_ideal[1];
+        center_ideal[1] = center_ideal[0];
+        center_ideal[0] = center[0];
+        count_avg++;
       }
       else if (count_avg <= 5)
       {
         r[count_avg] = radius[0];
         center_ideal[count_avg] = center[0];
-         count_avg++;
+        count_avg++;
       }
       else
       {
-         count_avg = 0;
+        count_avg = 0;
       }
 
       cv::Mat circles = frame;
       circle(circles, center_ideal[0], r[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
-      circle(circles, center_ideal[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
-      circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
+      circle(circles, center_ideal[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);    // center is made on the screen
+      circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);             // center of screen
 
       if (r[0] > 220)
       {
@@ -275,7 +276,7 @@ int main(int argc, char* argv[])
       {
         float distance;
         distance = pow(radius[0] / 7526.5, -.92678);  // function found using experiment
-        array.data.push_back(r[0]);                                        // publish radius
+        array.data.push_back(r[0]);                   // publish radius
         array.data.push_back((320 - center_ideal[0].x));
         array.data.push_back(-(240 - center_ideal[0].y));
         array.data.push_back(distance);
@@ -285,10 +286,13 @@ int main(int argc, char* argv[])
       pub.publish(array);
       if ((cvWaitKey(10) & 255) == 32)
       {
-        if (x == 32) x = -1;
-        else x = 32;
+        if (x == 32)
+          x = -1;
+        else
+          x = 32;
       }
-      if (x == 32) printf("paused\n");
+      if (x == 32)
+        printf("paused\n");
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
@@ -297,20 +301,23 @@ int main(int argc, char* argv[])
     }
     else if (r[0] > 220)
     {
-       array.data.push_back(-5);
-       array.data.push_back(-5);
-       array.data.push_back(-5);
-       array.data.push_back(-5);
+      array.data.push_back(-5);
+      array.data.push_back(-5);
+      array.data.push_back(-5);
+      array.data.push_back(-5);
     }
     else
     {
       std::cout << "waiting\n";
       if ((cvWaitKey(10) & 255) == 32)
       {
-        if (x == 32) x = -1;
-        else x = 32;
+        if (x == 32)
+          x = -1;
+        else
+          x = 32;
       }
-      if (x == 32) printf("paused\n");
+      if (x == 32)
+        printf("paused\n");
       ros::spinOnce();
     }
   }

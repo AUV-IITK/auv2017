@@ -40,7 +40,6 @@ void callback(task_gate::gateConfig &config, uint32_t level)
   ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
-
 void gateListener(std_msgs::Bool msg)
 {
   IP = msg.data;
@@ -48,7 +47,8 @@ void gateListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  if (p == 32) return;
+  if (p == 32)
+    return;
   try
   {
     count++;
@@ -65,7 +65,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
   std::string Video_Name = "Random_Video";
@@ -157,7 +157,7 @@ int main(int argc, char* argv[])
 
     if (flag)
     {
-      cv::imshow("F1", thresholded_hsv[0]);              // individual filters
+      cv::imshow("F1", thresholded_hsv[0]);  // individual filters
       cv::imshow("F2", thresholded_hsv[1]);
       cv::imshow("F3", thresholded_hsv[2]);
     }
@@ -223,7 +223,7 @@ int main(int argc, char* argv[])
 
       circle(frame_mat, center, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
       rectangle(frame_mat, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);
-      circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
+      circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);  // center of screen
 
       cv::imshow("Contours", Drawing);
       cv::imshow("RealPic", frame_mat);
@@ -232,15 +232,15 @@ int main(int argc, char* argv[])
       x = (boundRect[0].br()).y;
       y = (boundRect[0].tl()).y;
       z = (boundRect[0].tl()).x;
-      if (w == (frame.rows)-1 || x == (frame.cols)-1 || y == 1 || z == 1)
+      if (w == (frame.rows) - 1 || x == (frame.cols) - 1 || y == 1 || z == 1)
       {
-        if ( y == 1)
-           array.data.push_back(-1);  //  hits top
-        if ( z == 1)
+        if (y == 1)
+          array.data.push_back(-1);  //  hits top
+        if (z == 1)
           array.data.push_back(-2);  //  hits left
-        if ( w == frame.rows-1)
+        if (w == frame.rows - 1)
           array.data.push_back(-3);  //  hits bottom
-        if ( x == frame.cols-1)
+        if (x == frame.cols - 1)
           array.data.push_back(-4);  //  hits right
         ros::spinOnce();
         continue;
@@ -263,10 +263,13 @@ int main(int argc, char* argv[])
       std::cout << "waiting\n";
       if ((cvWaitKey(10) & 255) == 32)
       {
-        if (p == 32) p = -1;
-        else p = 32;
+        if (p == 32)
+          p = -1;
+        else
+          p = 32;
       }
-      if (p == 32) printf("paused\n");
+      if (p == 32)
+        printf("paused\n");
       ros::spinOnce();
     }
   }

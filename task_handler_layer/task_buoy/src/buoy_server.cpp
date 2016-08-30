@@ -77,9 +77,8 @@ public:
     sub_ip_ =
         nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000, &TaskBuoyInnerClass::buoyNavigation, this);
     yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskBuoyInnerClass::yawCB, this);
-    pressure_sensor_sub =
-        nh_.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth",
-          1000, &TaskBuoyInnerClass::pressureCB, this);
+    pressure_sensor_sub = nh_.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth", 1000,
+                                                           &TaskBuoyInnerClass::pressureCB, this);
     buoy_server_.start();
   }
 

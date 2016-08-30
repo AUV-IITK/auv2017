@@ -60,13 +60,13 @@ void callback_dyn(task_line::lineConfig &config, uint32_t level)
 std_msgs::Float64 msg;
 // parameters in param file should be nearly the same as the commented values
 // params for an orange strip
-int LowH = 0;   // 0
+int LowH = 0;    // 0
 int HighH = 88;  // 88
 
-int LowS = 0;   // 0
+int LowS = 0;     // 0
 int HighS = 251;  // 251
 
-int LowV = 0;   // 0
+int LowV = 0;     // 0
 int HighV = 255;  // 255
 
 // params for hough line transform
@@ -79,11 +79,9 @@ double rho = 0.1;
 double finalAngle = -1;
 double minDeviation = 0.02;
 
-
 cv::Mat frame;
 cv::Mat newframe, sent_to_callback, imgLines;
 int count = 0, count_avg = 0;
-
 
 double computeMean(vector<double> &newAngles)
 {
@@ -142,7 +140,8 @@ void callback(int, void *)
   {
     Vec4i l = lines[i];
     line(imgLines, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0, 255, 0), 1, CV_AA);
-    if ((l[2] == l[0]) || (l[1] == l[3])) continue;
+    if ((l[2] == l[0]) || (l[1] == l[3]))
+      continue;
     angles[j] = atan(static_cast<double>(l[2] - l[0]) / (l[1] - l[3]));
     j++;
   }
@@ -167,7 +166,8 @@ void lineAngleListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  if (m == 32) return;
+  if (m == 32)
+    return;
   try
   {
     count++;
@@ -184,7 +184,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
   std::string Video_Name = "Random_Video";
@@ -286,7 +286,7 @@ int main(int argc, char* argv[])
 
     if (flag)
     {
-      cv::imshow("F1", thresholded_hsv[0]);              // individual filters
+      cv::imshow("F1", thresholded_hsv[0]);  // individual filters
       cv::imshow("F2", thresholded_hsv[1]);
       cv::imshow("F3", thresholded_hsv[2]);
     }
@@ -303,7 +303,7 @@ int main(int argc, char* argv[])
       double largest_area = 0, largest_contour_index = 0;
       if (contours.empty())
       {
-        msg.data = -finalAngle * (180 / 3.14)+90;
+        msg.data = -finalAngle * (180 / 3.14) + 90;
         pub.publish(msg);
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
@@ -344,7 +344,7 @@ int main(int argc, char* argv[])
       {
         pub.publish(msg);
       }
-      callback(0, 0);        // for displaying the thresholded image initially
+      callback(0, 0);  // for displaying the thresholded image initially
       ros::spinOnce();
       // loop_rate.sleep();
 
@@ -354,22 +354,28 @@ int main(int argc, char* argv[])
         break;
       if ((cvWaitKey(10) & 255) == 32)
       {
-        if (m == 32) m = -1;
-        else m = 32;
+        if (m == 32)
+          m = -1;
+        else
+          m = 32;
       }
-      if (m == 32) printf("paused\n");
+      if (m == 32)
+        printf("paused\n");
       ros::spinOnce();
     }
     else
     {
-       std::cout << "waiting\n";
-       if ((cvWaitKey(10) & 255) == 32)
-       {
-         if (m == 32) x = -1;
-         else m = 32;
-       }
-       if (m == 32) printf("paused\n");
-       ros::spinOnce();
+      std::cout << "waiting\n";
+      if ((cvWaitKey(10) & 255) == 32)
+      {
+        if (m == 32)
+          x = -1;
+        else
+          m = 32;
+      }
+      if (m == 32)
+        printf("paused\n");
+      ros::spinOnce();
     }
   }
   output_cap.release();

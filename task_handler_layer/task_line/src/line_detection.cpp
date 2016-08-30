@@ -19,10 +19,9 @@
 #include <sstream>
 #include <string>
 
-
 int percentage = 5, x = -1;  // used for how much percent of the screen should be orange
-                      // before deciding that a line is below. Used in
-                      // dynamic_reconfig
+                             // before deciding that a line is below. Used in
+                             // dynamic_reconfig
 // callback for change the percent of orange before saying there is a line below
 bool IP = false;
 bool flag = false;
@@ -45,7 +44,8 @@ void lineDetectedListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  if (x == 32) return;
+  if (x == 32)
+    return;
   try
   {
     count++;
@@ -61,7 +61,6 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
     ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
   }
 }
-
 
 // callback for off switch.
 int detect(cv::Mat image)
@@ -149,10 +148,13 @@ int main(int argc, char **argv)
       loop_rate.sleep();
       if ((cvWaitKey(10) & 255) == 32)
       {
-        if (x == 32) x = -1;
-        else x = 32;
+        if (x == 32)
+          x = -1;
+        else
+          x = 32;
       }
-      if (x == 32) printf("paused\n");
+      if (x == 32)
+        printf("paused\n");
       ros::spinOnce();
     }
     else
@@ -160,10 +162,13 @@ int main(int argc, char **argv)
       std::cout << "waiting\n";
       if ((cvWaitKey(10) & 255) == 32)
       {
-        if (x == 32) x = -1;
-        else x = 32;
+        if (x == 32)
+          x = -1;
+        else
+          x = 32;
       }
-      if (x == 32) printf("paused\n");
+      if (x == 32)
+        printf("paused\n");
       ros::spinOnce();
     }
   }

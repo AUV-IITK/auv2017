@@ -31,8 +31,10 @@ int count = 0, count_avg = 0;
 
 float mod(float a)
 {
-  if (a > 0) return a;
-  else return - a;
+  if (a > 0)
+    return a;
+  else
+    return -a;
 }
 void callback(task_torpedo::torpedoConfig &config, uint32_t level)
 {
@@ -44,7 +46,6 @@ void callback(task_torpedo::torpedoConfig &config, uint32_t level)
   t3max = config.t3max_param;
   ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
 }
-
 
 void torpedoListener(std_msgs::Bool msg)
 {
@@ -69,7 +70,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
   std::string Video_Name = "Random_Video";
@@ -116,7 +117,6 @@ int main(int argc, char* argv[])
     cvNamedWindow("F2", CV_WINDOW_NORMAL);
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
   }
-
 
   // capture size -
   CvSize size = cvSize(width, height);
@@ -168,7 +168,7 @@ int main(int argc, char* argv[])
 
     if (flag)
     {
-      cv::imshow("F1", thresholded_hsv[0]);              // individual filters
+      cv::imshow("F1", thresholded_hsv[0]);  // individual filters
       cv::imshow("F2", thresholded_hsv[1]);
       cv::imshow("F3", thresholded_hsv[2]);
     }
@@ -234,7 +234,7 @@ int main(int argc, char* argv[])
 
       circle(frame_mat, center, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
       rectangle(frame_mat, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);
-      circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
+      circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);  // center of screen
 
       cv::imshow("Contours", Drawing);
       cv::imshow("RealPic", frame_mat);
@@ -245,7 +245,8 @@ int main(int argc, char* argv[])
       z = (boundRect[0].tl()).x;
       array.data.push_back((320 - center.x));
       array.data.push_back(-(240 - center.y));
-      int side = mod(w-z);
+
+      int side = mod(w - z);
       array.data.push_back(side);
       pub.publish(array);
       ros::spinOnce();
@@ -256,8 +257,8 @@ int main(int argc, char* argv[])
     }
     else
     {
-       std::cout << "waiting\n";
-       ros::spinOnce();
+      std::cout << "waiting\n";
+      ros::spinOnce();
     }
   }
   output_cap.release();

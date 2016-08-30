@@ -41,8 +41,10 @@ void callback(task_line::lineConfig &config, uint32_t level)
 
 float mod(float x, float y)
 {
-  if (x - y > 0) return x;
-  else return y;
+  if (x - y > 0)
+    return x;
+  else
+    return y;
 }
 void Switch_callback(std_msgs::Bool msg)
 {
@@ -165,7 +167,7 @@ int main(int argc, char *argv[])
 
     if (flag)
     {
-      cv::imshow("F1", thresholded_hsv[0]);              // individual filters
+      cv::imshow("F1", thresholded_hsv[0]);  // individual filters
       cv::imshow("F2", thresholded_hsv[1]);
       cv::imshow("F3", thresholded_hsv[2]);
     }
@@ -204,25 +206,32 @@ int main(int argc, char *argv[])
           largest_contour_index = i;  // Store the index of largest contour
         }
       }
+
       // Convex HULL
       cv::Mat Drawing(thresholded.rows, thresholded.cols, CV_8UC1, cv::Scalar::all(0));
-      std::vector<std::vector<cv::Point> >hull(1);
+      std::vector<std::vector<cv::Point> > hull(1);
       cv::convexHull(cv::Mat(contours[largest_contour_index]), hull[0], false);
+
       cv::Moments mu;
       std::vector<cv::Vec4i> hierarchy;
       mu = cv::moments(hull[0], false);
       cv::Point2f center_of_mass;
-      center_of_mass = cv::Point2f(mu.m10/mu.m00 , mu.m01/mu.m00);
+
+      center_of_mass = cv::Point2f(mu.m10 / mu.m00, mu.m01 / mu.m00);
+
       cv::drawContours(Drawing, hull, 0, color, 2, 8, hierarchy);
       cv::circle(frame, center_of_mass, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
       cv::imshow("COM", frame);
       cv::imshow("Contours", Drawing);
+
       cv::Point2f pt;
       pt.x = 320;  // size of my screen
       pt.y = 240;
+
       array.data.push_back((320 - center_of_mass.x));
       array.data.push_back((240 - center_of_mass.y));
       pub.publish(array);
+
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
