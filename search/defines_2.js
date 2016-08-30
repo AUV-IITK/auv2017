@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['pwmpineast',['pwmPinEast',['../arduino__node_8cpp.html#a369d53343c2f79fa90694ae015cd04fa',1,'pwmPinEast():&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a369d53343c2f79fa90694ae015cd04fa',1,'pwmPinEast():&#160;testing_arduino_node.cpp']]],
-  ['pwmpinnorthsway',['pwmPinNorthSway',['../arduino__node_8cpp.html#a7ff192f62552a596193c0258186d4bd5',1,'pwmPinNorthSway():&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a7ff192f62552a596193c0258186d4bd5',1,'pwmPinNorthSway():&#160;testing_arduino_node.cpp']]],
-  ['pwmpinnorthup',['pwmPinNorthUp',['../arduino__node_8cpp.html#a5b248e9db7a01dad48444a4bf0e3a59b',1,'pwmPinNorthUp():&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a5b248e9db7a01dad48444a4bf0e3a59b',1,'pwmPinNorthUp():&#160;testing_arduino_node.cpp']]],
-  ['pwmpinsouthsway',['pwmPinSouthSway',['../arduino__node_8cpp.html#abbf046d72eecea6db6b4339888ce522b',1,'pwmPinSouthSway():&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#abbf046d72eecea6db6b4339888ce522b',1,'pwmPinSouthSway():&#160;testing_arduino_node.cpp']]],
-  ['pwmpinsouthup',['pwmPinSouthUp',['../arduino__node_8cpp.html#add6d9fb1e44271e3932492a7a8e32b7f',1,'pwmPinSouthUp():&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#add6d9fb1e44271e3932492a7a8e32b7f',1,'pwmPinSouthUp():&#160;testing_arduino_node.cpp']]],
-  ['pwmpinwest',['pwmPinWest',['../arduino__node_8cpp.html#a9e0adf5f626e370e04f05f50f8f81635',1,'pwmPinWest():&#160;arduino_node.cpp'],['../testing__arduino__node_8cpp.html#a9e0adf5f626e370e04f05f50f8f81635',1,'pwmPinWest():&#160;testing_arduino_node.cpp']]]
+  ['ms5837_5fadc_5fread',['MS5837_ADC_READ',['../MS5837_8cpp.html#a4a3c0e27c1063285991447d11c7c1cd0',1,'MS5837.cpp']]],
+  ['ms5837_5faddr',['MS5837_ADDR',['../MS5837_8cpp.html#a839b01dca53628f77d12d2d853b918cd',1,'MS5837.cpp']]],
+  ['ms5837_5fconvert_5fd1_5f8192',['MS5837_CONVERT_D1_8192',['../MS5837_8cpp.html#af4f73bc59649f7365ad230fa30b43c98',1,'MS5837.cpp']]],
+  ['ms5837_5fconvert_5fd2_5f8192',['MS5837_CONVERT_D2_8192',['../MS5837_8cpp.html#a03a9e29e99e54ac3983ef47271d37912',1,'MS5837.cpp']]],
+  ['ms5837_5fprom_5fread',['MS5837_PROM_READ',['../MS5837_8cpp.html#a29caac8288c6da8eb254b650f65b1c76',1,'MS5837.cpp']]],
+  ['ms5837_5freset',['MS5837_RESET',['../MS5837_8cpp.html#aaa72450003eca1c78fbacb40f33c907a',1,'MS5837.cpp']]]
 ];

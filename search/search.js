@@ -14,7 +14,7 @@ var indexSectionsWithContent =
   4: "_abcdfgilmnoprstuvwy~",
   5: "$_abcdefghilmnoprstuvwxyz",
   6: "cfls",
-  7: "adpt"
+  7: "admpt"
 };
 
 var indexSectionNames =

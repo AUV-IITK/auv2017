@@ -155,7 +155,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  {</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;Inside analysisCB&quot;</span>);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="arduino__node_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="buoy__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">int</span> loopRate = 10;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    ros::Rate loop_rate(loopRate);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
@@ -301,6 +301,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;}</div>
 <div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
+<div class="ttc" id="buoy__detection_8cpp_html_ad43c3812e6d13e0518d9f8b8f463ffcf"><div class="ttname"><a href="buoy__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a></div><div class="ttdeci">int count</div><div class="ttdef"><b>Definition:</b> <a href="buoy__detection_8cpp_source.html#l00029">buoy_detection.cpp:29</a></div></div>
 <div class="ttc" id="forward_8cpp_html_a1f23b0a8c53e091001b4c962a1347dae"><div class="ttname"><a href="forward_8cpp.html#a1f23b0a8c53e091001b4c962a1347dae">Server</a></div><div class="ttdeci">actionlib::SimpleActionServer&lt; motion_commons::ForwardAction &gt; Server</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00013">forward.cpp:13</a></div></div>
 <div class="ttc" id="forward_8cpp_html_a96637b969f3c525ce49ac5b9bcad86d3"><div class="ttname"><a href="forward_8cpp.html#a96637b969f3c525ce49ac5b9bcad86d3">callback</a></div><div class="ttdeci">void callback(motion_forward::pidConfig &amp;config, double level)</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00158">forward.cpp:158</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_aa0cb2ade2bab681d9aa87d6b98d7f334"><div class="ttname"><a href="classinnerActionClass.html#aa0cb2ade2bab681d9aa87d6b98d7f334">innerActionClass::feedback_</a></div><div class="ttdeci">motion_commons::ForwardFeedback feedback_</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00027">forward.cpp:27</a></div></div>
@@ -311,7 +312,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="forward_8cpp_html_a1084d7e47a5571b229a33ad347cc9453"><div class="ttname"><a href="forward_8cpp.html#a1084d7e47a5571b229a33ad347cc9453">output</a></div><div class="ttdeci">float output</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00016">forward.cpp:16</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_a43e28ed4ba4950b68d369fe23c990d9c"><div class="ttname"><a href="classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c">innerActionClass::p</a></div><div class="ttdeci">float p</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00030">forward.cpp:30</a></div></div>
 <div class="ttc" id="forward_8cpp_html_a093edcb1e86e027d1bb0834d346fbbc5"><div class="ttname"><a href="forward_8cpp.html#a093edcb1e86e027d1bb0834d346fbbc5">finalForwardPosition</a></div><div class="ttdeci">float finalForwardPosition</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00016">forward.cpp:16</a></div></div>
-<div class="ttc" id="arduino__node_8cpp_html_ad43c3812e6d13e0518d9f8b8f463ffcf"><div class="ttname"><a href="arduino__node_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a></div><div class="ttdeci">int count</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00044">arduino_node.cpp:44</a></div></div>
 <div class="ttc" id="forward_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="forward_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00181">forward.cpp:181</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_a5740559cbca269d86156cbe5d05546b0"><div class="ttname"><a href="classinnerActionClass.html#a5740559cbca269d86156cbe5d05546b0">innerActionClass::setPID</a></div><div class="ttdeci">void setPID(float new_p, float new_i, float new_d, float new_band)</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00147">forward.cpp:147</a></div></div>
 <div class="ttc" id="classinnerActionClass_html_ad2df40f097108a9fbc64df40d8c59091"><div class="ttname"><a href="classinnerActionClass.html#ad2df40f097108a9fbc64df40d8c59091">innerActionClass::action_name_</a></div><div class="ttdeci">std::string action_name_</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00026">forward.cpp:26</a></div></div>
@@ -335,7 +335,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 30 2016 15:46:21 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 30 2016 17:08:07 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

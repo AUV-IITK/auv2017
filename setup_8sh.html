@@ -100,7 +100,7 @@ Variables</h2></td></tr>
 <tr class="separator:a430a38d74e3af7bfb3da15093a4971ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfe52983274a6d6bd62554a2586fe05b"><td class="memItemLeft" align="right" valign="top">then wstool merge&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="setup_8sh.html#abfe52983274a6d6bd62554a2586fe05b">$ROSINSTALL_FILE</a></td></tr>
 <tr class="separator:abfe52983274a6d6bd62554a2586fe05b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd1321d9fe0cafd134707ef8ccf75c81"><td class="memItemLeft" align="right" valign="top">fi wstool up echo Installing <br class="typebreak"/>
+<tr class="memitem:ab450e8ce56984d3c38d13384b925dcc2"><td class="memItemLeft" align="right" valign="top">fi wstool up echo Installing <br class="typebreak"/>
 dependencies sudo apt get <br class="typebreak"/>
 install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <br class="typebreak"/>
 vision opencv libopencv dev <br class="typebreak"/>
@@ -129,9 +129,10 @@ sketchbook libraries <a class="el" href="format__xml_8sh.html#a41d174d9528555924
 sketchbook libraries rm rf <br class="typebreak"/>
 ros_lib rosrun <br class="typebreak"/>
 rosserial_arduino <br class="typebreak"/>
-make_libraries py echo&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="setup_8sh.html#afd1321d9fe0cafd134707ef8ccf75c81">SUBSYSTEM</a> ==&quot;tty&quot;</td></tr>
-<tr class="separator:afd1321d9fe0cafd134707ef8ccf75c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ec16cbfd549eb5a7426e61d546225a9"><td class="memItemLeft" align="right" valign="top">fi wstool up echo Installing <br class="typebreak"/>
+make_libraries py <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> <br class="typebreak"/>
+sketchbook libraries git clone&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="setup_8sh.html#ab450e8ce56984d3c38d13384b925dcc2">https</a></td></tr>
+<tr class="separator:ab450e8ce56984d3c38d13384b925dcc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e7d5ab2839ab4f989261caee6944f71"><td class="memItemLeft" align="right" valign="top">fi wstool up echo Installing <br class="typebreak"/>
 dependencies sudo apt get <br class="typebreak"/>
 install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <br class="typebreak"/>
 vision opencv libopencv dev <br class="typebreak"/>
@@ -160,8 +161,9 @@ sketchbook libraries <a class="el" href="format__xml_8sh.html#a41d174d9528555924
 sketchbook libraries rm rf <br class="typebreak"/>
 ros_lib rosrun <br class="typebreak"/>
 rosserial_arduino <br class="typebreak"/>
-make_libraries py echo&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="setup_8sh.html#a6ec16cbfd549eb5a7426e61d546225a9">ATTRS</a> {idVendor}==&quot;26ac&quot;</td></tr>
-<tr class="separator:a6ec16cbfd549eb5a7426e61d546225a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+make_libraries py <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> <br class="typebreak"/>
+sketchbook libraries git clone&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="setup_8sh.html#a2e7d5ab2839ab4f989261caee6944f71">ATTRS</a> {idVendor}==&quot;26ac&quot;</td></tr>
+<tr class="separator:a2e7d5ab2839ab4f989261caee6944f71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="abfe52983274a6d6bd62554a2586fe05b"></a>
@@ -178,17 +180,31 @@ make_libraries py echo&#160;</td><td class="memItemRight" valign="bottom"><a cla
 
 </div>
 </div>
-<a class="anchor" id="a6ec16cbfd549eb5a7426e61d546225a9"></a>
+<a class="anchor" id="a2e7d5ab2839ab4f989261caee6944f71"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">fi wstool up echo Installing dependencies sudo apt get install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> vision opencv libopencv dev ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosbash ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosserial arduino ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosserial ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> convex decomposition ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> ivcon ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> pr2 description ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> actionlib ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> dynamic reconfigure ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> image transport ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> gazebo ros ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> roslint doxygen doxypy expect ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosdoc lite source opt ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <a class="el" href="testing__arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> bash <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> catkin_ws rosdep install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> from paths src ignore src rosdistro $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> source opt ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <a class="el" href="testing__arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> bash echo setting up rosserial_arduino mkdir <a class="el" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> sketchbook libraries <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> sketchbook libraries rm rf ros_lib rosrun rosserial_arduino make_libraries py echo ATTRS {idVendor}==&quot;26ac&quot;</td>
+          <td class="memname">fi wstool up echo Installing dependencies sudo apt get install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> vision opencv libopencv dev ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosbash ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosserial arduino ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosserial ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> convex decomposition ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> ivcon ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> pr2 description ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> actionlib ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> dynamic reconfigure ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> image transport ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> gazebo ros ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> roslint doxygen doxypy expect ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosdoc lite source opt ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <a class="el" href="testing__arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> bash <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> catkin_ws rosdep install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> from paths src ignore src rosdistro $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> source opt ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <a class="el" href="testing__arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> bash echo setting up rosserial_arduino mkdir <a class="el" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> sketchbook libraries <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> sketchbook libraries rm rf ros_lib rosrun rosserial_arduino make_libraries py <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> sketchbook libraries git clone ATTRS {idVendor}==&quot;26ac&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="setup_8sh_source.html#l00061">61</a> of file <a class="el" href="setup_8sh_source.html">setup.sh</a>.</p>
+<p>Definition at line <a class="el" href="setup_8sh_source.html#l00065">65</a> of file <a class="el" href="setup_8sh_source.html">setup.sh</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab450e8ce56984d3c38d13384b925dcc2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">fi wstool up echo Installing dependencies sudo apt get install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> vision opencv libopencv dev ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosbash ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosserial arduino ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosserial ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> convex decomposition ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> ivcon ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> pr2 description ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> actionlib ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> dynamic reconfigure ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> image transport ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> gazebo ros ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> roslint doxygen doxypy expect ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosdoc lite source opt ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <a class="el" href="testing__arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> bash <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> catkin_ws rosdep install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> from paths src ignore src rosdistro $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> source opt ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <a class="el" href="testing__arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> bash echo setting up rosserial_arduino mkdir <a class="el" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> sketchbook libraries <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> sketchbook libraries rm rf ros_lib rosrun rosserial_arduino make_libraries py <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> sketchbook libraries git clone https</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="setup_8sh_source.html#l00065">65</a> of file <a class="el" href="setup_8sh_source.html">setup.sh</a>.</p>
 
 </div>
 </div>
@@ -226,24 +242,10 @@ make_libraries py echo&#160;</td><td class="memItemRight" valign="bottom"><a cla
 
 </div>
 </div>
-<a class="anchor" id="afd1321d9fe0cafd134707ef8ccf75c81"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">fi wstool up echo Installing dependencies sudo apt get install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> vision opencv libopencv dev ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosbash ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosserial arduino ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosserial ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> convex decomposition ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> ivcon ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> pr2 description ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> actionlib ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> dynamic reconfigure ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> image transport ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> gazebo ros ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> roslint doxygen doxypy expect ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> rosdoc lite source opt ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <a class="el" href="testing__arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> bash <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> catkin_ws rosdep install <a class="el" href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a> from paths src ignore src rosdistro $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> source opt ros $<a class="el" href="setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff">ROS_DISTRO</a> <a class="el" href="testing__arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> bash echo setting up rosserial_arduino mkdir <a class="el" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> sketchbook libraries <a class="el" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> sketchbook libraries rm rf ros_lib rosrun rosserial_arduino make_libraries py echo SUBSYSTEM ==&quot;tty&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="setup_8sh_source.html#l00061">61</a> of file <a class="el" href="setup_8sh_source.html">setup.sh</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Aug 30 2016 15:46:23 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Aug 30 2016 17:08:08 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
