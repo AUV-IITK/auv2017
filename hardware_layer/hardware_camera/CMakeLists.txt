@@ -103,9 +103,6 @@ find_package( OpenCV REQUIRED )
 #   cfg/DynReconf1.cfg
 #   cfg/DynReconf2.cfg
 # )
-add_message_files(DIRECTORY msg
-  FILES ResizedImage.msg
-)
 
 ###################################
 ## catkin specific configuration ##
@@ -132,6 +129,9 @@ catkin_package(
 ###########
 ## Build ##
 ###########
+
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-std=gnu++11 ${CMAKE_CXX_FLAGS}")
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
