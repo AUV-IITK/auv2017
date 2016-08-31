@@ -27,7 +27,7 @@ private:
   motion_commons::UpwardFeedback feedback_;
   motion_commons::UpwardResult result_;
   ros::Publisher PWM;
-  float p, i, d, band;
+  float p, i, d, band, p_stablize, i_stablize, d_stablize, band_stablize, p_upward, i_upward, d_upward, band_upward;
 
 public:
   // Constructor, called when new instance of class declared
@@ -86,6 +86,22 @@ public:
 
     while (!upwardServer_.isPreemptRequested() && ros::ok() && count < goal->loop)
     {
+      if (goal->loop > 10000)
+      {
+        p = p_stablize;
+        i = i_stablize;
+        d = d_stablize;
+        band = band_stablize;
+      }
+
+      else
+      {
+        p = p_upward;
+        i = i_upward;
+        d = d_upward;
+        band = band_upward;
+      }
+
       error = finalDepth - presentDepth;
       integral += (error * dt);
       derivative = (presentDepth - previousDepth) / dt;
@@ -144,12 +160,17 @@ public:
     pwm.data = static_cast<int>(temp);
   }
 
-  void setPID(float new_p, float new_i, float new_d, float new_band)
+  void setPID(float new_p_stablize, float new_p_upward, float new_i_stablize, float new_i_upward, float new_d_stablize,
+              float new_d_upward, float new_band_stablize, float new_band_upward)
   {
-    p = new_p;
-    i = new_i;
-    d = new_d;
-    band = new_band;
+    p_stablize = new_p_stablize;
+    p_upward = new_p_upward;
+    i_stablize = new_i_stablize;
+    i_upward = new_i_upward;
+    d_stablize = new_d_stablize;
+    d_upward = new_d_upward;
+    band_stablize = new_band_stablize;
+    band_upward = new_band_upward;
   }
 };
 innerActionClass *object;
@@ -157,9 +178,12 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_upward::pidConfig &config, double level)
 {
-  ROS_INFO("UpwardServer: Reconfigure Request: p= %f i= %f d=%f error band=%f", config.p, config.i, config.d,
-           config.band);
-  object->setPID(config.p, config.i, config.d, config.band);
+  ROS_INFO("UpwardServer: Reconfigure Request: p_stablize=%f p_upward=%f "
+           "i_stablize=%f i_upward=%f d_stablize=%f d_upward=%f error band_upward=%f",
+           config.p_stablize, config.p_upward, config.i_stablize, config.i_upward, config.d_stablize, config.d_upward,
+           config.band_upward);
+  object->setPID(config.p_stablize, config.p_upward, config.i_stablize, config.i_upward, config.d_stablize,
+                 config.d_upward, config.band_stablize, config.band_upward);
 }
 
 void distanceCb(std_msgs::Float64 msg)
@@ -182,11 +206,15 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "upward");
   ros::NodeHandle n;
-  double p_param, i_param, d_param, band_param;
-  n.getParam("upward/p_param", p_param);
-  n.getParam("upward/i_param", i_param);
-  n.getParam("upward/d_param", d_param);
-  n.getParam("upward/band_param", band_param);
+  double p_stablize, p_upward, i_stablize, i_upward, d_stablize, d_upward, band_stablize, band_upward;
+  n.getParam("upward/p_stablize", p_stablize);
+  n.getParam("upward/p_upward", p_upward);
+  n.getParam("upward/i_stablize", i_stablize);
+  n.getParam("upward/i_upward", i_upward);
+  n.getParam("upward/d_stablize", d_stablize);
+  n.getParam("upward/d_upward", d_upward);
+  n.getParam("upward/band_stablize", band_stablize);
+  n.getParam("upward/band_upward", band_upward);
 
   ros::Subscriber zDistance = n.subscribe<std_msgs::Float64>("/varun/motion/z_distance", 1000, &distanceCb);
 
@@ -200,10 +228,14 @@ int main(int argc, char **argv)
   server.setCallback(f);
   // set launch file pid
   motion_upward::pidConfig config;
-  config.p = p_param;
-  config.i = i_param;
-  config.d = d_param;
-  config.band = band_param;
+  config.p_stablize = p_stablize;
+  config.p_upward = p_upward;
+  config.i_stablize = i_stablize;
+  config.i_upward = i_upward;
+  config.d_stablize = d_stablize;
+  config.d_upward = d_upward;
+  config.band_stablize = band_stablize;
+  config.band_upward = band_upward;
   callback(config, 0);
 
   ros::spin();
