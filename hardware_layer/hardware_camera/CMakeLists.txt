@@ -103,9 +103,6 @@ find_package( OpenCV REQUIRED )
 #   cfg/DynReconf1.cfg
 #   cfg/DynReconf2.cfg
 # )
-add_message_files(DIRECTORY msg
-  FILES ResizedImage.msg
-)
 
 ###################################
 ## catkin specific configuration ##
