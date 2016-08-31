@@ -353,7 +353,7 @@ void setup()
 void loop()
 {
   sensor.read();
-  voltage.data = sensor.depth()*100;
+  voltage.data = sensor.depth() * 100;
   ps_voltage.publish(&voltage);
   delay(200);
   nh.spinOnce();
