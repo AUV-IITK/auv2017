@@ -1,7 +1,0 @@
-<launch>
-    <node name="front_camera" output="screen" pkg="hardware_camera" respawn="true" type="vid_pub">
-        <param name="topic_name" type="string" value="/varun/sensors/front_camera/image_raw"/>
-        <param name="node_name" type="string" value="front_camera"/>
-        <param name="camera_number" type="string" value="0"/>
-    </node>
-</launch>
