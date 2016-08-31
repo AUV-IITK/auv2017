@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['hardware_5fcamera_2elaunch',['hardware_camera.launch',['../hardware__camera_8launch.html',1,'']]],
   ['hardware_5fnodes_2elaunch',['hardware_nodes.launch',['../hardware__nodes_8launch.html',1,'']]],
   ['height',['height',['../namespaceremote__gui.html#ab56538ef096108ce65caffcb4fb2fb4d',1,'remote_gui']]],
   ['heightcenter',['heightCenter',['../classTaskBuoyInnerClass.html#a1992f402d4d228344e724e406468b337',1,'TaskBuoyInnerClass::heightCenter()'],['../classTaskGateInnerClass.html#a6fea6e518b8651bd2e577cf8044c43b2',1,'TaskGateInnerClass::heightCenter()']]],

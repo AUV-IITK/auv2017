@@ -5,6 +5,7 @@ var searchData=
   ['cd',['cd',['../format__xml_8sh.html#a41d174d95285559246e87526c675fb54',1,'format_xml.sh']]],
   ['centralize_5fswitch_5foff',['centralize_switch_off',['../classTaskLineInnerClass.html#ae9b668844b226c17307a08f720d9ced3',1,'TaskLineInnerClass']]],
   ['centralize_5fswitch_5fon',['centralize_switch_on',['../classTaskLineInnerClass.html#a888642542a13bc21bfe0d387472548fd',1,'TaskLineInnerClass']]],
+  ['checkiffrontiszero',['checkIfFrontisZero',['../vid__pub_8cpp.html#ad6dd071eb77821c775225540383f6207',1,'vid_pub.cpp']]],
   ['clockfront',['clockFront',['../namespaceremote__gui.html#a41a938e67afe38224c68b28a9dc5f6a1',1,'remote_gui']]],
   ['clocksway',['clockSway',['../namespaceremote__gui.html#a1123fa330e09ccc72b15e29329b2737e',1,'remote_gui']]],
   ['computemean',['computeMean',['../line__angle_8cpp.html#af1aa22880cc9c13f6bcd0753a95dcdbf',1,'line_angle.cpp']]],

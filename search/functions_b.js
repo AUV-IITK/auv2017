@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['output_5fangles',['output_angles',['../dcm_8cpp.html#a3223c46dee7054e9fa0ed7177bb4fccd',1,'dcm.cpp']]]
+  ['normalizepwm',['NormalizePWM',['../arduino__node_8cpp.html#a49a393bc8b72c81b9bd4407f2f97b558',1,'arduino_node.cpp']]],
+  ['normalizeupwardpwm',['NormalizeUpwardPWM',['../arduino__node_8cpp.html#ab8149476e8b6bc7706e8b707d6a9cd87',1,'arduino_node.cpp']]]
 ];

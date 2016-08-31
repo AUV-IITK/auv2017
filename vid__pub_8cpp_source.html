@@ -96,57 +96,91 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;cv_bridge/cv_bridge.h&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span>  <span class="comment">// for converting the command line parameter to integer</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">   16</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;image_publisher&quot;</span>);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  ros::NodeHandle <a class="code" href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a>(<span class="stringliteral">&quot;~&quot;</span>);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  std::string topic_name, node_name, camera_number;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  nh.getParam(<span class="stringliteral">&quot;node_name&quot;</span>, node_name);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  nh.getParam(<span class="stringliteral">&quot;topic_name&quot;</span>, topic_name);</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  nh.getParam(<span class="stringliteral">&quot;camera_number&quot;</span>, camera_number);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="comment">// Check if video source has been passed as a parameter</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  image_transport::ImageTransport it(nh);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  image_transport::Publisher pub = it.advertise(topic_name, 1);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <span class="comment">// Convert the passed as command line parameter index for the video device to</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="comment">// an integer</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  std::istringstream video_sourceCmd(camera_number);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="keywordtype">int</span> video_source;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="comment">// Check if it is indeed a number</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <span class="keywordflow">if</span> (!(video_sourceCmd &gt;&gt; video_source))</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  cv::VideoCapture cap(video_source);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// Check if video device can be opened with the given index</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">if</span> (!cap.isOpened())</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  cv::Mat <a class="code" href="buoy__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  sensor_msgs::ImagePtr <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordtype">int</span> loopRate = 10;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  ros::Rate loop_rate(loopRate);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordflow">while</span> (nh.ok())</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    cap &gt;&gt; <a class="code" href="buoy__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">// Check if grabbed frame is actually full with some content</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">if</span> (!frame.empty())</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      msg = cv_bridge::CvImage(std_msgs::Header(), <span class="stringliteral">&quot;bgr8&quot;</span>, frame).toImageMsg();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      pub.publish(msg);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      <span class="comment">// loop_rate.sleep();</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    ros::spinOnce();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
-<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
-<div class="ttc" id="buoy__detection_8cpp_html_a22bf1f49f906224b1a4b38010110e929"><div class="ttname"><a href="buoy__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a></div><div class="ttdeci">cv::Mat frame</div><div class="ttdef"><b>Definition:</b> <a href="buoy__detection_8cpp_source.html#l00027">buoy_detection.cpp:27</a></div></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;cstdio&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="vid__pub_8cpp.html#a43b669bccb8bce8ea862a58a9dc116bd">   19</a></span>&#160;std::string <a class="code" href="vid__pub_8cpp.html#a43b669bccb8bce8ea862a58a9dc116bd">exec</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *cmd)</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordtype">char</span> buffer[128];</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  std::string result = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  std::shared_ptr&lt;FILE&gt; pipe(popen(cmd, <span class="stringliteral">&quot;r&quot;</span>), pclose);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordflow">if</span> (!pipe)</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;popen() failed!&quot;</span>);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">while</span> (!feof(pipe.get()))</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordflow">if</span> (fgets(buffer, 128, pipe.get()) != NULL)</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;      result += buffer;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="vid__pub_8cpp.html#ad6dd071eb77821c775225540383f6207">   34</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="vid__pub_8cpp.html#ad6dd071eb77821c775225540383f6207">checkIfFrontisZero</a>()</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  std::string productID = <span class="stringliteral">&quot;7BE06A00&quot;</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span> *command = <span class="stringliteral">&quot;udevadm info -a -p  $(udevadm info -q path -n /dev/video0)&quot;</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  std::string video0 = <a class="code" href="vid__pub_8cpp.html#a43b669bccb8bce8ea862a58a9dc116bd">exec</a>(command);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keywordflow">if</span> (video0.find(productID))</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">   44</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;image_publisher&quot;</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  ros::NodeHandle <a class="code" href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  std::string bottom_topic_name, front_topic_name, node_name;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordtype">int</span> front_camera_number, bottom_camera_number;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  front_topic_name = <span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  bottom_topic_name = <span class="stringliteral">&quot;/varun/sensors/bottom_camera/image_raw&quot;</span>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  image_transport::ImageTransport it(nh);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  image_transport::Publisher front_pub = it.advertise(front_topic_name, 1);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  image_transport::Publisher bottom_pub = it.advertise(bottom_topic_name, 1);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="vid__pub_8cpp.html#ad6dd071eb77821c775225540383f6207">checkIfFrontisZero</a>())</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    front_camera_number = 0;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    bottom_camera_number = 1;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    front_camera_number = 1;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    bottom_camera_number = 0;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  cv::VideoCapture front_cap(front_camera_number);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  cv::VideoCapture bottom_cap(bottom_camera_number);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  cv::Mat front_frame, bottom_frame;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  sensor_msgs::ImagePtr front_msg, bottom_msg;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordtype">int</span> loopRate = 10;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  ros::Rate loop_rate(loopRate);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keywordflow">while</span> (nh.ok())</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    front_cap &gt;&gt; front_frame;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    bottom_cap &gt;&gt; bottom_frame;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">// Check if grabbed frame is actually full with some content</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">if</span> (!front_frame.empty())</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      front_msg = cv_bridge::CvImage(std_msgs::Header(), <span class="stringliteral">&quot;bgr8&quot;</span>, front_frame).toImageMsg();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      front_pub.publish(front_msg);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="comment">// Check if grabbed frame is actually full with some content</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordflow">if</span> (!bottom_frame.empty())</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      bottom_msg = cv_bridge::CvImage(std_msgs::Header(), <span class="stringliteral">&quot;bgr8&quot;</span>, bottom_frame).toImageMsg();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      bottom_pub.publish(bottom_msg);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    ros::spinOnce();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
 <div class="ttc" id="arduino__node_8cpp_html_a8c8f15207982b3e185f86e1b4968e70d"><div class="ttname"><a href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a></div><div class="ttdeci">ros::NodeHandle nh</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00051">arduino_node.cpp:51</a></div></div>
-<div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00016">vid_pub.cpp:16</a></div></div>
+<div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00044">vid_pub.cpp:44</a></div></div>
+<div class="ttc" id="vid__pub_8cpp_html_ad6dd071eb77821c775225540383f6207"><div class="ttname"><a href="vid__pub_8cpp.html#ad6dd071eb77821c775225540383f6207">checkIfFrontisZero</a></div><div class="ttdeci">bool checkIfFrontisZero()</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00034">vid_pub.cpp:34</a></div></div>
+<div class="ttc" id="vid__pub_8cpp_html_a43b669bccb8bce8ea862a58a9dc116bd"><div class="ttname"><a href="vid__pub_8cpp.html#a43b669bccb8bce8ea862a58a9dc116bd">exec</a></div><div class="ttdeci">std::string exec(const char *cmd)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00019">vid_pub.cpp:19</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 31 2016 09:41:17 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Aug 31 2016 18:51:19 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

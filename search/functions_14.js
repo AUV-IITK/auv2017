@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['_7einneractionclass',['~innerActionClass',['../classinnerActionClass.html#a0d17548d84e3b7961c11c454b87dd24a',1,'innerActionClass::~innerActionClass(void)'],['../classinnerActionClass.html#a0d17548d84e3b7961c11c454b87dd24a',1,'innerActionClass::~innerActionClass(void)'],['../classinnerActionClass.html#a0d17548d84e3b7961c11c454b87dd24a',1,'innerActionClass::~innerActionClass(void)'],['../classinnerActionClass.html#a0d17548d84e3b7961c11c454b87dd24a',1,'innerActionClass::~innerActionClass(void)']]],
-  ['_7etaskbuoyinnerclass',['~TaskBuoyInnerClass',['../classTaskBuoyInnerClass.html#a46a480c9b95c4f7620360d6787486dec',1,'TaskBuoyInnerClass::~TaskBuoyInnerClass(void)'],['../classTaskBuoyInnerClass.html#a46a480c9b95c4f7620360d6787486dec',1,'TaskBuoyInnerClass::~TaskBuoyInnerClass(void)']]],
-  ['_7etaskgateinnerclass',['~TaskGateInnerClass',['../classTaskGateInnerClass.html#a61d3acb5f101e96a448a02b0d8c1676e',1,'TaskGateInnerClass']]],
-  ['_7etasklineinnerclass',['~TaskLineInnerClass',['../classTaskLineInnerClass.html#a097dc61f8f5a90b18e72b7b5bac7f392',1,'TaskLineInnerClass']]]
+  ['yawcb',['yawCB',['../classTaskBuoyInnerClass.html#a2b41f5c6e6e39d479e30e26538694abd',1,'TaskBuoyInnerClass::yawCB()'],['../classTaskGateInnerClass.html#ad229640df9c8ccd089a1edc8f43eb96f',1,'TaskGateInnerClass::yawCB()'],['../classTaskLineInnerClass.html#a46012579c788ff7bcc51816bb6587db6',1,'TaskLineInnerClass::yawCB()'],['../classTaskBuoyInnerClass.html#a2b41f5c6e6e39d479e30e26538694abd',1,'TaskBuoyInnerClass::yawCB()'],['../turningXY_8cpp.html#abb93af21a0cbd2ef68fe82f71976cdbc',1,'yawCb():&#160;turningXY.cpp']]]
 ];

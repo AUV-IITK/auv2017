@@ -100,6 +100,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;cv_bridge/cv_bridge.h&gt;</code><br/>
 <code>#include &lt;sstream&gt;</code><br/>
 <code>#include &lt;string&gt;</code><br/>
+<code>#include &lt;cstdio&gt;</code><br/>
+<code>#include &lt;iostream&gt;</code><br/>
+<code>#include &lt;memory&gt;</code><br/>
+<code>#include &lt;stdexcept&gt;</code><br/>
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for vid_pub.cpp:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -114,6 +118,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a43b669bccb8bce8ea862a58a9dc116bd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vid__pub_8cpp.html#a43b669bccb8bce8ea862a58a9dc116bd">exec</a> (const char *cmd)</td></tr>
+<tr class="separator:a43b669bccb8bce8ea862a58a9dc116bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6dd071eb77821c775225540383f6207"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vid__pub_8cpp.html#ad6dd071eb77821c775225540383f6207">checkIfFrontisZero</a> ()</td></tr>
+<tr class="separator:ad6dd071eb77821c775225540383f6207"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -123,6 +131,74 @@ Functions</h2></td></tr>
 
 <p>Definition in file <a class="el" href="vid__pub_8cpp_source.html">vid_pub.cpp</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ad6dd071eb77821c775225540383f6207"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool checkIfFrontisZero </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="vid__pub_8cpp_source.html#l00034">34</a> of file <a class="el" href="vid__pub_8cpp_source.html">vid_pub.cpp</a>.</p>
+
+<p><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="vid__pub_8cpp_ad6dd071eb77821c775225540383f6207_cgraph.png" border="0" usemap="#vid__pub_8cpp_ad6dd071eb77821c775225540383f6207_cgraph" alt=""/></div>
+<map name="vid__pub_8cpp_ad6dd071eb77821c775225540383f6207_cgraph" id="vid__pub_8cpp_ad6dd071eb77821c775225540383f6207_cgraph">
+<area shape="rect" id="node2" href="vid__pub_8cpp.html#a43b669bccb8bce8ea862a58a9dc116bd" title="exec" alt="" coords="184,5,235,32"/></map>
+</div>
+</p>
+
+<p><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="vid__pub_8cpp_ad6dd071eb77821c775225540383f6207_icgraph.png" border="0" usemap="#vid__pub_8cpp_ad6dd071eb77821c775225540383f6207_icgraph" alt=""/></div>
+<map name="vid__pub_8cpp_ad6dd071eb77821c775225540383f6207_icgraph" id="vid__pub_8cpp_ad6dd071eb77821c775225540383f6207_icgraph">
+<area shape="rect" id="node2" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="184,5,235,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
+<a class="anchor" id="a43b669bccb8bce8ea862a58a9dc116bd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string exec </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="vid__pub_8cpp_source.html#l00019">19</a> of file <a class="el" href="vid__pub_8cpp_source.html">vid_pub.cpp</a>.</p>
+
+<p><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="vid__pub_8cpp_a43b669bccb8bce8ea862a58a9dc116bd_icgraph.png" border="0" usemap="#vid__pub_8cpp_a43b669bccb8bce8ea862a58a9dc116bd_icgraph" alt=""/></div>
+<map name="vid__pub_8cpp_a43b669bccb8bce8ea862a58a9dc116bd_icgraph" id="vid__pub_8cpp_a43b669bccb8bce8ea862a58a9dc116bd_icgraph">
+<area shape="rect" id="node2" href="vid__pub_8cpp.html#ad6dd071eb77821c775225540383f6207" title="checkIfFrontisZero" alt="" coords="104,5,235,32"/><area shape="rect" id="node3" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="283,5,333,32"/></map>
+</div>
+</p>
+
+</div>
+</div>
 <a class="anchor" id="a3c04138a5bfe5d72780bb7e82a18e627"></a>
 <div class="memitem">
 <div class="memproto">
@@ -148,14 +224,25 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>member description </p>
 
-<p>Definition at line <a class="el" href="vid__pub_8cpp_source.html#l00016">16</a> of file <a class="el" href="vid__pub_8cpp_source.html">vid_pub.cpp</a>.</p>
+<p>Definition at line <a class="el" href="vid__pub_8cpp_source.html#l00044">44</a> of file <a class="el" href="vid__pub_8cpp_source.html">vid_pub.cpp</a>.</p>
+
+<p><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="vid__pub_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph.png" border="0" usemap="#vid__pub_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" alt=""/></div>
+<map name="vid__pub_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" id="vid__pub_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph">
+<area shape="rect" id="node2" href="vid__pub_8cpp.html#ad6dd071eb77821c775225540383f6207" title="checkIfFrontisZero" alt="" coords="104,5,235,32"/><area shape="rect" id="node3" href="vid__pub_8cpp.html#a43b669bccb8bce8ea862a58a9dc116bd" title="exec" alt="" coords="283,5,333,32"/></map>
+</div>
+</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 31 2016 09:41:19 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Aug 31 2016 18:51:21 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

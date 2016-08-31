@@ -11,7 +11,7 @@ var indexSectionsWithContent =
   1: "bitvw",
   2: "bgmr",
   3: "abcdfghlmoprstuvy",
-  4: "_abcdfgilmnoprstuvwy~",
+  4: "_abcdefgilmnoprstuvwy~",
   5: "$_abcdefghilmnoprstuvwxyz",
   6: "cfls",
   7: "admpt"
