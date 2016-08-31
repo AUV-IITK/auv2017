@@ -5,6 +5,10 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>  // for converting the command line parameter to integer
 #include <string>
+#include <cstdio>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
 
 /*! \file
 * \brief super short description
@@ -12,45 +16,75 @@
 * Long decription
 */
 
+std::string exec(const char *cmd)
+{
+  char buffer[128];
+  std::string result = "";
+  std::shared_ptr<FILE> pipe(popen(cmd, "r"), pclose);
+  if (!pipe)
+    throw std::runtime_error("popen() failed!");
+  while (!feof(pipe.get()))
+  {
+    if (fgets(buffer, 128, pipe.get()) != NULL)
+      result += buffer;
+  }
+  return result;
+}
+
+bool checkIfFrontisZero()
+{
+  std::string productID = "7BE06A00";
+  const char *command = "udevadm info -a -p  $(udevadm info -q path -n /dev/video0)";
+  std::string video0 = exec(command);
+  if (video0.find(productID))
+    return true;
+}
+
 /*! member description */
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "image_publisher");
-  ros::NodeHandle nh("~");
-  std::string topic_name, node_name, camera_number;
-  nh.getParam("node_name", node_name);
-  nh.getParam("topic_name", topic_name);
-  nh.getParam("camera_number", camera_number);
-  // Check if video source has been passed as a parameter
-
+  ros::NodeHandle nh;
+  std::string bottom_topic_name, front_topic_name, node_name;
+  int front_camera_number, bottom_camera_number;
+  front_topic_name = "/varun/sensors/front_camera/image_raw";
+  bottom_topic_name = "/varun/sensors/bottom_camera/image_raw";
   image_transport::ImageTransport it(nh);
-  image_transport::Publisher pub = it.advertise(topic_name, 1);
+  image_transport::Publisher front_pub = it.advertise(front_topic_name, 1);
+  image_transport::Publisher bottom_pub = it.advertise(bottom_topic_name, 1);
 
-  // Convert the passed as command line parameter index for the video device to
-  // an integer
-  std::istringstream video_sourceCmd(camera_number);
-  int video_source;
-  // Check if it is indeed a number
-  if (!(video_sourceCmd >> video_source))
-    return 1;
+  if (checkIfFrontisZero())
+  {
+    front_camera_number = 0;
+    bottom_camera_number = 1;
+  }
+  else
+  {
+    front_camera_number = 1;
+    bottom_camera_number = 0;
+  }
 
-  cv::VideoCapture cap(video_source);
-  // Check if video device can be opened with the given index
-  if (!cap.isOpened())
-    return 1;
-  cv::Mat frame;
-  sensor_msgs::ImagePtr msg;
+  cv::VideoCapture front_cap(front_camera_number);
+  cv::VideoCapture bottom_cap(bottom_camera_number);
+  cv::Mat front_frame, bottom_frame;
+  sensor_msgs::ImagePtr front_msg, bottom_msg;
   int loopRate = 10;
   ros::Rate loop_rate(loopRate);
   while (nh.ok())
   {
-    cap >> frame;
+    front_cap >> front_frame;
+    bottom_cap >> bottom_frame;
     // Check if grabbed frame is actually full with some content
-    if (!frame.empty())
+    if (!front_frame.empty())
     {
-      msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame).toImageMsg();
-      pub.publish(msg);
-      // loop_rate.sleep();
+      front_msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", front_frame).toImageMsg();
+      front_pub.publish(front_msg);
+    }
+    // Check if grabbed frame is actually full with some content
+    if (!bottom_frame.empty())
+    {
+      bottom_msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", bottom_frame).toImageMsg();
+      bottom_pub.publish(bottom_msg);
     }
     ros::spinOnce();
   }
