@@ -54,7 +54,7 @@ public:
   {
     pwm.data = 0;
     PWM.publish(pwm);
-    ROS_INFO("pwm send to arduino %d", pwm.data);
+    ROS_INFO("%s pwm send to arduino %d", ros::this_node::getName().c_str(), pwm.data);
     // this command cancels the previous goal
     sidewardServer_.setPreempted();
   }
@@ -62,7 +62,7 @@ public:
   // called when new goal recieved; start motion and finish it, if not interupted
   void analysisCB(const motion_commons::SidewardGoalConstPtr goal)
   {
-    ROS_INFO("Inside analysisCB");
+    ROS_INFO("%s Inside analysisCB", ros::this_node::getName().c_str());
 
     int count = 0;
     int loopRate = 10;
@@ -71,7 +71,7 @@ public:
     // waiting till we recieve the first value from Camera else it's useless to any calculations
     while (!initData)
     {
-      ROS_INFO("Waiting to get first input from Camera");
+      ROS_INFO("%s Waiting to get first input from Camera", ros::this_node::getName().c_str());
       loop_rate.sleep();
     }
 
@@ -98,7 +98,7 @@ public:
         reached = true;
         pwm.data = 0;
         PWM.publish(pwm);
-        ROS_INFO("thrusters stopped");
+        ROS_INFO("%s thrusters stopped", ros::this_node::getName().c_str());
         count++;
       }
       else
@@ -119,7 +119,7 @@ public:
       feedback_.DistanceRemaining = error;
       sidewardServer_.publishFeedback(feedback_);
       PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino sideward %d", pwm.data);
+      ROS_INFO("%s pwm send to arduino sideward %d", ros::this_node::getName().c_str(), pwm.data);
 
       ros::spinOnce();
       loop_rate.sleep();
@@ -157,7 +157,7 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_sideward::pidConfig &config, double level)
 {
-  ROS_INFO("SidewardServer: Reconfigure Request: p= %f i= %f d=%f error band=%f", config.p, config.i, config.d,
+  ROS_INFO("%s SidewardServer: Reconfigure Request: p= %f i= %f d=%f error band=%f", ros::this_node::getName().c_str(), config.p, config.i, config.d,
            config.band);
   object->setPID(config.p, config.i, config.d, config.band);
 }
@@ -190,7 +190,7 @@ int main(int argc, char **argv)
 
   ros::Subscriber yDistance = n.subscribe<std_msgs::Float64>("/varun/motion/y_distance", 1000, &distanceCb);
 
-  ROS_INFO("Waiting for Goal");
+  ROS_INFO("%s Waiting for Goal", ros::this_node::getName().c_str());
   object = new innerActionClass(ros::this_node::getName());
 
   // register dynamic reconfig server.

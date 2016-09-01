@@ -29,17 +29,17 @@ void spinThread()
   success = (*(temp.getResult())).Result;
   if (success)
   {
-    ROS_INFO("motion successful");
+    ROS_INFO("%s: motion successful", ros::this_node::getName().c_str());
   }
   else
-    ROS_INFO("motion unsuccessful");
+    ROS_INFO("%s: motion unsuccessful", ros::this_node::getName().c_str());
 }
 
 // dynamic reconfig; Our primary way of debugging
 // Send new goal or cancel goal depending on input from GUI
 void callback(motion_upward::upwardConfig &config, double level)
 {
-  ROS_INFO("Reconfigure Request: %f %s %d", config.double_param, config.bool_param ? "True" : "False", config.loop);
+  ROS_INFO("%s: Reconfigure Request: %f %s %d", ros::this_node::getName().c_str(), config.double_param, config.bool_param ? "True" : "False", config.loop);
   Client &can = *clientPointer;
   if (!config.bool_param)
   {
@@ -47,7 +47,7 @@ void callback(motion_upward::upwardConfig &config, double level)
     {
       moving = false;
       can.cancelGoal();
-      ROS_INFO("Goal Cancelled");
+      ROS_INFO("%s: Goal Cancelled", ros::this_node::getName().c_str());
     }
   }
   else
@@ -56,13 +56,13 @@ void callback(motion_upward::upwardConfig &config, double level)
     {
       Client &can = *clientPointer;
       can.cancelGoal();
-      ROS_INFO("Goal Cancelled");
+      ROS_INFO("%s: Goal Cancelled", ros::this_node::getName().c_str());
     }
     goal.Goal = config.double_param;
     goal.loop = config.loop;
     can.sendGoal(goal);
     boost::thread spin_thread(&spinThread);
-    ROS_INFO("Goal Send %f loop: %d", goal.Goal, goal.loop);
+    ROS_INFO("%s: Goal Send %f loop: %d", ros::this_node::getName().c_str(), goal.Goal, goal.loop);
     moving = true;
   }
 }
@@ -75,7 +75,7 @@ void pressure_data_callback(std_msgs::Float64 msg)
 // Callback for Feedback from Action Server
 void upwardCb(motion_commons::UpwardActionFeedback msg)
 {
-  ROS_INFO("feedback recieved %fsec remaining ", msg.feedback.DepthRemaining);
+  ROS_INFO("%s feedback recieved %fsec remaining ", ros::this_node::getName().c_str(), msg.feedback.DepthRemaining);
 }
 
 int main(int argc, char **argv)
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
   clientPointer = &upwardTestClient;
 
   // Waiting for action server to start
-  ROS_INFO("Waiting for action server to start.");
+  ROS_INFO("%s Waiting for action server to start.", ros::this_node::getName().c_str());
   upwardTestClient.waitForServer();
 
   // register dynamic reconfig server.

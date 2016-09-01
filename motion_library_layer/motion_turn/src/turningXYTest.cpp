@@ -19,7 +19,7 @@ bool goalSet = false;
 // dynamic reconfig
 void callback(motion_turn::turningConfig &config, double level)
 {
-  ROS_INFO("Reconfigure Request: %f %s %d", config.double_param, config.bool_param ? "True" : "False", config.loop);
+  ROS_INFO("%s Reconfigure Request: %f %s %d", ros::this_node::getName().c_str(), config.double_param, config.bool_param ? "True" : "False", config.loop);
   Client &can = *clientPointer;
   if (!config.bool_param)
   {
@@ -27,7 +27,7 @@ void callback(motion_turn::turningConfig &config, double level)
     {
       goalSet = false;
       can.cancelGoal();
-      ROS_INFO("Goal Cancelled");
+      ROS_INFO("%s Goal Cancelled", ros::this_node::getName().c_str());
     }
   }
   else
@@ -36,12 +36,12 @@ void callback(motion_turn::turningConfig &config, double level)
     {
       Client &can = *clientPointer;
       can.cancelGoal();
-      ROS_INFO("Goal Cancelled");
+      ROS_INFO("%s Goal Cancelled", ros::this_node::getName().c_str());
     }
     goal.AngleToTurn = config.double_param;
     goal.loop = config.loop;
     can.sendGoal(goal);
-    ROS_INFO("Goal Send %f loop:%d", goal.AngleToTurn, goal.loop);
+    ROS_INFO("%s Goal Send %f loop:%d", ros::this_node::getName().c_str(), goal.AngleToTurn, goal.loop);
     goalSet = true;
   }
 }
@@ -55,7 +55,7 @@ void imu_data_callback(std_msgs::Float64 msg)
 // specified
 void turnCb(motion_commons::TurnActionFeedback msg)
 {
-  ROS_INFO("feedback recieved, %f deg remaining ", msg.feedback.AngleRemaining);
+  ROS_INFO("%s feedback recieved, %f deg remaining ", ros::this_node::getName().c_str(), msg.feedback.AngleRemaining);
 }
 
 int main(int argc, char **argv)
@@ -71,10 +71,10 @@ int main(int argc, char **argv)
   clientPointer = &TurnTestClient;
   // this wait has to be implemented here so that we can wait for the server to
   // start
-  ROS_INFO("Waiting for action server to start.");
+  ROS_INFO("%s Waiting for action server to start.", ros::this_node::getName().c_str());
   TurnTestClient.waitForServer();
   goal.AngleToTurn = 0;
-  ROS_INFO("Action server started, sending goal.");
+  ROS_INFO("%s Action server started, sending goal.", ros::this_node::getName().c_str());
 
   // register dynamic reconfig server.
   dynamic_reconfigure::Server<motion_turn::turningConfig> server;
