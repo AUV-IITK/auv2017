@@ -96,7 +96,7 @@ int main(int argc, char **argv)
       out_pub.publish(imu_msg);
 
       // cout << temp << endl;
-      ROS_INFO("%s %f", "send an imu message", TO_DEG(yaw));
+      ROS_INFO("%s: %s %f", ros::this_node::getName().c_str(), "send an imu message", TO_DEG(yaw));
     }
     loopRate.sleep();
   }

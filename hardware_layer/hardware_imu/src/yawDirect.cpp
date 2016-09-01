@@ -35,8 +35,8 @@ int main(int argc, char **argv)
     read_sensors();
     msg.data = TO_DEG(-atan2(magnetom[1], magnetom[0]));
     chatter_pub.publish(msg);
-    ROS_INFO("%s %f", "send an imu message", TO_DEG(-atan2(magnetom[1], magnetom[0])));
-    // ROS_INFO("%d \n",temp);
+    string 
+    ROS_INFO("%s: %s %f", ros::this_node::getName().c_str(), "send an imu message", TO_DEG(-atan2(magnetom[1], magnetom[0])));
     ros::spinOnce();
     loopRate.sleep();
     temp++;
