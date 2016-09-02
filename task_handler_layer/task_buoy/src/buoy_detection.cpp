@@ -263,14 +263,72 @@ int main(int argc, char *argv[])
       cv::Mat circles = frame;
       circle(circles, center_ideal[0], r[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
       circle(circles, center_ideal[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);    // center is made on the screen
-      circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);             // center of screen
+      circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
 
-      if (r[0] > 220)
+      int net_x_cord = 320 - center_ideal[0].x + r[0];
+      int net_y_cord = -240 + center_ideal[0].y + r[0];
+      if (net_x_cord < -310)
+      {
+        array.data.push_back(-2);  // top
+        array.data.push_back(-2);
+        array.data.push_back(-2);
+        array.data.push_back(-2);
+      }
+      else if (net_x_cord > 310)
+      {
+        array.data.push_back(-1);  // left_side
+        array.data.push_back(-1);
+        array.data.push_back(-1);
+        array.data.push_back(-1);
+        pub.publish(array);
+        ros::spinOnce();
+        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
+        // remove higher bits using AND operator
+        if ((cvWaitKey(10) & 255) == 27)
+          break;
+        continue;
+      }
+      else if (net_y_cord > 230)
+      {
+        array.data.push_back(-3);  // bottom
+        array.data.push_back(-3);
+        array.data.push_back(-3);
+        array.data.push_back(-3);
+        pub.publish(array);
+        ros::spinOnce();
+        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
+        // remove higher bits using AND operator
+        if ((cvWaitKey(10) & 255) == 27)
+          break;
+        continue;
+      }
+      else if (net_y_cord < -230)
+      {
+        array.data.push_back(-4);  // right_side
+        array.data.push_back(-4);
+        array.data.push_back(-4);
+        array.data.push_back(-4);
+        pub.publish(array);
+        ros::spinOnce();
+        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
+        // remove higher bits using AND operator
+        if ((cvWaitKey(10) & 255) == 27)
+          break;
+        continue;
+      }
+      else if (r[0] > 220)
       {
         array.data.push_back(-5);
         array.data.push_back(-5);
         array.data.push_back(-5);
         array.data.push_back(-5);
+        pub.publish(array);
+        ros::spinOnce();
+        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
+        // remove higher bits using AND operator
+        if ((cvWaitKey(10) & 255) == 27)
+          break;
+        continue;
       }
       else
       {
@@ -281,6 +339,7 @@ int main(int argc, char *argv[])
         array.data.push_back(-(240 - center_ideal[0].y));
         array.data.push_back(distance);
       }
+
       cv::imshow("circle", circles);            // Original stream with detected ball overlay
       cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
       pub.publish(array);
@@ -298,13 +357,6 @@ int main(int argc, char *argv[])
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
         break;
-    }
-    else if (r[0] > 220)
-    {
-      array.data.push_back(-5);
-      array.data.push_back(-5);
-      array.data.push_back(-5);
-      array.data.push_back(-5);
     }
     else
     {
