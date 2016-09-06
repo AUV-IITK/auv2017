@@ -135,7 +135,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="torpedo__detection_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a> = config.t2max_param;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="torpedo__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a> = config.t3min_param;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="torpedo__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a> = config.t3max_param;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Reconfigure Request : New parameters : %d %d %d %d %d %d &quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="torpedo__detection_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="torpedo__detection_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="torpedo__detection_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="torpedo__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, <a class="code" href="torpedo__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Torpedo_Reconfigure Request:New params: %d %d %d %d %d %d &quot;</span>, <a class="code" href="torpedo__detection_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="torpedo__detection_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="torpedo__detection_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="torpedo__detection_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="torpedo__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, <a class="code" href="torpedo__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
 <div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="torpedo__detection_8cpp.html#a7c0ebfe6b31c897994082445bc9820b8">   50</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="torpedo__detection_8cpp.html#a7c0ebfe6b31c897994082445bc9820b8">torpedoListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
@@ -222,7 +222,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="comment">// Get one frame</span></div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="torpedo__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.empty())</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    {</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;empty frame \n&quot;</span>;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: empty frame&quot;</span>, ros::this_node::getName().c_str());      </div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;      <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    }</div>
@@ -346,7 +346,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    }</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    {</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;waiting\n&quot;</span>;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: waiting\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    }</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  }</div>
@@ -381,7 +381,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 2 2016 11:43:42 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 6 2016 14:47:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

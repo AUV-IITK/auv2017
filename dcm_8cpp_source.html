@@ -109,10 +109,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  }</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (output_format == OUTPUT__FORMAT_TEXT)</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="comment">// printf(&quot; YPR=&quot;);</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="comment">// printf(&quot;%f\t&quot;,TO_DEG(yaw));</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="comment">// printf(&quot;%f\t&quot;,TO_DEG(pitch));</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="comment">// printf(&quot;%f\n&quot;,TO_DEG(roll));</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="comment">// ROS_INFO(&quot; YPR=&quot;);</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="comment">// ROS_INFO(&quot;%f\t&quot;,TO_DEG(yaw));</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="comment">// ROS_INFO(&quot;%f\t&quot;,TO_DEG(pitch));</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="comment">// ROS_INFO(&quot;%f\n&quot;,TO_DEG(roll));</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
@@ -187,7 +187,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      out_pub.publish(imu_msg);</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <span class="comment">// cout &lt;&lt; temp &lt;&lt; endl;</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s %f&quot;</span>, <span class="stringliteral">&quot;send an imu message&quot;</span>, <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">yaw</a>));</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: %s %f&quot;</span>, ros::this_node::getName().c_str(), <span class="stringliteral">&quot;send an imu message&quot;</span>, <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">yaw</a>));</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    loopRate.sleep();</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
@@ -204,7 +204,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 2 2016 11:43:41 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 6 2016 14:47:12 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

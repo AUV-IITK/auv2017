@@ -127,7 +127,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="buoy__detection_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a> = config.t2max_param;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <a class="code" href="buoy__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a> = config.t3min_param;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <a class="code" href="buoy__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a> = config.t3max_param;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Reconfigure Request : New parameters : %d %d %d %d %d %d&quot;</span>, <a class="code" href="buoy__detection_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="buoy__detection_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="buoy__detection_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="buoy__detection_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="buoy__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, <a class="code" href="buoy__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Buoy_Reconfigure Request:New params : %d %d %d %d %d %d&quot;</span>, <a class="code" href="buoy__detection_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="buoy__detection_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="buoy__detection_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="buoy__detection_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="buoy__detection_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, <a class="code" href="buoy__detection_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
 <div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="buoy__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812">   42</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="buoy__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812">lineDetectedListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
@@ -149,7 +149,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordflow">catch</span> (cv_bridge::Exception &amp;e)</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    ROS_ERROR(<span class="stringliteral">&quot;Could not convert from &#39;%s&#39; to &#39;bgr8&#39;.&quot;</span>, msg-&gt;encoding.c_str());</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    ROS_ERROR(<span class="stringliteral">&quot;%s: Could not convert from &#39;%s&#39; to &#39;bgr8&#39;.&quot;</span>, ros::this_node::getName().c_str(), msg-&gt;encoding.c_str());</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  }</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
@@ -216,7 +216,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    loop_rate.sleep();</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="buoy__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.empty())</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    {</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;empty frame \n&quot;</span>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: empty frame&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    }</div>
@@ -440,7 +440,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;          <a class="code" href="buoy__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = 32;</div>
 <div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;      }</div>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="buoy__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == 32)</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: PAUSED\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;      <span class="comment">// If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),</span></div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;      <span class="comment">// remove higher bits using AND operator</span></div>
@@ -449,7 +449,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    }</div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    {</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;waiting\n&quot;</span>;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: waiting\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;      {</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="buoy__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == 32)</div>
@@ -458,7 +458,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;          <a class="code" href="buoy__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = 32;</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;      }</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="buoy__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == 32)</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: PAUSED\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    }</div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;  }</div>
@@ -491,7 +491,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 2 2016 11:43:42 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 6 2016 14:47:13 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

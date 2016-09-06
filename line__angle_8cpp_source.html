@@ -145,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a> = config.t2max_param;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a> = config.t3min_param;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a> = config.t3max_param;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Reconfigure Request : New parameters : %d %d %d %d %d %d &quot;</span>, <a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, <a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Line_angle Reconfigure: New params: %d %d %d %d %d %d &quot;</span>, <a class="code" href="line__angle_8cpp.html#a29640ad74517ae3023b67a75773c3f9a">t1min</a>, <a class="code" href="line__angle_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a>, <a class="code" href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a>, <a class="code" href="line__angle_8cpp.html#ade44e788b0f1c920c3e9175b4d9d9264">t2max</a>, <a class="code" href="line__angle_8cpp.html#a46f6551ea6d690e0cbb8d33ad39f61da">t3min</a>, <a class="code" href="line__angle_8cpp.html#aed7983d3e2d03188fff7eaf758bfd3e5">t3max</a>);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
 <div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">   60</a></span>&#160;std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
@@ -340,7 +340,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="comment">// Get one frame</span></div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.empty())</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    {</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;empty frame \n&quot;</span>;</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: empty frame&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      <span class="keywordflow">continue</span>;</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    }</div>
@@ -449,12 +449,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;          <a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> = 32;</div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;      }</div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32)</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: PAUSED\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    }</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    {</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;      std::cout &lt;&lt; <span class="stringliteral">&quot;waiting\n&quot;</span>;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: waiting\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;      {</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32)</div>
@@ -463,7 +463,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;          <a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> = 32;</div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;      }</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__angle_8cpp.html#a742204794ea328ba293fe59cec79b990">m</a> == 32)</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        printf(<span class="stringliteral">&quot;paused\n&quot;</span>);</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: PAUSED\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    }</div>
 <div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;  }</div>
@@ -487,7 +487,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="line__angle_8cpp_html_aeaa8c4a4967534eb353c231a3b21e5e3"><div class="ttname"><a href="line__angle_8cpp.html#aeaa8c4a4967534eb353c231a3b21e5e3">lineAngleListener</a></div><div class="ttdeci">void lineAngleListener(std_msgs::Bool msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00162">line_angle.cpp:162</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_a3d97c374036ee59cc995dea181e330cd"><div class="ttname"><a href="line__angle_8cpp.html#a3d97c374036ee59cc995dea181e330cd">sent_to_callback</a></div><div class="ttdeci">cv::Mat sent_to_callback</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00083">line_angle.cpp:83</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_a552d25c73cc82d337799b861b5ec9e3a"><div class="ttname"><a href="line__angle_8cpp.html#a552d25c73cc82d337799b861b5ec9e3a">callback_dyn</a></div><div class="ttdeci">void callback_dyn(task_line::lineConfig &amp;config, uint32_t level)</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00049">line_angle.cpp:49</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_a2fbc4cadeb0c52cc1ae0e99c790ee86c"><div class="ttname"><a href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; task_commons::lineAction &gt; line</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00018">masterAlternate.cpp:18</a></div></div>
+<div class="ttc" id="masterAlternate_8cpp_html_a2fbc4cadeb0c52cc1ae0e99c790ee86c"><div class="ttname"><a href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; task_commons::lineAction &gt; line</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00015">masterAlternate.cpp:15</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_a31ba5784b0e1d1d0451a1142764519dd"><div class="ttname"><a href="line__angle_8cpp.html#a31ba5784b0e1d1d0451a1142764519dd">t2min</a></div><div class="ttdeci">int t2min</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00047">line_angle.cpp:47</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_a7327bdf8364bb05cca2878c4ca24460d"><div class="ttname"><a href="line__angle_8cpp.html#a7327bdf8364bb05cca2878c4ca24460d">LowS</a></div><div class="ttdeci">int LowS</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00066">line_angle.cpp:66</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_aab7e318a33e12402d7111aba3fa2644f"><div class="ttname"><a href="line__angle_8cpp.html#aab7e318a33e12402d7111aba3fa2644f">LowH</a></div><div class="ttdeci">int LowH</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00063">line_angle.cpp:63</a></div></div>
@@ -517,7 +517,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 2 2016 11:43:42 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 6 2016 14:47:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

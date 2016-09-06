@@ -145,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  {</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="sideward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data = 0;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="classinnerActionClass.html#a6517e8982fc147f83b6a0a1725e2be1d">PWM</a>.publish(<a class="code" href="sideward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;pwm send to arduino %d&quot;</span>, <a class="code" href="sideward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s pwm send to arduino %d&quot;</span>, ros::this_node::getName().c_str(), <a class="code" href="sideward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">// this command cancels the previous goal</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="classinnerActionClass.html#abd032b7375ebf14cfc47df51cc3cf4e7">sidewardServer_</a>.setPreempted();</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  }</div>
@@ -153,7 +153,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">// called when new goal recieved; start motion and finish it, if not interupted</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classinnerActionClass.html#a53876ebc40305648c0918c3aace4a862">   63</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classinnerActionClass.html#a53876ebc40305648c0918c3aace4a862">analysisCB</a>(<span class="keyword">const</span> motion_commons::SidewardGoalConstPtr <a class="code" href="forwardTest_8cpp.html#a900bebf5b52612aabe4b22507010e0c2">goal</a>)</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;Inside analysisCB&quot;</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s Inside analysisCB&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="buoy__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">int</span> loopRate = 10;</div>
@@ -162,7 +162,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">// waiting till we recieve the first value from Camera else it&#39;s useless to any calculations</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">while</span> (!<a class="code" href="sideward_8cpp.html#a5857eb60203beb77f04690dc0248daa6">initData</a>)</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Waiting to get first input from Camera&quot;</span>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Waiting to get first input from Camera&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      loop_rate.sleep();</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
@@ -189,7 +189,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        reached = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <a class="code" href="sideward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data = 0;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="classinnerActionClass.html#a6517e8982fc147f83b6a0a1725e2be1d">PWM</a>.publish(<a class="code" href="sideward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;thrusters stopped&quot;</span>);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s thrusters stopped&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        count++;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      }</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;      <span class="keywordflow">else</span></div>
@@ -210,7 +210,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <a class="code" href="classinnerActionClass.html#aa0cb2ade2bab681d9aa87d6b98d7f334">feedback_</a>.DistanceRemaining = <a class="code" href="sideward_8cpp.html#a7cfd13d282af770aaa971755fa092fca">error</a>;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      <a class="code" href="classinnerActionClass.html#abd032b7375ebf14cfc47df51cc3cf4e7">sidewardServer_</a>.publishFeedback(<a class="code" href="classinnerActionClass.html#aa0cb2ade2bab681d9aa87d6b98d7f334">feedback_</a>);</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;      <a class="code" href="classinnerActionClass.html#a6517e8982fc147f83b6a0a1725e2be1d">PWM</a>.publish(<a class="code" href="sideward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;pwm send to arduino sideward %d&quot;</span>, <a class="code" href="sideward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s pwm send to arduino sideward %d&quot;</span>, ros::this_node::getName().c_str(), <a class="code" href="sideward_8cpp.html#a27c48c1c477175a9b9a12f607758c41c">pwm</a>.data);</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      loop_rate.sleep();</div>
@@ -248,8 +248,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">// dynamic reconfig</span></div>
 <div class="line"><a name="l00158"></a><span class="lineno"><a class="line" href="sideward_8cpp.html#a36893e8abfb7ca3f7068b266436f4444">  158</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="sideward_8cpp.html#a36893e8abfb7ca3f7068b266436f4444">callback</a>(motion_sideward::pidConfig &amp;config, <span class="keywordtype">double</span> level)</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;{</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;SidewardServer: Reconfigure Request: p= %f i= %f d=%f error band=%f&quot;</span>, config.p, config.i, config.d,</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;           config.band);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s SidewardServer: Reconfigure Request: p= %f i= %f d=%f error band=%f&quot;</span>, ros::this_node::getName().c_str(),</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;           config.p, config.i, config.d, config.band);</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  <span class="keywordtype">object</span>-&gt;setPID(config.p, config.i, config.d, config.band);</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;}</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
@@ -281,7 +281,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  ros::Subscriber yDistance = n.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/y_distance&quot;</span>, 1000, &amp;<a class="code" href="sideward_8cpp.html#aabda1cb085830b0333fcd588cfe4857b">distanceCb</a>);</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for Goal&quot;</span>);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s Waiting for Goal&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <span class="keywordtype">object</span> = <span class="keyword">new</span> <a class="code" href="classinnerActionClass.html">innerActionClass</a>(ros::this_node::getName());</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="comment">// register dynamic reconfig server.</span></div>
@@ -339,7 +339,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 2 2016 11:43:42 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 6 2016 14:47:13 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

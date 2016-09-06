@@ -112,17 +112,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="torpedo__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56">success</a> = (*(temp.getResult())).MotionCompleted;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="torpedo__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56">success</a>)</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;motion successful&quot;</span>);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s motion successful&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;motion unsuccessful&quot;</span>);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s motion unsuccessful&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;  ros::shutdown();</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">// never ever put the argument of the callback function anything other then the specified</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="torpedo__client_8cpp.html#acb47e24fdab829207ef723f9e7bcb17f">   32</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="torpedo__client_8cpp.html#acb47e24fdab829207ef723f9e7bcb17f">forwardCb</a>(task_commons::torpedoActionFeedback <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;feedback recieved %d&quot;</span>, msg.feedback.nosignificance);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s feedback recieved %d&quot;</span>, ros::this_node::getName().c_str(), msg.feedback.nosignificance);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
 <div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="torpedo__client_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">   37</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="torpedo__client_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
@@ -137,10 +137,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> testClient(<span class="stringliteral">&quot;torpedo_server&quot;</span>);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="torpedo__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">ptrClient</a> = &amp;testClient;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for action server to start.&quot;</span>);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s Waiting for action server to start.&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  testClient.waitForServer();</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <a class="code" href="torpedo__client_8cpp.html#a8cc911a316fb8229c4e145be9699e9a1">goal</a>.order = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Action server started, sending goal.&quot;</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s Action server started, sending goal.&quot;</span>.ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> &amp;can = *<a class="code" href="torpedo__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">ptrClient</a>;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="comment">// send goal</span></div>
@@ -162,7 +162,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 2 2016 11:43:42 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 6 2016 14:47:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

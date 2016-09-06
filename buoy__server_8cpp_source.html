@@ -157,7 +157,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    , <a class="code" href="classTaskBuoyInnerClass.html#a750945da7a74421ab620e267d079c9fc">UpwardClient_</a>(node2)</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    , <a class="code" href="classTaskBuoyInnerClass.html#a6c4c178ed2f6e0826e226b65e8b783a4">TurnClient_</a>(node3)</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;inside constructor&quot;</span>);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s inside constructor&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.registerPreemptCallback(boost::bind(&amp;<a class="code" href="classTaskBuoyInnerClass.html#af6400b5be5c38d768124d6b88f554cb5">TaskBuoyInnerClass::preemptCB</a>, <span class="keyword">this</span>));</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#adc0fc9aa0fedd99281bb8b826f95cfa1">switch_buoy_detection</a> = <a class="code" href="classTaskBuoyInnerClass.html#a65effd0ffd4ccee0f8f6ca003c54dc55">nh_</a>.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;buoy_detection_switch&quot;</span>, 1000);</div>
@@ -207,7 +207,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    {</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#a547ab9e2e716cc1191cd97499d13c658">IP_stopped</a> = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#ac446bc020a9efc07e0dc4051442ca425">stopBuoyDetection</a>();</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Bot is in front of buoy, IP stopped.&quot;</span>);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Bot is in front of buoy, IP stopped.&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    }</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  }</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
@@ -224,11 +224,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a1992f402d4d228344e724e406468b337">heightCenter</a> = (*(tempUpward.getResult())).Result;</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classTaskBuoyInnerClass.html#a1992f402d4d228344e724e406468b337">heightCenter</a>)</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    {</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Bot is at height center&quot;</span>);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Bot is at height center&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    }</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    {</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Bot is not at height center, something went wrong&quot;</span>);</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Bot is not at height center, something went wrong&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    }</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  }</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
@@ -239,11 +239,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a794fc8edd7787d1706bffe1a86aea3a4">heightGoal</a> = (*(tempUpward.getResult())).Result;</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classTaskBuoyInnerClass.html#a794fc8edd7787d1706bffe1a86aea3a4">heightGoal</a>)</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    {</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Bot is at desired height.&quot;</span>);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Bot is at desired height.&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    }</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Bot is not at desired height, something went wrong&quot;</span>);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Bot is not at desired height, something went wrong&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    }</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  }</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
@@ -254,11 +254,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a7e723b16dc08ac26d34597c47e84af86">sideCenter</a> = (*(tempSideward.getResult())).Result;</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classTaskBuoyInnerClass.html#a7e723b16dc08ac26d34597c47e84af86">sideCenter</a>)</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    {</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Bot is at side center&quot;</span>);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Bot is at side center&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    }</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    {</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;Bot is not at side center, something went wrong&quot;</span>);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Bot is not at side center, something went wrong&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    }</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  }</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
@@ -274,7 +274,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.isActive())</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;Waiting for Forward server to start.&quot;</span>);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s Waiting for Forward server to start.&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a6d6ad6c0a0f3c316f74a2a97f83acbc9">ForwardClient_</a>.waitForServer();</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a18a3d63e31f988f8ba7843c5ea16c537">SidewardClient_</a>.waitForServer();</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a750945da7a74421ab620e267d079c9fc">UpwardClient_</a>.waitForServer();</div>
@@ -315,85 +315,87 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;      <span class="comment">// publish the feedback</span></div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#a0db4b5ebb7f98052d51e636dd2bab741">feedback_</a>.nosignificance = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.publishFeedback(<a class="code" href="classTaskBuoyInnerClass.html#a0db4b5ebb7f98052d51e636dd2bab741">feedback_</a>);</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;x = %f, y = %f, front distance = %f&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#afa9053c5e3352ff2d5a3567af7b3f2a9">data_X_</a>.data, <a class="code" href="classTaskBuoyInnerClass.html#ae574112de5236ae30260bccd3414ea3f">data_Y_</a>.data, <a class="code" href="classTaskBuoyInnerClass.html#a692a7d4a61862c947eac2c04872a4e88">data_distance_</a>.data);</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    }</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;Bot is in center of buoy&quot;</span>);</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a404cba6df7c6dec51b74c87ac3e1191f">forwardgoal</a>.Goal = 0;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a404cba6df7c6dec51b74c87ac3e1191f">forwardgoal</a>.loop = 10;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a6d6ad6c0a0f3c316f74a2a97f83acbc9">ForwardClient_</a>.sendGoal(<a class="code" href="classTaskBuoyInnerClass.html#a404cba6df7c6dec51b74c87ac3e1191f">forwardgoal</a>);</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keywordflow">while</span> (goal-&gt;order)</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    {</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.isPreemptRequested() || !ros::ok())</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      {</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        <span class="comment">// set the action state to preempted</span></div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.setPreempted();</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <a class="code" href="classTaskBuoyInnerClass.html#a6b0bf971d9d0c4c48ab1ed4736a629d4">successBuoy</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      }</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;      looprate.sleep();</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskBuoyInnerClass.html#a547ab9e2e716cc1191cd97499d13c658">IP_stopped</a>)</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      {</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;        <a class="code" href="classTaskBuoyInnerClass.html#a6b0bf971d9d0c4c48ab1ed4736a629d4">successBuoy</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;Waiting for hitting the buoy...&quot;</span>);</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        sleep(1);</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      }</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#a0db4b5ebb7f98052d51e636dd2bab741">feedback_</a>.nosignificance = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.publishFeedback(<a class="code" href="classTaskBuoyInnerClass.html#a0db4b5ebb7f98052d51e636dd2bab741">feedback_</a>);</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;x = %f, y = %f, front distance = %f&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#afa9053c5e3352ff2d5a3567af7b3f2a9">data_X_</a>.data, <a class="code" href="classTaskBuoyInnerClass.html#ae574112de5236ae30260bccd3414ea3f">data_Y_</a>.data, <a class="code" href="classTaskBuoyInnerClass.html#a692a7d4a61862c947eac2c04872a4e88">data_distance_</a>.data);</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    }</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a6d6ad6c0a0f3c316f74a2a97f83acbc9">ForwardClient_</a>.cancelGoal();  <span class="comment">// stop motion here</span></div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;      ROS_INFO(<span class="stringliteral">&quot; %s: %s x = %f, y = %f, front distance = %f&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str(), <a class="code" href="classTaskBuoyInnerClass.html#afa9053c5e3352ff2d5a3567af7b3f2a9">data_X_</a>.data, <a class="code" href="classTaskBuoyInnerClass.html#ae574112de5236ae30260bccd3414ea3f">data_Y_</a>.data,</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;               <a class="code" href="classTaskBuoyInnerClass.html#a692a7d4a61862c947eac2c04872a4e88">data_distance_</a>.data);</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    }</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: Bot is in center of buoy&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a404cba6df7c6dec51b74c87ac3e1191f">forwardgoal</a>.Goal = 0;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a404cba6df7c6dec51b74c87ac3e1191f">forwardgoal</a>.loop = 10;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a6d6ad6c0a0f3c316f74a2a97f83acbc9">ForwardClient_</a>.sendGoal(<a class="code" href="classTaskBuoyInnerClass.html#a404cba6df7c6dec51b74c87ac3e1191f">forwardgoal</a>);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="keywordflow">while</span> (goal-&gt;order)</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    {</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.isPreemptRequested() || !ros::ok())</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      {</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        <span class="comment">// set the action state to preempted</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.setPreempted();</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <a class="code" href="classTaskBuoyInnerClass.html#a6b0bf971d9d0c4c48ab1ed4736a629d4">successBuoy</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;      }</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;      looprate.sleep();</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskBuoyInnerClass.html#a547ab9e2e716cc1191cd97499d13c658">IP_stopped</a>)</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      {</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        <a class="code" href="classTaskBuoyInnerClass.html#a6b0bf971d9d0c4c48ab1ed4736a629d4">successBuoy</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Waiting for hitting the buoy...&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        sleep(1);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      }</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#a0db4b5ebb7f98052d51e636dd2bab741">feedback_</a>.nosignificance = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.publishFeedback(<a class="code" href="classTaskBuoyInnerClass.html#a0db4b5ebb7f98052d51e636dd2bab741">feedback_</a>);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: x = %f, y = %f, front distance = %f&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str(), <a class="code" href="classTaskBuoyInnerClass.html#afa9053c5e3352ff2d5a3567af7b3f2a9">data_X_</a>.data, <a class="code" href="classTaskBuoyInnerClass.html#ae574112de5236ae30260bccd3414ea3f">data_Y_</a>.data,</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;               <a class="code" href="classTaskBuoyInnerClass.html#a692a7d4a61862c947eac2c04872a4e88">data_distance_</a>.data);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    }</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a8086e1cdc93d8110611efdb16082f61b">upwardgoal</a>.Goal = <a class="code" href="classTaskBuoyInnerClass.html#a55d9f5cc4959a0be07b6a634b6f2569f">present_depth</a> + 5;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a8086e1cdc93d8110611efdb16082f61b">upwardgoal</a>.loop = 10;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a750945da7a74421ab620e267d079c9fc">UpwardClient_</a>.sendGoal(<a class="code" href="classTaskBuoyInnerClass.html#a8086e1cdc93d8110611efdb16082f61b">upwardgoal</a>);</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;moving upward&quot;</span>);</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    boost::thread spin_thread_upward_pressure(&amp;<a class="code" href="classTaskBuoyInnerClass.html#a91d69e2dc33f6edd364bf9b8d6661aee">TaskBuoyInnerClass::spinThreadUpwardPressure</a>, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="keywordflow">while</span> (!<a class="code" href="classTaskBuoyInnerClass.html#a794fc8edd7787d1706bffe1a86aea3a4">heightGoal</a>)</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    {</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;present depth = %f&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a55d9f5cc4959a0be07b6a634b6f2569f">present_depth</a>);</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;      looprate.sleep();</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    }</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a177b1a1ced216df77419a98380a39fb0">result_</a>.MotionCompleted = <a class="code" href="classTaskBuoyInnerClass.html#a6b0bf971d9d0c4c48ab1ed4736a629d4">successBuoy</a> &amp;&amp; <a class="code" href="classTaskBuoyInnerClass.html#a794fc8edd7787d1706bffe1a86aea3a4">heightGoal</a>;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: Succeeded&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="comment">// set the action state to succeeded</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.setSucceeded(<a class="code" href="classTaskBuoyInnerClass.html#a177b1a1ced216df77419a98380a39fb0">result_</a>);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  }</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
-<div class="line"><a name="l00283"></a><span class="lineno"><a class="line" href="classTaskBuoyInnerClass.html#ab4e2fffff096535e4652cbe01d59f32a">  283</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskBuoyInnerClass.html#ab4e2fffff096535e4652cbe01d59f32a">startBuoyDetection</a>()</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;  {</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#adc0fc9aa0fedd99281bb8b826f95cfa1">switch_buoy_detection</a>.publish(msg);</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  }</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;</div>
-<div class="line"><a name="l00290"></a><span class="lineno"><a class="line" href="classTaskBuoyInnerClass.html#ac446bc020a9efc07e0dc4051442ca425">  290</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskBuoyInnerClass.html#ac446bc020a9efc07e0dc4051442ca425">stopBuoyDetection</a>()</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  {</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#adc0fc9aa0fedd99281bb8b826f95cfa1">switch_buoy_detection</a>.publish(msg);</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  }</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;};</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;</div>
-<div class="line"><a name="l00298"></a><span class="lineno"><a class="line" href="buoy__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">  298</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="buoy__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;{</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;buoy_server&quot;</span>);</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for Goal&quot;</span>);</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  <a class="code" href="classTaskBuoyInnerClass.html">TaskBuoyInnerClass</a> taskBuoyObject(ros::this_node::getName(), <span class="stringliteral">&quot;forward&quot;</span>, <span class="stringliteral">&quot;sideward&quot;</span>, <span class="stringliteral">&quot;upward&quot;</span>, <span class="stringliteral">&quot;turningXY&quot;</span>);</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  ros::spin();</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;}</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a6d6ad6c0a0f3c316f74a2a97f83acbc9">ForwardClient_</a>.cancelGoal();  <span class="comment">// stop motion here</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a8086e1cdc93d8110611efdb16082f61b">upwardgoal</a>.Goal = <a class="code" href="classTaskBuoyInnerClass.html#a55d9f5cc4959a0be07b6a634b6f2569f">present_depth</a> + 5;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a8086e1cdc93d8110611efdb16082f61b">upwardgoal</a>.loop = 10;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a750945da7a74421ab620e267d079c9fc">UpwardClient_</a>.sendGoal(<a class="code" href="classTaskBuoyInnerClass.html#a8086e1cdc93d8110611efdb16082f61b">upwardgoal</a>);</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: moving upward&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    boost::thread spin_thread_upward_pressure(&amp;<a class="code" href="classTaskBuoyInnerClass.html#a91d69e2dc33f6edd364bf9b8d6661aee">TaskBuoyInnerClass::spinThreadUpwardPressure</a>, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keywordflow">while</span> (!<a class="code" href="classTaskBuoyInnerClass.html#a794fc8edd7787d1706bffe1a86aea3a4">heightGoal</a>)</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    {</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: present depth = %f&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str(), <a class="code" href="classTaskBuoyInnerClass.html#a55d9f5cc4959a0be07b6a634b6f2569f">present_depth</a>);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      looprate.sleep();</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    }</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#a177b1a1ced216df77419a98380a39fb0">result_</a>.MotionCompleted = <a class="code" href="classTaskBuoyInnerClass.html#a6b0bf971d9d0c4c48ab1ed4736a629d4">successBuoy</a> &amp;&amp; <a class="code" href="classTaskBuoyInnerClass.html#a794fc8edd7787d1706bffe1a86aea3a4">heightGoal</a>;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: Succeeded&quot;</span>, <a class="code" href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="comment">// set the action state to succeeded</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#ae0e435acdbc5cdcab853ee5cc4dc513a">buoy_server_</a>.setSucceeded(<a class="code" href="classTaskBuoyInnerClass.html#a177b1a1ced216df77419a98380a39fb0">result_</a>);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;  }</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;</div>
+<div class="line"><a name="l00285"></a><span class="lineno"><a class="line" href="classTaskBuoyInnerClass.html#ab4e2fffff096535e4652cbe01d59f32a">  285</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskBuoyInnerClass.html#ab4e2fffff096535e4652cbe01d59f32a">startBuoyDetection</a>()</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  {</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#adc0fc9aa0fedd99281bb8b826f95cfa1">switch_buoy_detection</a>.publish(msg);</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;  }</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;</div>
+<div class="line"><a name="l00292"></a><span class="lineno"><a class="line" href="classTaskBuoyInnerClass.html#ac446bc020a9efc07e0dc4051442ca425">  292</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskBuoyInnerClass.html#ac446bc020a9efc07e0dc4051442ca425">stopBuoyDetection</a>()</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  {</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#adc0fc9aa0fedd99281bb8b826f95cfa1">switch_buoy_detection</a>.publish(msg);</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;  }</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;};</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="buoy__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">  300</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="buoy__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;{</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;buoy_server&quot;</span>);</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for Goal&quot;</span>);</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;  <a class="code" href="classTaskBuoyInnerClass.html">TaskBuoyInnerClass</a> taskBuoyObject(ros::this_node::getName(), <span class="stringliteral">&quot;forward&quot;</span>, <span class="stringliteral">&quot;sideward&quot;</span>, <span class="stringliteral">&quot;upward&quot;</span>, <span class="stringliteral">&quot;turningXY&quot;</span>);</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;  ros::spin();</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;}</div>
 <div class="ttc" id="buoy__server_8cpp_html_a899d9cf3b9cf7d80ed2f80492cb2bd6e"><div class="ttname"><a href="buoy__server_8cpp.html#a899d9cf3b9cf7d80ed2f80492cb2bd6e">ClientSideward</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::SidewardAction &gt; ClientSideward</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00026">buoy_server.cpp:26</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_af6400b5be5c38d768124d6b88f554cb5"><div class="ttname"><a href="classTaskBuoyInnerClass.html#af6400b5be5c38d768124d6b88f554cb5">TaskBuoyInnerClass::preemptCB</a></div><div class="ttdeci">void preemptCB(void)</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00123">buoy_server.cpp:123</a></div></div>
 <div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
@@ -417,7 +419,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classTaskBuoyInnerClass_html_a6d6ad6c0a0f3c316f74a2a97f83acbc9"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a6d6ad6c0a0f3c316f74a2a97f83acbc9">TaskBuoyInnerClass::ForwardClient_</a></div><div class="ttdeci">ClientForward ForwardClient_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00049">buoy_server.cpp:49</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a692a7d4a61862c947eac2c04872a4e88"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a692a7d4a61862c947eac2c04872a4e88">TaskBuoyInnerClass::data_distance_</a></div><div class="ttdeci">std_msgs::Float64 data_distance_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00038">buoy_server.cpp:38</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a187e465fe460a3a5b0973a67ec8e7d11"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a187e465fe460a3a5b0973a67ec8e7d11">TaskBuoyInnerClass::pressureCB</a></div><div class="ttdeci">void pressureCB(std_msgs::Float64 pressure_sensor_data)</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00094">buoy_server.cpp:94</a></div></div>
-<div class="ttc" id="buoy__server_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="buoy__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00298">buoy_server.cpp:298</a></div></div>
+<div class="ttc" id="buoy__server_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="buoy__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00300">buoy_server.cpp:300</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_ae7da72a871d348a8900625846d32cef4"><div class="ttname"><a href="classTaskBuoyInnerClass.html#ae7da72a871d348a8900625846d32cef4">TaskBuoyInnerClass::buoyNavigation</a></div><div class="ttdeci">void buoyNavigation(std_msgs::Float64MultiArray array)</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00101">buoy_server.cpp:101</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a91d69e2dc33f6edd364bf9b8d6661aee"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a91d69e2dc33f6edd364bf9b8d6661aee">TaskBuoyInnerClass::spinThreadUpwardPressure</a></div><div class="ttdeci">void spinThreadUpwardPressure()</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00144">buoy_server.cpp:144</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_aa88ad2242f1f6fa2e62b52a90c35bb0e"><div class="ttname"><a href="classTaskBuoyInnerClass.html#aa88ad2242f1f6fa2e62b52a90c35bb0e">TaskBuoyInnerClass::yaw_pub_</a></div><div class="ttdeci">ros::Publisher yaw_pub_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00045">buoy_server.cpp:45</a></div></div>
@@ -429,14 +431,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classTaskBuoyInnerClass_html_a9c5212844c25a935d9331ab715289a21"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a9c5212844c25a935d9331ab715289a21">TaskBuoyInnerClass::pressure_sensor_sub</a></div><div class="ttdeci">ros::Subscriber pressure_sensor_sub</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00043">buoy_server.cpp:43</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_ad704f9f6cb494e04cfba451eb928064b"><div class="ttname"><a href="classTaskBuoyInnerClass.html#ad704f9f6cb494e04cfba451eb928064b">TaskBuoyInnerClass::present_Y_</a></div><div class="ttdeci">ros::Publisher present_Y_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00048">buoy_server.cpp:48</a></div></div>
 <div class="ttc" id="forwardTest_8cpp_html_a900bebf5b52612aabe4b22507010e0c2"><div class="ttname"><a href="forwardTest_8cpp.html#a900bebf5b52612aabe4b22507010e0c2">goal</a></div><div class="ttdeci">motion_commons::ForwardGoal goal</div><div class="ttdef"><b>Definition:</b> <a href="forwardTest_8cpp_source.html#l00018">forwardTest.cpp:18</a></div></div>
-<div class="ttc" id="classTaskBuoyInnerClass_html_ab4e2fffff096535e4652cbe01d59f32a"><div class="ttname"><a href="classTaskBuoyInnerClass.html#ab4e2fffff096535e4652cbe01d59f32a">TaskBuoyInnerClass::startBuoyDetection</a></div><div class="ttdeci">void startBuoyDetection()</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00283">buoy_server.cpp:283</a></div></div>
+<div class="ttc" id="classTaskBuoyInnerClass_html_ab4e2fffff096535e4652cbe01d59f32a"><div class="ttname"><a href="classTaskBuoyInnerClass.html#ab4e2fffff096535e4652cbe01d59f32a">TaskBuoyInnerClass::startBuoyDetection</a></div><div class="ttdeci">void startBuoyDetection()</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00285">buoy_server.cpp:285</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a65effd0ffd4ccee0f8f6ca003c54dc55"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a65effd0ffd4ccee0f8f6ca003c54dc55">TaskBuoyInnerClass::nh_</a></div><div class="ttdeci">ros::NodeHandle nh_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00033">buoy_server.cpp:33</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a1992f402d4d228344e724e406468b337"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a1992f402d4d228344e724e406468b337">TaskBuoyInnerClass::heightCenter</a></div><div class="ttdeci">bool heightCenter</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00057">buoy_server.cpp:57</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a7b575f023d38b5566bce48844c4d3d76"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a7b575f023d38b5566bce48844c4d3d76">TaskBuoyInnerClass::turngoal</a></div><div class="ttdeci">motion_commons::TurnGoal turngoal</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00056">buoy_server.cpp:56</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a46a480c9b95c4f7620360d6787486dec"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a46a480c9b95c4f7620360d6787486dec">TaskBuoyInnerClass::~TaskBuoyInnerClass</a></div><div class="ttdeci">~TaskBuoyInnerClass(void)</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00085">buoy_server.cpp:85</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_aa37b3d009ac04046a2ca97de950b3afa"><div class="ttname"><a href="classTaskBuoyInnerClass.html#aa37b3d009ac04046a2ca97de950b3afa">TaskBuoyInnerClass::spinThreadUpwardCamera</a></div><div class="ttdeci">void spinThreadUpwardCamera()</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00129">buoy_server.cpp:129</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a547ab9e2e716cc1191cd97499d13c658"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a547ab9e2e716cc1191cd97499d13c658">TaskBuoyInnerClass::IP_stopped</a></div><div class="ttdeci">bool IP_stopped</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00057">buoy_server.cpp:57</a></div></div>
-<div class="ttc" id="classTaskBuoyInnerClass_html_ac446bc020a9efc07e0dc4051442ca425"><div class="ttname"><a href="classTaskBuoyInnerClass.html#ac446bc020a9efc07e0dc4051442ca425">TaskBuoyInnerClass::stopBuoyDetection</a></div><div class="ttdeci">void stopBuoyDetection()</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00290">buoy_server.cpp:290</a></div></div>
+<div class="ttc" id="classTaskBuoyInnerClass_html_ac446bc020a9efc07e0dc4051442ca425"><div class="ttname"><a href="classTaskBuoyInnerClass.html#ac446bc020a9efc07e0dc4051442ca425">TaskBuoyInnerClass::stopBuoyDetection</a></div><div class="ttdeci">void stopBuoyDetection()</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00292">buoy_server.cpp:292</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_afa9053c5e3352ff2d5a3567af7b3f2a9"><div class="ttname"><a href="classTaskBuoyInnerClass.html#afa9053c5e3352ff2d5a3567af7b3f2a9">TaskBuoyInnerClass::data_X_</a></div><div class="ttdeci">std_msgs::Float64 data_X_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00036">buoy_server.cpp:36</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a6707f050b03cb8be3c95b7615f3c5d82"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a6707f050b03cb8be3c95b7615f3c5d82">TaskBuoyInnerClass::analysisCB</a></div><div class="ttdeci">void analysisCB(const task_commons::buoyGoalConstPtr goal)</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00174">buoy_server.cpp:174</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a794fc8edd7787d1706bffe1a86aea3a4"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a794fc8edd7787d1706bffe1a86aea3a4">TaskBuoyInnerClass::heightGoal</a></div><div class="ttdeci">bool heightGoal</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00057">buoy_server.cpp:57</a></div></div>
@@ -450,7 +452,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 2 2016 11:43:42 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 6 2016 14:47:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
