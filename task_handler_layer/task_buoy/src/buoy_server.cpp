@@ -224,7 +224,8 @@ public:
       // publish the feedback
       feedback_.nosignificance = false;
       buoy_server_.publishFeedback(feedback_);
-      ROS_INFO(" %s: %s x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data, data_distance_.data);
+      ROS_INFO(" %s: %s x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data,
+               data_distance_.data);
       ros::spinOnce();
     }
 
@@ -255,7 +256,8 @@ public:
 
       feedback_.nosignificance = false;
       buoy_server_.publishFeedback(feedback_);
-      ROS_INFO("%s: x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data, data_distance_.data);
+      ROS_INFO("%s: x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data,
+               data_distance_.data);
       ros::spinOnce();
     }
 
