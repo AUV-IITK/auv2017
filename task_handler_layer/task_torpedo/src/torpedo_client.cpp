@@ -21,17 +21,17 @@ void spinThread()
   success = (*(temp.getResult())).MotionCompleted;
   if (success)
   {
-    ROS_INFO("motion successful");
+    ROS_INFO("%s motion successful", ros::this_node::getName().c_str());
   }
   else
-    ROS_INFO("motion unsuccessful");
+    ROS_INFO("%s motion unsuccessful", ros::this_node::getName().c_str());
   ros::shutdown();
 }
 
 // never ever put the argument of the callback function anything other then the specified
 void forwardCb(task_commons::torpedoActionFeedback msg)
 {
-  ROS_INFO("feedback recieved %d", msg.feedback.nosignificance);
+  ROS_INFO("%s feedback recieved %d", ros::this_node::getName().c_str(), msg.feedback.nosignificance);
 }
 
 int main(int argc, char **argv)
@@ -46,10 +46,10 @@ int main(int argc, char **argv)
   Client testClient("torpedo_server");
   ptrClient = &testClient;
 
-  ROS_INFO("Waiting for action server to start.");
+  ROS_INFO("%s Waiting for action server to start.", ros::this_node::getName().c_str());
   testClient.waitForServer();
   goal.order = true;
-  ROS_INFO("Action server started, sending goal.");
+  ROS_INFO("%s Action server started, sending goal.". ros::this_node::getName().c_str());
 
   Client &can = *ptrClient;
   // send goal
