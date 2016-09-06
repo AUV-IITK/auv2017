@@ -179,9 +179,9 @@ innerActionClass *object;
 void callback(motion_upward::pidConfig &config, double level)
 {
   ROS_INFO("%s: UpwardServer: Reconfigure Request: p_stablize=%f p_upward=%f "
-           "i_stablize=%f i_upward=%f d_stablize=%f d_upward=%f error band_upward=%f", ros::this_node::getName().c_str(), 
-           config.p_stablize, config.p_upward, config.i_stablize, config.i_upward, config.d_stablize, config.d_upward,
-           config.band_upward);
+           "i_stablize=%f i_upward=%f d_stablize=%f d_upward=%f error band_upward=%f",
+           ros::this_node::getName().c_str(), config.p_stablize, config.p_upward, config.i_stablize, config.i_upward,
+           config.d_stablize, config.d_upward, config.band_upward);
   object->setPID(config.p_stablize, config.p_upward, config.i_stablize, config.i_upward, config.d_stablize,
                  config.d_upward, config.band_stablize, config.band_upward);
 }

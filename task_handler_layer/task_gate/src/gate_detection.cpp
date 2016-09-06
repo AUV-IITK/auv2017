@@ -37,7 +37,7 @@ void callback(task_gate::gateConfig &config, uint32_t level)
   t2max = config.t2max_param;
   t3min = config.t3min_param;
   t3max = config.t3max_param;
-  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
+  ROS_INFO("Gate_Reconfigure Request:New params : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
 void gateListener(std_msgs::Bool msg)
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
     // Get one frame
     if (frame.empty())
     {
-      std::cout << "empty frame \n";
+      ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
       ros::spinOnce();
       continue;
     }
@@ -245,8 +245,7 @@ int main(int argc, char *argv[])
         ros::spinOnce();
         continue;
       }
-      std::cout << w << " " << x << " " << y << " " << z << "\n" << frame.cols << "  frame  " << frame.rows << "\n";
-
+      ROS_INFO("%s:%d %d %d %d\n%d %d\n", ros::this_node::getName().c_str(), w , x, y, z, frame.cols, frame.rows);
       array.data.push_back((320 - center.x));
       array.data.push_back(-(240 - center.y));
       pub.publish(array);
@@ -260,7 +259,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-      std::cout << "waiting\n";
+      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
       if ((cvWaitKey(10) & 255) == 32)
       {
         if (p == 32)
@@ -269,7 +268,7 @@ int main(int argc, char *argv[])
           p = 32;
       }
       if (p == 32)
-        printf("paused\n");
+        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }

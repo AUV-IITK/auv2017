@@ -119,11 +119,11 @@ public:
     heightCenter = (*(tempUpward.getResult())).Result;
     if (heightCenter)
     {
-      ROS_INFO("Bot is at height center");
+      ROS_INFO("%s Bot is at height center", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at height center, something went wrong");
+      ROS_INFO("%s Bot is not at height center, something went wrong", action_name_.c_str());
     }
   }
 
@@ -134,11 +134,11 @@ public:
     sideCenter = (*(tempSideward.getResult())).Result;
     if (sideCenter)
     {
-      ROS_INFO("Bot is at side center");
+      ROS_INFO("%s: Bot is at side center", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at side center, something went wrong");
+      ROS_INFO("%s Bot is not at side center, something went wrong", action_name_.c_str());
     }
   }
 
@@ -154,7 +154,7 @@ public:
     if (!gate_server_.isActive())
       return;
 
-    ROS_INFO("Waiting for Forward server to start.");
+    ROS_INFO("%s: Waiting for Forward server to start.", action_name_.c_str());
     ForwardClient_.waitForServer();
     SidewardClient_.waitForServer();
     UpwardClient_.waitForServer();
@@ -229,7 +229,7 @@ public:
       // publish the feedback
       feedback_.nosignificance = false;
       gate_server_.publishFeedback(feedback_);
-      ROS_INFO("x = %f, y = %f", data_X_.data, data_Y_.data);
+      ROS_INFO("%s:: x = %f, y = %f", action_name_.c_str(), data_X_.data, data_Y_.data);
       ros::spinOnce();
     }
 

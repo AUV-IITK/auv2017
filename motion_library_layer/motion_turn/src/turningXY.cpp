@@ -185,9 +185,9 @@ innerActionClass *object;
 void callback(motion_turn::pidConfig &config, double level)
 {
   ROS_INFO("%s TurnServer: Reconfigure Request: p_stablize=%f p_turn=%f "
-           "i_stablize=%f i_turn=%f d_stablize=%f d_turn=%f error band_turn=%f", ros::this_node::getName().c_str(), 
-           config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,
-           config.band_turn);
+           "i_stablize=%f i_turn=%f d_stablize=%f d_turn=%f error band_turn=%f",
+           ros::this_node::getName().c_str(), config.p_stablize, config.p_turn, config.i_stablize, config.i_turn,
+           config.d_stablize, config.d_turn, config.band_turn);
   object->setPID(config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,
                  config.band_stablize, config.band_turn);
 }

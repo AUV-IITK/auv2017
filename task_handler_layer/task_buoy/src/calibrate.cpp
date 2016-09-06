@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 
     if (frame.empty())
     {
-      printf("No Frame");
+      ROS_INFO("%s: No Frame", ros::this_node::getName().c_str());
       continue;
     }
 

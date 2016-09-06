@@ -49,7 +49,7 @@ int main(int argc, char **argv)
   ROS_INFO("%s Waiting for action server to start.", ros::this_node::getName().c_str());
   testClient.waitForServer();
   goal.order = true;
-  ROS_INFO("%s Action server started, sending goal.". ros::this_node::getName().c_str());
+  ROS_INFO("%s Action server started, sending goal.".ros::this_node::getName().c_str());
 
   Client &can = *ptrClient;
   // send goal

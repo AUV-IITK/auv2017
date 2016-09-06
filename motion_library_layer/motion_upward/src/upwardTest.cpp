@@ -39,7 +39,8 @@ void spinThread()
 // Send new goal or cancel goal depending on input from GUI
 void callback(motion_upward::upwardConfig &config, double level)
 {
-  ROS_INFO("%s: Reconfigure Request: %f %s %d", ros::this_node::getName().c_str(), config.double_param, config.bool_param ? "True" : "False", config.loop);
+  ROS_INFO("%s: Reconfigure Request: %f %s %d", ros::this_node::getName().c_str(), config.double_param,
+           config.bool_param ? "True" : "False", config.loop);
   Client &can = *clientPointer;
   if (!config.bool_param)
   {

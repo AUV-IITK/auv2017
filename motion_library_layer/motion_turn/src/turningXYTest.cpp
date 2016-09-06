@@ -19,7 +19,8 @@ bool goalSet = false;
 // dynamic reconfig
 void callback(motion_turn::turningConfig &config, double level)
 {
-  ROS_INFO("%s Reconfigure Request: %f %s %d", ros::this_node::getName().c_str(), config.double_param, config.bool_param ? "True" : "False", config.loop);
+  ROS_INFO("%s Reconfigure Request: %f %s %d", ros::this_node::getName().c_str(), config.double_param,
+           config.bool_param ? "True" : "False", config.loop);
   Client &can = *clientPointer;
   if (!config.bool_param)
   {

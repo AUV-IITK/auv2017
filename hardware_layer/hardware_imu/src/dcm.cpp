@@ -18,10 +18,10 @@ void output_angles()
   }
   else if (output_format == OUTPUT__FORMAT_TEXT)
   {
-    // printf(" YPR=");
-    // printf("%f\t",TO_DEG(yaw));
-    // printf("%f\t",TO_DEG(pitch));
-    // printf("%f\n",TO_DEG(roll));
+    // ROS_INFO(" YPR=");
+    // ROS_INFO("%f\t",TO_DEG(yaw));
+    // ROS_INFO("%f\t",TO_DEG(pitch));
+    // ROS_INFO("%f\n",TO_DEG(roll));
   }
 }
 
