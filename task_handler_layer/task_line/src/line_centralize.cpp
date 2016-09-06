@@ -36,7 +36,7 @@ void callback(task_line::lineConfig &config, uint32_t level)
   t2max = config.t2max_param;
   t3min = config.t3min_param;
   t3max = config.t3max_param;
-  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
+  ROS_INFO("centralize_Reconfigure Request:New params: %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
 float mod(float x, float y)
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 
     if (frame.empty())
     {
-      std::cout << "empty frame \n";
+      ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
       ros::spinOnce();
       continue;
     }
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-      std::cout << "waiting\n";
+      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }
