@@ -122,11 +122,11 @@ public:
     SideCenter = (*(tempSideward.getResult())).Result;
     if (SideCenter)
     {
-      ROS_INFO("Bot is at side center");
+      ROS_INFO("%s: Bot is at side center", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at side center, something went wrong");
+      ROS_INFO("%s: Bot is not at side center, something went wrong", action_name_.c_str());
       ros::shutdown();
     }
   }
@@ -138,11 +138,11 @@ public:
     FrontCenter = (*(tempForward.getResult())).Result;
     if (FrontCenter)
     {
-      ROS_INFO("Bot is at Front center");
+      ROS_INFO("%s Bot is at Front center", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at Front center, something went wrong");
+      ROS_INFO("%s: Bot is not at Front center, something went wrong", action_name_.c_str());
       ros::shutdown();
     }
   }
@@ -154,14 +154,14 @@ public:
     LineAlign = (*(tempTurn.getResult())).Result;
     if (LineAlign)
     {
-      ROS_INFO("Bot is at side center");
+      ROS_INFO("%s: Bot is at side center", action_name_.c_str());
     }
   }
 
   void preemptCB(void)
   {
     // Not actually preempting the goal because Shibhansh did it in analysisCB
-    ROS_INFO("Called when preempted from the client");
+    ROS_INFO("%s: Called when preempted from the client", action_name_.c_str());
   }
 
   void analysisCB(const task_commons::lineGoalConstPtr goal)
@@ -177,7 +177,7 @@ public:
     if (!line_server_.isActive())
       return;
 
-    ROS_INFO("Waiting for Forward server to start.");
+    ROS_INFO("%s Waiting for Forward server to start.", action_name_.c_str());
     ForwardClient_.waitForServer();
     SidewardClient_.waitForServer();
     TurnClient_.waitForServer();
@@ -216,7 +216,7 @@ public:
 
       feedback_.AngleRemaining = angle_goal.data;
       line_server_.publishFeedback(feedback_);
-      ROS_INFO("searching line");
+      ROS_INFO("%s: searching line", action_name_.c_str());
       ros::spinOnce();
     }
 
@@ -248,13 +248,13 @@ public:
       looprate.sleep();
       if (FrontCenter && SideCenter)
       {
-        ROS_INFO("Line has been centralized.");
+        ROS_INFO("%s: Line has been centralized.", action_name_.c_str());
         break;
       }
       // publish the feedback
       feedback_.AngleRemaining = angle_goal.data;
       line_server_.publishFeedback(feedback_);
-      ROS_INFO("x = %f, y = %f", data_X_.data, data_Y_.data);
+      ROS_INFO("%s:: x = %f, y = %f", action_name_.c_str(), data_X_.data, data_Y_.data);
       ros::spinOnce();
     }
 
@@ -284,21 +284,20 @@ public:
       {
         if (angle_goal.data <= 5.0 && angle_goal.data >= -5.0)
         {
-          ROS_INFO("line is aligned.");
+          ROS_INFO("%s: line is aligned.", action_name_.c_str());
           break;
         }
         else
         {
-          ROS_INFO("resending the angle goal.");
+          ROS_INFO("%s: resending the angle goal.", action_name_.c_str());
           turngoal.AngleToTurn = angle_goal.data;
           turngoal.loop = 10;
           TurnClient_.sendGoal(turngoal);
         }
       }
-      // publish the feedback
       feedback_.AngleRemaining = angle_goal.data;
       line_server_.publishFeedback(feedback_);
-      ROS_INFO("angle remaining = %f", angle_goal.data);
+      ROS_INFO("%s: angle remaining = %f", action_name_.c_str(), angle_goal.data);
       ros::spinOnce();
     }
 
@@ -307,7 +306,6 @@ public:
       isOrange = false;
       result_.MotionCompleted = success;
       ROS_INFO("%s: Succeeded", action_name_.c_str());
-      // set the action state to succeeded
       line_server_.setSucceeded(result_);
     }
   }
@@ -363,7 +361,6 @@ int main(int argc, char **argv)
   ROS_INFO("Waiting for Goal");
 
   TaskLineInnerClass taskLineObject(ros::this_node::getName(), "forward", "turningXY", "sideward");
-  // ROS_INFO("Waiting for master command");
 
   ros::spin();
   return 0;
