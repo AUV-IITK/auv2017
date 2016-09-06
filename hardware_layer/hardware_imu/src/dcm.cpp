@@ -18,10 +18,10 @@ void output_angles()
   }
   else if (output_format == OUTPUT__FORMAT_TEXT)
   {
-    // printf(" YPR=");
-    // printf("%f\t",TO_DEG(yaw));
-    // printf("%f\t",TO_DEG(pitch));
-    // printf("%f\n",TO_DEG(roll));
+    // ROS_INFO(" YPR=");
+    // ROS_INFO("%f\t",TO_DEG(yaw));
+    // ROS_INFO("%f\t",TO_DEG(pitch));
+    // ROS_INFO("%f\n",TO_DEG(roll));
   }
 }
 
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
       out_pub.publish(imu_msg);
 
       // cout << temp << endl;
-      ROS_INFO("%s %f", "send an imu message", TO_DEG(yaw));
+      ROS_INFO("%s: %s %f", ros::this_node::getName().c_str(), "send an imu message", TO_DEG(yaw));
     }
     loopRate.sleep();
   }

@@ -54,7 +54,7 @@ public:
   {
     pwm.data = 0;
     PWM.publish(pwm);
-    ROS_INFO("pwm send to arduino %d", pwm.data);
+    ROS_INFO("%s pwm send to arduino %d", ros::this_node::getName().c_str(), pwm.data);
     // this command cancels the previous goal
     turnServer_.setPreempted();
   }
@@ -63,7 +63,7 @@ public:
   // interupted
   void analysisCB(const motion_commons::TurnGoalConstPtr goal)
   {
-    ROS_INFO("Inside analysisCB");
+    ROS_INFO("%s Inside analysisCB", ros::this_node::getName().c_str());
 
     int count = 0;
     int loopRate = 10;
@@ -73,7 +73,7 @@ public:
     // calculations
     while (!initData)
     {
-      ROS_INFO("Waiting to get first input from IMU");
+      ROS_INFO("%s Waiting to get first input from IMU", ros::this_node::getName().c_str());
       loop_rate.sleep();
       ros::spinOnce();
     }
@@ -120,7 +120,7 @@ public:
         reached = true;
         pwm.data = 0;
         PWM.publish(pwm);
-        ROS_INFO("thrusters stopped");
+        ROS_INFO("%s thrusters stopped", ros::this_node::getName().c_str());
         count++;
       }
       else
@@ -141,7 +141,7 @@ public:
       feedback_.AngleRemaining = error;
       turnServer_.publishFeedback(feedback_);
       PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino turn %d", pwm.data);
+      ROS_INFO("%s pwm send to arduino turn %d", ros::this_node::getName().c_str(), pwm.data);
 
       ros::spinOnce();
       loop_rate.sleep();
@@ -184,10 +184,10 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_turn::pidConfig &config, double level)
 {
-  ROS_INFO("TurnServer: Reconfigure Request: p_stablize=%f p_turn=%f "
+  ROS_INFO("%s TurnServer: Reconfigure Request: p_stablize=%f p_turn=%f "
            "i_stablize=%f i_turn=%f d_stablize=%f d_turn=%f error band_turn=%f",
-           config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,
-           config.band_turn);
+           ros::this_node::getName().c_str(), config.p_stablize, config.p_turn, config.i_stablize, config.i_turn,
+           config.d_stablize, config.d_turn, config.band_turn);
   object->setPID(config.p_stablize, config.p_turn, config.i_stablize, config.i_turn, config.d_stablize, config.d_turn,
                  config.band_stablize, config.band_turn);
 }
@@ -225,7 +225,7 @@ int main(int argc, char **argv)
 
   ros::Subscriber yaw = n.subscribe<std_msgs::Float64>("/varun/motion/yaw", 1000, &yawCb);
 
-  ROS_INFO("Waiting for Goal");
+  ROS_INFO("%s Waiting for Goal", ros::this_node::getName().c_str());
   object = new innerActionClass(ros::this_node::getName());
 
   // register dynamic reconfig server.

@@ -66,7 +66,7 @@ public:
     , UpwardClient_(node2)
     , TurnClient_(node3)
   {
-    ROS_INFO("inside constructor");
+    ROS_INFO("%s inside constructor", action_name_.c_str());
     buoy_server_.registerPreemptCallback(boost::bind(&TaskBuoyInnerClass::preemptCB, this));
 
     switch_buoy_detection = nh_.advertise<std_msgs::Bool>("buoy_detection_switch", 1000);
@@ -116,7 +116,7 @@ public:
     {
       IP_stopped = true;
       stopBuoyDetection();
-      ROS_INFO("Bot is in front of buoy, IP stopped.");
+      ROS_INFO("%s Bot is in front of buoy, IP stopped.", action_name_.c_str());
     }
   }
 
@@ -133,11 +133,11 @@ public:
     heightCenter = (*(tempUpward.getResult())).Result;
     if (heightCenter)
     {
-      ROS_INFO("Bot is at height center");
+      ROS_INFO("%s Bot is at height center", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at height center, something went wrong");
+      ROS_INFO("%s Bot is not at height center, something went wrong", action_name_.c_str());
     }
   }
 
@@ -148,11 +148,11 @@ public:
     heightGoal = (*(tempUpward.getResult())).Result;
     if (heightGoal)
     {
-      ROS_INFO("Bot is at desired height.");
+      ROS_INFO("%s Bot is at desired height.", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at desired height, something went wrong");
+      ROS_INFO("%s Bot is not at desired height, something went wrong", action_name_.c_str());
     }
   }
 
@@ -163,11 +163,11 @@ public:
     sideCenter = (*(tempSideward.getResult())).Result;
     if (sideCenter)
     {
-      ROS_INFO("Bot is at side center");
+      ROS_INFO("%s Bot is at side center", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at side center, something went wrong");
+      ROS_INFO("%s Bot is not at side center, something went wrong", action_name_.c_str());
     }
   }
 
@@ -183,7 +183,7 @@ public:
     if (!buoy_server_.isActive())
       return;
 
-    ROS_INFO("Waiting for Forward server to start.");
+    ROS_INFO("%s Waiting for Forward server to start.", action_name_.c_str());
     ForwardClient_.waitForServer();
     SidewardClient_.waitForServer();
     UpwardClient_.waitForServer();
@@ -224,11 +224,12 @@ public:
       // publish the feedback
       feedback_.nosignificance = false;
       buoy_server_.publishFeedback(feedback_);
-      ROS_INFO("x = %f, y = %f, front distance = %f", data_X_.data, data_Y_.data, data_distance_.data);
+      ROS_INFO(" %s: %s x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data,
+               data_distance_.data);
       ros::spinOnce();
     }
 
-    ROS_INFO("Bot is in center of buoy");
+    ROS_INFO("%s: Bot is in center of buoy", action_name_.c_str());
     forwardgoal.Goal = 0;
     forwardgoal.loop = 10;
     ForwardClient_.sendGoal(forwardgoal);
@@ -248,14 +249,15 @@ public:
       if (IP_stopped)
       {
         successBuoy = true;
-        ROS_INFO("Waiting for hitting the buoy...");
+        ROS_INFO("%s: Waiting for hitting the buoy...", action_name_.c_str());
         sleep(1);
         break;
       }
 
       feedback_.nosignificance = false;
       buoy_server_.publishFeedback(feedback_);
-      ROS_INFO("x = %f, y = %f, front distance = %f", data_X_.data, data_Y_.data, data_distance_.data);
+      ROS_INFO("%s: x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data,
+               data_distance_.data);
       ros::spinOnce();
     }
 
@@ -264,12 +266,12 @@ public:
     upwardgoal.Goal = present_depth + 5;
     upwardgoal.loop = 10;
     UpwardClient_.sendGoal(upwardgoal);
-    ROS_INFO("moving upward");
+    ROS_INFO("%s: moving upward", action_name_.c_str());
     boost::thread spin_thread_upward_pressure(&TaskBuoyInnerClass::spinThreadUpwardPressure, this);
 
     while (!heightGoal)
     {
-      ROS_INFO("present depth = %f", present_depth);
+      ROS_INFO("%s: present depth = %f", action_name_.c_str(), present_depth);
       looprate.sleep();
       ros::spinOnce();
     }

@@ -34,7 +34,7 @@ int count = 0;
 void callback(task_line::lineConfig &config, uint32_t level)
 {
   percentage = config.orange_param;
-  ROS_INFO("Reconfigure Request : New parameters :%d", percentage);
+  ROS_INFO("%s Reconfigure Request : New parameters :%d", ros::this_node::getName().c_str(), percentage);
 }
 
 void lineDetectedListener(std_msgs::Bool msg)
@@ -116,7 +116,7 @@ int main(int argc, char **argv)
   {
     if (!frame.data)  // Check for invalid input
     {
-      std::cout << "Could not open or find the image" << std::endl;
+      ROS_INFO("%s: Could not open or find the image\n", ros::this_node::getName().c_str());
       ros::spinOnce();
       continue;
       // TODO(shikherverma) : for now I am resetting the video but later we need to handle this
@@ -131,14 +131,14 @@ int main(int argc, char **argv)
         std_msgs::Bool msg;
         msg.data = true;
         robot_pub.publish(msg);
-        ROS_INFO("found line");
+        ROS_INFO("%s: found line", ros::this_node::getName().c_str());
       }
       else if (alert == 0)
       {
         std_msgs::Bool msg;
         msg.data = false;
         robot_pub.publish(msg);
-        ROS_INFO("no line");
+        ROS_INFO("%s: no line", ros::this_node::getName().c_str());
       }
       else
       {
@@ -154,12 +154,12 @@ int main(int argc, char **argv)
           x = 32;
       }
       if (x == 32)
-        printf("paused\n");
+        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
     else
     {
-      std::cout << "waiting\n";
+      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
       if ((cvWaitKey(10) & 255) == 32)
       {
         if (x == 32)
@@ -168,7 +168,7 @@ int main(int argc, char **argv)
           x = 32;
       }
       if (x == 32)
-        printf("paused\n");
+        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }

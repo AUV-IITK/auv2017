@@ -12,9 +12,6 @@
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
-using std::cout;
-using std::endl;
-
 typedef actionlib::SimpleActionClient<task_commons::lineAction> line;
 typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> forward;
 
@@ -31,14 +28,14 @@ void spinThread()
 
 void forwardCb(task_commons::lineActionFeedback msg)
 {
-  ROS_INFO("feedback recieved %f", msg.feedback.AngleRemaining);
+  ROS_INFO("%s: feedback recieved %f", ros::this_node::getName().c_str(), msg.feedback.AngleRemaining);
 }
 
 int main(int argc, char **argv)
 {
   if (argc < 2)
   {
-    cout << "please specify the time for forward motion" << endl;
+    ROS_INFO("%s: please specify the time for forward motion\n", ros::this_node::getName().c_str());
     return 0;
   }
   float forwardTime;
@@ -54,9 +51,9 @@ int main(int argc, char **argv)
 
   forward forwardClient("forward");
 
-  ROS_INFO("Waiting for task_commons server to start.");
+  ROS_INFO("%s: Waiting for task_commons server to start.", ros::this_node::getName().c_str());
   lineClient.waitForServer();
-  ROS_INFO("task_commons server started");
+  ROS_INFO("%s task_commons server started", ros::this_node::getName().c_str());
 
   boost::thread spin_thread(&spinThread);
 
@@ -64,27 +61,27 @@ int main(int argc, char **argv)
   {
     linegoal.order = true;
     lineClient.sendGoal(linegoal);
-    ROS_INFO("line detection started");
+    ROS_INFO("%s line detection started", ros::this_node::getName().c_str());
     lineClient.waitForResult();
     lineSuccess = (*(lineClient.getResult())).MotionCompleted;
     if (lineSuccess)
     {
-      ROS_INFO("line colour detected");
+      ROS_INFO("%s line colour detected", ros::this_node::getName().c_str());
     }
     else
-      ROS_INFO("line not detected");
+      ROS_INFO("%s line not detected", ros::this_node::getName().c_str());
 
     forwardgoal.Goal = forwardTime;
     forwardClient.sendGoal(forwardgoal);
-    ROS_INFO("Moving forward");
+    ROS_INFO("%s Moving forward", ros::this_node::getName().c_str());
     forwardClient.waitForResult();
     forwardSuccess = (*(forwardClient.getResult())).Result;
     if (forwardSuccess)
     {
-      ROS_INFO("forward motion successful");
+      ROS_INFO("%s forward motion successful", ros::this_node::getName().c_str());
     }
     else
-      ROS_INFO("forward motion unsuccessful");
+      ROS_INFO("%s forward motion unsuccessful", ros::this_node::getName().c_str());
   }
   return 0;
 }

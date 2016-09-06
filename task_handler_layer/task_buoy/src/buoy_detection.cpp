@@ -36,7 +36,7 @@ void callback(task_buoy::buoyConfig &config, uint32_t level)
   t2max = config.t2max_param;
   t3min = config.t3min_param;
   t3max = config.t3max_param;
-  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
+  ROS_INFO("Buoy_Reconfigure Request:New params : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
 void lineDetectedListener(std_msgs::Bool msg)
@@ -60,7 +60,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
   catch (cv_bridge::Exception &e)
   {
-    ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+    ROS_ERROR("%s: Could not convert from '%s' to 'bgr8'.", ros::this_node::getName().c_str(), msg->encoding.c_str());
   }
 }
 
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     loop_rate.sleep();
     if (frame.empty())
     {
-      std::cout << "empty frame \n";
+      ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
       ros::spinOnce();
       continue;
     }
@@ -351,7 +351,7 @@ int main(int argc, char *argv[])
           x = 32;
       }
       if (x == 32)
-        printf("paused\n");
+        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
@@ -360,7 +360,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-      std::cout << "waiting\n";
+      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
       if ((cvWaitKey(10) & 255) == 32)
       {
         if (x == 32)
@@ -369,7 +369,7 @@ int main(int argc, char *argv[])
           x = 32;
       }
       if (x == 32)
-        printf("paused\n");
+        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }

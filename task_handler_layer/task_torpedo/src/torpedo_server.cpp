@@ -66,7 +66,7 @@ public:
     , UpwardClient_(node2)
     , TurnClient_(node3)
   {
-    ROS_INFO("inside constructor");
+    ROS_INFO("%s inside constructor", action_name_.c_str());
     torpedo_server_.registerPreemptCallback(boost::bind(&TaskBuoyInnerClass::preemptCB, this));
 
     switch_torpedo_detection = nh_.advertise<std_msgs::Bool>("torpedo_detection_switch", 1000);
@@ -113,14 +113,14 @@ public:
     {
       IP_stopped = true;
       stopBuoyDetection();
-      ROS_INFO("Bot is in front of torpedo, IP stopped.");
+      ROS_INFO("%s Bot is in front of torpedo, IP stopped.", action_name_.c_str());
     }
   }
 
   void preemptCB(void)
   {
     // Not actually preempting the goal because Prakhar did it in analysisCB
-    ROS_INFO("Called when preempted from the client");
+    ROS_INFO("%s Called when preempted from the client", action_name_.c_str());
   }
 
   void spinThreadUpwardCamera()
@@ -130,11 +130,11 @@ public:
     heightCenter = (*(tempUpward.getResult())).Result;
     if (heightCenter)
     {
-      ROS_INFO("Bot is at height center");
+      ROS_INFO("%s Bot is at height center", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at height center, something went wrong");
+      ROS_INFO("%s Bot is not at height center, something went wrong", action_name_.c_str());
     }
   }
 
@@ -145,11 +145,11 @@ public:
     heightGoal = (*(tempUpward.getResult())).Result;
     if (heightGoal)
     {
-      ROS_INFO("Bot is at desired height.");
+      ROS_INFO("%s Bot is at desired height.", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at desired height, something went wrong");
+      ROS_INFO("%s Bot is not at desired height, something went wrong", action_name_.c_str());
     }
   }
 
@@ -160,17 +160,17 @@ public:
     sideCenter = (*(tempSideward.getResult())).Result;
     if (sideCenter)
     {
-      ROS_INFO("Bot is at side center");
+      ROS_INFO("%s Bot is at side center", action_name_.c_str());
     }
     else
     {
-      ROS_INFO("Bot is not at side center, something went wrong");
+      ROS_INFO("%s Bot is not at side center, something went wrong", action_name_.c_str());
     }
   }
 
   void analysisCB(const task_commons::torpedoGoalConstPtr goal)
   {
-    ROS_INFO("Inside analysisCB");
+    ROS_INFO("%s Inside analysisCB", action_name_.c_str());
     heightCenter = true;
     sideCenter = false;
     successBuoy = false;
@@ -180,7 +180,7 @@ public:
     if (!torpedo_server_.isActive())
       return;
 
-    ROS_INFO("Waiting for Forward server to start.");
+    ROS_INFO("%s Waiting for Forward server to start.", action_name_.c_str());
     ForwardClient_.waitForServer();
     SidewardClient_.waitForServer();
     UpwardClient_.waitForServer();
@@ -221,11 +221,12 @@ public:
       // publish the feedback
       feedback_.nosignificance = false;
       torpedo_server_.publishFeedback(feedback_);
-      ROS_INFO("x = %f, y = %f, front distance = %f", data_X_.data, data_Y_.data, data_distance_.data);
+      ROS_INFO("%s :: x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data,
+               data_distance_.data);
       ros::spinOnce();
     }
 
-    ROS_INFO("Bot is in center of torpedo");
+    ROS_INFO("%s Bot is in center of torpedo", action_name_.c_str());
     forwardgoal.Goal = 0;
     forwardgoal.loop = 10;
     ForwardClient_.sendGoal(forwardgoal);
@@ -245,14 +246,15 @@ public:
       if (IP_stopped)
       {
         successBuoy = true;
-        ROS_INFO("Waiting for hitting the torpedo...");
+        ROS_INFO("%s Waiting for hitting the torpedo...", action_name_.c_str());
         sleep(1);
         break;
       }
 
       feedback_.nosignificance = false;
       torpedo_server_.publishFeedback(feedback_);
-      ROS_INFO("x = %f, y = %f, front distance = %f", data_X_.data, data_Y_.data, data_distance_.data);
+      ROS_INFO("%s :: x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data,
+               data_distance_.data);
       ros::spinOnce();
     }
 
@@ -261,12 +263,12 @@ public:
     upwardgoal.Goal = present_depth + 5;
     upwardgoal.loop = 10;
     UpwardClient_.sendGoal(upwardgoal);
-    ROS_INFO("moving upward");
+    ROS_INFO("%s moving upward", action_name_.c_str());
     boost::thread spin_thread_upward_pressure(&TaskBuoyInnerClass::spinThreadUpwardPressure, this);
 
     while (!heightGoal)
     {
-      ROS_INFO("present depth = %f", present_depth);
+      ROS_INFO("%s present depth = %f", action_name_.c_str(), present_depth);
       looprate.sleep();
       ros::spinOnce();
     }

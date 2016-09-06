@@ -54,7 +54,7 @@ public:
   {
     pwm.data = 0;
     PWM.publish(pwm);
-    ROS_INFO("pwm send to arduino %d", pwm.data);
+    ROS_INFO("%s pwm send to arduino %d", ros::this_node::getName().c_str(), pwm.data);
     // this command cancels the previous goal
     upwardServer_.setPreempted();
   }
@@ -62,7 +62,7 @@ public:
   // called when new goal recieved; Start motion and finish it, if not interrupted
   void analysisCB(const motion_commons::UpwardGoalConstPtr goal)
   {
-    ROS_INFO("Inside analysisCB");
+    ROS_INFO("%s: Inside analysisCB", ros::this_node::getName().c_str());
 
     int count = 0;
     int loopRate = 10;
@@ -71,7 +71,7 @@ public:
     // waiting till we recieve the first value from Camera/pressure sensor else it's useless do any calculations
     while (!initData)
     {
-      ROS_INFO("Waiting to get first input at topic zDistance");
+      ROS_INFO("%s: Waiting to get first input at topic zDistance", ros::this_node::getName().c_str());
       loop_rate.sleep();
     }
 
@@ -113,7 +113,7 @@ public:
         reached = true;
         pwm.data = 0;
         PWM.publish(pwm);
-        ROS_INFO("thrusters stopped");
+        ROS_INFO("%s: thrusters stopped", ros::this_node::getName().c_str());
         count++;
       }
       else
@@ -124,7 +124,7 @@ public:
 
       if (upwardServer_.isPreemptRequested() || !ros::ok())
       {
-        ROS_INFO("%s: Preempted", action_name_.c_str());
+        ROS_INFO("%s: %s: Preempted", ros::this_node::getName().c_str(), action_name_.c_str());
         // set the action state to preempted
         upwardServer_.setPreempted();
         reached = false;
@@ -134,7 +134,7 @@ public:
       feedback_.DepthRemaining = error;
       upwardServer_.publishFeedback(feedback_);
       PWM.publish(pwm);
-      ROS_INFO("pwm send to arduino upward %d", pwm.data);
+      ROS_INFO("%s: pwm send to arduino upward %d", ros::this_node::getName().c_str(), pwm.data);
 
       ros::spinOnce();
       loop_rate.sleep();
@@ -142,7 +142,7 @@ public:
     if (reached)
     {
       result_.Result = reached;
-      ROS_INFO("%s: Succeeded", action_name_.c_str());
+      ROS_INFO("%s: %s: Succeeded", ros::this_node::getName().c_str(), action_name_.c_str());
       // set the action state to succeeded
       upwardServer_.setSucceeded(result_);
     }
@@ -178,10 +178,10 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_upward::pidConfig &config, double level)
 {
-  ROS_INFO("UpwardServer: Reconfigure Request: p_stablize=%f p_upward=%f "
+  ROS_INFO("%s: UpwardServer: Reconfigure Request: p_stablize=%f p_upward=%f "
            "i_stablize=%f i_upward=%f d_stablize=%f d_upward=%f error band_upward=%f",
-           config.p_stablize, config.p_upward, config.i_stablize, config.i_upward, config.d_stablize, config.d_upward,
-           config.band_upward);
+           ros::this_node::getName().c_str(), config.p_stablize, config.p_upward, config.i_stablize, config.i_upward,
+           config.d_stablize, config.d_upward, config.band_upward);
   object->setPID(config.p_stablize, config.p_upward, config.i_stablize, config.i_upward, config.d_stablize,
                  config.d_upward, config.band_stablize, config.band_upward);
 }
@@ -218,7 +218,7 @@ int main(int argc, char **argv)
 
   ros::Subscriber zDistance = n.subscribe<std_msgs::Float64>("/varun/motion/z_distance", 1000, &distanceCb);
 
-  ROS_INFO("Waiting for Goal");
+  ROS_INFO("%s: Waiting for Goal", ros::this_node::getName().c_str());
   object = new innerActionClass(ros::this_node::getName());
 
   // register dynamic reconfig server.
