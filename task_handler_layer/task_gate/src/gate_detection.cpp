@@ -37,7 +37,7 @@ void callback(task_gate::gateConfig &config, uint32_t level)
   t2max = config.t2max_param;
   t3min = config.t3min_param;
   t3max = config.t3max_param;
-  ROS_INFO("Gate_Reconfigure Request:New params : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
+  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
 void gateListener(std_msgs::Bool msg)
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
     // Get one frame
     if (frame.empty())
     {
-      ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
+      std::cout << "empty frame \n";
       ros::spinOnce();
       continue;
     }
@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
           largest_area = a;
           largest_contour_index = i;  // Store the index of largest contour
         }
-      }
+      }  
       // Convex HULL
       std::vector<std::vector<cv::Point> > hull(contours.size());
       convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], false);
@@ -213,7 +213,8 @@ int main(int argc, char *argv[])
       cv::Point center;
       center.x = ((boundRect[0].br()).x + (boundRect[0].tl()).x) / 2;
       center.y = ((boundRect[0].tl()).y + (boundRect[0].br()).y) / 2;
-
+      float side_x = (boundRect[0].br()).x - (boundRect[0].tl()).x;
+      float side_y = -(boundRect[0].tl()).y - (boundRect[0].br()).y;
       drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
 
       cv::Mat frame_mat = frame;
@@ -232,24 +233,45 @@ int main(int argc, char *argv[])
       x = (boundRect[0].br()).y;
       y = (boundRect[0].tl()).y;
       z = (boundRect[0].tl()).x;
-      if (w == (frame.rows) - 1 || x == (frame.cols) - 1 || y == 1 || z == 1)
+      if ((side_y < 40)&&(z == 1))
+      {
+        array.data.push_back(-2);
+        array.data.push_back(-2);  //  hits left
+      }
+      else if ((side_y < 40)&&(x == frame.cols - 1))
+      {
+        array.data.push_back(-4);
+        array.data.push_back(-4);  //  hits left
+      } 
+      else if (w == (frame.rows) - 1 || x == (frame.cols) - 1 || y == 1 || z == 1)
       {
         if (y == 1)
+        {	
+          array.data.push_back(-1);
           array.data.push_back(-1);  //  hits top
-        if (z == 1)
-          array.data.push_back(-2);  //  hits left
-        if (w == frame.rows - 1)
+        }
+        else if (w == frame.rows - 1)
+        {
+          array.data.push_back(-3);
           array.data.push_back(-3);  //  hits bottom
-        if (x == frame.cols - 1)
+        }
+        else if (z == 1)
+        {
+          array.data.push_back(-2);
+          array.data.push_back(-2);  //  hits left
+        }
+        else if (x == frame.cols - 1)
+        {
+          array.data.push_back(-4);
           array.data.push_back(-4);  //  hits right
-        ros::spinOnce();
-        continue;
+        }
       }
-      ROS_INFO("%s:%d %d %d %d\n%d %d\n", ros::this_node::getName().c_str(), w , x, y, z, frame.cols, frame.rows);
-      array.data.push_back((320 - center.x));
-      array.data.push_back(-(240 - center.y));
+      else
+      {	
+        array.data.push_back((320 - center.x));
+        array.data.push_back(-(240 - center.y));
+      }
       pub.publish(array);
-
       ros::spinOnce();
 
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
@@ -259,7 +281,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
+      std::cout << "waiting\n";
       if ((cvWaitKey(10) & 255) == 32)
       {
         if (p == 32)
@@ -268,10 +290,11 @@ int main(int argc, char *argv[])
           p = 32;
       }
       if (p == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+        printf("paused\n");
       ros::spinOnce();
     }
   }
   output_cap.release();
   return 0;
 }
+

@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
       break;
 
     if (!IP)
-    {
+    {     
       // find contours
       std::vector<std::vector<cv::Point> > contours;
       cv::Mat thresholded_Mat = thresholded;
@@ -183,6 +183,7 @@ int main(int argc, char *argv[])
           array.data.push_back(-2);
           array.data.push_back(-2);
           array.data.push_back(-2);
+          pub.publish(array);
         }
         else if (x_cord > 270)
         {
@@ -190,6 +191,7 @@ int main(int argc, char *argv[])
           array.data.push_back(-1);
           array.data.push_back(-1);
           array.data.push_back(-1);
+          pub.publish(array);
         }
         else if (y_cord > 200)
         {
@@ -197,6 +199,7 @@ int main(int argc, char *argv[])
           array.data.push_back(-3);
           array.data.push_back(-3);
           array.data.push_back(-3);
+          pub.publish(array);
         }
         else if (y_cord < -200)
         {
@@ -204,8 +207,8 @@ int main(int argc, char *argv[])
           array.data.push_back(-4);
           array.data.push_back(-4);
           array.data.push_back(-4);
+          pub.publish(array);
         }
-        pub.publish(array);
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
         // remove higher bits using AND operator
@@ -213,7 +216,6 @@ int main(int argc, char *argv[])
           break;
         continue;
       }
-
       for (int i = 0; i < contours.size(); i++)  // iterate through each contour.
       {
         double a = contourArea(contours[i], false);  //  Find the area of contour
@@ -269,10 +271,12 @@ int main(int argc, char *argv[])
       int net_y_cord = -240 + center_ideal[0].y + r[0];
       if (net_x_cord < -310)
       {
+      	printf("shit_2\n");
         array.data.push_back(-2);  // top
         array.data.push_back(-2);
         array.data.push_back(-2);
         array.data.push_back(-2);
+        pub.publish(array);
       }
       else if (net_x_cord > 310)
       {
@@ -282,12 +286,7 @@ int main(int argc, char *argv[])
         array.data.push_back(-1);
         pub.publish(array);
         ros::spinOnce();
-        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-        // remove higher bits using AND operator
-        if ((cvWaitKey(10) & 255) == 27)
-          break;
-        continue;
-      }
+      }  
       else if (net_y_cord > 230)
       {
         array.data.push_back(-3);  // bottom
@@ -295,12 +294,7 @@ int main(int argc, char *argv[])
         array.data.push_back(-3);
         array.data.push_back(-3);
         pub.publish(array);
-        ros::spinOnce();
-        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-        // remove higher bits using AND operator
-        if ((cvWaitKey(10) & 255) == 27)
-          break;
-        continue;
+
       }
       else if (net_y_cord < -230)
       {
@@ -309,12 +303,6 @@ int main(int argc, char *argv[])
         array.data.push_back(-4);
         array.data.push_back(-4);
         pub.publish(array);
-        ros::spinOnce();
-        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-        // remove higher bits using AND operator
-        if ((cvWaitKey(10) & 255) == 27)
-          break;
-        continue;
       }
       else if (r[0] > 220)
       {
@@ -323,12 +311,6 @@ int main(int argc, char *argv[])
         array.data.push_back(-5);
         array.data.push_back(-5);
         pub.publish(array);
-        ros::spinOnce();
-        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-        // remove higher bits using AND operator
-        if ((cvWaitKey(10) & 255) == 27)
-          break;
-        continue;
       }
       else
       {
@@ -338,11 +320,12 @@ int main(int argc, char *argv[])
         array.data.push_back((320 - center_ideal[0].x));
         array.data.push_back(-(240 - center_ideal[0].y));
         array.data.push_back(distance);
+        pub.publish(array);
       }
-
+      printf("shit_3\n");
       cv::imshow("circle", circles);            // Original stream with detected ball overlay
       cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
-      pub.publish(array);
+
       if ((cvWaitKey(10) & 255) == 32)
       {
         if (x == 32)
@@ -351,7 +334,7 @@ int main(int argc, char *argv[])
           x = 32;
       }
       if (x == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+      ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
@@ -376,3 +359,4 @@ int main(int argc, char *argv[])
   output_cap.release();
   return 0;
 }
+
