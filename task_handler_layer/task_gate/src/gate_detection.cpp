@@ -37,7 +37,7 @@ void callback(task_gate::gateConfig &config, uint32_t level)
   t2max = config.t2max_param;
   t3min = config.t3min_param;
   t3max = config.t3max_param;
-  ROS_INFO("Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
+  ROS_INFO("Gate_Reconfigure Request : New parameters : %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
 void gateListener(std_msgs::Bool msg)
@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
     // Get one frame
     if (frame.empty())
     {
-      std::cout << "empty frame \n";
+      ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
       ros::spinOnce();
       continue;
     }
@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
           largest_area = a;
           largest_contour_index = i;  // Store the index of largest contour
         }
-      }  
+      }
       // Convex HULL
       std::vector<std::vector<cv::Point> > hull(contours.size());
       convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], false);
@@ -281,7 +281,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-      std::cout << "waiting\n";
+      ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
       if ((cvWaitKey(10) & 255) == 32)
       {
         if (p == 32)
@@ -290,7 +290,7 @@ int main(int argc, char *argv[])
           p = 32;
       }
       if (p == 32)
-        printf("paused\n");
+      ROS_INFO("paused\n")
       ros::spinOnce();
     }
   }

@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
       break;
 
     if (!IP)
-    {     
+    {
       // find contours
       std::vector<std::vector<cv::Point> > contours;
       cv::Mat thresholded_Mat = thresholded;
@@ -271,7 +271,6 @@ int main(int argc, char *argv[])
       int net_y_cord = -240 + center_ideal[0].y + r[0];
       if (net_x_cord < -310)
       {
-      	printf("shit_2\n");
         array.data.push_back(-2);  // top
         array.data.push_back(-2);
         array.data.push_back(-2);
@@ -322,7 +321,6 @@ int main(int argc, char *argv[])
         array.data.push_back(distance);
         pub.publish(array);
       }
-      printf("shit_3\n");
       cv::imshow("circle", circles);            // Original stream with detected ball overlay
       cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
 
