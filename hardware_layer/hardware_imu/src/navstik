@@ -57,7 +57,8 @@ NavStik::NavStik()
 	if(stat != fine)
 		return;	
 
-	std::system("echo 'usb' >> /dev/navstik");
+	std::system("echo 'usb' > /dev/navstik");
+	std::system("echo 'usb' > /dev/navstik");
 	navstik.open(Path.c_str());
 
 	if(!navstik)
@@ -72,8 +73,8 @@ NavStik::NavStik()
 		while (!navstik)
 		{
 			cout<<"Connecting..."<<endl;
-			std::system("echo 'usb' >> /dev/navstik");
-			std::system("echo 'usb' >> /dev/navstik");
+			std::system("echo 'usb' > /dev/navstik");
+			std::system("echo 'usb' > /dev/navstik");
 			navstik.open(Path.c_str());
 		}
 
