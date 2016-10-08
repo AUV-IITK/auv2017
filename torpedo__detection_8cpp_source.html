@@ -118,7 +118,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="torpedo__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">   28</a></span>&#160;cv::Mat <a class="code" href="torpedo__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="torpedo__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">   29</a></span>&#160;cv::Mat <a class="code" href="torpedo__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="torpedo__detection_8cpp.html#a2d043c356e83ee5dde583a82999bef8b">   30</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="torpedo__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0, <a class="code" href="torpedo__detection_8cpp.html#a2d043c356e83ee5dde583a82999bef8b">count_avg</a> = 0;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="torpedo__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">   30</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="torpedo__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0, <a class="code" href="torpedo__detection_8cpp.html#a2d043c356e83ee5dde583a82999bef8b">count_avg</a> = 0, <a class="code" href="torpedo__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> = -1;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
 <div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="torpedo__detection_8cpp.html#ac97d0b27dc900a2cc282f4dc318a6897">   32</a></span>&#160;<span class="keywordtype">float</span> <a class="code" href="torpedo__detection_8cpp.html#ac97d0b27dc900a2cc282f4dc318a6897">mod</a>(<span class="keywordtype">float</span> a)</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
@@ -346,13 +346,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    }</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    {</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: waiting\n&quot;</span>, ros::this_node::getName().c_str());</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    }</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  }</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;  output_cap.release();</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;}</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: empty frame&quot;</span>, ros::this_node::getName().c_str());</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;      {</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="torpedo__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> == 32)</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;          <a class="code" href="torpedo__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> = -1;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;          <a class="code" href="torpedo__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> = 32;</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      }</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="torpedo__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a> == 32)</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: PAUSED\n&quot;</span>, ros::this_node::getName().c_str());</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    }</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  }</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;  output_cap.release();</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;}</div>
 <div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
 <div class="ttc" id="torpedo__detection_8cpp_html_ac222ef7f89a8d202a92d75523e3e4e96"><div class="ttname"><a href="torpedo__detection_8cpp.html#ac222ef7f89a8d202a92d75523e3e4e96">callback</a></div><div class="ttdeci">void callback(task_torpedo::torpedoConfig &amp;config, uint32_t level)</div><div class="ttdef"><b>Definition:</b> <a href="torpedo__detection_8cpp_source.html#l00039">torpedo_detection.cpp:39</a></div></div>
 <div class="ttc" id="torpedo__detection_8cpp_html_a6150e0515f7202e2fb518f7206ed97dc"><div class="ttname"><a href="torpedo__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a></div><div class="ttdeci">int x</div><div class="ttdef"><b>Definition:</b> <a href="torpedo__detection_8cpp_source.html#l00022">torpedo_detection.cpp:22</a></div></div>
@@ -366,6 +375,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="torpedo__detection_8cpp_html_a7c0ebfe6b31c897994082445bc9820b8"><div class="ttname"><a href="torpedo__detection_8cpp.html#a7c0ebfe6b31c897994082445bc9820b8">torpedoListener</a></div><div class="ttdeci">void torpedoListener(std_msgs::Bool msg)</div><div class="ttdef"><b>Definition:</b> <a href="torpedo__detection_8cpp_source.html#l00050">torpedo_detection.cpp:50</a></div></div>
 <div class="ttc" id="namespaceremote__gui_html_ab56538ef096108ce65caffcb4fb2fb4d"><div class="ttname"><a href="namespaceremote__gui.html#ab56538ef096108ce65caffcb4fb2fb4d">remote_gui.height</a></div><div class="ttdeci">int height</div><div class="ttdef"><b>Definition:</b> <a href="remote__gui_8py_source.html#l00106">remote_gui.py:106</a></div></div>
 <div class="ttc" id="torpedo__detection_8cpp_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="torpedo__detection_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="torpedo__detection_8cpp_source.html#l00073">torpedo_detection.cpp:73</a></div></div>
+<div class="ttc" id="torpedo__detection_8cpp_html_a533391314665d6bf1b5575e9a9cd8552"><div class="ttname"><a href="torpedo__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a></div><div class="ttdeci">int p</div><div class="ttdef"><b>Definition:</b> <a href="torpedo__detection_8cpp_source.html#l00030">torpedo_detection.cpp:30</a></div></div>
 <div class="ttc" id="torpedo__detection_8cpp_html_a873b8202a3128894f1e085b2e301d9df"><div class="ttname"><a href="torpedo__detection_8cpp.html#a873b8202a3128894f1e085b2e301d9df">t1max</a></div><div class="ttdeci">int t1max</div><div class="ttdef"><b>Definition:</b> <a href="torpedo__detection_8cpp_source.html#l00026">torpedo_detection.cpp:26</a></div></div>
 <div class="ttc" id="torpedo__detection_8cpp_html_a0a2f84ed7838f07779ae24c5a9086d33"><div class="ttname"><a href="torpedo__detection_8cpp.html#a0a2f84ed7838f07779ae24c5a9086d33">y</a></div><div class="ttdeci">int y</div><div class="ttdef"><b>Definition:</b> <a href="torpedo__detection_8cpp_source.html#l00022">torpedo_detection.cpp:22</a></div></div>
 <div class="ttc" id="torpedo__detection_8cpp_html_a22bf1f49f906224b1a4b38010110e929"><div class="ttname"><a href="torpedo__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a></div><div class="ttdeci">cv::Mat frame</div><div class="ttdef"><b>Definition:</b> <a href="torpedo__detection_8cpp_source.html#l00028">torpedo_detection.cpp:28</a></div></div>
@@ -381,7 +391,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Oct 8 2016 12:08:42 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 8 2016 22:16:33 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['p',['p',['../classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c',1,'innerActionClass::p()'],['../gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552',1,'p():&#160;gate_detection.cpp']]],
+  ['p',['p',['../classinnerActionClass.html#a43e28ed4ba4950b68d369fe23c990d9c',1,'innerActionClass::p()'],['../gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552',1,'p():&#160;gate_detection.cpp'],['../torpedo__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552',1,'p():&#160;torpedo_detection.cpp']]],
   ['p_5fstablize',['p_stablize',['../classinnerActionClass.html#a0c5c3ccc24bc8d9d98d48ad1c900c0a5',1,'innerActionClass']]],
   ['p_5fturn',['p_turn',['../classinnerActionClass.html#a6db9313fb7f631223102f88d79258d9d',1,'innerActionClass']]],
   ['p_5fupward',['p_upward',['../classinnerActionClass.html#a66b34bc675293408c03726d9db8d7770',1,'innerActionClass']]],
