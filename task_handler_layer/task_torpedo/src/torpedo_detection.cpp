@@ -257,11 +257,6 @@ int main(int argc, char *argv[])
     }
     else
     {
-      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
-      ros::spinOnce();
-    }
-    else
-    {
       ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
       if ((cvWaitKey(10) & 255) == 32)
       {
