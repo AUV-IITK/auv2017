@@ -285,7 +285,7 @@ int main(int argc, char *argv[])
         array.data.push_back(-1);
         pub.publish(array);
         ros::spinOnce();
-      }  
+      }
       else if (net_y_cord > 230)
       {
         array.data.push_back(-3);  // bottom
@@ -293,7 +293,6 @@ int main(int argc, char *argv[])
         array.data.push_back(-3);
         array.data.push_back(-3);
         pub.publish(array);
-
       }
       else if (net_y_cord < -230)
       {
