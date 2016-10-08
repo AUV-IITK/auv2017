@@ -233,20 +233,20 @@ int main(int argc, char *argv[])
       x = (boundRect[0].br()).y;
       y = (boundRect[0].tl()).y;
       z = (boundRect[0].tl()).x;
-      if ((side_y < 40)&&(z == 1))
+      if ((side_y < 40) && (z == 1))
       {
         array.data.push_back(-2);
         array.data.push_back(-2);  //  hits left
       }
-      else if ((side_y < 40)&&(x == frame.cols - 1))
+      else if ((side_y < 40) && (x == frame.cols - 1))
       {
         array.data.push_back(-4);
         array.data.push_back(-4);  //  hits left
-      } 
+      }
       else if (w == (frame.rows) - 1 || x == (frame.cols) - 1 || y == 1 || z == 1)
       {
         if (y == 1)
-        {	
+        {
           array.data.push_back(-1);
           array.data.push_back(-1);  //  hits top
         }
@@ -267,7 +267,7 @@ int main(int argc, char *argv[])
         }
       }
       else
-      {	
+      {
         array.data.push_back((320 - center.x));
         array.data.push_back(-(240 - center.y));
       }
