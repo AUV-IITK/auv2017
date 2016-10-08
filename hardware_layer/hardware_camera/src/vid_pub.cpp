@@ -34,10 +34,10 @@ std::string exec(const char *cmd)
 
 bool checkIfFrontisZero()
 {
-  std::string productID = "7BE06A00";
+  std::string serialNumber = "243FA8C0";
   const char *command = "udevadm info -a -p  $(udevadm info -q path -n /dev/video0)";
   std::string video0 = exec(command);
-  if (video0.find(productID))
+  if (video0.find(serialNumber))
     return true;
   return false;
 }
