@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
     // Get one frame
     if (frame.empty())
     {
-      ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());      
+      ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
       ros::spinOnce();
       continue;
     }

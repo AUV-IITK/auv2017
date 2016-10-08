@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
     if ((!IP))
     {
       // find contours
-      std::vector<std::vector<cv::Point>> contours;
+      std::vector<std::vector<cv::Point> > contours;
       cv::Mat thresholded_Mat;
       thresholded.copyTo(thresholded_Mat);
 
