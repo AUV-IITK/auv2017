@@ -27,7 +27,7 @@ int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
 
 cv::Mat frame;
 cv::Mat newframe;
-int count = 0, count_avg = 0;
+int count = 0, count_avg = 0, p = -1;
 
 float mod(float a)
 {
@@ -258,6 +258,20 @@ int main(int argc, char *argv[])
     else
     {
       ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
+      ros::spinOnce();
+    }
+    else
+    {
+      ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
+      if ((cvWaitKey(10) & 255) == 32)
+      {
+        if (p == 32)
+          p = -1;
+        else
+          p = 32;
+      }
+      if (p == 32)
+        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }

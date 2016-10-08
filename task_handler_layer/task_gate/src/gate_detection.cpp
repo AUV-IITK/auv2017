@@ -290,7 +290,7 @@ int main(int argc, char *argv[])
           p = 32;
       }
       if (p == 32)
-      ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }
