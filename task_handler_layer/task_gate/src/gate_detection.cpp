@@ -213,8 +213,8 @@ int main(int argc, char *argv[])
       cv::Point center;
       center.x = ((boundRect[0].br()).x + (boundRect[0].tl()).x) / 2;
       center.y = ((boundRect[0].tl()).y + (boundRect[0].br()).y) / 2;
-      float side_x = (boundRect[0].br()).x - (boundRect[0].tl()).x;
-      float side_y = -(boundRect[0].tl()).y - (boundRect[0].br()).y;
+      int side_x = (boundRect[0].br()).x - (boundRect[0].tl()).x;
+      int side_y = -((boundRect[0].tl()).y - (boundRect[0].br()).y);
       drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
 
       cv::Mat frame_mat = frame;
@@ -233,12 +233,12 @@ int main(int argc, char *argv[])
       x = (boundRect[0].br()).y;
       y = (boundRect[0].tl()).y;
       z = (boundRect[0].tl()).x;
-      if ((side_y < 40) && (z == 1))
+      if ((side_y < 70) && (z == 1))
       {
         array.data.push_back(-2);
         array.data.push_back(-2);  //  hits left
       }
-      else if ((side_y < 40) && (x == frame.cols - 1))
+      else if ((side_y < 70) && (x == frame.cols - 1))
       {
         array.data.push_back(-4);
         array.data.push_back(-4);  //  hits left
@@ -268,8 +268,8 @@ int main(int argc, char *argv[])
       }
       else
       {
-        array.data.push_back((320 - center.x));
-        array.data.push_back(-(240 - center.y));
+        array.data.push_back((frame.cols/2.0 - center.x));
+        array.data.push_back(-(frame.rows/2.0 - center.y));
       }
       pub.publish(array);
       ros::spinOnce();
