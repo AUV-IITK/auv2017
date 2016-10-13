@@ -28,6 +28,7 @@ private:
   motion_commons::UpwardResult result_;
   ros::Publisher PWM;
   float p, i, d, band, p_stablize, i_stablize, d_stablize, band_stablize, p_upward, i_upward, d_upward, band_upward;
+  int neutral_buoyancy;
 
 public:
   // Constructor, called when new instance of class declared
@@ -36,6 +37,7 @@ public:
     upwardServer_(nh_, name, boost::bind(&innerActionClass::analysisCB, this, _1), false)
     , action_name_(name)
   {
+    neutral_buoyancy = 130;
     // Add preempt callback
     upwardServer_.registerPreemptCallback(boost::bind(&innerActionClass::preemptCB, this));
     // Declaring publisher for PWM
@@ -52,7 +54,7 @@ public:
   // callback for goal cancelled; Stop the bot
   void preemptCB(void)
   {
-    pwm.data = 0;
+    pwm.data = 0 + neutral_buoyancy;
     PWM.publish(pwm);
     ROS_INFO("%s pwm send to arduino %d", ros::this_node::getName().c_str(), pwm.data);
     // this command cancels the previous goal
@@ -111,7 +113,7 @@ public:
       if (pwm.data <= band && pwm.data >= -band)
       {
         reached = true;
-        pwm.data = 0;
+        pwm.data = 0 + neutral_buoyancy;
         PWM.publish(pwm);
         ROS_INFO("%s: thrusters stopped", ros::this_node::getName().c_str());
         count++;
@@ -157,7 +159,12 @@ public:
     if (output < minOutput)
       output = minOutput;
     float temp = output * scale;
-    pwm.data = static_cast<int>(temp);
+    int output_pwm = static_cast<int>(temp) + neutral_buoyancy;
+    if (output_pwm > 230)
+      output_pwm = 230;
+    if (output_pwm < -230)
+      output_pwm = -230;
+    pwm.data = output_pwm;
   }
 
   void setPID(float new_p_stablize, float new_p_upward, float new_i_stablize, float new_i_upward, float new_d_stablize,
