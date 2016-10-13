@@ -160,10 +160,10 @@ public:
       output = minOutput;
     float temp = output * scale;
     int output_pwm = static_cast<int>(temp) + neutral_buoyancy;
-    if (output_pwm > 230)
-      output_pwm = 230;
-    if (output_pwm < -230)
-      output_pwm = -230;
+    if (output_pwm > 255)
+      output_pwm = 255;
+    if (output_pwm < -255)
+      output_pwm = -255;
     pwm.data = output_pwm;
   }
 

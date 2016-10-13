@@ -163,7 +163,12 @@ public:
     if (output < minOutput)
       output = minOutput;
     float temp = output * scale;
-    pwm.data = static_cast<int>(temp);
+    int output_pwm = static_cast<int>(temp);
+    if (output_pwm > 255)
+      output_pwm = 255;
+    if (output_pwm < -255)
+      output_pwm = -255;
+    pwm.data = output_pwm;
   }
 
   void setPID(float new_p_stablize, float new_p_turn, float new_i_stablize, float new_i_turn, float new_d_stablize,

@@ -141,7 +141,12 @@ public:
     if (output < minOutput)
       output = minOutput;
     float temp = output * scale;
-    pwm.data = static_cast<int>(temp);
+    int output_pwm = static_cast<int>(temp);
+    if (output_pwm > 255)
+      output_pwm = 255;
+    if (output_pwm < -255)
+      output_pwm = -255;
+    pwm.data = output_pwm;
   }
 
   void setPID(float new_p, float new_i, float new_d, float new_band)
