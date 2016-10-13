@@ -353,7 +353,8 @@ void setup()
 void loop()
 {
   sensor.read();
-  voltage.data = sensor.depth() * 100;
+  // voltage.data made -ve because pressure sensor data should increase going up
+  voltage.data = -(sensor.depth() * 100);
   ps_voltage.publish(&voltage);
   delay(200);
   nh.spinOnce();
