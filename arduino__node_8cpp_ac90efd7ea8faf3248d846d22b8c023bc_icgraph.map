@@ -1,6 +1,0 @@
-<map id="btd122" name="btd122">
-<area shape="rect" id="node2" href="$arduino__node_8cpp.html#a26ba31bae93400833d49b39d7242c5c6" title="thrusterSouthSway" alt="" coords="115,31,248,57"/>
-<area shape="rect" id="node3" href="$arduino__node_8cpp.html#a6df7e1605027db03e2d15ecf662510f8" title="PWMCbSideward" alt="" coords="297,5,423,32"/>
-<area shape="rect" id="node5" href="$arduino__node_8cpp.html#a42c75c7d4fc2656e6035ea12a1d6001a" title="PWMCbTurn" alt="" coords="311,56,409,83"/>
-<area shape="rect" id="node4" href="$arduino__node_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d" title="setup" alt="" coords="473,31,527,57"/>
-</map>

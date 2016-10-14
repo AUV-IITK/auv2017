@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">masterAlternate.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="masterAlternate_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;ros/ros.h&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;motion_commons/ForwardAction.h&gt;</span></div>
@@ -103,26 +102,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;actionlib/client/simple_action_client.h&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;actionlib/client/terminal_state.h&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">   15</a></span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;task_commons::lineAction&gt; <a class="code" href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="masterAlternate_8cpp.html#ae88284796ab95b93409abe7ac8fea3a4">   16</a></span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;motion_commons::ForwardAction&gt; <a class="code" href="masterAlternate_8cpp.html#ae88284796ab95b93409abe7ac8fea3a4">forward</a>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;task_commons::lineAction&gt; line;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;motion_commons::ForwardAction&gt; forward;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="masterAlternate_8cpp.html#af55ce9f358e8b5c12ce0a2634d9714dd">   18</a></span>&#160;task_commons::lineGoal <a class="code" href="masterAlternate_8cpp.html#af55ce9f358e8b5c12ce0a2634d9714dd">linegoal</a>;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="masterAlternate_8cpp.html#aa7c85a023cf3cf60204b4cd066e867e4">   19</a></span>&#160;motion_commons::ForwardGoal <a class="code" href="masterAlternate_8cpp.html#aa7c85a023cf3cf60204b4cd066e867e4">forwardgoal</a>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;task_commons::lineGoal linegoal;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;motion_commons::ForwardGoal forwardgoal;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="masterAlternate_8cpp.html#a43970f049f49d9d78f18ce00b68ab365">   21</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="masterAlternate_8cpp.html#a43970f049f49d9d78f18ce00b68ab365">lineSuccess</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="masterAlternate_8cpp.html#a2bc74ef7e23736b9d57de94f762011e5">   22</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="masterAlternate_8cpp.html#a2bc74ef7e23736b9d57de94f762011e5">forwardSuccess</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">bool</span> lineSuccess = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">bool</span> forwardSuccess = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="masterAlternate_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">   24</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="masterAlternate_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">spinThread</a>()</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">void</span> spinThread()</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  ros::spin();</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="masterAlternate_8cpp.html#a2e0bee838f341a1f94f1a22c11a55ea3">   29</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="masterAlternate_8cpp.html#a2e0bee838f341a1f94f1a22c11a55ea3">forwardCb</a>(task_commons::lineActionFeedback <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> forwardCb(task_commons::lineActionFeedback msg)</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s: feedback recieved %f&quot;</span>, ros::this_node::getName().c_str(), msg.feedback.AngleRemaining);</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="masterAlternate_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">   34</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="masterAlternate_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keywordflow">if</span> (argc &lt; 2)</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  {</div>
@@ -133,41 +132,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  forwardTime = atof(argv[1]);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;TheMasterNode&quot;</span>);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  ros::NodeHandle <a class="code" href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  ros::NodeHandle nh;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="comment">// here task_commonsserver is the name of the node of the actionserver.</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  ros::Subscriber subline =</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      nh.subscribe&lt;task_commons::lineActionFeedback&gt;(<span class="stringliteral">&quot;/task_commonsserver/feedback&quot;</span>, 1000, &amp;<a class="code" href="masterAlternate_8cpp.html#a2e0bee838f341a1f94f1a22c11a55ea3">forwardCb</a>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      nh.subscribe&lt;task_commons::lineActionFeedback&gt;(<span class="stringliteral">&quot;/task_commonsserver/feedback&quot;</span>, 1000, &amp;forwardCb);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a> lineClient(<span class="stringliteral">&quot;task_line&quot;</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  line lineClient(<span class="stringliteral">&quot;task_line&quot;</span>);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="masterAlternate_8cpp.html#ae88284796ab95b93409abe7ac8fea3a4">forward</a> forwardClient(<span class="stringliteral">&quot;forward&quot;</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  forward forwardClient(<span class="stringliteral">&quot;forward&quot;</span>);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s: Waiting for task_commons server to start.&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  lineClient.waitForServer();</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s task_commons server started&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  boost::thread spin_thread(&amp;<a class="code" href="masterAlternate_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">spinThread</a>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  boost::thread spin_thread(&amp;spinThread);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordflow">while</span> (ros::ok())</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="masterAlternate_8cpp.html#af55ce9f358e8b5c12ce0a2634d9714dd">linegoal</a>.order = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    lineClient.sendGoal(<a class="code" href="masterAlternate_8cpp.html#af55ce9f358e8b5c12ce0a2634d9714dd">linegoal</a>);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    linegoal.order = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    lineClient.sendGoal(linegoal);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s line detection started&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    lineClient.waitForResult();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="masterAlternate_8cpp.html#a43970f049f49d9d78f18ce00b68ab365">lineSuccess</a> = (*(lineClient.getResult())).MotionCompleted;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="masterAlternate_8cpp.html#a43970f049f49d9d78f18ce00b68ab365">lineSuccess</a>)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    lineSuccess = (*(lineClient.getResult())).MotionCompleted;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span> (lineSuccess)</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    {</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s line colour detected&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s line not detected&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="masterAlternate_8cpp.html#aa7c85a023cf3cf60204b4cd066e867e4">forwardgoal</a>.Goal = forwardTime;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    forwardClient.sendGoal(<a class="code" href="masterAlternate_8cpp.html#aa7c85a023cf3cf60204b4cd066e867e4">forwardgoal</a>);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    forwardgoal.Goal = forwardTime;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    forwardClient.sendGoal(forwardgoal);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s Moving forward&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    forwardClient.waitForResult();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="masterAlternate_8cpp.html#a2bc74ef7e23736b9d57de94f762011e5">forwardSuccess</a> = (*(forwardClient.getResult())).Result;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="masterAlternate_8cpp.html#a2bc74ef7e23736b9d57de94f762011e5">forwardSuccess</a>)</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    forwardSuccess = (*(forwardClient.getResult())).Result;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordflow">if</span> (forwardSuccess)</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    {</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s forward motion successful&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
@@ -176,21 +175,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  }</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_a2bc74ef7e23736b9d57de94f762011e5"><div class="ttname"><a href="masterAlternate_8cpp.html#a2bc74ef7e23736b9d57de94f762011e5">forwardSuccess</a></div><div class="ttdeci">bool forwardSuccess</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00022">masterAlternate.cpp:22</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_a43970f049f49d9d78f18ce00b68ab365"><div class="ttname"><a href="masterAlternate_8cpp.html#a43970f049f49d9d78f18ce00b68ab365">lineSuccess</a></div><div class="ttdeci">bool lineSuccess</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00021">masterAlternate.cpp:21</a></div></div>
-<div class="ttc" id="arduino__node_8cpp_html_a8c8f15207982b3e185f86e1b4968e70d"><div class="ttname"><a href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a></div><div class="ttdeci">ros::NodeHandle nh</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00051">arduino_node.cpp:51</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_a2fbc4cadeb0c52cc1ae0e99c790ee86c"><div class="ttname"><a href="masterAlternate_8cpp.html#a2fbc4cadeb0c52cc1ae0e99c790ee86c">line</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; task_commons::lineAction &gt; line</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00015">masterAlternate.cpp:15</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_af55ce9f358e8b5c12ce0a2634d9714dd"><div class="ttname"><a href="masterAlternate_8cpp.html#af55ce9f358e8b5c12ce0a2634d9714dd">linegoal</a></div><div class="ttdeci">task_commons::lineGoal linegoal</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00018">masterAlternate.cpp:18</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_aa7c85a023cf3cf60204b4cd066e867e4"><div class="ttname"><a href="masterAlternate_8cpp.html#aa7c85a023cf3cf60204b4cd066e867e4">forwardgoal</a></div><div class="ttdeci">motion_commons::ForwardGoal forwardgoal</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00019">masterAlternate.cpp:19</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_a2e0bee838f341a1f94f1a22c11a55ea3"><div class="ttname"><a href="masterAlternate_8cpp.html#a2e0bee838f341a1f94f1a22c11a55ea3">forwardCb</a></div><div class="ttdeci">void forwardCb(task_commons::lineActionFeedback msg)</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00029">masterAlternate.cpp:29</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_ac57ed3683dbd1741af9bf0f9adf1c91f"><div class="ttname"><a href="masterAlternate_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">spinThread</a></div><div class="ttdeci">void spinThread()</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00024">masterAlternate.cpp:24</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="masterAlternate_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00034">masterAlternate.cpp:34</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_ae88284796ab95b93409abe7ac8fea3a4"><div class="ttname"><a href="masterAlternate_8cpp.html#ae88284796ab95b93409abe7ac8fea3a4">forward</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::ForwardAction &gt; forward</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00016">masterAlternate.cpp:16</a></div></div>
+<div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00075">vid_pub.cpp:75</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 14 2016 08:51:33 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 16:18:49 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

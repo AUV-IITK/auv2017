@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">line_detection.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="line__detection_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;cv.h&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;highgui.h&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;ros/ros.h&gt;</span></div>
@@ -110,40 +109,40 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">   22</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__detection_8cpp.html#a2f4f51c5a35082684ccbbcae8dd4dc25">percentage</a> = 5, <a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = -1;  <span class="comment">// used for how much percent of the screen should be orange</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">int</span> percentage = 5, x = -1;  <span class="comment">// used for how much percent of the screen should be orange</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                             <span class="comment">// before deciding that a line is below. Used in</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                             <span class="comment">// dynamic_reconfig</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">// callback for change the percent of orange before saying there is a line below</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#a31312a6881a1fcac1c757c95025214c5">   26</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="line__detection_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">   27</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="line__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a">   28</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="line__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#afffefc71bd2ff1a09c9a079c5d9425c4">   29</a></span>&#160;cv::Mat <a class="code" href="line__detection_8cpp.html#afffefc71bd2ff1a09c9a079c5d9425c4">red_hue_image</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">   30</a></span>&#160;cv::Mat <a class="code" href="line__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">   31</a></span>&#160;cv::Mat <a class="code" href="line__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">   32</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a> = 0;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keywordtype">bool</span> IP = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">bool</span> flag = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">bool</span> video = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;cv::Mat red_hue_image;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;cv::Mat frame;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;cv::Mat newframe;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">int</span> count = 0;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#a1f0c39f784e9f7180b6d94206e23c307">   34</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="line__detection_8cpp.html#a1f0c39f784e9f7180b6d94206e23c307">callback</a>(task_line::lineConfig &amp;config, uint32_t level)</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keywordtype">void</span> callback(task_line::lineConfig &amp;config, uint32_t level)</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <a class="code" href="line__detection_8cpp.html#a2f4f51c5a35082684ccbbcae8dd4dc25">percentage</a> = config.orange_param;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s Reconfigure Request : New parameters :%d&quot;</span>, ros::this_node::getName().c_str(), <a class="code" href="line__detection_8cpp.html#a2f4f51c5a35082684ccbbcae8dd4dc25">percentage</a>);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  percentage = config.orange_param;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s Reconfigure Request : New parameters :%d&quot;</span>, ros::this_node::getName().c_str(), percentage);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812">   40</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="line__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812">lineDetectedListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">void</span> lineDetectedListener(std_msgs::Bool msg)</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <a class="code" href="line__detection_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a> = msg.data;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  IP = msg.data;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">   45</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="line__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>(<span class="keyword">const</span> sensor_msgs::ImageConstPtr &amp;<a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> imageCallback(<span class="keyword">const</span> sensor_msgs::ImageConstPtr &amp;msg)</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;{</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == 32)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">if</span> (x == 32)</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">try</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="line__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a>++;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="line__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a> = cv_bridge::toCvShare(msg, <span class="stringliteral">&quot;bgr8&quot;</span>)-&gt;image;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    count++;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    newframe = cv_bridge::toCvShare(msg, <span class="stringliteral">&quot;bgr8&quot;</span>)-&gt;image;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;newframe&quot;</span>, CV_WINDOW_NORMAL);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="line__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a>.copyTo(<a class="code" href="line__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    cv::imshow(<span class="stringliteral">&quot;newframe&quot;</span>, <a class="code" href="line__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    newframe.copyTo(frame);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    cv::imshow(<span class="stringliteral">&quot;newframe&quot;</span>, newframe);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordflow">catch</span> (cv_bridge::Exception &amp;e)</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  {</div>
@@ -152,7 +151,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">// callback for off switch.</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#af213473e3f4fd759285abd77395edb7b">   66</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__detection_8cpp.html#af213473e3f4fd759285abd77395edb7b">detect</a>(cv::Mat image)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">int</span> detect(cv::Mat image)</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  cv::Size size(640, 480);  <span class="comment">// the dst image size,e.g.100x100</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  cv::Mat resizeimage;      <span class="comment">// dst image</span></div>
@@ -165,45 +164,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  cv::Mat hsv_image;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="comment">// keep only red color</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  inRange(hsv_image, cv::Scalar(0, 100, 100), cv::Scalar(179, 255, 255), <a class="code" href="line__detection_8cpp.html#afffefc71bd2ff1a09c9a079c5d9425c4">red_hue_image</a>);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  GaussianBlur(<a class="code" href="line__detection_8cpp.html#afffefc71bd2ff1a09c9a079c5d9425c4">red_hue_image</a>, <a class="code" href="line__detection_8cpp.html#afffefc71bd2ff1a09c9a079c5d9425c4">red_hue_image</a>, cv::Size(9, 9), 2, 2);  <span class="comment">// gaussian blur to remove false positives</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordtype">int</span> nonzero = countNonZero(<a class="code" href="line__detection_8cpp.html#afffefc71bd2ff1a09c9a079c5d9425c4">red_hue_image</a>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  inRange(hsv_image, cv::Scalar(0, 100, 100), cv::Scalar(179, 255, 255), red_hue_image);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  GaussianBlur(red_hue_image, red_hue_image, cv::Size(9, 9), 2, 2);  <span class="comment">// gaussian blur to remove false positives</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordtype">int</span> nonzero = countNonZero(red_hue_image);</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <span class="keywordtype">int</span> nonzeropercentage = nonzero / 3072;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordflow">if</span> (nonzero &gt; (3072 * <a class="code" href="line__detection_8cpp.html#a2f4f51c5a35082684ccbbcae8dd4dc25">percentage</a>))  <span class="comment">// return 1 if a major portion of image</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordflow">if</span> (nonzero &gt; (3072 * percentage))  <span class="comment">// return 1 if a major portion of image</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                                      <span class="comment">// has red color, Note : here the size of</span></div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                                      <span class="comment">// image is 640X480 = 307200.</span></div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">return</span> 1;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">   90</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;line_detection&quot;</span>);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  ros::NodeHandle n;</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  ros::Publisher robot_pub = n.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;/varun/ip/line_detection&quot;</span>, 1000);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_detection_switch&quot;</span>, 1000, &amp;<a class="code" href="line__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812">lineDetectedListener</a>);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_detection_switch&quot;</span>, 1000, &amp;lineDetectedListener);</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  image_transport::ImageTransport it(n);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>, 1, <a class="code" href="line__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a>);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>, 1, imageCallback);</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  ros::Rate loop_rate(12);  <span class="comment">// this rate should be same as the rate of camera</span></div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                            <span class="comment">// input. and in the case of other sensors , this</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                            <span class="comment">// rate should be same as there rate of data</span></div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                            <span class="comment">// generation</span></div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_detection/percentage&quot;</span>, <a class="code" href="line__detection_8cpp.html#a2f4f51c5a35082684ccbbcae8dd4dc25">percentage</a>);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_detection/percentage&quot;</span>, percentage);</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  dynamic_reconfigure::Server&lt;task_line::lineConfig&gt; server;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  dynamic_reconfigure::Server&lt;task_line::lineConfig&gt;::CallbackType f;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  f = boost::bind(&amp;<a class="code" href="line__detection_8cpp.html#a1f0c39f784e9f7180b6d94206e23c307">callback</a>, _1, _2);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  f = boost::bind(&amp;callback, _1, _2);</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  server.setCallback(f);</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keywordflow">if</span> (argc == 2)</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  {</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F3&quot;</span>, CV_WINDOW_NORMAL);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;percentage&quot;</span>, <span class="stringliteral">&quot;red_hue_image&quot;</span>, &amp;<a class="code" href="line__detection_8cpp.html#a2f4f51c5a35082684ccbbcae8dd4dc25">percentage</a>, 100, NULL);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;percentage&quot;</span>, <span class="stringliteral">&quot;red_hue_image&quot;</span>, &amp;percentage, 100, NULL);</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  }</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keywordflow">while</span> (ros::ok())</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="line__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>.data)  <span class="comment">// Check for invalid input</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">if</span> (!frame.data)  <span class="comment">// Check for invalid input</span></div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    {</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Could not open or find the image\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      ros::spinOnce();</div>
@@ -211,20 +210,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;      <span class="comment">// TODO(shikherverma) : for now I am resetting the video but later we need to handle this</span></div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;      <span class="comment">// camera not available error properly</span></div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    }</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="line__detection_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a>)</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordflow">if</span> (!IP)</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      <span class="keywordtype">int</span> alert = <a class="code" href="line__detection_8cpp.html#af213473e3f4fd759285abd77395edb7b">detect</a>(<a class="code" href="line__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a>);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      cv::imshow(<span class="stringliteral">&quot;red_hue_image&quot;</span>, <a class="code" href="line__detection_8cpp.html#afffefc71bd2ff1a09c9a079c5d9425c4">red_hue_image</a>);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;      <span class="keywordtype">int</span> alert = detect(frame);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      cv::imshow(<span class="stringliteral">&quot;red_hue_image&quot;</span>, red_hue_image);</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      <span class="keywordflow">if</span> (alert == 1)</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      {</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        std_msgs::Bool msg;</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        msg.data = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        robot_pub.publish(msg);</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: found line&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      }</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      <span class="keywordflow">else</span> <span class="keywordflow">if</span> (alert == 0)</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      {</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        std_msgs::Bool msg;</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        msg.data = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        robot_pub.publish(msg);</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: no line&quot;</span>, ros::this_node::getName().c_str());</div>
@@ -237,12 +236,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      loop_rate.sleep();</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      {</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == 32)</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;          <a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = -1;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keywordflow">if</span> (x == 32)</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;          x = -1;</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;          <a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = 32;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;          x = 32;</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      }</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == 32)</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      <span class="keywordflow">if</span> (x == 32)</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: PAUSED\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    }</div>
@@ -251,37 +250,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: waiting\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;      <span class="keywordflow">if</span> ((cvWaitKey(10) &amp; 255) == 32)</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      {</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == 32)</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;          <a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = -1;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordflow">if</span> (x == 32)</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;          x = -1;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;          <a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> = 32;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;          x = 32;</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      }</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a> == 32)</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      <span class="keywordflow">if</span> (x == 32)</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: PAUSED\n&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    }</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  }</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;}</div>
-<div class="ttc" id="line__detection_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="line__detection_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00090">line_detection.cpp:90</a></div></div>
-<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_adb12876cf5ceaeef805d9553c935730a"><div class="ttname"><a href="line__detection_8cpp.html#adb12876cf5ceaeef805d9553c935730a">video</a></div><div class="ttdeci">bool video</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00028">line_detection.cpp:28</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_a8b3ab54ed3e81c69863d65e4e6c424a0"><div class="ttname"><a href="line__detection_8cpp.html#a8b3ab54ed3e81c69863d65e4e6c424a0">flag</a></div><div class="ttdeci">bool flag</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00027">line_detection.cpp:27</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_a2f4f51c5a35082684ccbbcae8dd4dc25"><div class="ttname"><a href="line__detection_8cpp.html#a2f4f51c5a35082684ccbbcae8dd4dc25">percentage</a></div><div class="ttdeci">int percentage</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00022">line_detection.cpp:22</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_a374d7aaa964993d6dfc64ee492979812"><div class="ttname"><a href="line__detection_8cpp.html#a374d7aaa964993d6dfc64ee492979812">lineDetectedListener</a></div><div class="ttdeci">void lineDetectedListener(std_msgs::Bool msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00040">line_detection.cpp:40</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_afffefc71bd2ff1a09c9a079c5d9425c4"><div class="ttname"><a href="line__detection_8cpp.html#afffefc71bd2ff1a09c9a079c5d9425c4">red_hue_image</a></div><div class="ttdeci">cv::Mat red_hue_image</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00029">line_detection.cpp:29</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_a0d7dfd9133ce1e6b48bfdc8249db33d1"><div class="ttname"><a href="line__detection_8cpp.html#a0d7dfd9133ce1e6b48bfdc8249db33d1">imageCallback</a></div><div class="ttdeci">void imageCallback(const sensor_msgs::ImageConstPtr &amp;msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00045">line_detection.cpp:45</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_af213473e3f4fd759285abd77395edb7b"><div class="ttname"><a href="line__detection_8cpp.html#af213473e3f4fd759285abd77395edb7b">detect</a></div><div class="ttdeci">int detect(cv::Mat image)</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00066">line_detection.cpp:66</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_a31312a6881a1fcac1c757c95025214c5"><div class="ttname"><a href="line__detection_8cpp.html#a31312a6881a1fcac1c757c95025214c5">IP</a></div><div class="ttdeci">bool IP</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00026">line_detection.cpp:26</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_a1f0c39f784e9f7180b6d94206e23c307"><div class="ttname"><a href="line__detection_8cpp.html#a1f0c39f784e9f7180b6d94206e23c307">callback</a></div><div class="ttdeci">void callback(task_line::lineConfig &amp;config, uint32_t level)</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00034">line_detection.cpp:34</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_a6150e0515f7202e2fb518f7206ed97dc"><div class="ttname"><a href="line__detection_8cpp.html#a6150e0515f7202e2fb518f7206ed97dc">x</a></div><div class="ttdeci">int x</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00022">line_detection.cpp:22</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_a22bf1f49f906224b1a4b38010110e929"><div class="ttname"><a href="line__detection_8cpp.html#a22bf1f49f906224b1a4b38010110e929">frame</a></div><div class="ttdeci">cv::Mat frame</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00030">line_detection.cpp:30</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_adfa06e3fe6169ecfb3a176aa2f8194fc"><div class="ttname"><a href="line__detection_8cpp.html#adfa06e3fe6169ecfb3a176aa2f8194fc">newframe</a></div><div class="ttdeci">cv::Mat newframe</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00031">line_detection.cpp:31</a></div></div>
-<div class="ttc" id="line__detection_8cpp_html_ad43c3812e6d13e0518d9f8b8f463ffcf"><div class="ttname"><a href="line__detection_8cpp.html#ad43c3812e6d13e0518d9f8b8f463ffcf">count</a></div><div class="ttdeci">int count</div><div class="ttdef"><b>Definition:</b> <a href="line__detection_8cpp_source.html#l00032">line_detection.cpp:32</a></div></div>
+<div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00075">vid_pub.cpp:75</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 14 2016 08:51:34 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 16:18:50 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

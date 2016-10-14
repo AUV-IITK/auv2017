@@ -1,4 +1,0 @@
-<map id="thrusterEast" name="thrusterEast">
-<area shape="rect" id="node2" href="$testing__arduino__node_8cpp.html#a0911ab71d49fb01b45b4de7eaee40d52" title="PWMCbForward" alt="" coords="153,5,271,32"/>
-<area shape="rect" id="node3" href="$testing__arduino__node_8cpp.html#af69dbffb67e18c36c78217d5cc622ca7" title="PWMCbTurnSway" alt="" coords="147,56,277,83"/>
-</map>

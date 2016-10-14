@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">line_server.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="line__server_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;ros/ros.h&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;std_msgs/Float64.h&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;std_msgs/Float32.h&gt;</span></div>
@@ -112,192 +111,192 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;motion_commons/TurnActionResult.h&gt;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="line__server_8cpp.html#ae1bf426006d20b6412ffba4e053d2762">   24</a></span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionServer&lt;task_commons::lineAction&gt; <a class="code" href="line__server_8cpp.html#ae1bf426006d20b6412ffba4e053d2762">Server</a>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="line__server_8cpp.html#ac27db57c06cb41bc450ad678fcb6cad5">   25</a></span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;motion_commons::ForwardAction&gt; <a class="code" href="line__server_8cpp.html#ac27db57c06cb41bc450ad678fcb6cad5">Client_Forward</a>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="line__server_8cpp.html#a2470278e30c3496f368db6ad90a0d9ca">   26</a></span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;motion_commons::SidewardAction&gt; <a class="code" href="line__server_8cpp.html#a2470278e30c3496f368db6ad90a0d9ca">Client_Sideward</a>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="line__server_8cpp.html#a5bc50c66f7e4e539e96ad6c02ad813d2">   27</a></span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;motion_commons::TurnAction&gt; <a class="code" href="line__server_8cpp.html#a5bc50c66f7e4e539e96ad6c02ad813d2">Client_Turn</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionServer&lt;task_commons::lineAction&gt; Server;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;motion_commons::ForwardAction&gt; Client_Forward;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;motion_commons::SidewardAction&gt; Client_Sideward;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;motion_commons::TurnAction&gt; Client_Turn;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
 <div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html">   29</a></span>&#160;<span class="keyword">class </span><a class="code" href="classTaskLineInnerClass.html">TaskLineInnerClass</a></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">   32</a></span>&#160;  ros::NodeHandle <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">   33</a></span>&#160;  <a class="code" href="forward_8cpp.html#a1f23b0a8c53e091001b4c962a1347dae">Server</a> <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">   34</a></span>&#160;  std::string <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14">   35</a></span>&#160;  task_commons::lineFeedback <a class="code" href="classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14">feedback_</a>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a0175ab0e22c0e775b8bb81f9011e47cf">   36</a></span>&#160;  task_commons::lineResult <a class="code" href="classTaskLineInnerClass.html#a0175ab0e22c0e775b8bb81f9011e47cf">result_</a>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a228bc85f2092f5e61868d6b864610abd">   37</a></span>&#160;  ros::Subscriber <a class="code" href="classTaskLineInnerClass.html#a228bc85f2092f5e61868d6b864610abd">detection_data</a>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#af54ee53bf77cc31df2150fcb9c749928">   38</a></span>&#160;  ros::Subscriber <a class="code" href="classTaskLineInnerClass.html#af54ee53bf77cc31df2150fcb9c749928">yaw_sub</a>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#afa61378babcf0d925b090a08fd487cef">   39</a></span>&#160;  ros::Subscriber <a class="code" href="classTaskLineInnerClass.html#afa61378babcf0d925b090a08fd487cef">centralize_data</a>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a8657492b5efbdd587f1a48d4478c48bb">   40</a></span>&#160;  ros::Subscriber <a class="code" href="classTaskLineInnerClass.html#a8657492b5efbdd587f1a48d4478c48bb">angle_data</a>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120">   41</a></span>&#160;  ros::Publisher <a class="code" href="classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120">switch_centralize</a>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a29ea58ef7091bd7af9285886a91f2843">   42</a></span>&#160;  ros::Publisher <a class="code" href="classTaskLineInnerClass.html#a29ea58ef7091bd7af9285886a91f2843">switch_angle</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a00cbb3db5c2420b2891a5f2983ad88e0">   43</a></span>&#160;  ros::Publisher <a class="code" href="classTaskLineInnerClass.html#a00cbb3db5c2420b2891a5f2983ad88e0">switch_detection</a>;</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a43b3cec8b94356c87358ff6e12be9b7f">   44</a></span>&#160;  ros::Publisher <a class="code" href="classTaskLineInnerClass.html#a43b3cec8b94356c87358ff6e12be9b7f">present_X_</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a977b9dc415cc21cf6246abb4e51e5750">   45</a></span>&#160;  ros::Publisher <a class="code" href="classTaskLineInnerClass.html#a977b9dc415cc21cf6246abb4e51e5750">present_Y_</a>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ad3a40ff59b53acb92bf53f6d8739fca0">   46</a></span>&#160;  ros::Publisher <a class="code" href="classTaskLineInnerClass.html#ad3a40ff59b53acb92bf53f6d8739fca0">yaw_pub_</a>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#aba34864e2e3fa25db5147b69746a65e4">   47</a></span>&#160;  <a class="code" href="line__server_8cpp.html#ac27db57c06cb41bc450ad678fcb6cad5">Client_Forward</a> <a class="code" href="classTaskLineInnerClass.html#aba34864e2e3fa25db5147b69746a65e4">ForwardClient_</a>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ac84fc2f7b6d7587d0a84a36472c45074">   48</a></span>&#160;  <a class="code" href="line__server_8cpp.html#a2470278e30c3496f368db6ad90a0d9ca">Client_Sideward</a> <a class="code" href="classTaskLineInnerClass.html#ac84fc2f7b6d7587d0a84a36472c45074">SidewardClient_</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">   49</a></span>&#160;  <a class="code" href="line__server_8cpp.html#a5bc50c66f7e4e539e96ad6c02ad813d2">Client_Turn</a> <a class="code" href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">TurnClient_</a>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a64c19d97671241ee3f71dff3b0949ef7">   50</a></span>&#160;  motion_commons::ForwardGoal <a class="code" href="classTaskLineInnerClass.html#a64c19d97671241ee3f71dff3b0949ef7">forwardgoal</a>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a9095e6162d15d7aaae719a1913762b5c">   51</a></span>&#160;  motion_commons::SidewardGoal <a class="code" href="classTaskLineInnerClass.html#a9095e6162d15d7aaae719a1913762b5c">sidewardgoal</a>;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">   52</a></span>&#160;  motion_commons::TurnGoal <a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a51c740e5389b8268ca11287f67472291">   53</a></span>&#160;  std_msgs::Float64 <a class="code" href="classTaskLineInnerClass.html#a51c740e5389b8268ca11287f67472291">data_X_</a>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc">   54</a></span>&#160;  std_msgs::Float64 <a class="code" href="classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc">data_Y_</a>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">   55</a></span>&#160;  std_msgs::Float64 <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">   56</a></span>&#160;  <span class="keywordtype">bool</span> <a class="code" href="classTaskLineInnerClass.html#ab05dd6a3432c2bec5c4ecb6c80ad678d">isOrange</a>, <a class="code" href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">success</a>, <a class="code" href="classTaskLineInnerClass.html#ad5293972040c956454c3fa3857e14cf2">FrontCenter</a>, <a class="code" href="classTaskLineInnerClass.html#ad3e3e845a454bf7e9942f791fe449204">SideCenter</a>, <a class="code" href="classTaskLineInnerClass.html#ac564a672a843010916cd9189635cf783">LineAlign</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  ros::NodeHandle nh_;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  Server line_server_;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  std::string action_name_;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  task_commons::lineFeedback feedback_;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  task_commons::lineResult result_;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  ros::Subscriber detection_data;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  ros::Subscriber yaw_sub;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  ros::Subscriber centralize_data;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  ros::Subscriber angle_data;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  ros::Publisher switch_centralize;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  ros::Publisher switch_angle;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  ros::Publisher switch_detection;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  ros::Publisher present_X_;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  ros::Publisher present_Y_;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  ros::Publisher yaw_pub_;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  Client_Forward ForwardClient_;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  Client_Sideward SidewardClient_;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  Client_Turn TurnClient_;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  motion_commons::ForwardGoal forwardgoal;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  motion_commons::SidewardGoal sidewardgoal;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  motion_commons::TurnGoal turngoal;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  std_msgs::Float64 data_X_;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  std_msgs::Float64 data_Y_;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  std_msgs::Float64 angle_goal;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordtype">bool</span> isOrange, success, FrontCenter, SideCenter, LineAlign;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#af941d64caf8662a2639885ab36c32c88">   59</a></span>&#160;  <a class="code" href="classTaskLineInnerClass.html#af941d64caf8662a2639885ab36c32c88">TaskLineInnerClass</a>(std::string name, std::string node, std::string node1,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="classTaskLineInnerClass.html">TaskLineInnerClass</a>(std::string name, std::string node, std::string node1,</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                     std::string node2)</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    :  <span class="comment">// here we are defining the server, third argument is optional</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>(<a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>, name, boost::bind(&amp;<a class="code" href="classTaskLineInnerClass.html">TaskLineInnerClass</a>::<a class="code" href="classTaskLineInnerClass.html#ad60b9f7c6bd3827cefb7c3200fd3a345">analysisCB</a>, this, _1), false)</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    , <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>(name)</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    , <a class="code" href="classTaskLineInnerClass.html#aba34864e2e3fa25db5147b69746a65e4">ForwardClient_</a>(node)</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    , <a class="code" href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">TurnClient_</a>(node1)</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    , <a class="code" href="classTaskLineInnerClass.html#ac84fc2f7b6d7587d0a84a36472c45074">SidewardClient_</a>(node2)</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    line_server_(nh_, name, boost::bind(&amp;TaskLineInnerClass::analysisCB, <span class="keyword">this</span>, _1), <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    , action_name_(name)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    , ForwardClient_(node)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    , TurnClient_(node1)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    , SidewardClient_(node2)</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  {</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;inside constructor&quot;</span>);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.registerPreemptCallback(boost::bind(&amp;<a class="code" href="classTaskLineInnerClass.html#a384ef8e929a02351dc89260ce0a88fd4">TaskLineInnerClass::preemptCB</a>, <span class="keyword">this</span>));</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a43b3cec8b94356c87358ff6e12be9b7f">present_X_</a> = <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/y_distance&quot;</span>, 1000);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a977b9dc415cc21cf6246abb4e51e5750">present_Y_</a> = <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/x_distance&quot;</span>, 1000);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a00cbb3db5c2420b2891a5f2983ad88e0">switch_detection</a> = <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_detection_switch&quot;</span>, 1000);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a29ea58ef7091bd7af9285886a91f2843">switch_angle</a> = <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_angle_switch&quot;</span>, 1000);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120">switch_centralize</a> = <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_centralize_switch&quot;</span>, 1000);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad3a40ff59b53acb92bf53f6d8739fca0">yaw_pub_</a> = <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/yaw&quot;</span>, 1000);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    line_server_.registerPreemptCallback(boost::bind(&amp;TaskLineInnerClass::preemptCB, <span class="keyword">this</span>));</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    present_X_ = nh_.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/y_distance&quot;</span>, 1000);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    present_Y_ = nh_.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/x_distance&quot;</span>, 1000);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    switch_detection = nh_.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_detection_switch&quot;</span>, 1000);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    switch_angle = nh_.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_angle_switch&quot;</span>, 1000);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    switch_centralize = nh_.advertise&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_centralize_switch&quot;</span>, 1000);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    yaw_pub_ = nh_.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/motion/yaw&quot;</span>, 1000);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a228bc85f2092f5e61868d6b864610abd">detection_data</a> = <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;/varun/ip/line_detection&quot;</span>, 1000,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                                                   &amp;<a class="code" href="classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed">TaskLineInnerClass::lineDetectedListener</a>, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#af54ee53bf77cc31df2150fcb9c749928">yaw_sub</a> = <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/sensors/imu/yaw&quot;</span>, 1000, &amp;<a class="code" href="classTaskLineInnerClass.html#a46012579c788ff7bcc51816bb6587db6">TaskLineInnerClass::yawCB</a>, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#afa61378babcf0d925b090a08fd487cef">centralize_data</a> = <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.subscribe&lt;std_msgs::Float64MultiArray&gt;(<span class="stringliteral">&quot;/varun/ip/line_centralize&quot;</span>, 1000,</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                                                                 &amp;<a class="code" href="classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0">TaskLineInnerClass::lineCentralizeListener</a>, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a8657492b5efbdd587f1a48d4478c48bb">angle_data</a> =</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <a class="code" href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">nh_</a>.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/ip/line_angle&quot;</span>, 1000, &amp;<a class="code" href="classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7">TaskLineInnerClass::lineAngleListener</a>, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    detection_data = nh_.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;/varun/ip/line_detection&quot;</span>, 1000,</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                                                   &amp;TaskLineInnerClass::lineDetectedListener, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    yaw_sub = nh_.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/sensors/imu/yaw&quot;</span>, 1000, &amp;TaskLineInnerClass::yawCB, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    centralize_data = nh_.subscribe&lt;std_msgs::Float64MultiArray&gt;(<span class="stringliteral">&quot;/varun/ip/line_centralize&quot;</span>, 1000,</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                                                                 &amp;TaskLineInnerClass::lineCentralizeListener, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    angle_data =</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        nh_.subscribe&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/ip/line_angle&quot;</span>, 1000, &amp;TaskLineInnerClass::lineAngleListener, <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.start();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    line_server_.start();</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a097dc61f8f5a90b18e72b7b5bac7f392">   88</a></span>&#160;  <a class="code" href="classTaskLineInnerClass.html#a097dc61f8f5a90b18e72b7b5bac7f392">~TaskLineInnerClass</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  ~<a class="code" href="classTaskLineInnerClass.html">TaskLineInnerClass</a>(<span class="keywordtype">void</span>)</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  {</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  }</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a46012579c788ff7bcc51816bb6587db6">   92</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a46012579c788ff7bcc51816bb6587db6">yawCB</a>(std_msgs::Float64 imu_data)</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">void</span> yawCB(std_msgs::Float64 imu_data)</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad3a40ff59b53acb92bf53f6d8739fca0">yaw_pub_</a>.publish(imu_data);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    yaw_pub_.publish(imu_data);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed">   97</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed">lineDetectedListener</a>(std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">void</span> lineDetectedListener(std_msgs::Bool msg)</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  {</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">if</span> (msg.data)</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#ab05dd6a3432c2bec5c4ecb6c80ad678d">isOrange</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      isOrange = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#ab05dd6a3432c2bec5c4ecb6c80ad678d">isOrange</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;      isOrange = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  }</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0">  105</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0">lineCentralizeListener</a>(std_msgs::Float64MultiArray array)</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordtype">void</span> lineCentralizeListener(std_msgs::Float64MultiArray array)</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a51c740e5389b8268ca11287f67472291">data_X_</a>.data = array.data[0];</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc">data_Y_</a>.data = array.data[1];</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a43b3cec8b94356c87358ff6e12be9b7f">present_X_</a>.publish(<a class="code" href="classTaskLineInnerClass.html#a51c740e5389b8268ca11287f67472291">data_X_</a>);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a977b9dc415cc21cf6246abb4e51e5750">present_Y_</a>.publish(<a class="code" href="classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc">data_Y_</a>);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    data_X_.data = array.data[0];</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    data_Y_.data = array.data[1];</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    present_X_.publish(data_X_);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    present_Y_.publish(data_Y_);</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  }</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7">  113</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7">lineAngleListener</a>(std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keywordtype">void</span> lineAngleListener(std_msgs::Float64 msg)</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  {</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data = msg.data;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    angle_goal.data = msg.data;</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  }</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ae07eb165184873c268556b940a8aa7ba">  118</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#ae07eb165184873c268556b940a8aa7ba">spinThreadSidewardCamera</a>()</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordtype">void</span> spinThreadSidewardCamera()</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="line__server_8cpp.html#a2470278e30c3496f368db6ad90a0d9ca">Client_Sideward</a> &amp;tempSideward = <a class="code" href="classTaskLineInnerClass.html#ac84fc2f7b6d7587d0a84a36472c45074">SidewardClient_</a>;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    Client_Sideward &amp;tempSideward = SidewardClient_;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    tempSideward.waitForResult();</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad3e3e845a454bf7e9942f791fe449204">SideCenter</a> = (*(tempSideward.getResult())).Result;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#ad3e3e845a454bf7e9942f791fe449204">SideCenter</a>)</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    SideCenter = (*(tempSideward.getResult())).Result;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordflow">if</span> (SideCenter)</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    {</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Bot is at side center&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Bot is at side center&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    {</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Bot is not at side center, something went wrong&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Bot is not at side center, something went wrong&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      ros::shutdown();</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  }</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
-<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a51db394798f796493568d62db8b3aa83">  134</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a51db394798f796493568d62db8b3aa83">spinThreadForwardCamera</a>()</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keywordtype">void</span> spinThreadForwardCamera()</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  {</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <a class="code" href="line__server_8cpp.html#ac27db57c06cb41bc450ad678fcb6cad5">Client_Forward</a> &amp;tempForward = <a class="code" href="classTaskLineInnerClass.html#aba34864e2e3fa25db5147b69746a65e4">ForwardClient_</a>;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    Client_Forward &amp;tempForward = ForwardClient_;</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    tempForward.waitForResult();</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad5293972040c956454c3fa3857e14cf2">FrontCenter</a> = (*(tempForward.getResult())).Result;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#ad5293972040c956454c3fa3857e14cf2">FrontCenter</a>)</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    FrontCenter = (*(tempForward.getResult())).Result;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keywordflow">if</span> (FrontCenter)</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    {</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Bot is at Front center&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s Bot is at Front center&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    }</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    {</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Bot is not at Front center, something went wrong&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Bot is not at Front center, something went wrong&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      ros::shutdown();</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    }</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  }</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
-<div class="line"><a name="l00150"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a17b47434216fa587ca2d5ca31756257d">  150</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a17b47434216fa587ca2d5ca31756257d">spinThreadTurnCamera</a>()</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  <span class="keywordtype">void</span> spinThreadTurnCamera()</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  {</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <a class="code" href="line__server_8cpp.html#a5bc50c66f7e4e539e96ad6c02ad813d2">Client_Turn</a> &amp;tempTurn = <a class="code" href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">TurnClient_</a>;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    Client_Turn &amp;tempTurn = TurnClient_;</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    tempTurn.waitForResult();</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ac564a672a843010916cd9189635cf783">LineAlign</a> = (*(tempTurn.getResult())).Result;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#ac564a672a843010916cd9189635cf783">LineAlign</a>)</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    LineAlign = (*(tempTurn.getResult())).Result;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">if</span> (LineAlign)</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    {</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Bot is at side center&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Bot is at side center&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    }</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  }</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
-<div class="line"><a name="l00161"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a384ef8e929a02351dc89260ce0a88fd4">  161</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a384ef8e929a02351dc89260ce0a88fd4">preemptCB</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  <span class="keywordtype">void</span> preemptCB(<span class="keywordtype">void</span>)</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  {</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="comment">// Not actually preempting the goal because Shibhansh did it in analysisCB</span></div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: Called when preempted from the client&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: Called when preempted from the client&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  }</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
-<div class="line"><a name="l00167"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ad60b9f7c6bd3827cefb7c3200fd3a345">  167</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#ad60b9f7c6bd3827cefb7c3200fd3a345">analysisCB</a>(<span class="keyword">const</span> task_commons::lineGoalConstPtr <a class="code" href="forwardTest_8cpp.html#a900bebf5b52612aabe4b22507010e0c2">goal</a>)</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <span class="keywordtype">void</span> analysisCB(<span class="keyword">const</span> task_commons::lineGoalConstPtr goal)</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  {</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;Inside analysisCB&quot;</span>);</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">success</a> = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ab05dd6a3432c2bec5c4ecb6c80ad678d">isOrange</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ac564a672a843010916cd9189635cf783">LineAlign</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad5293972040c956454c3fa3857e14cf2">FrontCenter</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ad3e3e845a454bf7e9942f791fe449204">SideCenter</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    success = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    isOrange = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    LineAlign = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    FrontCenter = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    SideCenter = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    ros::Rate looprate(12);</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordflow">if</span> (!<a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.isActive())</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordflow">if</span> (!line_server_.isActive())</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s Waiting for Forward server to start.&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aba34864e2e3fa25db5147b69746a65e4">ForwardClient_</a>.waitForServer();</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ac84fc2f7b6d7587d0a84a36472c45074">SidewardClient_</a>.waitForServer();</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">TurnClient_</a>.waitForServer();</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s Waiting for Forward server to start.&quot;</span>, action_name_.c_str());</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    ForwardClient_.waitForServer();</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    SidewardClient_.waitForServer();</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    TurnClient_.waitForServer();</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a196c7a18e88a27bf727ce68df3e50bd3">TaskLineInnerClass::detection_switch_on</a>();</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    TaskLineInnerClass::detection_switch_on();</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="comment">// Stabilization of yaw</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>.AngleToTurn = 0;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>.loop = 100000;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">TurnClient_</a>.sendGoal(<a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    turngoal.AngleToTurn = 0;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    turngoal.loop = 100000;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    TurnClient_.sendGoal(turngoal);</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="comment">// start moving forward.</span></div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="comment">// send initial data to forward.</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a64c19d97671241ee3f71dff3b0949ef7">forwardgoal</a>.Goal = 100;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a64c19d97671241ee3f71dff3b0949ef7">forwardgoal</a>.loop = 10;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aba34864e2e3fa25db5147b69746a65e4">ForwardClient_</a>.sendGoal(<a class="code" href="classTaskLineInnerClass.html#a64c19d97671241ee3f71dff3b0949ef7">forwardgoal</a>);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    forwardgoal.Goal = 100;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    forwardgoal.loop = 10;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    ForwardClient_.sendGoal(forwardgoal);</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;    <span class="keywordflow">while</span> (goal-&gt;order)</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    {</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.isPreemptRequested() || !ros::ok())</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;      <span class="keywordflow">if</span> (line_server_.isPreemptRequested() || !ros::ok())</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;      {</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        <span class="comment">// set the action state to preempted</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.setPreempted();</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <a class="code" href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">success</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        line_server_.setPreempted();</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        success = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;      }</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;      looprate.sleep();</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#ab05dd6a3432c2bec5c4ecb6c80ad678d">isOrange</a>)</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      <span class="keywordflow">if</span> (isOrange)</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      {</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        <span class="comment">// stop will happen outside while loop so if preempted then too it will</span></div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="comment">// stop</span></div>
@@ -305,147 +304,147 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;      }</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;      <span class="comment">// publish the feedback</span></div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14">feedback_</a>.AngleRemaining = <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.publishFeedback(<a class="code" href="classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14">feedback_</a>);</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: searching line&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;      feedback_.AngleRemaining = angle_goal.data;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;      line_server_.publishFeedback(feedback_);</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: searching line&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    }</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aba34864e2e3fa25db5147b69746a65e4">ForwardClient_</a>.cancelGoal();  <span class="comment">// stop motion here</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#acc1c7357342276415f428d1948b28af8">TaskLineInnerClass::detection_switch_off</a>();</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    ForwardClient_.cancelGoal();  <span class="comment">// stop motion here</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    TaskLineInnerClass::detection_switch_off();</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a888642542a13bc21bfe0d387472548fd">TaskLineInnerClass::centralize_switch_on</a>();</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    TaskLineInnerClass::centralize_switch_on();</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a9095e6162d15d7aaae719a1913762b5c">sidewardgoal</a>.Goal = 0;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a9095e6162d15d7aaae719a1913762b5c">sidewardgoal</a>.loop = 10;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ac84fc2f7b6d7587d0a84a36472c45074">SidewardClient_</a>.sendGoal(<a class="code" href="classTaskLineInnerClass.html#a9095e6162d15d7aaae719a1913762b5c">sidewardgoal</a>);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    boost::thread spin_thread_sideward_camera(&amp;<a class="code" href="classTaskLineInnerClass.html#ae07eb165184873c268556b940a8aa7ba">TaskLineInnerClass::spinThreadSidewardCamera</a>, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    sidewardgoal.Goal = 0;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    sidewardgoal.loop = 10;</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    SidewardClient_.sendGoal(sidewardgoal);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    boost::thread spin_thread_sideward_camera(&amp;TaskLineInnerClass::spinThreadSidewardCamera, <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a64c19d97671241ee3f71dff3b0949ef7">forwardgoal</a>.Goal = 0;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a64c19d97671241ee3f71dff3b0949ef7">forwardgoal</a>.loop = 10;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aba34864e2e3fa25db5147b69746a65e4">ForwardClient_</a>.sendGoal(<a class="code" href="classTaskLineInnerClass.html#a64c19d97671241ee3f71dff3b0949ef7">forwardgoal</a>);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    boost::thread spin_thread_forward_camera(&amp;<a class="code" href="classTaskLineInnerClass.html#a51db394798f796493568d62db8b3aa83">TaskLineInnerClass::spinThreadForwardCamera</a>, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    forwardgoal.Goal = 0;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    forwardgoal.loop = 10;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    ForwardClient_.sendGoal(forwardgoal);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    boost::thread spin_thread_forward_camera(&amp;TaskLineInnerClass::spinThreadForwardCamera, <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="keywordflow">while</span> (goal-&gt;order)</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    {</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.isPreemptRequested() || !ros::ok())</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;      <span class="keywordflow">if</span> (line_server_.isPreemptRequested() || !ros::ok())</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;      {</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="comment">// set the action state to preempted</span></div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.setPreempted();</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        <a class="code" href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">success</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        line_server_.setPreempted();</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        success = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;      }</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;      looprate.sleep();</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#ad5293972040c956454c3fa3857e14cf2">FrontCenter</a> &amp;&amp; <a class="code" href="classTaskLineInnerClass.html#ad3e3e845a454bf7e9942f791fe449204">SideCenter</a>)</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;      <span class="keywordflow">if</span> (FrontCenter &amp;&amp; SideCenter)</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;      {</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Line has been centralized.&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Line has been centralized.&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;      }</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;      <span class="comment">// publish the feedback</span></div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14">feedback_</a>.AngleRemaining = <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.publishFeedback(<a class="code" href="classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14">feedback_</a>);</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s:: x = %f, y = %f&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str(), <a class="code" href="classTaskLineInnerClass.html#a51c740e5389b8268ca11287f67472291">data_X_</a>.data, <a class="code" href="classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc">data_Y_</a>.data);</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;      feedback_.AngleRemaining = angle_goal.data;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;      line_server_.publishFeedback(feedback_);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s:: x = %f, y = %f&quot;</span>, action_name_.c_str(), data_X_.data, data_Y_.data);</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    }</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#ae9b668844b226c17307a08f720d9ced3">TaskLineInnerClass::centralize_switch_off</a>();</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    TaskLineInnerClass::centralize_switch_off();</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a41ec4a9e7262affadb1cb4c092656b81">TaskLineInnerClass::angle_switch_on</a>();</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    TaskLineInnerClass::angle_switch_on();</div>
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">TurnClient_</a>.cancelGoal();  <span class="comment">// stopped stablisation</span></div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    TurnClient_.cancelGoal();  <span class="comment">// stopped stablisation</span></div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>.AngleToTurn = <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>.loop = 10;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">TurnClient_</a>.sendGoal(<a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>);</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    boost::thread spin_thread_turn_camera(&amp;<a class="code" href="classTaskLineInnerClass.html#a17b47434216fa587ca2d5ca31756257d">TaskLineInnerClass::spinThreadTurnCamera</a>, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    turngoal.AngleToTurn = angle_goal.data;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    turngoal.loop = 10;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    TurnClient_.sendGoal(turngoal);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    boost::thread spin_thread_turn_camera(&amp;TaskLineInnerClass::spinThreadTurnCamera, <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keywordflow">while</span> (goal-&gt;order)</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    {</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.isPreemptRequested() || !ros::ok())</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;      <span class="keywordflow">if</span> (line_server_.isPreemptRequested() || !ros::ok())</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      {</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="comment">// set the action state to preempted</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.setPreempted();</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        <a class="code" href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">success</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        line_server_.setPreempted();</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        success = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;      }</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;      looprate.sleep();</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#ac564a672a843010916cd9189635cf783">LineAlign</a>)</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;      <span class="keywordflow">if</span> (LineAlign)</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      {</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data &lt;= 5.0 &amp;&amp; <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data &gt;= -5.0)</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="keywordflow">if</span> (angle_goal.data &lt;= 5.0 &amp;&amp; angle_goal.data &gt;= -5.0)</div>
 <div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        {</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;          ROS_INFO(<span class="stringliteral">&quot;%s: line is aligned.&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;          ROS_INFO(<span class="stringliteral">&quot;%s: line is aligned.&quot;</span>, action_name_.c_str());</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;          <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        }</div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        {</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;          ROS_INFO(<span class="stringliteral">&quot;%s: resending the angle goal.&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;          <a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>.AngleToTurn = <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;          <a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>.loop = 10;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;          <a class="code" href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">TurnClient_</a>.sendGoal(<a class="code" href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">turngoal</a>);</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;          ROS_INFO(<span class="stringliteral">&quot;%s: resending the angle goal.&quot;</span>, action_name_.c_str());</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;          turngoal.AngleToTurn = angle_goal.data;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;          turngoal.loop = 10;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;          TurnClient_.sendGoal(turngoal);</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        }</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      }</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14">feedback_</a>.AngleRemaining = <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data;</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.publishFeedback(<a class="code" href="classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14">feedback_</a>);</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: angle remaining = %f&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str(), <a class="code" href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">angle_goal</a>.data);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      feedback_.AngleRemaining = angle_goal.data;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      line_server_.publishFeedback(feedback_);</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: angle remaining = %f&quot;</span>, action_name_.c_str(), angle_goal.data);</div>
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      ros::spinOnce();</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    }</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">success</a>)</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <span class="keywordflow">if</span> (success)</div>
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    {</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#ab05dd6a3432c2bec5c4ecb6c80ad678d">isOrange</a> = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#a0175ab0e22c0e775b8bb81f9011e47cf">result_</a>.MotionCompleted = <a class="code" href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">success</a>;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Succeeded&quot;</span>, <a class="code" href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">action_name_</a>.c_str());</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      <a class="code" href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">line_server_</a>.setSucceeded(<a class="code" href="classTaskLineInnerClass.html#a0175ab0e22c0e775b8bb81f9011e47cf">result_</a>);</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      isOrange = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      result_.MotionCompleted = success;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: Succeeded&quot;</span>, action_name_.c_str());</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;      line_server_.setSucceeded(result_);</div>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    }</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  }</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
-<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a196c7a18e88a27bf727ce68df3e50bd3">  313</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a196c7a18e88a27bf727ce68df3e50bd3">detection_switch_on</a>()</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  <span class="keywordtype">void</span> detection_switch_on()</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  {</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    std_msgs::Bool msg;</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a00cbb3db5c2420b2891a5f2983ad88e0">switch_detection</a>.publish(msg);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    switch_detection.publish(msg);</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  }</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
-<div class="line"><a name="l00320"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#acc1c7357342276415f428d1948b28af8">  320</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#acc1c7357342276415f428d1948b28af8">detection_switch_off</a>()</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  <span class="keywordtype">void</span> detection_switch_off()</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;  {</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    std_msgs::Bool msg;</div>
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a00cbb3db5c2420b2891a5f2983ad88e0">switch_detection</a>.publish(msg);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    switch_detection.publish(msg);</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;  }</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;</div>
-<div class="line"><a name="l00327"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a41ec4a9e7262affadb1cb4c092656b81">  327</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a41ec4a9e7262affadb1cb4c092656b81">angle_switch_on</a>()</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <span class="keywordtype">void</span> angle_switch_on()</div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  {</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    std_msgs::Bool msg;</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a29ea58ef7091bd7af9285886a91f2843">switch_angle</a>.publish(msg);</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    switch_angle.publish(msg);</div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;  }</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;</div>
-<div class="line"><a name="l00334"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#aa83dce2e31d0109c119828ddc401df6d">  334</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#aa83dce2e31d0109c119828ddc401df6d">angle_switch_off</a>()</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  <span class="keywordtype">void</span> angle_switch_off()</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  {</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    std_msgs::Bool msg;</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a29ea58ef7091bd7af9285886a91f2843">switch_angle</a>.publish(msg);</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    switch_angle.publish(msg);</div>
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  }</div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
-<div class="line"><a name="l00341"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#a888642542a13bc21bfe0d387472548fd">  341</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#a888642542a13bc21bfe0d387472548fd">centralize_switch_on</a>()</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  <span class="keywordtype">void</span> centralize_switch_on()</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  {</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    std_msgs::Bool msg;</div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120">switch_centralize</a>.publish(msg);</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    switch_centralize.publish(msg);</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;  }</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;</div>
-<div class="line"><a name="l00348"></a><span class="lineno"><a class="line" href="classTaskLineInnerClass.html#ae9b668844b226c17307a08f720d9ced3">  348</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskLineInnerClass.html#ae9b668844b226c17307a08f720d9ced3">centralize_switch_off</a>()</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  <span class="keywordtype">void</span> centralize_switch_off()</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  {</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    std_msgs::Bool <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    std_msgs::Bool msg;</div>
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    <a class="code" href="classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120">switch_centralize</a>.publish(msg);</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    switch_centralize.publish(msg);</div>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  }</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;};</div>
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="comment">//***********************************************************************************//</span></div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
-<div class="line"><a name="l00357"></a><span class="lineno"><a class="line" href="line__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">  357</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="line__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
 <div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;{</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;line_server&quot;</span>);</div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
@@ -456,65 +455,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  ros::spin();</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;}</div>
-<div class="ttc" id="classTaskLineInnerClass_html_a3e167551112a32f8666a54f4d04d98b7"><div class="ttname"><a href="classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7">TaskLineInnerClass::lineAngleListener</a></div><div class="ttdeci">void lineAngleListener(std_msgs::Float64 msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00113">line_server.cpp:113</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a1d55a176f3640caec242edc3174b87d9"><div class="ttname"><a href="classTaskLineInnerClass.html#a1d55a176f3640caec242edc3174b87d9">TaskLineInnerClass::success</a></div><div class="ttdeci">bool success</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00056">line_server.cpp:56</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ac0bdb40884c7d8792a37f5a8c818e1a0"><div class="ttname"><a href="classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0">TaskLineInnerClass::lineCentralizeListener</a></div><div class="ttdeci">void lineCentralizeListener(std_msgs::Float64MultiArray array)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00105">line_server.cpp:105</a></div></div>
-<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ad3a40ff59b53acb92bf53f6d8739fca0"><div class="ttname"><a href="classTaskLineInnerClass.html#ad3a40ff59b53acb92bf53f6d8739fca0">TaskLineInnerClass::yaw_pub_</a></div><div class="ttdeci">ros::Publisher yaw_pub_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00046">line_server.cpp:46</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ad5aa1a7c17a7315d6b03f250c804fcb9"><div class="ttname"><a href="classTaskLineInnerClass.html#ad5aa1a7c17a7315d6b03f250c804fcb9">TaskLineInnerClass::line_server_</a></div><div class="ttdeci">Server line_server_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00033">line_server.cpp:33</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a0175ab0e22c0e775b8bb81f9011e47cf"><div class="ttname"><a href="classTaskLineInnerClass.html#a0175ab0e22c0e775b8bb81f9011e47cf">TaskLineInnerClass::result_</a></div><div class="ttdeci">task_commons::lineResult result_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00036">line_server.cpp:36</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_aba34864e2e3fa25db5147b69746a65e4"><div class="ttname"><a href="classTaskLineInnerClass.html#aba34864e2e3fa25db5147b69746a65e4">TaskLineInnerClass::ForwardClient_</a></div><div class="ttdeci">Client_Forward ForwardClient_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00047">line_server.cpp:47</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ad5293972040c956454c3fa3857e14cf2"><div class="ttname"><a href="classTaskLineInnerClass.html#ad5293972040c956454c3fa3857e14cf2">TaskLineInnerClass::FrontCenter</a></div><div class="ttdeci">bool FrontCenter</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00056">line_server.cpp:56</a></div></div>
-<div class="ttc" id="forward_8cpp_html_a1f23b0a8c53e091001b4c962a1347dae"><div class="ttname"><a href="forward_8cpp.html#a1f23b0a8c53e091001b4c962a1347dae">Server</a></div><div class="ttdeci">actionlib::SimpleActionServer&lt; motion_commons::ForwardAction &gt; Server</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00013">forward.cpp:13</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a2401f1eb4e10f35af34394ec91a3a8ec"><div class="ttname"><a href="classTaskLineInnerClass.html#a2401f1eb4e10f35af34394ec91a3a8ec">TaskLineInnerClass::action_name_</a></div><div class="ttdeci">std::string action_name_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00034">line_server.cpp:34</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_af1f459398cf589de68b197126b91b4bc"><div class="ttname"><a href="classTaskLineInnerClass.html#af1f459398cf589de68b197126b91b4bc">TaskLineInnerClass::data_Y_</a></div><div class="ttdeci">std_msgs::Float64 data_Y_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00054">line_server.cpp:54</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_aa83dce2e31d0109c119828ddc401df6d"><div class="ttname"><a href="classTaskLineInnerClass.html#aa83dce2e31d0109c119828ddc401df6d">TaskLineInnerClass::angle_switch_off</a></div><div class="ttdeci">void angle_switch_off()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00334">line_server.cpp:334</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a81f98e79f9e7c9e9f39ea3ed39406120"><div class="ttname"><a href="classTaskLineInnerClass.html#a81f98e79f9e7c9e9f39ea3ed39406120">TaskLineInnerClass::switch_centralize</a></div><div class="ttdeci">ros::Publisher switch_centralize</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00041">line_server.cpp:41</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a196c7a18e88a27bf727ce68df3e50bd3"><div class="ttname"><a href="classTaskLineInnerClass.html#a196c7a18e88a27bf727ce68df3e50bd3">TaskLineInnerClass::detection_switch_on</a></div><div class="ttdeci">void detection_switch_on()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00313">line_server.cpp:313</a></div></div>
-<div class="ttc" id="line__server_8cpp_html_a2470278e30c3496f368db6ad90a0d9ca"><div class="ttname"><a href="line__server_8cpp.html#a2470278e30c3496f368db6ad90a0d9ca">Client_Sideward</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::SidewardAction &gt; Client_Sideward</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00026">line_server.cpp:26</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a228bc85f2092f5e61868d6b864610abd"><div class="ttname"><a href="classTaskLineInnerClass.html#a228bc85f2092f5e61868d6b864610abd">TaskLineInnerClass::detection_data</a></div><div class="ttdeci">ros::Subscriber detection_data</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00037">line_server.cpp:37</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a384ef8e929a02351dc89260ce0a88fd4"><div class="ttname"><a href="classTaskLineInnerClass.html#a384ef8e929a02351dc89260ce0a88fd4">TaskLineInnerClass::preemptCB</a></div><div class="ttdeci">void preemptCB(void)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00161">line_server.cpp:161</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ad3e3e845a454bf7e9942f791fe449204"><div class="ttname"><a href="classTaskLineInnerClass.html#ad3e3e845a454bf7e9942f791fe449204">TaskLineInnerClass::SideCenter</a></div><div class="ttdeci">bool SideCenter</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00056">line_server.cpp:56</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a17b47434216fa587ca2d5ca31756257d"><div class="ttname"><a href="classTaskLineInnerClass.html#a17b47434216fa587ca2d5ca31756257d">TaskLineInnerClass::spinThreadTurnCamera</a></div><div class="ttdeci">void spinThreadTurnCamera()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00150">line_server.cpp:150</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ae9b668844b226c17307a08f720d9ced3"><div class="ttname"><a href="classTaskLineInnerClass.html#ae9b668844b226c17307a08f720d9ced3">TaskLineInnerClass::centralize_switch_off</a></div><div class="ttdeci">void centralize_switch_off()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00348">line_server.cpp:348</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a41ec4a9e7262affadb1cb4c092656b81"><div class="ttname"><a href="classTaskLineInnerClass.html#a41ec4a9e7262affadb1cb4c092656b81">TaskLineInnerClass::angle_switch_on</a></div><div class="ttdeci">void angle_switch_on()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00327">line_server.cpp:327</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ada8cac94ffa1801a695acde05910d2f5"><div class="ttname"><a href="classTaskLineInnerClass.html#ada8cac94ffa1801a695acde05910d2f5">TaskLineInnerClass::nh_</a></div><div class="ttdeci">ros::NodeHandle nh_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00032">line_server.cpp:32</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a8657492b5efbdd587f1a48d4478c48bb"><div class="ttname"><a href="classTaskLineInnerClass.html#a8657492b5efbdd587f1a48d4478c48bb">TaskLineInnerClass::angle_data</a></div><div class="ttdeci">ros::Subscriber angle_data</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00040">line_server.cpp:40</a></div></div>
-<div class="ttc" id="line__server_8cpp_html_ac27db57c06cb41bc450ad678fcb6cad5"><div class="ttname"><a href="line__server_8cpp.html#ac27db57c06cb41bc450ad678fcb6cad5">Client_Forward</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::ForwardAction &gt; Client_Forward</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00025">line_server.cpp:25</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ad60b9f7c6bd3827cefb7c3200fd3a345"><div class="ttname"><a href="classTaskLineInnerClass.html#ad60b9f7c6bd3827cefb7c3200fd3a345">TaskLineInnerClass::analysisCB</a></div><div class="ttdeci">void analysisCB(const task_commons::lineGoalConstPtr goal)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00167">line_server.cpp:167</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a00cbb3db5c2420b2891a5f2983ad88e0"><div class="ttname"><a href="classTaskLineInnerClass.html#a00cbb3db5c2420b2891a5f2983ad88e0">TaskLineInnerClass::switch_detection</a></div><div class="ttdeci">ros::Publisher switch_detection</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00043">line_server.cpp:43</a></div></div>
-<div class="ttc" id="line__server_8cpp_html_ae1bf426006d20b6412ffba4e053d2762"><div class="ttname"><a href="line__server_8cpp.html#ae1bf426006d20b6412ffba4e053d2762">Server</a></div><div class="ttdeci">actionlib::SimpleActionServer&lt; task_commons::lineAction &gt; Server</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00024">line_server.cpp:24</a></div></div>
-<div class="ttc" id="forwardTest_8cpp_html_a900bebf5b52612aabe4b22507010e0c2"><div class="ttname"><a href="forwardTest_8cpp.html#a900bebf5b52612aabe4b22507010e0c2">goal</a></div><div class="ttdeci">motion_commons::ForwardGoal goal</div><div class="ttdef"><b>Definition:</b> <a href="forwardTest_8cpp_source.html#l00018">forwardTest.cpp:18</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a62146c23ab51a86dc6244430754e3d04"><div class="ttname"><a href="classTaskLineInnerClass.html#a62146c23ab51a86dc6244430754e3d04">TaskLineInnerClass::turngoal</a></div><div class="ttdeci">motion_commons::TurnGoal turngoal</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00052">line_server.cpp:52</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a46012579c788ff7bcc51816bb6587db6"><div class="ttname"><a href="classTaskLineInnerClass.html#a46012579c788ff7bcc51816bb6587db6">TaskLineInnerClass::yawCB</a></div><div class="ttdeci">void yawCB(std_msgs::Float64 imu_data)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00092">line_server.cpp:92</a></div></div>
-<div class="ttc" id="line__server_8cpp_html_a5bc50c66f7e4e539e96ad6c02ad813d2"><div class="ttname"><a href="line__server_8cpp.html#a5bc50c66f7e4e539e96ad6c02ad813d2">Client_Turn</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::TurnAction &gt; Client_Turn</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00027">line_server.cpp:27</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ae07eb165184873c268556b940a8aa7ba"><div class="ttname"><a href="classTaskLineInnerClass.html#ae07eb165184873c268556b940a8aa7ba">TaskLineInnerClass::spinThreadSidewardCamera</a></div><div class="ttdeci">void spinThreadSidewardCamera()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00118">line_server.cpp:118</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ab05dd6a3432c2bec5c4ecb6c80ad678d"><div class="ttname"><a href="classTaskLineInnerClass.html#ab05dd6a3432c2bec5c4ecb6c80ad678d">TaskLineInnerClass::isOrange</a></div><div class="ttdeci">bool isOrange</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00056">line_server.cpp:56</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_afa61378babcf0d925b090a08fd487cef"><div class="ttname"><a href="classTaskLineInnerClass.html#afa61378babcf0d925b090a08fd487cef">TaskLineInnerClass::centralize_data</a></div><div class="ttdeci">ros::Subscriber centralize_data</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00039">line_server.cpp:39</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_adbbed874f709a7fefeb4c17faeb956ed"><div class="ttname"><a href="classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed">TaskLineInnerClass::lineDetectedListener</a></div><div class="ttdeci">void lineDetectedListener(std_msgs::Bool msg)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00097">line_server.cpp:97</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_afeee959f9e8b9bd19ab6792259617c14"><div class="ttname"><a href="classTaskLineInnerClass.html#afeee959f9e8b9bd19ab6792259617c14">TaskLineInnerClass::feedback_</a></div><div class="ttdeci">task_commons::lineFeedback feedback_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00035">line_server.cpp:35</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a51c740e5389b8268ca11287f67472291"><div class="ttname"><a href="classTaskLineInnerClass.html#a51c740e5389b8268ca11287f67472291">TaskLineInnerClass::data_X_</a></div><div class="ttdeci">std_msgs::Float64 data_X_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00053">line_server.cpp:53</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a888642542a13bc21bfe0d387472548fd"><div class="ttname"><a href="classTaskLineInnerClass.html#a888642542a13bc21bfe0d387472548fd">TaskLineInnerClass::centralize_switch_on</a></div><div class="ttdeci">void centralize_switch_on()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00341">line_server.cpp:341</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a43b3cec8b94356c87358ff6e12be9b7f"><div class="ttname"><a href="classTaskLineInnerClass.html#a43b3cec8b94356c87358ff6e12be9b7f">TaskLineInnerClass::present_X_</a></div><div class="ttdeci">ros::Publisher present_X_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00044">line_server.cpp:44</a></div></div>
+<div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00075">vid_pub.cpp:75</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html"><div class="ttname"><a href="classTaskLineInnerClass.html">TaskLineInnerClass</a></div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00029">line_server.cpp:29</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ac84fc2f7b6d7587d0a84a36472c45074"><div class="ttname"><a href="classTaskLineInnerClass.html#ac84fc2f7b6d7587d0a84a36472c45074">TaskLineInnerClass::SidewardClient_</a></div><div class="ttdeci">Client_Sideward SidewardClient_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00048">line_server.cpp:48</a></div></div>
-<div class="ttc" id="line__server_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="line__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00357">line_server.cpp:357</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a29ea58ef7091bd7af9285886a91f2843"><div class="ttname"><a href="classTaskLineInnerClass.html#a29ea58ef7091bd7af9285886a91f2843">TaskLineInnerClass::switch_angle</a></div><div class="ttdeci">ros::Publisher switch_angle</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00042">line_server.cpp:42</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a64c19d97671241ee3f71dff3b0949ef7"><div class="ttname"><a href="classTaskLineInnerClass.html#a64c19d97671241ee3f71dff3b0949ef7">TaskLineInnerClass::forwardgoal</a></div><div class="ttdeci">motion_commons::ForwardGoal forwardgoal</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00050">line_server.cpp:50</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_af54ee53bf77cc31df2150fcb9c749928"><div class="ttname"><a href="classTaskLineInnerClass.html#af54ee53bf77cc31df2150fcb9c749928">TaskLineInnerClass::yaw_sub</a></div><div class="ttdeci">ros::Subscriber yaw_sub</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00038">line_server.cpp:38</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_acc1c7357342276415f428d1948b28af8"><div class="ttname"><a href="classTaskLineInnerClass.html#acc1c7357342276415f428d1948b28af8">TaskLineInnerClass::detection_switch_off</a></div><div class="ttdeci">void detection_switch_off()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00320">line_server.cpp:320</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_aadc97b2b2e45805bd37971fc7285b65b"><div class="ttname"><a href="classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b">TaskLineInnerClass::angle_goal</a></div><div class="ttdeci">std_msgs::Float64 angle_goal</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00055">line_server.cpp:55</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_af941d64caf8662a2639885ab36c32c88"><div class="ttname"><a href="classTaskLineInnerClass.html#af941d64caf8662a2639885ab36c32c88">TaskLineInnerClass::TaskLineInnerClass</a></div><div class="ttdeci">TaskLineInnerClass(std::string name, std::string node, std::string node1, std::string node2)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00059">line_server.cpp:59</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_aa8a843b342075d5eb4919445662177ad"><div class="ttname"><a href="classTaskLineInnerClass.html#aa8a843b342075d5eb4919445662177ad">TaskLineInnerClass::TurnClient_</a></div><div class="ttdeci">Client_Turn TurnClient_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00049">line_server.cpp:49</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a9095e6162d15d7aaae719a1913762b5c"><div class="ttname"><a href="classTaskLineInnerClass.html#a9095e6162d15d7aaae719a1913762b5c">TaskLineInnerClass::sidewardgoal</a></div><div class="ttdeci">motion_commons::SidewardGoal sidewardgoal</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00051">line_server.cpp:51</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a097dc61f8f5a90b18e72b7b5bac7f392"><div class="ttname"><a href="classTaskLineInnerClass.html#a097dc61f8f5a90b18e72b7b5bac7f392">TaskLineInnerClass::~TaskLineInnerClass</a></div><div class="ttdeci">~TaskLineInnerClass(void)</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00088">line_server.cpp:88</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_ac564a672a843010916cd9189635cf783"><div class="ttname"><a href="classTaskLineInnerClass.html#ac564a672a843010916cd9189635cf783">TaskLineInnerClass::LineAlign</a></div><div class="ttdeci">bool LineAlign</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00056">line_server.cpp:56</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a977b9dc415cc21cf6246abb4e51e5750"><div class="ttname"><a href="classTaskLineInnerClass.html#a977b9dc415cc21cf6246abb4e51e5750">TaskLineInnerClass::present_Y_</a></div><div class="ttdeci">ros::Publisher present_Y_</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00045">line_server.cpp:45</a></div></div>
-<div class="ttc" id="classTaskLineInnerClass_html_a51db394798f796493568d62db8b3aa83"><div class="ttname"><a href="classTaskLineInnerClass.html#a51db394798f796493568d62db8b3aa83">TaskLineInnerClass::spinThreadForwardCamera</a></div><div class="ttdeci">void spinThreadForwardCamera()</div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00134">line_server.cpp:134</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 14 2016 08:51:34 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 16:18:50 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

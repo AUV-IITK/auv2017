@@ -1,7 +1,0 @@
-<map id="TaskLineInnerClass::TaskLineInnerClass" name="TaskLineInnerClass::TaskLineInnerClass">
-<area shape="rect" id="node2" href="$classTaskLineInnerClass.html#a384ef8e929a02351dc89260ce0a88fd4" title="TaskLineInnerClass\l::preemptCB" alt="" coords="208,5,347,46"/>
-<area shape="rect" id="node3" href="$classTaskLineInnerClass.html#adbbed874f709a7fefeb4c17faeb956ed" title="TaskLineInnerClass\l::lineDetectedListener" alt="" coords="203,70,352,111"/>
-<area shape="rect" id="node4" href="$classTaskLineInnerClass.html#a46012579c788ff7bcc51816bb6587db6" title="TaskLineInnerClass\l::yawCB" alt="" coords="208,135,347,177"/>
-<area shape="rect" id="node5" href="$classTaskLineInnerClass.html#ac0bdb40884c7d8792a37f5a8c818e1a0" title="TaskLineInnerClass\l::lineCentralizeListener" alt="" coords="200,201,355,242"/>
-<area shape="rect" id="node6" href="$classTaskLineInnerClass.html#a3e167551112a32f8666a54f4d04d98b7" title="TaskLineInnerClass\l::lineAngleListener" alt="" coords="208,266,347,307"/>
-</map>

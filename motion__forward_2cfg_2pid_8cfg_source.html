@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,25 +88,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">pid.cfg</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="motion__forward_2cfg_2pid_8cfg.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#!/usr/bin/env python</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#!/usr/bin/env python</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span>PACKAGE = <span class="stringliteral">&quot;motion_forward&quot;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;from dynamic_reconfigure.parameter_generator_catkin <span class="keyword">import</span> *</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;gen = ParameterGenerator()</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;gen.add(&quot;<a class="code" href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a>&quot;, double_t, 0, &quot;P parameter&quot;, 0, -1000, 1000)</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;gen.add(&quot;p&quot;, double_t, 0, &quot;P parameter&quot;, 0, -1000, 1000)</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;gen.add(&quot;i&quot;, double_t, 0, &quot;I parameter&quot;, 0, -1000, 1000)</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;gen.add(&quot;d&quot;, double_t, 0, &quot;D parameter&quot;, 0, -1000, 1000)</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;gen.add(&quot;band&quot;, double_t, 0, &quot;Band parameter&quot;, 8, 0, 100)</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;exit(gen.generate(PACKAGE, &quot;<a class="code" href="masterAlternate_8cpp.html#ae88284796ab95b93409abe7ac8fea3a4">forward</a>&quot;, &quot;pid&quot;))</div>
-<div class="ttc" id="gate__detection_8cpp_html_a533391314665d6bf1b5575e9a9cd8552"><div class="ttname"><a href="gate__detection_8cpp.html#a533391314665d6bf1b5575e9a9cd8552">p</a></div><div class="ttdeci">int p</div><div class="ttdef"><b>Definition:</b> <a href="gate__detection_8cpp_source.html#l00030">gate_detection.cpp:30</a></div></div>
-<div class="ttc" id="masterAlternate_8cpp_html_ae88284796ab95b93409abe7ac8fea3a4"><div class="ttname"><a href="masterAlternate_8cpp.html#ae88284796ab95b93409abe7ac8fea3a4">forward</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::ForwardAction &gt; forward</div><div class="ttdef"><b>Definition:</b> <a href="masterAlternate_8cpp_source.html#l00016">masterAlternate.cpp:16</a></div></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;exit(gen.generate(PACKAGE, &quot;forward&quot;, &quot;pid&quot;))</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 14 2016 08:51:33 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 16:18:49 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">gate_client.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="gate__client_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &lt;ros/ros.h&gt;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;std_msgs/Float32.h&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;task_commons/gateAction.h&gt;</span></div>
@@ -98,19 +97,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;actionlib/client/simple_action_client.h&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;actionlib/client/terminal_state.h&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="gate__client_8cpp.html#a3cf9bf55181050eb471297ff84378e0a">   10</a></span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;task_commons::gateAction&gt; <a class="code" href="gate__client_8cpp.html#a3cf9bf55181050eb471297ff84378e0a">Client</a>;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">typedef</span> actionlib::SimpleActionClient&lt;task_commons::gateAction&gt; Client;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="gate__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">   12</a></span>&#160;<a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> *<a class="code" href="gate__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">ptrClient</a>;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="gate__client_8cpp.html#aa18aaeb829b6edd38b2f860f83222507">   13</a></span>&#160;task_commons::gateGoal <a class="code" href="gate__client_8cpp.html#aa18aaeb829b6edd38b2f860f83222507">goal</a>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;Client *ptrClient;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;task_commons::gateGoal goal;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="gate__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56">   15</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="gate__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56">success</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">bool</span> success = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="gate__client_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">   17</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gate__client_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">spinThread</a>()</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> spinThread()</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> &amp;temp = *<a class="code" href="gate__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">ptrClient</a>;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  Client &amp;temp = *ptrClient;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  temp.waitForResult();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <a class="code" href="gate__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56">success</a> = (*(temp.getResult())).MotionCompleted;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="gate__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56">success</a>)</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  success = (*(temp.getResult())).MotionCompleted;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordflow">if</span> (success)</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  {</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: motion successful&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
@@ -120,48 +119,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">// never ever put the argument of the callback function anything other then the specified</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="gate__client_8cpp.html#ada6b38f95d274285d3494b1c478d4e10">   32</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gate__client_8cpp.html#ada6b38f95d274285d3494b1c478d4e10">forwardCb</a>(task_commons::gateActionFeedback <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>)</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keywordtype">void</span> forwardCb(task_commons::gateActionFeedback msg)</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;{</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s: feedback recieved %d&quot;</span>, ros::this_node::getName().c_str(), msg.feedback.nosignificance);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="gate__client_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">   37</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="gate__client_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;gate_client&quot;</span>);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  ros::NodeHandle <a class="code" href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  ros::NodeHandle nh;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="comment">// here gate_server is the name of the node of the actionserver.</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  ros::Subscriber sub_ = nh.subscribe&lt;task_commons::gateActionFeedback&gt;(<span class="stringliteral">&quot;/gate_server/feedback&quot;</span>, 1000, &amp;<a class="code" href="gate__client_8cpp.html#ada6b38f95d274285d3494b1c478d4e10">forwardCb</a>);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  ros::Subscriber sub_ = nh.subscribe&lt;task_commons::gateActionFeedback&gt;(<span class="stringliteral">&quot;/gate_server/feedback&quot;</span>, 1000, &amp;forwardCb);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> testClient(<span class="stringliteral">&quot;gate_server&quot;</span>);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="gate__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">ptrClient</a> = &amp;testClient;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  Client testClient(<span class="stringliteral">&quot;gate_server&quot;</span>);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  ptrClient = &amp;testClient;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s :Waiting for action server to start.&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  testClient.waitForServer();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="gate__client_8cpp.html#aa18aaeb829b6edd38b2f860f83222507">goal</a>.order = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  goal.order = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s: Action server started, sending goal.&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a> &amp;can = *<a class="code" href="gate__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">ptrClient</a>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  Client &amp;can = *ptrClient;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="comment">// send goal</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  can.sendGoal(<a class="code" href="gate__client_8cpp.html#aa18aaeb829b6edd38b2f860f83222507">goal</a>);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  boost::thread spin_thread(&amp;<a class="code" href="gate__client_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">spinThread</a>);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  can.sendGoal(goal);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  boost::thread spin_thread(&amp;spinThread);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  ros::spin();</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordflow">return</span> 0;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
-<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
-<div class="ttc" id="gate__client_8cpp_html_ac57ed3683dbd1741af9bf0f9adf1c91f"><div class="ttname"><a href="gate__client_8cpp.html#ac57ed3683dbd1741af9bf0f9adf1c91f">spinThread</a></div><div class="ttdeci">void spinThread()</div><div class="ttdef"><b>Definition:</b> <a href="gate__client_8cpp_source.html#l00017">gate_client.cpp:17</a></div></div>
-<div class="ttc" id="gate__client_8cpp_html_aa18aaeb829b6edd38b2f860f83222507"><div class="ttname"><a href="gate__client_8cpp.html#aa18aaeb829b6edd38b2f860f83222507">goal</a></div><div class="ttdeci">task_commons::gateGoal goal</div><div class="ttdef"><b>Definition:</b> <a href="gate__client_8cpp_source.html#l00013">gate_client.cpp:13</a></div></div>
-<div class="ttc" id="gate__client_8cpp_html_a7960f9c558f9ee2c3d4a8fdea096fb56"><div class="ttname"><a href="gate__client_8cpp.html#a7960f9c558f9ee2c3d4a8fdea096fb56">success</a></div><div class="ttdeci">bool success</div><div class="ttdef"><b>Definition:</b> <a href="gate__client_8cpp_source.html#l00015">gate_client.cpp:15</a></div></div>
-<div class="ttc" id="forwardTest_8cpp_html_a7accf1f4e38117db922ecca2ebccfc94"><div class="ttname"><a href="forwardTest_8cpp.html#a7accf1f4e38117db922ecca2ebccfc94">Client</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::ForwardAction &gt; Client</div><div class="ttdef"><b>Definition:</b> <a href="forwardTest_8cpp_source.html#l00015">forwardTest.cpp:15</a></div></div>
-<div class="ttc" id="arduino__node_8cpp_html_a8c8f15207982b3e185f86e1b4968e70d"><div class="ttname"><a href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a></div><div class="ttdeci">ros::NodeHandle nh</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00051">arduino_node.cpp:51</a></div></div>
-<div class="ttc" id="gate__client_8cpp_html_a3cf9bf55181050eb471297ff84378e0a"><div class="ttname"><a href="gate__client_8cpp.html#a3cf9bf55181050eb471297ff84378e0a">Client</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; task_commons::gateAction &gt; Client</div><div class="ttdef"><b>Definition:</b> <a href="gate__client_8cpp_source.html#l00010">gate_client.cpp:10</a></div></div>
-<div class="ttc" id="gate__client_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="gate__client_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="gate__client_8cpp_source.html#l00037">gate_client.cpp:37</a></div></div>
-<div class="ttc" id="gate__client_8cpp_html_ab5ac5f74faa7e9f892006eb04fc05025"><div class="ttname"><a href="gate__client_8cpp.html#ab5ac5f74faa7e9f892006eb04fc05025">ptrClient</a></div><div class="ttdeci">Client * ptrClient</div><div class="ttdef"><b>Definition:</b> <a href="gate__client_8cpp_source.html#l00012">gate_client.cpp:12</a></div></div>
-<div class="ttc" id="gate__client_8cpp_html_ada6b38f95d274285d3494b1c478d4e10"><div class="ttname"><a href="gate__client_8cpp.html#ada6b38f95d274285d3494b1c478d4e10">forwardCb</a></div><div class="ttdeci">void forwardCb(task_commons::gateActionFeedback msg)</div><div class="ttdef"><b>Definition:</b> <a href="gate__client_8cpp_source.html#l00032">gate_client.cpp:32</a></div></div>
+<div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00075">vid_pub.cpp:75</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 14 2016 08:51:34 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 16:18:50 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

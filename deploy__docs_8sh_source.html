@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,31 +88,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">deploy_docs.sh</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="deploy__docs_8sh.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#!/bin/bash</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#!/bin/bash</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># This script is used by travis to deploy generated docs</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="deploy__docs_8sh.html#a56224dd0dc71cff3fd5abb5e71edcf73">    6</a></span>&#160;<span class="keyword">function</span> <a class="code" href="deploy__docs_8sh.html#a56224dd0dc71cff3fd5abb5e71edcf73">doCompile</a> {</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">function</span> doCompile {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  ~/catkin_ws/src/auv/utils/generate_docs.sh</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;}</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"># Pull requests and commits to other branches shouldn&#39;t try to deploy, just build to verify</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor"></span><span class="keywordflow">if</span> [ <span class="stringliteral">&quot;$TRAVIS_PULL_REQUEST&quot;</span> != <span class="stringliteral">&quot;false&quot;</span> -o <span class="stringliteral">&quot;$TRAVIS_BRANCH&quot;</span> != <span class="stringliteral">&quot;master&quot;</span> ]; then</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="deploy__docs_8sh.html#a97958fd72b308f3c885648eb0ac19aa2">   12</a></span>&#160;  echo <span class="stringliteral">&quot;Skipping deploy; just doing a build.&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  <a class="code" href="deploy__docs_8sh.html#a56224dd0dc71cff3fd5abb5e71edcf73">doCompile</a></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  echo <span class="stringliteral">&quot;Skipping deploy; just doing a build.&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  doCompile</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  exit 0</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;fi</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor"># Clone the existing gh-pages for this repo into html/</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor"></span><span class="preprocessor"># Create a new empty branch if gh-pages doesn&#39;t exist yet (should only happen on first deply)</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor"></span>git clone  <span class="stringliteral">&quot;https://github.com/AUV-IITK/auv.git&quot;</span> ~/catkin_ws/src/auv/html/</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<a class="code" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> ~/catkin_ws/src/auv/html/</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;cd ~/catkin_ws/src/auv/html/</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor"># Save some useful information</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor"></span>export SHA=`git rev-parse --verify HEAD`</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;git checkout -b gh-pages origin/gh-pages</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<a class="code" href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a> ..</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;cd ..</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor"># Clean html/ existing contents except .git folder</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor"></span>rm -rf ~/catkin_ws/src/auv/html<span class="comment">/*</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"># Run our compile script</span></div>
@@ -132,12 +131,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"># Now that we&#39;re all set up, we can push.</span></div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">git push -f -q https://ShikherVerma:$GH_TOKEN@github.com/AUV-IITK/auv.git gh-pages</span></div>
-<div class="ttc" id="format__xml_8sh_html_a41d174d95285559246e87526c675fb54"><div class="ttname"><a href="format__xml_8sh.html#a41d174d95285559246e87526c675fb54">cd</a></div><div class="ttdeci">cd(dirname&quot;$0&quot;)&quot; find ../ -type f -iname &quot;*.xml&quot; -o -iname &quot;*.world&quot; -o -iname &quot;*.config&quot; -o -iname &quot;*.urfg&quot; -o -iname &quot;*.sdf&quot; -o -iname &quot;*.dae&quot; | xargs -I '</div><div class="ttdef"><b>Definition:</b> <a href="format__xml_8sh_source.html#l00003">format_xml.sh:3</a></div></div>
-<div class="ttc" id="deploy__docs_8sh_html_a56224dd0dc71cff3fd5abb5e71edcf73"><div class="ttname"><a href="deploy__docs_8sh.html#a56224dd0dc71cff3fd5abb5e71edcf73">doCompile</a></div><div class="ttdeci">function doCompile</div><div class="ttdef"><b>Definition:</b> <a href="deploy__docs_8sh_source.html#l00006">deploy_docs.sh:6</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 14 2016 08:51:34 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 16:18:50 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

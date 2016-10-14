@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">dcm.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="dcm_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;ros/ros.h&quot;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;std_msgs/Float64.h&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;sensor_msgs/Imu.h&quot;</span></div>
@@ -98,14 +97,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;DCM&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="dcm_8cpp.html#a3223c46dee7054e9fa0ed7177bb4fccd">   10</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="dcm_8cpp.html#a3223c46dee7054e9fa0ed7177bb4fccd">output_angles</a>()</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keywordtype">void</span> output_angles()</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <span class="keywordflow">if</span> (output_format == OUTPUT__FORMAT_BINARY)</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keywordtype">float</span> ypr[3];</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    ypr[0] = <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">yaw</a>);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    ypr[1] = <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#acceeecd0d1d1c1590727b682814740d2">pitch</a>);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    ypr[2] = <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#ac97cc167218d6c5e6230215c23e5157d">roll</a>);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    ypr[0] = TO_DEG(yaw);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    ypr[1] = TO_DEG(pitch);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    ypr[2] = TO_DEG(roll);</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  }</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="keywordflow">else</span> <span class="keywordflow">if</span> (output_format == OUTPUT__FORMAT_TEXT)</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  {</div>
@@ -116,15 +115,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  }</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="dcm_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">   28</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="dcm_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;dcm&quot;</span>);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  ros::NodeHandle n;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  ros::Publisher out_pub = n.advertise&lt;sensor_msgs::Imu&gt;(<span class="stringliteral">&quot;imuyrp&quot;</span>, 1000);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  ros::NodeHandle <a class="code" href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  ros::NodeHandle nh;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  ros::Publisher chatter_pub = nh.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/sensors/imu/yaw&quot;</span>, 1000);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  sensor_msgs::Imu imu_msg;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  std_msgs::Float64 msg;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="comment">// Read sensors, init DCM algorithm</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  removegyrooff();</div>
@@ -155,7 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;      <span class="comment">// cout &lt;&lt; G_Dt &lt;&lt; endl;</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      <span class="comment">// Update sensor readings</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      <a class="code" href="yawDirect_8cpp.html#aee9ce76a3496550d4abf9f8e8979beec">read_sensors</a>();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;      read_sensors();</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      <span class="comment">// Run DCM algorithm</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      Compass_Heading();  <span class="comment">// Calculate magnetic heading</span></div>
@@ -163,14 +162,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      Normalize();</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      Drift_correction();</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      Euler_angles();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      <a class="code" href="dcm_8cpp.html#a3223c46dee7054e9fa0ed7177bb4fccd">output_angles</a>();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;      output_angles();</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      imu_msg = sensor_msgs::Imu();</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      imu_msg.header.stamp = ros::Time::now();</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      imu_msg.header.frame_id = <span class="stringliteral">&quot;imu&quot;</span>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      imu_msg.orientation.x = <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#acceeecd0d1d1c1590727b682814740d2">pitch</a>);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      imu_msg.orientation.y = <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#ac97cc167218d6c5e6230215c23e5157d">roll</a>);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      imu_msg.orientation.z = <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">yaw</a>);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;      imu_msg.orientation.x = TO_DEG(pitch);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      imu_msg.orientation.y = TO_DEG(roll);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      imu_msg.orientation.z = TO_DEG(yaw);</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      imu_msg.orientation.w = 0.0;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      imu_msg.orientation_covariance[0] = -1;</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      imu_msg.angular_velocity.x = 0.0;</div>
@@ -182,29 +181,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      imu_msg.linear_acceleration.z = 0.0;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      imu_msg.linear_acceleration_covariance[0] = -1;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      msg.data = <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">yaw</a>);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      msg.data = TO_DEG(yaw);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      chatter_pub.publish(msg);</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      out_pub.publish(imu_msg);</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <span class="comment">// cout &lt;&lt; temp &lt;&lt; endl;</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: %s %f&quot;</span>, ros::this_node::getName().c_str(), <span class="stringliteral">&quot;send an imu message&quot;</span>, <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(<a class="code" href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">yaw</a>));</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;      ROS_INFO(<span class="stringliteral">&quot;%s: %s %f&quot;</span>, ros::this_node::getName().c_str(), <span class="stringliteral">&quot;send an imu message&quot;</span>, TO_DEG(yaw));</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    loopRate.sleep();</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  }</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
-<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
-<div class="ttc" id="namespacemock__imu__eular_html_ac97cc167218d6c5e6230215c23e5157d"><div class="ttname"><a href="namespacemock__imu__eular.html#ac97cc167218d6c5e6230215c23e5157d">mock_imu_eular.roll</a></div><div class="ttdeci">float roll</div><div class="ttdef"><b>Definition:</b> <a href="mock__imu__eular_8py_source.html#l00007">mock_imu_eular.py:7</a></div></div>
-<div class="ttc" id="yawDirect_8cpp_html_aee9ce76a3496550d4abf9f8e8979beec"><div class="ttname"><a href="yawDirect_8cpp.html#aee9ce76a3496550d4abf9f8e8979beec">read_sensors</a></div><div class="ttdeci">void read_sensors()</div><div class="ttdef"><b>Definition:</b> <a href="yawDirect_8cpp_source.html#l00012">yawDirect.cpp:12</a></div></div>
-<div class="ttc" id="arduino__node_8cpp_html_a8c8f15207982b3e185f86e1b4968e70d"><div class="ttname"><a href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a></div><div class="ttdeci">ros::NodeHandle nh</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00051">arduino_node.cpp:51</a></div></div>
-<div class="ttc" id="yawDirect_8cpp_html_a847e0dd5ce74f31a4cd86dac97a9713c"><div class="ttname"><a href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a></div><div class="ttdeci">#define TO_DEG(x)</div><div class="ttdef"><b>Definition:</b> <a href="yawDirect_8cpp_source.html#l00010">yawDirect.cpp:10</a></div></div>
-<div class="ttc" id="namespacemock__imu__eular_html_acceeecd0d1d1c1590727b682814740d2"><div class="ttname"><a href="namespacemock__imu__eular.html#acceeecd0d1d1c1590727b682814740d2">mock_imu_eular.pitch</a></div><div class="ttdeci">float pitch</div><div class="ttdef"><b>Definition:</b> <a href="mock__imu__eular_8py_source.html#l00008">mock_imu_eular.py:8</a></div></div>
-<div class="ttc" id="namespacemock__imu__eular_html_a120f94ded6c9687908d3cc7422f5317f"><div class="ttname"><a href="namespacemock__imu__eular.html#a120f94ded6c9687908d3cc7422f5317f">mock_imu_eular.yaw</a></div><div class="ttdeci">float yaw</div><div class="ttdef"><b>Definition:</b> <a href="mock__imu__eular_8py_source.html#l00009">mock_imu_eular.py:9</a></div></div>
-<div class="ttc" id="dcm_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="dcm_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="dcm_8cpp_source.html#l00028">dcm.cpp:28</a></div></div>
-<div class="ttc" id="dcm_8cpp_html_a3223c46dee7054e9fa0ed7177bb4fccd"><div class="ttname"><a href="dcm_8cpp.html#a3223c46dee7054e9fa0ed7177bb4fccd">output_angles</a></div><div class="ttdeci">void output_angles()</div><div class="ttdef"><b>Definition:</b> <a href="dcm_8cpp_source.html#l00010">dcm.cpp:10</a></div></div>
+<div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00075">vid_pub.cpp:75</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 14 2016 08:51:33 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 16:18:49 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

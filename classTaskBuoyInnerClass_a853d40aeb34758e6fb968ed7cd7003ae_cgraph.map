@@ -1,7 +1,0 @@
-<map id="TaskBuoyInnerClass::TaskBuoyInnerClass" name="TaskBuoyInnerClass::TaskBuoyInnerClass">
-<area shape="rect" id="node2" href="$classTaskBuoyInnerClass.html#af6400b5be5c38d768124d6b88f554cb5" title="TaskBuoyInnerClass\l::preemptCB" alt="" coords="205,5,349,46"/>
-<area shape="rect" id="node3" href="$classTaskBuoyInnerClass.html#a7796b2a6b650e2db105b8f4cd3eab2f0" title="TaskBuoyInnerClass\l::torpedoNavigation" alt="" coords="205,70,349,111"/>
-<area shape="rect" id="node5" href="$classTaskBuoyInnerClass.html#a2b41f5c6e6e39d479e30e26538694abd" title="TaskBuoyInnerClass\l::yawCB" alt="" coords="205,135,349,177"/>
-<area shape="rect" id="node6" href="$classTaskBuoyInnerClass.html#a187e465fe460a3a5b0973a67ec8e7d11" title="TaskBuoyInnerClass\l::pressureCB" alt="" coords="205,201,349,242"/>
-<area shape="rect" id="node4" href="$classTaskBuoyInnerClass.html#ac446bc020a9efc07e0dc4051442ca425" title="TaskBuoyInnerClass\l::stopBuoyDetection" alt="" coords="397,70,541,111"/>
-</map>

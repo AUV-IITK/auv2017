@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['arduino_5fnode_2ecpp',['arduino_node.cpp',['../arduino__node_8cpp.html',1,'']]]
+  ['remote_5fgui_2epy',['remote_gui.py',['../remote__gui_8py.html',1,'']]]
 ];

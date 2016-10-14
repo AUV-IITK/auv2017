@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">yawDirect.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="yawDirect_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;ros/ros.h&quot;</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;std_msgs/Float64.h&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;sensor_msgs/Imu.h&quot;</span></div>
@@ -97,23 +96,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;caliberation&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="yawDirect_8cpp.html#aa6e50afea72fd680a43859ea86e692be">    9</a></span>&#160;<span class="preprocessor">#define TO_RAD(x) (x * 0.01745329252)  // *pi/180</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">   10</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TO_DEG(x) (x * 57.2957795131)  // *180/pi</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define TO_RAD(x) (x * 0.01745329252)  // *pi/180</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TO_DEG(x) (x * 57.2957795131)  // *180/pi</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="yawDirect_8cpp.html#aee9ce76a3496550d4abf9f8e8979beec">   12</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="yawDirect_8cpp.html#aee9ce76a3496550d4abf9f8e8979beec">read_sensors</a>()</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keywordtype">void</span> read_sensors()</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  Read_Gyro();   <span class="comment">// Read gyroscope</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;  Read_Accel();  <span class="comment">// Read accelerometer</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;  Read_Magn();   <span class="comment">// Read magnetometer</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;}</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="yawDirect_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">   19</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="yawDirect_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;imu&quot;</span>);</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  ros::NodeHandle <a class="code" href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  ros::NodeHandle nh;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  ros::Publisher chatter_pub = nh.advertise&lt;std_msgs::Float64&gt;(<span class="stringliteral">&quot;/varun/sensors/imu/yaw&quot;</span>, 1000);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  std_msgs::Float64 <a class="code" href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  std_msgs::Float64 msg;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  ros::Rate loopRate(10);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
@@ -123,24 +122,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keywordflow">while</span> (ros::ok())</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="yawDirect_8cpp.html#aee9ce76a3496550d4abf9f8e8979beec">read_sensors</a>();</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    msg.data = <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(-atan2(magnetom[1], magnetom[0]));</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    read_sensors();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    msg.data = TO_DEG(-atan2(magnetom[1], magnetom[0]));</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    chatter_pub.publish(msg);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s %f&quot;</span>, <span class="stringliteral">&quot;yawDirect: send an imu message&quot;</span>, <a class="code" href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a>(-atan2(magnetom[1], magnetom[0])));</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s %f&quot;</span>, <span class="stringliteral">&quot;yawDirect: send an imu message&quot;</span>, TO_DEG(-atan2(magnetom[1], magnetom[0])));</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    ros::spinOnce();</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    loopRate.sleep();</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    temp++;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  }</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
-<div class="ttc" id="line__angle_8cpp_html_ae3b32ecec4590e38557f4c80e5ed58ed"><div class="ttname"><a href="line__angle_8cpp.html#ae3b32ecec4590e38557f4c80e5ed58ed">msg</a></div><div class="ttdeci">std_msgs::Float64 msg</div><div class="ttdef"><b>Definition:</b> <a href="line__angle_8cpp_source.html#l00060">line_angle.cpp:60</a></div></div>
-<div class="ttc" id="yawDirect_8cpp_html_aee9ce76a3496550d4abf9f8e8979beec"><div class="ttname"><a href="yawDirect_8cpp.html#aee9ce76a3496550d4abf9f8e8979beec">read_sensors</a></div><div class="ttdeci">void read_sensors()</div><div class="ttdef"><b>Definition:</b> <a href="yawDirect_8cpp_source.html#l00012">yawDirect.cpp:12</a></div></div>
-<div class="ttc" id="arduino__node_8cpp_html_a8c8f15207982b3e185f86e1b4968e70d"><div class="ttname"><a href="arduino__node_8cpp.html#a8c8f15207982b3e185f86e1b4968e70d">nh</a></div><div class="ttdeci">ros::NodeHandle nh</div><div class="ttdef"><b>Definition:</b> <a href="arduino__node_8cpp_source.html#l00051">arduino_node.cpp:51</a></div></div>
-<div class="ttc" id="yawDirect_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="yawDirect_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="yawDirect_8cpp_source.html#l00019">yawDirect.cpp:19</a></div></div>
-<div class="ttc" id="yawDirect_8cpp_html_a847e0dd5ce74f31a4cd86dac97a9713c"><div class="ttname"><a href="yawDirect_8cpp.html#a847e0dd5ce74f31a4cd86dac97a9713c">TO_DEG</a></div><div class="ttdeci">#define TO_DEG(x)</div><div class="ttdef"><b>Definition:</b> <a href="yawDirect_8cpp_source.html#l00010">yawDirect.cpp:10</a></div></div>
+<div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00075">vid_pub.cpp:75</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 14 2016 08:51:33 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 16:18:49 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
