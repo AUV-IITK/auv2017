@@ -26,7 +26,7 @@ std::string exec(const char *cmd)
 {
   char buffer[128];
   std::string result = "";
-  FILE* pipe = popen(cmd, "r");
+  FILE *pipe = popen(cmd, "r");
   if (!pipe)
     throw std::runtime_error("popen() failed!");
   while (!feof(pipe))
@@ -50,13 +50,13 @@ bool checkIfFrontisZero()
 cv::Mat rotate(cv::Mat src, double angle)
 {
   // get rotation matrix for rotating the image around its center
-  cv::Point2f center(src.cols/2.0, src.rows/2.0);
+  cv::Point2f center(src.cols / 2.0, src.rows / 2.0);
   cv::Mat rot = cv::getRotationMatrix2D(center, angle, 1.0);
   // determine bounding rectangle
-  cv::Rect bbox = cv::RotatedRect(center,src.size(), angle).boundingRect();
+  cv::Rect bbox = cv::RotatedRect(center, src.size(), angle).boundingRect();
   // adjust transformation matrix
-  rot.at<double>(0,2) += bbox.width/2.0 - center.x;
-  rot.at<double>(1,2) += bbox.height/2.0 - center.y;
+  rot.at<double>(0, 2) += bbox.width / 2.0 - center.x;
+  rot.at<double>(1, 2) += bbox.height / 2.0 - center.y;
   cv::Mat dst;
   cv::warpAffine(src, dst, rot, bbox.size());
   return dst;
@@ -65,8 +65,8 @@ cv::Mat rotate(cv::Mat src, double angle)
 // dynamic reconfig
 void callback(hardware_camera::cameraConfig &config, double level)
 {
-  ROS_INFO("%s Vide_pub: Reconfigure Request: angle= %f flag= %d", ros::this_node::getName().c_str(),
-           config.angle, config.flag);
+  ROS_INFO("%s Vide_pub: Reconfigure Request: angle= %f flag= %d", ros::this_node::getName().c_str(), config.angle,
+           config.flag);
   rotation_error = config.angle;
   flag = config.flag;
 }
@@ -84,14 +84,15 @@ int main(int argc, char **argv)
   server.setCallback(f);
 
   // get launch file constants
-  double error_angle; int flag_integer;
+  double error_angle;
+  int flag_integer;
   nh.getParam("cameras/error_angle", error_angle);
   nh.getParam("cameras/flag", flag_integer);
 
   // set launch file constants
   hardware_camera::cameraConfig config;
   config.angle = error_angle;
-  config.flag = (flag_integer==1) ? true : false;
+  config.flag = (flag_integer == 1) ? true : false;
   callback(config, 0);
 
   std::string bottom_topic_name, front_topic_name, node_name;
@@ -121,10 +122,13 @@ int main(int argc, char **argv)
   ros::Rate loop_rate(loopRate);
   while (nh.ok())
   {
-    if (flag) {
+    if (flag)
+    {
       front_cap >> bottom_frame;
       bottom_cap >> front_frame;
-    } else {
+    }
+    else
+    {
       front_cap >> front_frame;
       bottom_cap >> bottom_frame;
     }
