@@ -42,6 +42,7 @@ const float c117 = 441.32;
 const float s117 = -3.03;
 const float c122 = 547.39;
 const float s122 = -2.93;
+const int neutral_buoyancy_offset = 0;
 
 MS5837 sensor;
 
@@ -259,15 +260,17 @@ void PWMCbSideward(const std_msgs::Int32& msg)
 
 void PWMCbUpward(const std_msgs::Int32& msg)
 {
-  if (msg.data > 0)
+  int pwm = msg.data;
+  pwm = pwm + neutral_buoyancy_offset;
+  if (pwm > 0)
   {
-    thrusterNorthUp(msg.data, true);
-    thrusterSouthUp(msg.data, true);
+    thrusterNorthUp(pwm, true);
+    thrusterSouthUp(pwm, true);
   }
   else
   {
-    thrusterNorthUp(msg.data, false);
-    thrusterSouthUp(msg.data, false);
+    thrusterNorthUp(pwm, false);
+    thrusterSouthUp(pwm, false);
   }
 }
 
