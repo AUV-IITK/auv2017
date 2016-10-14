@@ -11,5 +11,7 @@ var searchData=
   ['right',['right',['../namespaceremote__gui.html#a8d7d571377bc61c3cf7e366182833e23',1,'remote_gui']]],
   ['rightclicked',['rightClicked',['../namespaceremote__gui.html#af510671fb4b65c730389470ec8dd8780',1,'remote_gui']]],
   ['roll',['roll',['../namespacemock__imu__eular.html#ac97cc167218d6c5e6230215c23e5157d',1,'mock_imu_eular']]],
-  ['ros_5fdistro',['ROS_DISTRO',['../setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff',1,'setup.sh']]]
+  ['ros_5fdistro',['ROS_DISTRO',['../setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff',1,'setup.sh']]],
+  ['rotate',['rotate',['../vid__pub_8cpp.html#a21408d7e81a1349a917f1eb05f925ffc',1,'vid_pub.cpp']]],
+  ['rotation_5ferror',['rotation_error',['../vid__pub_8cpp.html#a295970be2f97abe9ba86699c5ec48d55',1,'vid_pub.cpp']]]
 ];

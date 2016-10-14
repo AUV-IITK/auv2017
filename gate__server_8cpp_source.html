@@ -181,7 +181,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <a class="code" href="classTaskGateInnerClass.html#ad963b1278e2cb6d331b160e2c6e1d79b">yaw_pub_</a>.publish(imu_data);</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  }</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classTaskGateInnerClass.html#ae315d8da46a88319401587122466c0ad">   93</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskGateInnerClass.html#ae315d8da46a88319401587122466c0ad">gateNavigation</a>(std_msgs::Float64MultiArray <a class="code" href="calibrate_8cpp.html#a4d9cf4a89ae43fecb41cf159390f74ce">array</a>)</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classTaskGateInnerClass.html#ae315d8da46a88319401587122466c0ad">   93</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskGateInnerClass.html#ae315d8da46a88319401587122466c0ad">gateNavigation</a>(std_msgs::Float64MultiArray array)</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  {</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="classTaskGateInnerClass.html#a657bdaa6e4aff64a9ead0105e6757c5e">data_X_</a>.data = array.data[0];</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <a class="code" href="classTaskGateInnerClass.html#a8a513a4fffbf6a0e0cb54881e6aa259b">data_Y_</a>.data = array.data[1];</div>
@@ -380,7 +380,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="forward_8cpp_html_a1f23b0a8c53e091001b4c962a1347dae"><div class="ttname"><a href="forward_8cpp.html#a1f23b0a8c53e091001b4c962a1347dae">Server</a></div><div class="ttdeci">actionlib::SimpleActionServer&lt; motion_commons::ForwardAction &gt; Server</div><div class="ttdef"><b>Definition:</b> <a href="forward_8cpp_source.html#l00013">forward.cpp:13</a></div></div>
 <div class="ttc" id="classTaskGateInnerClass_html_a1100f512d8bae4bf6ff803e926921825"><div class="ttname"><a href="classTaskGateInnerClass.html#a1100f512d8bae4bf6ff803e926921825">TaskGateInnerClass::present_distance_</a></div><div class="ttdeci">ros::Publisher present_distance_</div><div class="ttdef"><b>Definition:</b> <a href="gate__server_8cpp_source.html#l00046">gate_server.cpp:46</a></div></div>
 <div class="ttc" id="classTaskGateInnerClass_html_a9b71083434efdf822c71abbdaad5df92"><div class="ttname"><a href="classTaskGateInnerClass.html#a9b71083434efdf822c71abbdaad5df92">TaskGateInnerClass::upwardgoal</a></div><div class="ttdeci">motion_commons::UpwardGoal upwardgoal</div><div class="ttdef"><b>Definition:</b> <a href="gate__server_8cpp_source.html#l00055">gate_server.cpp:55</a></div></div>
-<div class="ttc" id="calibrate_8cpp_html_a4d9cf4a89ae43fecb41cf159390f74ce"><div class="ttname"><a href="calibrate_8cpp.html#a4d9cf4a89ae43fecb41cf159390f74ce">array</a></div><div class="ttdeci">std_msgs::Float32MultiArray array</div><div class="ttdef"><b>Definition:</b> <a href="calibrate_8cpp_source.html#l00017">calibrate.cpp:17</a></div></div>
 <div class="ttc" id="classTaskGateInnerClass_html_a657bdaa6e4aff64a9ead0105e6757c5e"><div class="ttname"><a href="classTaskGateInnerClass.html#a657bdaa6e4aff64a9ead0105e6757c5e">TaskGateInnerClass::data_X_</a></div><div class="ttdeci">std_msgs::Float64 data_X_</div><div class="ttdef"><b>Definition:</b> <a href="gate__server_8cpp_source.html#l00036">gate_server.cpp:36</a></div></div>
 <div class="ttc" id="gate__server_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="gate__server_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="gate__server_8cpp_source.html#l00274">gate_server.cpp:274</a></div></div>
 <div class="ttc" id="gate__server_8cpp_html_a99c40c208da9641155f16698df58ed2b"><div class="ttname"><a href="gate__server_8cpp.html#a99c40c208da9641155f16698df58ed2b">ClientTurn</a></div><div class="ttdeci">actionlib::SimpleActionClient&lt; motion_commons::TurnAction &gt; ClientTurn</div><div class="ttdef"><b>Definition:</b> <a href="gate__server_8cpp_source.html#l00028">gate_server.cpp:28</a></div></div>
@@ -430,7 +429,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 13 2016 14:03:17 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 08:51:34 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

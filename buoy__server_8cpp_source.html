@@ -189,7 +189,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <a class="code" href="classTaskBuoyInnerClass.html#ad704f9f6cb494e04cfba451eb928064b">present_Y_</a>.publish(pressure_sensor_data);</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  }</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classTaskBuoyInnerClass.html#ae7da72a871d348a8900625846d32cef4">  101</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskBuoyInnerClass.html#ae7da72a871d348a8900625846d32cef4">buoyNavigation</a>(std_msgs::Float64MultiArray <a class="code" href="calibrate_8cpp.html#a4d9cf4a89ae43fecb41cf159390f74ce">array</a>)</div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classTaskBuoyInnerClass.html#ae7da72a871d348a8900625846d32cef4">  101</a></span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classTaskBuoyInnerClass.html#ae7da72a871d348a8900625846d32cef4">buoyNavigation</a>(std_msgs::Float64MultiArray array)</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  {</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#afa9053c5e3352ff2d5a3567af7b3f2a9">data_X_</a>.data = array.data[1];</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="classTaskBuoyInnerClass.html#ae574112de5236ae30260bccd3414ea3f">data_Y_</a>.data = array.data[2];</div>
@@ -410,7 +410,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classTaskBuoyInnerClass_html_a8a4f2e32872b4fd0320a2f7a242bdbbb"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a8a4f2e32872b4fd0320a2f7a242bdbbb">TaskBuoyInnerClass::action_name_</a></div><div class="ttdeci">std::string action_name_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00035">buoy_server.cpp:35</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a750945da7a74421ab620e267d079c9fc"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a750945da7a74421ab620e267d079c9fc">TaskBuoyInnerClass::UpwardClient_</a></div><div class="ttdeci">ClientUpward UpwardClient_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00051">buoy_server.cpp:51</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a8086e1cdc93d8110611efdb16082f61b"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a8086e1cdc93d8110611efdb16082f61b">TaskBuoyInnerClass::upwardgoal</a></div><div class="ttdeci">motion_commons::UpwardGoal upwardgoal</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00055">buoy_server.cpp:55</a></div></div>
-<div class="ttc" id="calibrate_8cpp_html_a4d9cf4a89ae43fecb41cf159390f74ce"><div class="ttname"><a href="calibrate_8cpp.html#a4d9cf4a89ae43fecb41cf159390f74ce">array</a></div><div class="ttdeci">std_msgs::Float32MultiArray array</div><div class="ttdef"><b>Definition:</b> <a href="calibrate_8cpp_source.html#l00017">calibrate.cpp:17</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a1498d17429aee5bf0549460ececc8538"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a1498d17429aee5bf0549460ececc8538">TaskBuoyInnerClass::sub_ip_</a></div><div class="ttdeci">ros::Subscriber sub_ip_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00041">buoy_server.cpp:41</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a52809098a526156dde9d550b096170ec"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a52809098a526156dde9d550b096170ec">TaskBuoyInnerClass::present_X_</a></div><div class="ttdeci">ros::Publisher present_X_</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00047">buoy_server.cpp:47</a></div></div>
 <div class="ttc" id="classTaskBuoyInnerClass_html_a2b41f5c6e6e39d479e30e26538694abd"><div class="ttname"><a href="classTaskBuoyInnerClass.html#a2b41f5c6e6e39d479e30e26538694abd">TaskBuoyInnerClass::yawCB</a></div><div class="ttdeci">void yawCB(std_msgs::Float64 imu_data)</div><div class="ttdef"><b>Definition:</b> <a href="buoy__server_8cpp_source.html#l00089">buoy_server.cpp:89</a></div></div>
@@ -452,7 +451,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 13 2016 14:03:17 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 14 2016 08:51:33 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

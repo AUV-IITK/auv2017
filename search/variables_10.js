@@ -5,5 +5,6 @@ var searchData=
   ['rho',['rho',['../line__angle_8cpp.html#a3ed57096651b587c2bf716fa78048153',1,'line_angle.cpp']]],
   ['right',['right',['../namespaceremote__gui.html#a8d7d571377bc61c3cf7e366182833e23',1,'remote_gui']]],
   ['roll',['roll',['../namespacemock__imu__eular.html#ac97cc167218d6c5e6230215c23e5157d',1,'mock_imu_eular']]],
-  ['ros_5fdistro',['ROS_DISTRO',['../setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff',1,'setup.sh']]]
+  ['ros_5fdistro',['ROS_DISTRO',['../setup_8sh.html#a430a38d74e3af7bfb3da15093a4971ff',1,'setup.sh']]],
+  ['rotation_5ferror',['rotation_error',['../vid__pub_8cpp.html#a295970be2f97abe9ba86699c5ec48d55',1,'vid_pub.cpp']]]
 ];

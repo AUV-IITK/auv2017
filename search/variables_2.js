@@ -6,6 +6,5 @@ var searchData=
   ['angle_5fgoal',['angle_goal',['../classTaskLineInnerClass.html#aadc97b2b2e45805bd37971fc7285b65b',1,'TaskLineInnerClass']]],
   ['anticlockwisefront',['anticlockwiseFront',['../namespaceremote__gui.html#a406d59579065a0bc88026a2baa811630',1,'remote_gui']]],
   ['anticlockwisesway',['anticlockwiseSway',['../namespaceremote__gui.html#aabab582027c4d3476159340a001e21fa',1,'remote_gui']]],
-  ['array',['array',['../calibrate_8cpp.html#a4d9cf4a89ae43fecb41cf159390f74ce',1,'calibrate.cpp']]],
   ['attrs',['ATTRS',['../setup_8sh.html#a2e7d5ab2839ab4f989261caee6944f71',1,'setup.sh']]]
 ];
