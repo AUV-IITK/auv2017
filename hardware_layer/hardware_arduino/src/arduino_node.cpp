@@ -47,7 +47,7 @@ const int neutral_buoyancy_offset = 0;
 MS5837 sensor;
 
 bool isMovingForward = true;
-float v;
+float last_pressure_sensor_value, pressure_sensor_value;
 std_msgs::Float64 voltage;
 ros::NodeHandle nh;
 
@@ -357,8 +357,14 @@ void loop()
 {
   sensor.read();
   // voltage.data made -ve because pressure sensor data should increase going up
-  voltage.data = -(sensor.depth() * 100);
-  ps_voltage.publish(&voltage);
+  pressure_sensor_value = -(sensor.depth() * 100);
+  // to avoid random high values
+  if (abs(last_pressure_sensor_value - pressure_sensor_value) < 100)
+  {
+    voltage.data = 0.7 * pressure_sensor_value + 0.3 * last_pressure_sensor_value;
+    ps_voltage.publish(&voltage);
+    last_pressure_sensor_value = pressure_sensor_value;
+  }
   delay(200);
   nh.spinOnce();
 }
