@@ -46,7 +46,7 @@ bool flag = false;
 bool video = false;
 int t1min, t1max, t2min, t2max, t3min, t3max, lineCount = 0;
 
-void callback_dyn(task_line::lineConfig &config, uint32_t level)
+void callback_dyn(task_line::lineConfig &config, double level)
 {
   t1min = config.t1min_param;
   t1max = config.t1max_param;
@@ -220,6 +220,15 @@ int main(int argc, char *argv[])
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
   f = boost::bind(&callback_dyn, _1, _2);
   server.setCallback(f);
+
+  task_line::lineConfig config;
+  config.t1min_param = t1min;
+  config.t1max_param = t1max;
+  config.t2min_param = t2min;
+  config.t2max_param = t2max;
+  config.t3min_param = t3min;
+  config.t3max_param = t3max;
+  callback_dyn(config, 0);
 
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
