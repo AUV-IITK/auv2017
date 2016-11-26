@@ -183,7 +183,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  ros::Subscriber sub = n.subscribe&lt;std_msgs::Bool&gt;(<span class="stringliteral">&quot;line_detection_switch&quot;</span>, 1000, &amp;lineDetectedListener);</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  image_transport::ImageTransport it(n);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>, 1, imageCallback);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/bottom_camera/image_raw&quot;</span>, 1, imageCallback);</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  ros::Rate loop_rate(12);  <span class="comment">// this rate should be same as the rate of camera</span></div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                            <span class="comment">// input. and in the case of other sensors , this</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                            <span class="comment">// rate should be same as there rate of data</span></div>
@@ -266,7 +266,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 26 2016 07:32:49 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Nov 26 2016 10:51:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

@@ -295,7 +295,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  ros::Rate loop_rate(10);</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  image_transport::ImageTransport it(n);</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/front_camera/image_raw&quot;</span>, 1, imageCallback);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  image_transport::Subscriber sub1 = it.subscribe(<span class="stringliteral">&quot;/varun/sensors/bottom_camera/image_raw&quot;</span>, 1, imageCallback);</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_angle/t1max&quot;</span>, t1max);</div>
 <div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  n.getParam(<span class="stringliteral">&quot;line_angle/t1min&quot;</span>, t1min);</div>
@@ -319,12 +319,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F2&quot;</span>, CV_WINDOW_NORMAL);</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    cvNamedWindow(<span class="stringliteral">&quot;F3&quot;</span>, CV_WINDOW_NORMAL);</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t1min&quot;</span>, <span class="stringliteral">&quot;F1&quot;</span>, &amp;t1min, 260, NULL);</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t1max&quot;</span>, <span class="stringliteral">&quot;F1&quot;</span>, &amp;t1max, 260, NULL);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t2min&quot;</span>, <span class="stringliteral">&quot;F2&quot;</span>, &amp;t2min, 260, NULL);</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t2max&quot;</span>, <span class="stringliteral">&quot;F2&quot;</span>, &amp;t2max, 260, NULL);</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t3min&quot;</span>, <span class="stringliteral">&quot;F3&quot;</span>, &amp;t3min, 260, NULL);</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    cvCreateTrackbar(<span class="stringliteral">&quot;t3max&quot;</span>, <span class="stringliteral">&quot;F3&quot;</span>, &amp;t3max, 260, NULL);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="comment">// cvCreateTrackbar(&quot;t1min&quot;, &quot;F1&quot;, &amp;t1min, 260, NULL);</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="comment">// cvCreateTrackbar(&quot;t1max&quot;, &quot;F1&quot;, &amp;t1max, 260, NULL);</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="comment">// cvCreateTrackbar(&quot;t2min&quot;, &quot;F2&quot;, &amp;t2min, 260, NULL);</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    <span class="comment">// cvCreateTrackbar(&quot;t2max&quot;, &quot;F2&quot;, &amp;t2max, 260, NULL);</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    <span class="comment">// cvCreateTrackbar(&quot;t3min&quot;, &quot;F3&quot;, &amp;t3min, 260, NULL);</span></div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="comment">// cvCreateTrackbar(&quot;t3max&quot;, &quot;F3&quot;, &amp;t3max, 260, NULL);</span></div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;  }</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;  <span class="comment">// capture size -</span></div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  CvSize size = cvSize(width, height);</div>
@@ -473,7 +473,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 26 2016 07:32:49 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Nov 26 2016 10:51:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

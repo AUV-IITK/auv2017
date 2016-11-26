@@ -153,7 +153,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="comment">// interupted</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordtype">void</span> analysisCB(<span class="keyword">const</span> motion_commons::TurnGoalConstPtr goal)</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s Inside analysisCB&quot;</span>, ros::this_node::getName().c_str());</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s Inside analysisCB, Goal = %f&quot;</span>, ros::this_node::getName().c_str(), goal-&gt;AngleToTurn);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">int</span> count = 0;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">int</span> loopRate = 10;</div>
@@ -348,7 +348,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Nov 26 2016 07:32:49 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Nov 26 2016 10:51:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
