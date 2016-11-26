@@ -12,6 +12,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
+#include "std_msgs/Float32MultiArray.h"
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
 #include "std_msgs/Float64MultiArray.h"

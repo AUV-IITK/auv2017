@@ -91,15 +91,15 @@ int main(int argc, char *argv[])
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_centralize_switch", 1000, &Switch_callback);
   ros::Rate loop_rate(10);
 
-  image_transport::ImageTransport it(n);
-  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
-
   n.getParam("line_centralize/t1max", t1max);
   n.getParam("line_centralize/t1min", t1min);
   n.getParam("line_centralize/t2max", t2max);
   n.getParam("line_centralize/t2min", t2min);
   n.getParam("line_centralize/t3max", t3max);
   n.getParam("line_centralize/t3min", t3min);
+
+  image_transport::ImageTransport it(n);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
 
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
@@ -116,12 +116,12 @@ int main(int argc, char *argv[])
     cvNamedWindow("F2", CV_WINDOW_NORMAL);
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
 
-    cvCreateTrackbar("t1min", "F1", &t1min, 260, NULL);
-    cvCreateTrackbar("t1max", "F1", &t1max, 260, NULL);
-    cvCreateTrackbar("t2min", "F2", &t2min, 260, NULL);
-    cvCreateTrackbar("t2max", "F2", &t2max, 260, NULL);
-    cvCreateTrackbar("t3min", "F3", &t3min, 260, NULL);
-    cvCreateTrackbar("t3max", "F3", &t3max, 260, NULL);
+    // cvCreateTrackbar("t1min", "F1", &t1min, 260, NULL);
+    // cvCreateTrackbar("t1max", "F1", &t1max, 260, NULL);
+    // cvCreateTrackbar("t2min", "F2", &t2min, 260, NULL);
+    // cvCreateTrackbar("t2max", "F2", &t2max, 260, NULL);
+    // cvCreateTrackbar("t3min", "F3", &t3min, 260, NULL);
+    // cvCreateTrackbar("t3max", "F3", &t3max, 260, NULL);
   }
 
   // capture size -

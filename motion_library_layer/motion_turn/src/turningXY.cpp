@@ -63,7 +63,7 @@ public:
   // interupted
   void analysisCB(const motion_commons::TurnGoalConstPtr goal)
   {
-    ROS_INFO("%s Inside analysisCB", ros::this_node::getName().c_str());
+    ROS_INFO("%s Inside analysisCB, Goal = %f", ros::this_node::getName().c_str(), goal->AngleToTurn);
 
     int count = 0;
     int loopRate = 10;
