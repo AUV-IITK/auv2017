@@ -95,7 +95,7 @@ int main(int argc, char **argv)
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_detection_switch", 1000, &lineDetectedListener);
 
   image_transport::ImageTransport it(n);
-  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
   ros::Rate loop_rate(12);  // this rate should be same as the rate of camera
                             // input. and in the case of other sensors , this
                             // rate should be same as there rate of data
