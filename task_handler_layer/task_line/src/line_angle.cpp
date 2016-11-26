@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
   ros::Rate loop_rate(10);
 
   image_transport::ImageTransport it(n);
-  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
 
   n.getParam("line_angle/t1max", t1max);
   n.getParam("line_angle/t1min", t1min);
