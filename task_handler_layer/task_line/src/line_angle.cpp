@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
 
   cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
 
-  ros::init(argc, argv, "gate_detection");
+  ros::init(argc, argv, "line_angle");
   ros::NodeHandle n;
 
   ros::Publisher pub = n.advertise<std_msgs::Float64>("/varun/ip/line_angle", 1000);
