@@ -29,8 +29,6 @@
   catkin_make roslint_task_line &&
   catkin_make --pkg task_octagon &&
   catkin_make roslint_task_octagon &&
-  catkin_make --pkg task_torpedo &&
-  catkin_make roslint_task_torpedo &&
   # build master layer
   catkin_make --pkg the_master &&
   catkin_make roslint_the_master &&
