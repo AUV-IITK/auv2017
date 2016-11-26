@@ -9,6 +9,6 @@
   </node>
   <node name="buoy_server" pkg="task_buoy" type="buoy_server" respawn="true"  output="screen">
   </node>
-  <node name="buoy_client" pkg="task_buoy" type="buoy_client" respawn="true"  output="screen">
-  </node>
+  <!-- <node name="buoy_client" pkg="task_buoy" type="buoy_client" respawn="true"  output="screen">
+  </node> -->
 </launch>

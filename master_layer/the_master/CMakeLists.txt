@@ -10,15 +10,20 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  actionlib
+  actionlib_msgs
+  message_generation
   task_commons
   motion_commons
+  sensor_msgs
+  dynamic_reconfigure
 )
 
 ## Check for lint errors
 roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -110,7 +115,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   #  INCLUDE_DIRS include
   #  LIBRARIES the_master
-  CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
+  CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs task_commons motion_commons
   #  DEPENDS system_lib
 )
 
@@ -126,8 +131,8 @@ include_directories(include
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(masterAlternate src/masterAlternate.cpp)
-target_link_libraries(masterAlternate ${catkin_LIBRARIES})
+add_executable(master src/master.cpp)
+target_link_libraries(master ${catkin_LIBRARIES})
 ## Declare a C++ library
 # add_library(the_master
 #   src/${PROJECT_NAME}/the_master.cpp
