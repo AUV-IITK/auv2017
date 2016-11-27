@@ -127,7 +127,7 @@ public:
     else
     {
       ROS_INFO("%s: Bot is not at side center, something went wrong", action_name_.c_str());
-      ros::shutdown();
+      success = false;
     }
   }
 
@@ -143,7 +143,7 @@ public:
     else
     {
       ROS_INFO("%s: Bot is not at Front center, something went wrong", action_name_.c_str());
-      ros::shutdown();
+      success = false;
     }
   }
 
@@ -154,7 +154,12 @@ public:
     LineAlign = (*(tempTurn.getResult())).Result;
     if (LineAlign)
     {
-      ROS_INFO("%s: Bot is at side center", action_name_.c_str());
+      ROS_INFO("%s: Bot is aligned", action_name_.c_str());
+    }
+    else
+    {
+      ROS_INFO("%s: Bot is not aligned, something went wrong", action_name_.c_str());
+      success = false;
     }
   }
 
@@ -194,7 +199,7 @@ public:
     forwardgoal.loop = 10;
     ForwardClient_.sendGoal(forwardgoal);
 
-    while (goal->order)
+    while (goal->order && success)
     {
       if (line_server_.isPreemptRequested() || !ros::ok())
       {
@@ -235,7 +240,7 @@ public:
     ForwardClient_.sendGoal(forwardgoal);
     boost::thread spin_thread_forward_camera(&TaskLineInnerClass::spinThreadForwardCamera, this);
 
-    while (goal->order)
+    while (goal->order && success)
     {
       if (line_server_.isPreemptRequested() || !ros::ok())
       {
@@ -269,7 +274,7 @@ public:
     TurnClient_.sendGoal(turngoal);
     boost::thread spin_thread_turn_camera(&TaskLineInnerClass::spinThreadTurnCamera, this);
 
-    while (goal->order)
+    while (goal->order && success)
     {
       if (line_server_.isPreemptRequested() || !ros::ok())
       {
@@ -279,35 +284,23 @@ public:
         success = false;
         break;
       }
+
       looprate.sleep();
       if (LineAlign)
       {
-        if (angle_goal.data <= 5.0 && angle_goal.data >= -5.0)
-        {
-          ROS_INFO("%s: line is aligned.", action_name_.c_str());
-          break;
-        }
-        else
-        {
-          ROS_INFO("%s: resending the angle goal.", action_name_.c_str());
-          turngoal.AngleToTurn = angle_goal.data;
-          turngoal.loop = 10;
-          TurnClient_.sendGoal(turngoal);
-        }
+        ROS_INFO("%s: line is aligned.", action_name_.c_str());
+        break;
       }
+
       feedback_.AngleRemaining = angle_goal.data;
       line_server_.publishFeedback(feedback_);
       ROS_INFO("%s: angle remaining = %f", action_name_.c_str(), angle_goal.data);
       ros::spinOnce();
     }
 
-    if (success)
-    {
-      isOrange = false;
-      result_.MotionCompleted = success;
-      ROS_INFO("%s: Succeeded", action_name_.c_str());
-      line_server_.setSucceeded(result_);
-    }
+    result_.MotionCompleted = success;
+    ROS_INFO("%s: Success is %s", action_name_.c_str(), success ? "true" : "false");
+    line_server_.setSucceeded(result_);
   }
 
   void detection_switch_on()
