@@ -9,15 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  sensor_msgs
-  actionlib
-  actionlib_msgs
   message_generation
-  task_commons
-  motion_commons
   cv_bridge
-  sensor_msgs
-  image_transport
   dynamic_reconfigure
 )
 
@@ -110,7 +103,7 @@ find_package( OpenCV REQUIRED )
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
-  cfg/buoy.cfg
+  cfg/caliberate.cfg
 )
 
 ###################################
@@ -131,8 +124,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
   #  INCLUDE_DIRS include
   #  LIBRARIES task_gate
-  CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation task_commons motion_commons
-  #  DEPENDS system_lib
+  CATKIN_DEPENDS roscpp rospy std_msgs  message_generation   #  DEPENDS system_lib
 )
 
 

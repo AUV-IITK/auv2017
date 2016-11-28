@@ -6,7 +6,7 @@
 #include "std_msgs/Int8.h"
 #include <fstream>
 #include <dynamic_reconfigure/server.h>
-#include <task_buoy/buoyConfig.h>
+#include <caliberate/caliberateConfig.h>
 #include <vector>
 #include <std_msgs/Bool.h>
 #include <opencv2/core/core.hpp>
@@ -26,7 +26,7 @@ cv::Mat frame;
 cv::Mat newframe;
 int count = 0, count_avg = 0, x = -1;
 
-void callback(task_buoy::buoyConfig &config, uint32_t level)
+void callback(caliberate::caliberateConfig &config, uint32_t level)
 {
   t1min = config.t1min_param;
   t1max = config.t1max_param;
@@ -34,31 +34,31 @@ void callback(task_buoy::buoyConfig &config, uint32_t level)
   t2max = config.t2max_param;
   t3min = config.t3min_param;
   t3max = config.t3max_param;
-  ROS_INFO("Buoy_Reconfigure Request:New params : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
+  ROS_INFO("caliberate_Reconfigure Request:New params : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
 int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
 
-  ros::init(argc, argv, "buoy_detection");
+  ros::init(argc, argv, "caliberate");
   ros::NodeHandle n;
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/caliberate", 1000);
   ros::Rate loop_rate(10);
 
-  dynamic_reconfigure::Server<caliberate::buoyConfig> server;
-  dynamic_reconfigure::Server<caliberate::buoyConfig>::CallbackType f;
+  dynamic_reconfigure::Server<caliberate::caliberateConfig> server;
+  dynamic_reconfigure::Server<caliberate::caliberateConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
 
-  n.getParam("buoy_detection/t1max", t1max);
-  n.getParam("buoy_detection/t1min", t1min);
-  n.getParam("buoy_detection/t2max", t2max);
-  n.getParam("buoy_detection/t2min", t2min);
-  n.getParam("buoy_detection/t3max", t3max);
-  n.getParam("buoy_detection/t3min", t3min);
+  n.getParam("caliberate_detection/t1max", t1max);
+  n.getParam("caliberate_detection/t1min", t1min);
+  n.getParam("caliberate_detection/t2max", t2max);
+  n.getParam("caliberate_detection/t2min", t2min);
+  n.getParam("caliberate_detection/t3max", t3max);
+  n.getParam("caliberate_detection/t3min", t3min);
 
-  caliberate::buoyConfig config;
+  caliberate::caliberateConfig config;
   config.t1min_param = t1min;
   config.t1max_param = t1max;
   config.t2min_param = t2min;
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
   cvNamedWindow("F1", CV_WINDOW_NORMAL);
 
   if (argc != 2) printf("Please write the name of the file you want to load\n");
-  Videocapture cap(argv[1]);
+  cv::VideoCapture cap(argv[1]);
   
   CvSize size = cvSize(width, height);
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
@@ -85,7 +85,6 @@ int main(int argc, char *argv[])
   {
     std_msgs::Float64MultiArray array;
     loop_rate.sleep();
-
     if(x!=32) cap >> frame;
     
     if (frame.empty())
@@ -117,12 +116,10 @@ int main(int argc, char *argv[])
     cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
     cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
 
-    if (flag)
-    {
-      cv::imshow("F1", thresholded_hsv[0]);  // individual filters
-      cv::imshow("F2", thresholded_hsv[1]);
-      cv::imshow("F3", thresholded_hsv[2]);
-    }
+    cv::imshow("F1", thresholded_hsv[0]);  // individual filters
+    cv::imshow("F2", thresholded_hsv[1]);
+    cv::imshow("F3", thresholded_hsv[2]);
+
     
     std::vector<std::vector<cv::Point> > contours;
     cv::Mat thresholded_Mat = thresholded;
@@ -138,11 +135,13 @@ int main(int argc, char *argv[])
         largest_contour_index = i;  // Store the index of largest contour
       }
     }
+    cv::Scalar color(255, 255, 255);
+    std::vector<cv::Vec4i> hierarchy;
 
     cv::Mat Drawing(thresholded_Mat.rows, thresholded_Mat.cols, CV_8UC1, cv::Scalar::all(0));
     drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
     cv::imshow("Contours", Drawing);
-    cv::imshow("RealPic", frame_mat);
+    cv::imshow("RealPic", frame);
 
 
     if ((cvWaitKey(10) & 255) == 27)
@@ -159,7 +158,7 @@ int main(int argc, char *argv[])
     ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
     ros::spinOnce();
   }
-  output_cap.release();
   return 0;
 }
 
+  
