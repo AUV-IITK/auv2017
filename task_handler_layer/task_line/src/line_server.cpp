@@ -198,6 +198,7 @@ public:
     forwardgoal.Goal = 100;
     forwardgoal.loop = 10;
     ForwardClient_.sendGoal(forwardgoal);
+    ROS_INFO("%s: searching line", action_name_.c_str());
 
     while (goal->order && success)
     {
@@ -220,8 +221,9 @@ public:
       // publish the feedback
 
       feedback_.AngleRemaining = angle_goal.data;
+      feedback_.x_coord = data_X_.data;
+      feedback_.y_coord = data_Y_.data;
       line_server_.publishFeedback(feedback_);
-      ROS_INFO("%s: searching line", action_name_.c_str());
       ros::spinOnce();
     }
 
@@ -239,6 +241,7 @@ public:
     forwardgoal.loop = 10;
     ForwardClient_.sendGoal(forwardgoal);
     boost::thread spin_thread_forward_camera(&TaskLineInnerClass::spinThreadForwardCamera, this);
+    ROS_INFO("%s: line is going to be centralized", action_name_.c_str());
 
     while (goal->order && success)
     {
@@ -258,8 +261,9 @@ public:
       }
       // publish the feedback
       feedback_.AngleRemaining = angle_goal.data;
+      feedback_.x_coord = data_X_.data;
+      feedback_.y_coord = data_Y_.data;
       line_server_.publishFeedback(feedback_);
-      ROS_INFO("%s:: x = %f, y = %f", action_name_.c_str(), data_X_.data, data_Y_.data);
       ros::spinOnce();
     }
 
@@ -273,6 +277,7 @@ public:
     turngoal.loop = 10;
     TurnClient_.sendGoal(turngoal);
     boost::thread spin_thread_turn_camera(&TaskLineInnerClass::spinThreadTurnCamera, this);
+    ROS_INFO("%s: line is going to be aligned", action_name_.c_str());
 
     while (goal->order && success)
     {
@@ -293,8 +298,9 @@ public:
       }
 
       feedback_.AngleRemaining = angle_goal.data;
+      feedback_.x_coord = data_X_.data;
+      feedback_.y_coord = data_Y_.data;
       line_server_.publishFeedback(feedback_);
-      ROS_INFO("%s: angle remaining = %f", action_name_.c_str(), angle_goal.data);
       ros::spinOnce();
     }
 

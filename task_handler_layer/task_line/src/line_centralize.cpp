@@ -249,7 +249,6 @@ int main(int argc, char *argv[])
     }
     else
     {
-      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }
