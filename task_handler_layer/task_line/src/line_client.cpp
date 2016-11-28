@@ -1,6 +1,7 @@
 // Copyright 2016 AUV-IITK
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Float64.h>
 #include <task_commons/lineAction.h>
 #include <task_commons/lineActionFeedback.h>
 #include <task_commons/lineActionResult.h>
@@ -31,7 +32,8 @@ void spinThread()
 // never ever put the argument of the callback function anything other then the specified
 void forwardCb(task_commons::lineActionFeedback msg)
 {
-  ROS_INFO("%s: feedback recieved %f", ros::this_node::getName().c_str(), msg.feedback.AngleRemaining);
+  ROS_INFO("%s: feedback recieved Angle Remaining = %f, x_coord = %f, y_coord = %f",
+    ros::this_node::getName().c_str(), msg.feedback.AngleRemaining, msg.feedback.x_coord, msg.feedback.y_coord);
 }
 
 int main(int argc, char **argv)
