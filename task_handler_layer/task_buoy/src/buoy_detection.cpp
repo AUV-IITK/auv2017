@@ -86,12 +86,6 @@ int main(int argc, char *argv[])
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
   ros::Rate loop_rate(10);
 
-  n.getParam("buoy_detection/t1max", t1max);
-  n.getParam("buoy_detection/t1min", t1min);
-  n.getParam("buoy_detection/t2max", t2max);
-  n.getParam("buoy_detection/t2min", t2min);
-  n.getParam("buoy_detection/t3max", t3max);
-  n.getParam("buoy_detection/t3min", t3min);
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
@@ -100,6 +94,22 @@ int main(int argc, char *argv[])
   dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
+
+  n.getParam("buoy_detection/t1max", t1max);
+  n.getParam("buoy_detection/t1min", t1min);
+  n.getParam("buoy_detection/t2max", t2max);
+  n.getParam("buoy_detection/t2min", t2min);
+  n.getParam("buoy_detection/t3max", t3max);
+  n.getParam("buoy_detection/t3min", t3min);
+
+  task_buoy::buoyConfig config;
+  config.t1min_param = t1min;
+  config.t1max_param = t1max;
+  config.t2min_param = t2min;
+  config.t2max_param = t2max;
+  config.t3min_param = t3min;
+  config.t3max_param = t3max;
+  callback(config, 0);
 
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
   cvNamedWindow("circle", CV_WINDOW_NORMAL);

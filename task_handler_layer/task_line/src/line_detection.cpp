@@ -101,11 +101,16 @@ int main(int argc, char **argv)
                             // rate should be same as there rate of data
                             // generation
 
-  n.getParam("line_detection/percentage", percentage);
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
+
+  n.getParam("line_detection/percentage", percentage);
+
+  task_line::lineConfig config;
+  config.orange_param = percentage;
+  callback(config, 0);
 
   if (argc == 2)
   {
