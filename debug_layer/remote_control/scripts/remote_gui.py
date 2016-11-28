@@ -20,6 +20,7 @@ if __name__ == '__main__':
 
         def forwardClicked():
             """Documentation for a function"""
+            w1.set( w1.get() +10)
             rospy.loginfo("forward is clicked with pwm = %d", w1.get())
             forward_motion.publish(w1.get())
 
@@ -97,6 +98,9 @@ if __name__ == '__main__':
             forward_motion.publish(0)
 
         window = Tk()
+        def func(event):
+            w1.set( w1.get() +10)
+        window.bind('s', func)
         label = Label(window, bd=5, font=("Helvetica", 16),
                       fg="blue", anchor=N, text="AUV IITK")
         label.pack()
