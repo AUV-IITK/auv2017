@@ -32,7 +32,7 @@ void spinThread()
 // never ever put the argument of the callback function anything other then the specified
 void forwardCb(task_commons::lineActionFeedback msg)
 {
-  ROS_INFO("%s: feedback recieved Angle Remaining = %f, x_coord = %f, y_coord = %f",
+  ROS_INFO("%s: Angle Remaining = %f, x_coord = %f, y_coord = %f",
     ros::this_node::getName().c_str(), msg.feedback.AngleRemaining, msg.feedback.x_coord, msg.feedback.y_coord);
 }
 
