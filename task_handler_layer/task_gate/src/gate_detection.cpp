@@ -86,13 +86,6 @@ int main(int argc, char *argv[])
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("gate_detection_switch", 1000, &gateListener);
   ros::Rate loop_rate(10);
 
-  n.getParam("gate_detection/t1max", t1max);
-  n.getParam("gate_detection/t1min", t1min);
-  n.getParam("gate_detection/t2max", t2max);
-  n.getParam("gate_detection/t2min", t2min);
-  n.getParam("gate_detection/t3max", t3max);
-  n.getParam("gate_detection/t3min", t3min);
-
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
@@ -100,6 +93,22 @@ int main(int argc, char *argv[])
   dynamic_reconfigure::Server<task_gate::gateConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
+
+  n.getParam("gate_detection/t1max", t1max);
+  n.getParam("gate_detection/t1min", t1min);
+  n.getParam("gate_detection/t2max", t2max);
+  n.getParam("gate_detection/t2min", t2min);
+  n.getParam("gate_detection/t3max", t3max);
+  n.getParam("gate_detection/t3min", t3min);
+
+  task_gate::gateConfig config;
+  config.t1min_param = t1min;
+  config.t1max_param = t1max;
+  config.t2min_param = t2min;
+  config.t2max_param = t2max;
+  config.t3min_param = t3min;
+  config.t3max_param = t3max;
+  callback(config, 0);
 
   cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
