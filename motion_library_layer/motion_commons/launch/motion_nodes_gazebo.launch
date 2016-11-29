@@ -3,13 +3,13 @@
     <param name="p_param" type="double" value="10.0" />
     <param name="i_param" type="double" value="0.0" />
     <param name="d_param" type="double" value="0.0" />
-    <param name="band_param" type="double" value="15.0" />
+    <param name="band_param" type="double" value="5.0" />
   </node>
   <node name="sideward" pkg="motion_sideward" type="sideward" respawn="true"  output="screen">
     <param name="p_param" type="double" value="10.0" />
     <param name="i_param" type="double" value="0.0" />
     <param name="d_param" type="double" value="0.0" />
-    <param name="band_param" type="double" value="15.0" />
+    <param name="band_param" type="double" value="5.0" />
   </node>
   <node name="turningXY" pkg="motion_turn" type="turningXY" respawn="true"  output="screen">
     <param name="p_stablize" type="double" value="10.0" />
