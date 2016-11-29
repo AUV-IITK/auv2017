@@ -163,7 +163,7 @@ public:
     TaskGateInnerClass::startGateDetection();
 
     sidewardgoal.Goal = 0;
-    sidewardgoal.loop = 10;
+    sidewardgoal.loop = 50;
     SidewardClient_.sendGoal(sidewardgoal);
     boost::thread spin_thread_sideward(&TaskGateInnerClass::spinThreadSideward, this);
 
@@ -173,7 +173,7 @@ public:
     TurnClient_.sendGoal(turngoal);
 
     upwardgoal.Goal = 0;
-    upwardgoal.loop = 10;
+    upwardgoal.loop = 50;
     UpwardClient_.sendGoal(upwardgoal);
     boost::thread spin_thread_upward(&TaskGateInnerClass::spinThreadUpward, this);
 
