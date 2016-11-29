@@ -262,7 +262,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    ros::spinOnce();</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  }</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  goalUpward.Goal = present_depth + 10;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  goalUpward.Goal = present_depth + 10;     <span class="comment">// add param</span></div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  goalUpward.loop = 10;</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Action server started, sending goal to upward.&quot;</span>);</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;</div>
@@ -288,11 +288,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  mock_forward.data = 250;</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  pub_forward.publish(mock_forward);</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  sleep(3);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  sleep(5);                   <span class="comment">// add param</span></div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  canForward.cancelGoal();</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  goalUpward.Goal = present_depth - 13;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  goalUpward.Goal = present_depth - 11;         <span class="comment">// add param</span></div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  goalUpward.loop = 10;</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Sending goal to upward.&quot;</span>);</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
@@ -306,14 +306,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    ros::spinOnce();</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  }</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  ros::spin();</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;}</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  successLine = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  goalLine.order = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Sending goal to line.&quot;</span>);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="comment">// send goal</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  canLine.sendGoal(goalLine);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;  boost::thread spin_thread_line2(&amp;spinThreadLine);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="keywordflow">while</span> (!successLine)</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  {</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    ros::spinOnce();</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  }</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  ros::spin();</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;}</div>
 <div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00075">vid_pub.cpp:75</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 29 2016 22:06:18 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 29 2016 22:29:14 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
