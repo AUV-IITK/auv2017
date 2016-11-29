@@ -8,19 +8,30 @@
 #include <task_commons/lineActionFeedback.h>
 #include <task_commons/buoyActionResult.h>
 #include <task_commons/lineActionResult.h>
+#include <motion_commons/UpwardAction.h>
+#include <motion_commons/UpwardActionFeedback.h>
+#include <motion_commons/UpwardActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
 typedef actionlib::SimpleActionClient<task_commons::buoyAction> ClientBuoy;
 typedef actionlib::SimpleActionClient<task_commons::lineAction> ClientLine;
+typedef actionlib::SimpleActionClient<motion_commons::UpwardAction> ClientUpward;
 
 ClientBuoy *ptrClientBuoy;
 ClientLine *ptrClientLine;
+ClientUpward *ptrClientUpward;
 task_commons::buoyGoal goalBuoy;
 task_commons::lineGoal goalLine;
+motion_commons::UpwardGoal goalUpward;
+
+ros::Publisher pub_upward;
 
 bool successBuoy = false;
 bool successLine = false;
+bool successUpward = false;
+
+float present_depth;
 
 void spinThreadBuoy()
 {
@@ -47,17 +58,39 @@ void spinThreadLine()
   else
     ROS_INFO("%s: motion line unsuccessful", ros::this_node::getName().c_str());
 }
+
+void spinThreadUpwardPressure()
+{
+  ClientUpward &temp = *ptrClientUpward;
+  temp.waitForResult();
+  successUpward = (*(temp.getResult())).Result;
+  if (successUpward)
+  {
+    ROS_INFO("%s Bot is at desired height.", ros::this_node::getName().c_str());
+  }
+  else
+  {
+    ROS_INFO("%s Bot is not at desired height, something went wrong", ros::this_node::getName().c_str());
+  }
+}
 // never ever put the argument of the callback function anything other then the specified
-void forwardCbBuoy(task_commons::buoyActionFeedback msg)
+void buoyCB(task_commons::buoyActionFeedback msg)
 {
   ROS_INFO("%s: x_coord = %f, y_coord = %f, distance = %f",
     ros::this_node::getName().c_str(), msg.feedback.x_coord, msg.feedback.y_coord, msg.feedback.distance);
 }
 
-void forwardCbLine(task_commons::lineActionFeedback msg)
+void lineCB(task_commons::lineActionFeedback msg)
 {
   ROS_INFO("%s: feedback recieved Angle Remaining = %f, x_coord = %f, y_coord = %f",
     ros::this_node::getName().c_str(), msg.feedback.AngleRemaining, msg.feedback.x_coord, msg.feedback.y_coord);
+}
+
+void pressureCB(std_msgs::Float64 pressure_sensor_data)
+{
+  present_depth = pressure_sensor_data.data;
+  if (successBuoy)
+    pub_upward.publish(pressure_sensor_data);
 }
 
 int main(int argc, char **argv)
@@ -67,18 +100,24 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
   // here buoy_server is the name of the node of the actionserver.
   ros::Subscriber sub_buoy = nh.subscribe<task_commons::buoyActionFeedback>("/buoy_server/feedback",
-    1000, &forwardCbBuoy);
+    1000, &buoyCB);
   ros::Subscriber sub_line = nh.subscribe<task_commons::lineActionFeedback>("/line_server/feedback",
-    1000, &forwardCbLine);
+    1000, &lineCB);
+  ros::Subscriber sub_upward = nh.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth",
+    1000, &pressureCB);
+  pub_upward = nh.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
 
   ClientBuoy buoyClient("buoy_server");
   ptrClientBuoy = &buoyClient;
   ClientLine lineClient("line_server");
   ptrClientLine = &lineClient;
+  ClientUpward upwardClient("upward");
+  ptrClientUpward = &upwardClient;
 
   ROS_INFO("Waiting for action server to start.");
   lineClient.waitForServer();
   buoyClient.waitForServer();
+  upwardClient.waitForServer();
 
   goalLine.order = true;
   ROS_INFO("Action server started, sending goal to line.");
@@ -100,6 +139,25 @@ int main(int argc, char **argv)
   // send goal
   canBuoy.sendGoal(goalBuoy);
   boost::thread spin_thread_buoy(&spinThreadBuoy);
+
+  while (!successBuoy)
+  {
+    ros::spinOnce();
+  }
+
+  goalUpward.Goal = present_depth + 5;
+  goalUpward.loop = 10;
+  ROS_INFO("Action server started, sending goal to upward.");
+
+  ClientUpward &canUpward = *ptrClientUpward;
+  // send goal
+  canUpward.sendGoal(goalUpward);
+  boost::thread spin_thread_upward(&spinThreadUpwardPressure);
+
+  while (!successUpward)
+  {
+    ros::spinOnce();
+  }
   ros::spin();
   return 0;
 }
