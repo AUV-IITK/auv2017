@@ -172,7 +172,7 @@ int main(int argc, char **argv)
     ros::spinOnce();
   }
 
-  goalUpward.Goal = present_depth + 10;
+  goalUpward.Goal = present_depth + 10;     // add param
   goalUpward.loop = 10;
   ROS_INFO("Action server started, sending goal to upward.");
 
@@ -198,11 +198,11 @@ int main(int argc, char **argv)
   mock_forward.data = 250;
   pub_forward.publish(mock_forward);
 
-  sleep(3);
+  sleep(5);                   // add param
 
   canForward.cancelGoal();
 
-  goalUpward.Goal = present_depth - 13;
+  goalUpward.Goal = present_depth - 11;         // add param
   goalUpward.loop = 10;
   ROS_INFO("Sending goal to upward.");
 
@@ -216,6 +216,18 @@ int main(int argc, char **argv)
     ros::spinOnce();
   }
 
+  successLine = false;
+  goalLine.order = true;
+  ROS_INFO("Sending goal to line.");
+
+  // send goal
+  canLine.sendGoal(goalLine);
+  boost::thread spin_thread_line2(&spinThreadLine);
+
+  while (!successLine)
+  {
+    ros::spinOnce();
+  }
   ros::spin();
   return 0;
 }
