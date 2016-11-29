@@ -9,6 +9,4 @@
   </node>
   <node name="gate_server" pkg="task_gate" type="gate_server" respawn="true"  output="screen">
   </node>
-  <node name="gate_client" pkg="task_gate" type="gate_client" respawn="true"  output="screen">
-  </node>
 </launch>
