@@ -363,103 +363,107 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    TurnClient_.cancelGoal();  <span class="comment">// stopped stablisation</span></div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    turngoal.AngleToTurn = angle_goal.data;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    turngoal.loop = 10;</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    TurnClient_.sendGoal(turngoal);</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    boost::thread spin_thread_turn_camera(&amp;TaskLineInnerClass::spinThreadTurnCamera, <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: line is going to be aligned&quot;</span>, action_name_.c_str());</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="keywordflow">while</span> (goal-&gt;order &amp;&amp; success)</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    {</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;      <span class="keywordflow">if</span> (line_server_.isPreemptRequested() || !ros::ok())</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;      {</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, action_name_.c_str());</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;        <span class="comment">// set the action state to preempted</span></div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        line_server_.setPreempted();</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;        success = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;      }</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;      looprate.sleep();</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;      <span class="keywordflow">if</span> (LineAlign)</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;      {</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: line is aligned.&quot;</span>, action_name_.c_str());</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      }</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;      feedback_.AngleRemaining = angle_goal.data;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      feedback_.x_coord = data_X_.data;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      feedback_.y_coord = data_Y_.data;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;      line_server_.publishFeedback(feedback_);</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      ros::spinOnce();</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    }</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    result_.MotionCompleted = success;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: Success is %s&quot;</span>, action_name_.c_str(), success ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>);</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    line_server_.setSucceeded(result_);</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  }</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  <span class="keywordtype">void</span> detection_switch_on()</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;  {</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    std_msgs::Bool msg;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    switch_detection.publish(msg);</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  }</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  <span class="keywordtype">void</span> detection_switch_off()</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;  {</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    std_msgs::Bool msg;</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    switch_detection.publish(msg);</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  }</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  <span class="keywordtype">void</span> angle_switch_on()</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  {</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    std_msgs::Bool msg;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    switch_angle.publish(msg);</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  }</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;  <span class="keywordtype">void</span> angle_switch_off()</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  {</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    std_msgs::Bool msg;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    switch_angle.publish(msg);</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  }</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;  <span class="keywordtype">void</span> centralize_switch_on()</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  {</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    std_msgs::Bool msg;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    switch_centralize.publish(msg);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  }</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;  <span class="keywordtype">void</span> centralize_switch_off()</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;  {</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    std_msgs::Bool msg;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    switch_centralize.publish(msg);</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  }</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;};</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="comment">//***********************************************************************************//</span></div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;{</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;line_server&quot;</span>);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keywordflow">while</span> (angle_goal.data == 0.0)</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    {</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      sleep(.01);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    }</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    turngoal.AngleToTurn = angle_goal.data;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    turngoal.loop = 10;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    TurnClient_.sendGoal(turngoal);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    boost::thread spin_thread_turn_camera(&amp;TaskLineInnerClass::spinThreadTurnCamera, <span class="keyword">this</span>);</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: line is going to be aligned&quot;</span>, action_name_.c_str());</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordflow">while</span> (goal-&gt;order &amp;&amp; success)</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;    {</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;      <span class="keywordflow">if</span> (line_server_.isPreemptRequested() || !ros::ok())</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;      {</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: Preempted&quot;</span>, action_name_.c_str());</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <span class="comment">// set the action state to preempted</span></div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        line_server_.setPreempted();</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        success = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;      }</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;      looprate.sleep();</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      <span class="keywordflow">if</span> (LineAlign)</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;      {</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        ROS_INFO(<span class="stringliteral">&quot;%s: line is aligned.&quot;</span>, action_name_.c_str());</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      }</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;      feedback_.AngleRemaining = angle_goal.data;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;      feedback_.x_coord = data_X_.data;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;      feedback_.y_coord = data_Y_.data;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;      line_server_.publishFeedback(feedback_);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;      ros::spinOnce();</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    }</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    result_.MotionCompleted = success;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    ROS_INFO(<span class="stringliteral">&quot;%s: Success is %s&quot;</span>, action_name_.c_str(), success ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>);</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    line_server_.setSucceeded(result_);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;  }</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  <span class="keywordtype">void</span> detection_switch_on()</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;  {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    switch_detection.publish(msg);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;  }</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="keywordtype">void</span> detection_switch_off()</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  {</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    switch_detection.publish(msg);</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  }</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;  <span class="keywordtype">void</span> angle_switch_on()</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;  {</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    switch_angle.publish(msg);</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  }</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="keywordtype">void</span> angle_switch_off()</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  {</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    switch_angle.publish(msg);</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  }</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  <span class="keywordtype">void</span> centralize_switch_on()</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  {</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    msg.data = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    switch_centralize.publish(msg);</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;  }</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  <span class="keywordtype">void</span> centralize_switch_off()</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  {</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    std_msgs::Bool msg;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    msg.data = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    switch_centralize.publish(msg);</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  }</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;};</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="comment">//***********************************************************************************//</span></div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for Goal&quot;</span>);</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  <a class="code" href="classTaskLineInnerClass.html">TaskLineInnerClass</a> taskLineObject(ros::this_node::getName(), <span class="stringliteral">&quot;forward&quot;</span>, <span class="stringliteral">&quot;turningXY&quot;</span>, <span class="stringliteral">&quot;sideward&quot;</span>);</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;{</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;line_server&quot;</span>);</div>
 <div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  ros::spin();</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;}</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;Waiting for Goal&quot;</span>);</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  <a class="code" href="classTaskLineInnerClass.html">TaskLineInnerClass</a> taskLineObject(ros::this_node::getName(), <span class="stringliteral">&quot;forward&quot;</span>, <span class="stringliteral">&quot;turningXY&quot;</span>, <span class="stringliteral">&quot;sideward&quot;</span>);</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  ros::spin();</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;}</div>
 <div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00075">vid_pub.cpp:75</a></div></div>
 <div class="ttc" id="classTaskLineInnerClass_html"><div class="ttname"><a href="classTaskLineInnerClass.html">TaskLineInnerClass</a></div><div class="ttdef"><b>Definition:</b> <a href="line__server_8cpp_source.html#l00029">line_server.cpp:29</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Nov 29 2016 17:37:53 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Nov 29 2016 19:46:18 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
