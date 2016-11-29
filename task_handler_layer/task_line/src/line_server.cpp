@@ -273,6 +273,10 @@ public:
 
     TurnClient_.cancelGoal();  // stopped stablisation
 
+    while (angle_goal.data == 0.0)
+    {
+      sleep(.01);
+    }
     turngoal.AngleToTurn = angle_goal.data;
     turngoal.loop = 10;
     TurnClient_.sendGoal(turngoal);

@@ -87,9 +87,9 @@ int main(int argc, char **argv)
   // send goal
   canLine.sendGoal(goalLine);
   boost::thread spin_thread_line(&spinThreadLine);
+
   while (!successLine)
   {
-    ROS_INFO("wait for the line dude :p");
     ros::spinOnce();
   }
 
