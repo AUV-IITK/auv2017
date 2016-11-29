@@ -8,24 +8,31 @@
 #include <task_commons/lineActionFeedback.h>
 #include <task_commons/buoyActionResult.h>
 #include <task_commons/lineActionResult.h>
+#include <motion_commons/ForwardAction.h>
 #include <motion_commons/UpwardAction.h>
 #include <motion_commons/UpwardActionFeedback.h>
+#include <motion_commons/ForwardActionFeedback.h>
 #include <motion_commons/UpwardActionResult.h>
+#include <motion_commons/ForwardActionResult.h>
 #include <actionlib/client/simple_action_client.h>
 #include <actionlib/client/terminal_state.h>
 
 typedef actionlib::SimpleActionClient<task_commons::buoyAction> ClientBuoy;
 typedef actionlib::SimpleActionClient<task_commons::lineAction> ClientLine;
 typedef actionlib::SimpleActionClient<motion_commons::UpwardAction> ClientUpward;
+typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> ClientForward;
 
 ClientBuoy *ptrClientBuoy;
 ClientLine *ptrClientLine;
 ClientUpward *ptrClientUpward;
+ClientForward *ptrClientForward;
 task_commons::buoyGoal goalBuoy;
 task_commons::lineGoal goalLine;
 motion_commons::UpwardGoal goalUpward;
+motion_commons::ForwardGoal goalForward;
 
 ros::Publisher pub_upward;
+ros::Publisher pub_forward;
 
 bool successBuoy = false;
 bool successLine = false;
@@ -106,6 +113,7 @@ int main(int argc, char **argv)
   ros::Subscriber sub_upward = nh.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth",
     1000, &pressureCB);
   pub_upward = nh.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
+  pub_forward = nh.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
 
   ClientBuoy buoyClient("buoy_server");
   ptrClientBuoy = &buoyClient;
@@ -113,11 +121,14 @@ int main(int argc, char **argv)
   ptrClientLine = &lineClient;
   ClientUpward upwardClient("upward");
   ptrClientUpward = &upwardClient;
+  ClientForward forwardClient("forward");
+  ptrClientForward = &forwardClient;
 
   ROS_INFO("Waiting for action server to start.");
   lineClient.waitForServer();
   buoyClient.waitForServer();
   upwardClient.waitForServer();
+  forwardClient.waitForServer();
 
   goalLine.order = true;
   ROS_INFO("Action server started, sending goal to line.");
@@ -145,7 +156,7 @@ int main(int argc, char **argv)
     ros::spinOnce();
   }
 
-  goalUpward.Goal = present_depth + 5;
+  goalUpward.Goal = present_depth + 10;
   goalUpward.loop = 10;
   ROS_INFO("Action server started, sending goal to upward.");
 
@@ -158,6 +169,22 @@ int main(int argc, char **argv)
   {
     ros::spinOnce();
   }
+
+  goalForward.Goal = 0;
+  goalForward.loop = 10;
+  ROS_INFO("Action server started, sending goal to forward.");
+
+  ClientForward &canForward = *ptrClientForward;
+  // send goal
+  canForward.sendGoal(goalForward);
+
+  std_msgs::Float64 mock_forward;
+  mock_forward.data = 200;
+  pub_forward.publish(mock_forward);
+
+  sleep(1);
+
+  canForward.cancelGoal();
   ros::spin();
   return 0;
 }
