@@ -37,6 +37,7 @@ ros::Publisher pub_forward;
 bool successBuoy = false;
 bool successLine = false;
 bool successUpward = false;
+bool successDownward = false;
 
 float present_depth;
 
@@ -72,6 +73,21 @@ void spinThreadUpwardPressure()
   temp.waitForResult();
   successUpward = (*(temp.getResult())).Result;
   if (successUpward)
+  {
+    ROS_INFO("%s Bot is at desired height.", ros::this_node::getName().c_str());
+  }
+  else
+  {
+    ROS_INFO("%s Bot is not at desired height, something went wrong", ros::this_node::getName().c_str());
+  }
+}
+
+void spinThreadDownwardPressure()
+{
+  ClientUpward &temp = *ptrClientUpward;
+  temp.waitForResult();
+  successDownward = (*(temp.getResult())).Result;
+  if (successDownward)
   {
     ROS_INFO("%s Bot is at desired height.", ros::this_node::getName().c_str());
   }
@@ -179,12 +195,27 @@ int main(int argc, char **argv)
   canForward.sendGoal(goalForward);
 
   std_msgs::Float64 mock_forward;
-  mock_forward.data = 200;
+  mock_forward.data = 250;
   pub_forward.publish(mock_forward);
 
-  sleep(1);
+  sleep(3);
 
   canForward.cancelGoal();
+
+  goalUpward.Goal = present_depth - 13;
+  goalUpward.loop = 10;
+  ROS_INFO("Sending goal to upward.");
+
+  ClientUpward &canDownward = *ptrClientUpward;
+  // send goal
+  canDownward.sendGoal(goalUpward);
+  boost::thread spin_thread_downward(&spinThreadDownwardPressure);
+
+  while (!successDownward)
+  {
+    ros::spinOnce();
+  }
+
   ros::spin();
   return 0;
 }
