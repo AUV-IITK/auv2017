@@ -313,7 +313,7 @@ int main(int argc, char *argv[])
         array.data.push_back(-4);
         pub.publish(array);
       }
-      else if (r[0] > 220)
+      else if (r[0] > 110)
       {
         array.data.push_back(-5);
         array.data.push_back(-5);
@@ -351,7 +351,6 @@ int main(int argc, char *argv[])
     }
     else
     {
-      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
       if ((cvWaitKey(10) & 255) == 32)
       {
         if (x == 32)

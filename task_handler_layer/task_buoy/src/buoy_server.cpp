@@ -227,7 +227,7 @@ public:
       {
         successBuoy = true;
         ROS_INFO("%s: Waiting for hitting the buoy...", action_name_.c_str());
-        sleep(1);
+        // sleep(1);
         break;
       }
 
