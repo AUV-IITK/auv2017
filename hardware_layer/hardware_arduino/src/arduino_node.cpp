@@ -351,6 +351,9 @@ void setup()
   PWMCbSideward(msg);
   PWMCbUpward(msg);
   PWMCbTurn(msg);
+
+  sensor.read();
+  last_pressure_sensor_value = -(sensor.depth() * 100);
 }
 
 void loop()
