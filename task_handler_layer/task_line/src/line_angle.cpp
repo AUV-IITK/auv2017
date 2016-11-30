@@ -209,17 +209,18 @@ int main(int argc, char *argv[])
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
 
+
+  dynamic_reconfigure::Server<task_line::lineConfig> server;
+  dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
+  f = boost::bind(&callback_dyn, _1, _2);
+  server.setCallback(f);
+
   n.getParam("line_angle/t1max", t1max);
   n.getParam("line_angle/t1min", t1min);
   n.getParam("line_angle/t2max", t2max);
   n.getParam("line_angle/t2min", t2min);
   n.getParam("line_angle/t3max", t3max);
   n.getParam("line_angle/t3min", t3min);
-
-  dynamic_reconfigure::Server<task_line::lineConfig> server;
-  dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
-  f = boost::bind(&callback_dyn, _1, _2);
-  server.setCallback(f);
 
   task_line::lineConfig config;
   config.t1min_param = t1min;
@@ -239,13 +240,6 @@ int main(int argc, char *argv[])
     cvNamedWindow("F1", CV_WINDOW_NORMAL);
     cvNamedWindow("F2", CV_WINDOW_NORMAL);
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
-
-    // cvCreateTrackbar("t1min", "F1", &t1min, 260, NULL);
-    // cvCreateTrackbar("t1max", "F1", &t1max, 260, NULL);
-    // cvCreateTrackbar("t2min", "F2", &t2min, 260, NULL);
-    // cvCreateTrackbar("t2max", "F2", &t2max, 260, NULL);
-    // cvCreateTrackbar("t3min", "F3", &t3min, 260, NULL);
-    // cvCreateTrackbar("t3max", "F3", &t3max, 260, NULL);
   }
   // capture size -
   CvSize size = cvSize(width, height);
@@ -374,7 +368,6 @@ int main(int argc, char *argv[])
     }
     else
     {
-      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
       if ((cvWaitKey(10) & 255) == 32)
       {
         if (m == 32)

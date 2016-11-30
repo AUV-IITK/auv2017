@@ -101,17 +101,25 @@ int main(int argc, char **argv)
                             // rate should be same as there rate of data
                             // generation
 
-  n.getParam("line_detection/percentage", percentage);
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
+
+  n.getParam("line_detection/percentage", percentage);
+
+  task_line::lineConfig config;
+  config.orange_param = percentage;
+  callback(config, 0);
 
   if (argc == 2)
   {
     cvNamedWindow("F3", CV_WINDOW_NORMAL);
     cvCreateTrackbar("percentage", "red_hue_image", &percentage, 100, NULL);
   }
+
+  int oldAlert = 42;  // Used to decide when to print
+
   while (ros::ok())
   {
     if (!frame.data)  // Check for invalid input
@@ -126,19 +134,28 @@ int main(int argc, char **argv)
     {
       int alert = detect(frame);
       cv::imshow("red_hue_image", red_hue_image);
+
       if (alert == 1)
       {
         std_msgs::Bool msg;
         msg.data = true;
         robot_pub.publish(msg);
-        ROS_INFO("%s: found line", ros::this_node::getName().c_str());
+        if (oldAlert != alert)
+        {
+          ROS_INFO("%s: found line", ros::this_node::getName().c_str());
+          oldAlert = alert;
+        }
       }
       else if (alert == 0)
       {
         std_msgs::Bool msg;
         msg.data = false;
         robot_pub.publish(msg);
-        ROS_INFO("%s: no line", ros::this_node::getName().c_str());
+        if (oldAlert != alert)
+        {
+          ROS_INFO("%s: no line", ros::this_node::getName().c_str());
+          oldAlert = alert;
+        }
       }
       else
       {
@@ -159,7 +176,6 @@ int main(int argc, char **argv)
     }
     else
     {
-      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
       if ((cvWaitKey(10) & 255) == 32)
       {
         if (x == 32)

@@ -40,7 +40,6 @@ private:
   task_commons::buoyResult result_;
   ros::Subscriber sub_ip_;
   ros::Subscriber yaw_sub_;
-  ros::Subscriber pressure_sensor_sub;
   ros::Publisher switch_buoy_detection;
   ros::Publisher yaw_pub_;
   ros::Publisher present_distance_;
@@ -77,8 +76,6 @@ public:
     sub_ip_ =
         nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000, &TaskBuoyInnerClass::buoyNavigation, this);
     yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskBuoyInnerClass::yawCB, this);
-    pressure_sensor_sub = nh_.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth", 1000,
-                                                           &TaskBuoyInnerClass::pressureCB, this);
     buoy_server_.start();
   }
 
@@ -89,13 +86,6 @@ public:
   void yawCB(std_msgs::Float64 imu_data)
   {
     yaw_pub_.publish(imu_data);
-  }
-
-  void pressureCB(std_msgs::Float64 pressure_sensor_data)
-  {
-    present_depth = pressure_sensor_data.data;
-    if (successBuoy)
-      present_Y_.publish(pressure_sensor_data);
   }
 
   void buoyNavigation(std_msgs::Float64MultiArray array)
@@ -138,21 +128,6 @@ public:
     else
     {
       ROS_INFO("%s Bot is not at height center, something went wrong", action_name_.c_str());
-    }
-  }
-
-  void spinThreadUpwardPressure()
-  {
-    ClientUpward &tempUpward = UpwardClient_;
-    tempUpward.waitForResult();
-    heightGoal = (*(tempUpward.getResult())).Result;
-    if (heightGoal)
-    {
-      ROS_INFO("%s Bot is at desired height.", action_name_.c_str());
-    }
-    else
-    {
-      ROS_INFO("%s Bot is not at desired height, something went wrong", action_name_.c_str());
     }
   }
 
@@ -205,6 +180,7 @@ public:
     upwardgoal.loop = 10;
     UpwardClient_.sendGoal(upwardgoal);
     boost::thread spin_thread_upward_camera(&TaskBuoyInnerClass::spinThreadUpwardCamera, this);
+    ROS_INFO("%s: finding buoy", action_name_.c_str());
 
     while (goal->order)
     {
@@ -222,10 +198,10 @@ public:
         break;
       }
       // publish the feedback
-      feedback_.nosignificance = false;
+      feedback_.x_coord = data_X_.data;
+      feedback_.y_coord = data_Y_.data;
+      feedback_.distance = data_distance_.data;
       buoy_server_.publishFeedback(feedback_);
-      ROS_INFO(" %s: %s x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data,
-               data_distance_.data);
       ros::spinOnce();
     }
 
@@ -233,6 +209,7 @@ public:
     forwardgoal.Goal = 0;
     forwardgoal.loop = 10;
     ForwardClient_.sendGoal(forwardgoal);
+    ROS_INFO("%s: Bot is moving forward to hit the buoy", action_name_.c_str());
 
     while (goal->order)
     {
@@ -250,33 +227,20 @@ public:
       {
         successBuoy = true;
         ROS_INFO("%s: Waiting for hitting the buoy...", action_name_.c_str());
-        sleep(1);
+        // sleep(1);
         break;
       }
 
-      feedback_.nosignificance = false;
+      feedback_.x_coord = data_X_.data;
+      feedback_.y_coord = data_Y_.data;
+      feedback_.distance = data_distance_.data;
       buoy_server_.publishFeedback(feedback_);
-      ROS_INFO("%s: x = %f, y = %f, front distance = %f", action_name_.c_str(), data_X_.data, data_Y_.data,
-               data_distance_.data);
       ros::spinOnce();
     }
 
     ForwardClient_.cancelGoal();  // stop motion here
 
-    upwardgoal.Goal = present_depth + 5;
-    upwardgoal.loop = 10;
-    UpwardClient_.sendGoal(upwardgoal);
-    ROS_INFO("%s: moving upward", action_name_.c_str());
-    boost::thread spin_thread_upward_pressure(&TaskBuoyInnerClass::spinThreadUpwardPressure, this);
-
-    while (!heightGoal)
-    {
-      ROS_INFO("%s: present depth = %f", action_name_.c_str(), present_depth);
-      looprate.sleep();
-      ros::spinOnce();
-    }
-
-    result_.MotionCompleted = successBuoy && heightGoal;
+    result_.MotionCompleted = successBuoy;
     ROS_INFO("%s: Succeeded", action_name_.c_str());
     // set the action state to succeeded
     buoy_server_.setSucceeded(result_);

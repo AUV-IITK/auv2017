@@ -1,6 +1,7 @@
 // Copyright 2016 AUV-IITK
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Float64.h>
 #include <task_commons/buoyAction.h>
 #include <task_commons/buoyActionFeedback.h>
 #include <task_commons/buoyActionResult.h>
@@ -31,7 +32,8 @@ void spinThread()
 // never ever put the argument of the callback function anything other then the specified
 void forwardCb(task_commons::buoyActionFeedback msg)
 {
-  ROS_INFO("%s: feedback recieved %d", ros::this_node::getName().c_str(), msg.feedback.nosignificance);
+  ROS_INFO("%s: x_coord = %f, y_coord = %f, distance = %f",
+    ros::this_node::getName().c_str(), msg.feedback.x_coord, msg.feedback.y_coord, msg.feedback.distance);
 }
 
 int main(int argc, char **argv)
