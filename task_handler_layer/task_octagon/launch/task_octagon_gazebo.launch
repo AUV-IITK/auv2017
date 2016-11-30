@@ -1,10 +1,10 @@
 <launch>
-  <node name="circle_detection" pkg="task_buoy" type="circle_detection" respawn="true"  output="screen">
-    <param name="t1min" type="int" value="178" />
-    <param name="t1max" type="int" value="183" />
-    <param name="t2min" type="int" value="234" />
-    <param name="t2max" type="int" value="260" />
-    <param name="t3min" type="int" value="227" />
-    <param name="t3max" type="int" value="255" />
+  <node name="circle_detection" pkg="task_octagon" type="circle_detection" respawn="true"  output="screen">
+    <param name="t1min" type="int" value="74" />
+    <param name="t1max" type="int" value="98" />
+    <param name="t2min" type="int" value="43" />
+    <param name="t2max" type="int" value="256" />
+    <param name="t3min" type="int" value="190" />
+    <param name="t3max" type="int" value="250" />
   </node>
 </launch>

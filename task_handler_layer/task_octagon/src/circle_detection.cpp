@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
   n.getParam("circle_detection/t3min", t3min);
 
   image_transport::ImageTransport it(n);
-  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
 
   cvNamedWindow("Contours", CV_WINDOW_NORMAL);
   cvNamedWindow("circle", CV_WINDOW_NORMAL);
