@@ -5,6 +5,4 @@ bool order
 bool MotionCompleted
 ---
 #feedback definition
-float64 x_coord
-float64 y_coord
 float32 AngleRemaining
