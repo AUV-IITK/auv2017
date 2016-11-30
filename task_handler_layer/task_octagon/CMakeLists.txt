@@ -131,35 +131,36 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(include
+  ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
 )
-
-add_executable(circle_detection src/circle_detection.cpp)
-target_link_libraries(circle_detection ${OpenCV_LIBS} )
-target_link_libraries(circle_detection ${catkin_LIBRARIES})
-
-## Declare a C++ library
-# add_library(task_octagon
-#   src/${PROJECT_NAME}/task_octagon.cpp
+## Declare a cpp library
+# add_library(task_octagon_detection
+#   src/${PROJECT_NAME}/task_octagon_detection.cpp
 # )
 
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(task_octagon ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+## Declare a cpp executable
+# add_executable(task_octagon_detection_node src/task_octagon_detection_node.cpp)
+add_executable(octagon_detection src/octagon_detection.cpp)
+add_executable(octagon_centralize src/octagon_centralize.cpp)
+add_executable(octagon_server src/octagon_server.cpp)
+add_executable(octagon_client src/octagon_client.cpp)
 
-## Declare a C++ executable
-# add_executable(task_octagon_node src/task_octagon_node.cpp)
-
-## Add cmake target dependencies of the executable
-## same as for the library above
-# add_dependencies(task_octagon_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+## Add cmake target dependencies of the executable/library
+## as an example, message headers may need to be generated before nodes
+# add_dependencies(task_octagon_detection_node task_octagon_detection_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(task_octagon_node
+# target_link_libraries(task_octagon_detection_node
 #   ${catkin_LIBRARIES}
 # )
+target_link_libraries(octagon_detection ${catkin_LIBRARIES})
+target_link_libraries(octagon_centralize ${OpenCV_LIBS})
+target_link_libraries(octagon_centralize ${catkin_LIBRARIES})
+target_link_libraries(octagon_detection ${OpenCV_LIBS})
+target_link_libraries(octagon_server ${catkin_LIBRARIES})
+target_link_libraries(octagon_client ${catkin_LIBRARIES})
 
 #############
 ## Install ##
