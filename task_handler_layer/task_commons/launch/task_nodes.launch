@@ -5,8 +5,8 @@
   <node name="line_angle" pkg="task_line" type="line_angle" respawn="true" />
   <node name="line_centralize" pkg="task_line" type="line_centralize" respawn="true" />
   <node name="line_server" pkg="task_line" type="line_server" respawn="true" />
-  <node name="circle_detection" pkg="task_octagon" type="circle_detection" respawn="true" />
-  <node name="circle_server" pkg="task_octagon" type="circle_server" respawn="true" />
+  <node name="octagon_detection" pkg="task_octagon" type="octagon_detection" respawn="true" />
+  <node name="octagon_server" pkg="task_octagon" type="octagon_server" respawn="true" />
   <node name="gate_detection" pkg="task_gate" type="gate_detection" respawn="true" />
   <node name="buoy_detection" pkg="task_gate" type="gate_server" respawn="true" />
 </launch>
