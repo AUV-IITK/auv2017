@@ -13,7 +13,7 @@ using std::string;
 typedef actionlib::SimpleActionServer<motion_commons::TurnAction> Server;
 float presentAngularPosition = 0;
 float previousAngularPosition = 0;
-float finalAngularPosition, error, output;
+float finalAngularPosition, error, output, error_val;
 bool initData = false;
 std_msgs::Int32 pwm;  // pwm to be send to arduino
 
@@ -110,6 +110,14 @@ public:
       }
 
       error = finalAngularPosition - presentAngularPosition;
+      if (error < 0)
+        error_val = error + 360;
+      else
+        error_val = error - 360;
+
+      if (abs(error_val) < abs(error))
+        error = error_val;
+
       integral += (error * dt);
       derivative = (presentAngularPosition - previousAngularPosition) / dt;
       output = (p * error) + (i * integral) + (d * derivative);
