@@ -14,10 +14,13 @@ if __name__ == '__main__':
 
         def change_pwm_motion_1(data):
             w1.set(data.data)
+
         def change_pwm_motion_2(data):
             w2.set(data.data)
+
         def change_pwm_motion_3(data):
             w3.set(data.data)
+
         def change_pwm_motion_4(data):
             w4.set(data.data)
         forward_motion = rospy.Publisher('/pwm/forward', Int32)
@@ -26,13 +29,15 @@ if __name__ == '__main__':
         Sideward_motion = rospy.Publisher('/pwm/sideward', Int32)
         Upward_motion = rospy.Publisher('/pwm/upward', Int32)
         rospy.init_node('pwm_monitor', anonymous=True)
-        rospy.Subscriber("/pwm/forward", Int32, change_pwm_motion_1)   #topic for motion_1
-        rospy.Subscriber("/pwm/turn", Int32, change_pwm_motion_2)   #topic for motion_2
-        rospy.Subscriber("/pwm/sideward", Int32, change_pwm_motion_3)   #topic for motion_3
-        rospy.Subscriber("/pwm/upward", Int32, change_pwm_motion_4)   #topic for motion_4
+        # topic for motion_1
+        rospy.Subscriber("/pwm/forward", Int32, change_pwm_motion_1)
+        # topic for motion_2
+        rospy.Subscriber("/pwm/turn", Int32, change_pwm_motion_2)
+        rospy.Subscriber("/pwm/sideward", Int32,
+                         change_pwm_motion_3)  # topic for motion_3
+        # topic for motion_4
+        rospy.Subscriber("/pwm/upward", Int32, change_pwm_motion_4)
 
-
-         
         # def forwardClicked():
         #     """Documentation for a function"""
         #     w1.set( w1.get() +10)
@@ -120,7 +125,7 @@ if __name__ == '__main__':
                       fg="blue", anchor=N, text="AUV IITK")
         label.pack()
         # Button(window, bg="darkmagenta", font=("Helvetica", 14), fg="white",
-               # height=3, width=10, text="Reset", command=reset).pack()
+        # height=3, width=10, text="Reset", command=reset).pack()
         ca = Canvas(window, height=50)
         ca.pack()
         main = PanedWindow()
@@ -167,7 +172,7 @@ if __name__ == '__main__':
         m4 = PanedWindow(main, orient=VERTICAL)
         main.add(m4)
         w4 = Scale(m4, length=150, troughcolor="orange", highlightbackground="grey", label="PWM",
-                    fg="darkviolet", from_=-255, to=255, orient=HORIZONTAL, activebackground="lightgreen")
+                   fg="darkviolet", from_=-255, to=255, orient=HORIZONTAL, activebackground="lightgreen")
         l4 = Label(m4, fg="green", font=("Helvetica", 12), text="upward")
         m4.add(l4)
         m4.add(w4)
