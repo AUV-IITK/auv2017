@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['remote_5fgui_2epy',['remote_gui.py',['../remote__gui_8py.html',1,'']]]
+  ['pwm_5fmonitor_2epy',['pwm_monitor.py',['../pwm__monitor_8py.html',1,'']]]
 ];

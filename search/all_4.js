@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['taskbuoyinnerclass',['TaskBuoyInnerClass',['../classTaskBuoyInnerClass.html',1,'']]],
-  ['taskgateinnerclass',['TaskGateInnerClass',['../classTaskGateInnerClass.html',1,'']]],
-  ['tasklineinnerclass',['TaskLineInnerClass',['../classTaskLineInnerClass.html',1,'']]]
+  ['remote_5fgui_2epy',['remote_gui.py',['../remote__gui_8py.html',1,'']]]
 ];

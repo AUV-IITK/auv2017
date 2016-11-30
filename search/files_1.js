@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vid_5fpub_2ecpp',['vid_pub.cpp',['../vid__pub_8cpp.html',1,'']]]
+  ['remote_5fgui_2epy',['remote_gui.py',['../remote__gui_8py.html',1,'']]]
 ];
