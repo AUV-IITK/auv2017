@@ -4,19 +4,19 @@
 #include <std_msgs/Int32.h>
 #include <math.h>
 
-#define pwmPinWest 4
-#define pwmPinEast 5
-#define directionPinWest1 26
-#define directionPinWest2 27
-#define directionPinEast1 35
-#define directionPinEast2 29
+#define pwmPinWest 3
+#define pwmPinEast 2
+#define directionPinEast1 30
+#define directionPinEast2 31
+#define directionPinWest1 32
+#define directionPinWest2 33
 
-#define pwmPinNorthSway 2
-#define pwmPinSouthSway 3
-#define directionPinNorthSway1 31
-#define directionPinNorthSway2 30
-#define directionPinSouthSway1 33
-#define directionPinSouthSway2 32
+#define pwmPinNorthSway 5
+#define pwmPinSouthSway 4
+#define directionPinSouthSway1 27
+#define directionPinSouthSway2 26
+#define directionPinNorthSway1 29
+#define directionPinNorthSway2 28
 
 #define pwmPinNorthUp 6
 #define pwmPinSouthUp 7
