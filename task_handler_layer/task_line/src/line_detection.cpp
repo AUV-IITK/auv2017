@@ -50,10 +50,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   {
     count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
-    cvNamedWindow("newframe", CV_WINDOW_NORMAL);
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
-    cv::imshow("newframe", newframe);
     ////////////////////////// FATAL ///////////////////////////////////////////////////
   }
   catch (cv_bridge::Exception &e)
@@ -111,12 +109,6 @@ int main(int argc, char **argv)
   task_line::lineConfig config;
   config.orange_param = percentage;
   callback(config, 0);
-
-  if (argc == 2)
-  {
-    cvNamedWindow("F3", CV_WINDOW_NORMAL);
-    cvCreateTrackbar("percentage", "red_hue_image", &percentage, 100, NULL);
-  }
 
   int oldAlert = 42;  // Used to decide when to print
 
