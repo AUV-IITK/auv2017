@@ -1,13 +1,18 @@
 #!/usr/bin/python
 from Tkinter import *
 import rospy
+from std_msgs.msg import Int32
+from std_msgs.msg import Float64
+import motion_commons.msg
+import actionlib
+import roslib
+roslib.load_manifest('motion_commons')
 """
 \file
 \brief super short description
 
 Long decription
 """
-from std_msgs.msg import Int32
 
 if __name__ == '__main__':
     try:
@@ -191,16 +196,26 @@ if __name__ == '__main__':
 # #######################################################################
 
         def verticalStabilize():
+            client_vertical = actionlib.SimpleActionClient(
+                'upward', motion_commons.Upward.UpwardAction)
+            client_vertical.wait_for_server()
+            goal_upward = motion_commons.msg.UpwardGoal(
+                Goal=present_depth, loop=100000)
             if vert_stab_var.get() == 1:
-                print("now on vert")
+                client_vertical.send_goal(goal_upward)
             else:
-                print("now off vert")
+                client_vertical.cancel_goal(goal_upward)
 
         def sidewardStabilize():
+            client_turn = actionlib.SimpleActionClient(
+                'turningXY', motion_commons.Turn.TurnAction)
+            client_turn.wait_for_server()
+            goal_turn = motion_commons.msg.TurnAction(
+                AngleToTurn=0.0, loop=100000)
             if side_stab_var.get() == 1:
-                print("now on side")
+                client_turn.send_goal(goal_turn)
             else:
-                print("now off side")
+                client_turn.cancel_goal(goal_turn)
 
 # LABEL TOP##################################################################
         label = Label(window, bd=5, font=("Helvetica", 16),
