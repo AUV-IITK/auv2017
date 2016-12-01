@@ -12,19 +12,23 @@
 #include <task_commons/octagonAction.h>
 #include <motion_commons/ForwardAction.h>
 #include <motion_commons/SidewardAction.h>
+#include <motion_commons/UpwardAction.h>
 #include <motion_commons/TurnAction.h>
 #include <motion_commons/SidewardActionFeedback.h>
 #include <motion_commons/ForwardActionFeedback.h>
+#include <motion_commons/UpwardActionFeedback.h>
 #include <motion_commons/TurnActionFeedback.h>
 #include <motion_commons/SidewardActionResult.h>
 #include <motion_commons/ForwardActionResult.h>
 #include <motion_commons/TurnActionResult.h>
+#include <motion_commons/UpwardActionResult.h>
 #include <string>
 
 typedef actionlib::SimpleActionServer<task_commons::octagonAction> Server;
 typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> Client_Forward;
 typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> Client_Sideward;
 typedef actionlib::SimpleActionClient<motion_commons::TurnAction> Client_Turn;
+typedef actionlib::SimpleActionClient<motion_commons::UpwardAction> Client_Upward;
 
 class TaskoctagonInnerClass
 {
@@ -43,24 +47,27 @@ private:
   ros::Publisher present_Y_;
   ros::Publisher yaw_pub_;
   Client_Forward ForwardClient_;
+  Client_Upward UpwardClient_;
   Client_Sideward SidewardClient_;
   Client_Turn TurnClient_;
   motion_commons::ForwardGoal forwardgoal;
   motion_commons::SidewardGoal sidewardgoal;
   motion_commons::TurnGoal turngoal;
+  motion_commons::UpwardGoal upwardgoal;
   std_msgs::Float64 data_X_;
   std_msgs::Float64 data_Y_;
   bool isblue, success, FrontCenter, SideCenter, octagonAlign;
 
 public:
   TaskoctagonInnerClass(std::string name, std::string node, std::string node1,
-                     std::string node2)
+                     std::string node2, std::string node3)
     :  // here we are defining the server, third argument is optional
     octagon_server_(nh_, name, boost::bind(&TaskoctagonInnerClass::analysisCB, this, _1), false)
     , action_name_(name)
     , ForwardClient_(node)
     , TurnClient_(node1)
     , SidewardClient_(node2)
+    , UpwardClient_(node3)
   {
     ROS_INFO("inside constructor");
     octagon_server_.registerPreemptCallback(boost::bind(&TaskoctagonInnerClass::preemptCB, this));
@@ -74,7 +81,7 @@ public:
                                                    &TaskoctagonInnerClass::octagonDetectedListener, this);
     yaw_sub = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskoctagonInnerClass::yawCB, this);
     centralize_data = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/octagon_centralize", 1000,
-                                                                 &TaskoctagonInnerClass::octagonCentralizeListener, this);
+                                                           &TaskoctagonInnerClass::octagonCentralizeListener, this);
     octagon_server_.start();
   }
 
@@ -207,7 +214,7 @@ public:
       }
       // publish the feedback
 
-      feedback_.AngleRemaining = angle_goal.data;
+      // feedback_.AngleRemaining = angle_goal.data;
       feedback_.x_coord = data_X_.data;
       feedback_.y_coord = data_Y_.data;
       octagon_server_.publishFeedback(feedback_);
@@ -247,7 +254,7 @@ public:
         break;
       }
       // publish the feedback
-      feedback_.AngleRemaining = angle_goal.data;
+      // feedback_.AngleRemaining = angle_goal.data;
       feedback_.x_coord = data_X_.data;
       feedback_.y_coord = data_Y_.data;
       octagon_server_.publishFeedback(feedback_);
@@ -341,7 +348,7 @@ int main(int argc, char **argv)
 
   ROS_INFO("Waiting for Goal");
 
-  TaskoctagonInnerClass taskoctagonObject(ros::this_node::getName(), "forward", "turningXY", "sideward");
+  TaskoctagonInnerClass taskoctagonObject(ros::this_node::getName(), "forward", "turningXY", "sideward", "upward");
 
   ros::spin();
   return 0;
