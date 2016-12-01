@@ -17,6 +17,7 @@ Long decription
 if __name__ == '__main__':
     try:
         window = Tk()
+        window.wm_title("AUV Remote Controller")
         side_stab_var = IntVar()
         vert_stab_var = IntVar()
         forward_motion = rospy.Publisher('/pwm/forward', Int32)
@@ -25,65 +26,32 @@ if __name__ == '__main__':
         Upward_motion = rospy.Publisher('/pwm/upward', Int32)
         rospy.init_node('remote_gui', anonymous=True)
 
-        def change_pwm_motion_1(data):
+        def change_pwm_motion_forward(data):
             w01.set(data.data)
 
-        def change_pwm_motion_2(data):
+        def change_pwm_motion_turn(data):
             w02.set(data.data)
 
-        def change_pwm_motion_3(data):
+        def change_pwm_motion_sideward(data):
             w03.set(data.data)
 
-        def change_pwm_motion_4(data):
+        def change_pwm_motion_upward(data):
             w04.set(data.data)
-        # topic for motion_1
-        rospy.Subscriber("/pwm/forward", Int32, change_pwm_motion_1)
-        # topic for motion_2
-        rospy.Subscriber("/pwm/turn", Int32, change_pwm_motion_2)
-        # topic for motion_3
-        rospy.Subscriber("/pwm/sideward", Int32, change_pwm_motion_3)
-        # topic for motion_4
-        rospy.Subscriber("/pwm/upward", Int32, change_pwm_motion_4)
-# #################################################################
-        ca = Canvas(window, height=50)
-        ca.pack()
-        main = PanedWindow()
-        main.pack()
-        m01 = PanedWindow(main, orient=VERTICAL)
-        main.add(m01)
-        w01 = Scale(m01, length=150, troughcolor="orange", highlightbackground="grey", label="PWM", fg="darkviolet",
-                    from_=-255, to=255, orient=HORIZONTAL, activebackground="lightgreen")
-        l01 = Label(m01, fg="green", font=("Helvetica", 12), text="front_current")
-        m01.add(l01)
-        m01.add(w01)
-        ca = Canvas(main, width=50, height=100)
-        main.add(ca)
-        m04 = PanedWindow(main, orient=VERTICAL)
-        main.add(m04)
-        w04 = Scale(m04, length=150, troughcolor="orange", highlightbackground="grey", label="PWM", fg="darkviolet",
-                    from_=-255, to=255, orient=HORIZONTAL, activebackground="lightgreen")
-        l04 = Label(m04, fg="green", font=("Helvetica", 12), text="vertical_current")
-        m04.add(l04)
-        m04.add(w04)
-        ca = Canvas(main, width=50, height=100)
-        main.add(ca)
-        m03 = PanedWindow(main, orient=VERTICAL)
-        main.add(m03)
-        w03 = Scale(m03, length=150, troughcolor="orange", highlightbackground="grey", label="PWM", fg="darkviolet",
-                    from_=-255, to=255, orient=HORIZONTAL, activebackground="lightgreen")
-        l03 = Label(m03, fg="green", font=("Helvetica", 12), text="sway_current")
-        m03.add(l03)
-        m03.add(w03)
-        ca = Canvas(main, width=50, height=100)
-        main.add(ca)
-        m02 = PanedWindow(main, orient=VERTICAL)
-        main.add(m02)
-        w02 = Scale(m02, length=150, troughcolor="orange", highlightbackground="grey", label="PWM", fg="darkviolet",
-                    from_=-255, to=255, orient=HORIZONTAL, activebackground="lightgreen")
-        l02 = Label(m02, fg="green", font=("Helvetica", 12), text="turn_current")
-        m02.add(l02)
-        m02.add(w02)
 
+        def pressure_sensor_data(data):
+            global present_depth
+            present_depth = data.data
+        # topic for motion_forward
+        rospy.Subscriber("/pwm/forward", Int32, change_pwm_motion_forward)
+        # topic for motion_turn
+        rospy.Subscriber("/pwm/turn", Int32, change_pwm_motion_turn)
+        # topic for motion_sideward
+        rospy.Subscriber("/pwm/sideward", Int32, change_pwm_motion_sideward)
+        # topic for motion_upward
+        rospy.Subscriber("/pwm/upward", Int32, change_pwm_motion_upward)
+        # topic for pressure sensor data
+        rospy.Subscriber("/varun/sensors/pressure_sensor/depth",
+                         Float64, pressure_sensor_data)
 # #################################################################
 # FORWARD_RELATED########################################################
 
@@ -176,7 +144,8 @@ if __name__ == '__main__':
         def anticlock(event):
             if side_stab_var.get() == 0:
                 w4.set(w4.get() - 10)
-                rospy.loginfo("anticlockwise is clicked with pwm = %d", w4.get())
+                rospy.loginfo(
+                    "anticlockwise is clicked with pwm = %d", w4.get())
                 Turn_motion.publish(w4.get())
             else:
                 rospy.loginfo("side stability is on")
@@ -227,8 +196,10 @@ if __name__ == '__main__':
                height=3, width=10, text="Reset", command=reset).pack()
         window.bind('r', reset)
 # ###########################################################################
-        t1 = Checkbutton(window, text="Vert. Stab.", command=verticalStabilize, variable=vert_stab_var, onvalue=1, offvalue=0, height=5, width=20)
-        t2 = Checkbutton(window, text="Side Stab.", command=sidewardStabilize, variable=side_stab_var, onvalue=1, offvalue=0, height=5, width=20)
+        t1 = Checkbutton(window, text="Vert. Stab.", command=verticalStabilize,
+                         variable=vert_stab_var, onvalue=1, offvalue=0, height=5, width=20)
+        t2 = Checkbutton(window, text="Side Stab.", command=sidewardStabilize,
+                         variable=side_stab_var, onvalue=1, offvalue=0, height=5, width=20)
         t1.pack()
         t2.pack()
 # ###########################################################################
@@ -243,7 +214,8 @@ if __name__ == '__main__':
         window.bind('w', forwardClicked)
         window.bind('s', backwardClicked)
         l1 = Label(m1, fg="green", font=("Helvetica", 12), text="front")
-        Stop_front = Button(m1, text="stop", fg="yellow", bg="red", command=stop_front)
+        Stop_front = Button(m1, text="stop", fg="yellow",
+                            bg="red", command=stop_front)
         window.bind('u', stop_front)
         m1.add(l1)
         m1.add(w1)
