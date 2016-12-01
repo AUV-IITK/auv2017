@@ -156,9 +156,9 @@ add_executable(octagon_client src/octagon_client.cpp)
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(octagon_detection ${catkin_LIBRARIES})
+target_link_libraries(octagon_detection ${OpenCV_LIBS})
 target_link_libraries(octagon_centralize ${OpenCV_LIBS})
 target_link_libraries(octagon_centralize ${catkin_LIBRARIES})
-target_link_libraries(octagon_detection ${OpenCV_LIBS})
 target_link_libraries(octagon_server ${catkin_LIBRARIES})
 target_link_libraries(octagon_client ${catkin_LIBRARIES})
 

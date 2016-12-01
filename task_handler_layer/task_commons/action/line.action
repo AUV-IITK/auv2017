@@ -4,5 +4,5 @@ bool order
 #result definition
 bool MotionCompleted
 ---
-#feedback definition
-float32 AngleRemaining
+#feedback
+bool nosignificance
