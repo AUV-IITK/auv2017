@@ -5,8 +5,6 @@
 #include "std_msgs/String.h"
 #include "std_msgs/Int8.h"
 #include <fstream>
-#include <dynamic_reconfigure/server.h>
-#include <task_octagon/octagonConfig.h>
 #include <vector>
 #include <std_msgs/Bool.h>
 #include <opencv2/core/core.hpp>
@@ -14,18 +12,23 @@
 #include <opencv2/opencv.hpp>
 #include <opencv/highgui.h>
 #include <image_transport/image_transport.h>
+#include <dynamic_reconfigure/server.h>
+#include <task_octagon/octagonConfig.h>
 #include "std_msgs/Float32MultiArray.h"
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
 #include <string>
-#include "std_msgs/Float64MultiArray.h"
+#include <std_msgs/Float64MultiArray.h>
 
 bool IP = true;
 bool flag = false;
 bool video = false;
-int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
+cv::Mat frame;
+cv::Mat newframe;
+int count = 0, count_avg = 0;
+int t1min, t1max, t2min, t2max, t3min, t3max;
 
-void callback(task_octagon::octagonConfig &config, uint32_t level)
+void callback(task_octagon::octagonConfig &config, double level)
 {
   t1min = config.t1min_param;
   t1max = config.t1max_param;
@@ -33,12 +36,8 @@ void callback(task_octagon::octagonConfig &config, uint32_t level)
   t2max = config.t2max_param;
   t3min = config.t3min_param;
   t3max = config.t3max_param;
-  ROS_INFO("Octagon_Reconfigure Request:New params: %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
+  ROS_INFO("centralize_Reconfigure Request:New params: %d %d %d %d %d %d ", t1min, t1max, t2min, t2max, t3min, t3max);
 }
-
-cv::Mat frame;
-cv::Mat newframe;
-int count = 0, count_avg = 0;
 
 float mod(float x, float y)
 {
@@ -47,7 +46,7 @@ float mod(float x, float y)
   else
     return y;
 }
-void lineDetectedListener(std_msgs::Bool msg)
+void Switch_callback(std_msgs::Bool msg)
 {
   IP = msg.data;
 }
@@ -73,6 +72,7 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
+  cv::Scalar color(255, 255, 255);
   std::string Video_Name = "Random_Video";
   if (argc >= 2)
     flag = true;
@@ -85,30 +85,40 @@ int main(int argc, char *argv[])
 
   cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
 
-  ros::init(argc, argv, "circle_detection");
+  ros::init(argc, argv, "octagon_centralize");
   ros::NodeHandle n;
-  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/octagon", 1000);
-  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("circle_detection_switch", 1000, &lineDetectedListener);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/octagon_centralize", 1000);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("octagon_centralize_switch", 1000, &Switch_callback);
   ros::Rate loop_rate(10);
 
-  n.getParam("circle_detection/t1max", t1max);
-  n.getParam("circle_detection/t1min", t1min);
-  n.getParam("circle_detection/t2max", t2max);
-  n.getParam("circle_detection/t2min", t2min);
-  n.getParam("circle_detection/t3max", t3max);
-  n.getParam("circle_detection/t3min", t3min);
 
   image_transport::ImageTransport it(n);
-  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
-
-  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("circle", CV_WINDOW_NORMAL);
-  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
 
   dynamic_reconfigure::Server<task_octagon::octagonConfig> server;
   dynamic_reconfigure::Server<task_octagon::octagonConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
+
+  n.getParam("octagon_centralize/t1max", t1max);
+  n.getParam("octagon_centralize/t1min", t1min);
+  n.getParam("octagon_centralize/t2max", t2max);
+  n.getParam("octagon_centralize/t2min", t2min);
+  n.getParam("octagon_centralize/t3max", t3max);
+  n.getParam("octagon_centralize/t3min", t3min);
+
+  task_octagon::octagonConfig config;
+  config.t1min_param = t1min;
+  config.t1max_param = t1max;
+  config.t2min_param = t2min;
+  config.t2max_param = t2max;
+  config.t3min_param = t3min;
+  config.t3max_param = t3max;
+  callback(config, 0);
+
+  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
+  cvNamedWindow("COM", CV_WINDOW_NORMAL);
+  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
 
   if (flag)
   {
@@ -121,14 +131,10 @@ int main(int argc, char *argv[])
   CvSize size = cvSize(width, height);
 
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
-  float r[5];
-
-  for (int i; i++; i < 5)
-    r[i] = 0;
-
-  while (1)
+  while (ros::ok())
   {
     std_msgs::Float64MultiArray array;
+    loop_rate.sleep();
 
     if (frame.empty())
     {
@@ -149,7 +155,6 @@ int main(int argc, char *argv[])
     cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
     cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
     cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-
     // Filter out colors which are out of range.
     cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);
     // Split image into its 3 one dimensional images
@@ -179,14 +184,10 @@ int main(int argc, char *argv[])
       std::vector<std::vector<cv::Point> > contours;
       cv::Mat thresholded_Mat;
       thresholded.copyTo(thresholded_Mat);
-
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
-
       if (contours.empty())
       {
-        array.data.push_back(0);
-        array.data.push_back(0);
         array.data.push_back(0);
         array.data.push_back(0);
 
@@ -208,43 +209,40 @@ int main(int argc, char *argv[])
           largest_contour_index = i;  // Store the index of largest contour
         }
       }
-      // Convex HULL
-      std::vector<std::vector<cv::Point> > hull(contours.size());
-      convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], false);
 
-      std::vector<cv::Point2f> center(1);
-      std::vector<float> radius(1);
-      std::vector<cv::Point2f> center_ideal(1);
-      cv::minEnclosingCircle(contours[largest_contour_index], center[0], radius[0]);
+      // Convex HULL
+      cv::Mat Drawing(thresholded.rows, thresholded.cols, CV_8UC1, cv::Scalar::all(0));
+      std::vector<std::vector<cv::Point> > hull(1);
+      cv::convexHull(cv::Mat(contours[largest_contour_index]), hull[0], false);
+
+      cv::Moments mu;
+      std::vector<cv::Vec4i> hierarchy;
+      mu = cv::moments(hull[0], false);
+      cv::Point2f center_of_mass;
+
+      center_of_mass = cv::Point2f(mu.m10 / mu.m00, mu.m01 / mu.m00);
+
+      cv::drawContours(Drawing, hull, 0, color, 2, 8, hierarchy);
+      cv::circle(frame, center_of_mass, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
+      cv::imshow("COM", frame);
+      cv::imshow("Contours", Drawing);
 
       cv::Point2f pt;
       pt.x = 320;  // size of my screen
       pt.y = 240;
 
-      cv::Mat circles = frame;
-      circle(circles, center[0], radius[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
-      circle(circles, center[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);         // center is made on the screen
-      circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
-
-      array.data.push_back(r[0]);  // publish radius
-      array.data.push_back((320 - center_ideal[0].x));
-      array.data.push_back(-(240 - center_ideal[0].y));
-
-      cv::imshow("circle", circles);            // Original stream with detected ball overlay
-      cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
-
+      array.data.push_back((320 - center_of_mass.x));
+      array.data.push_back((240 - center_of_mass.y));
       pub.publish(array);
+
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
-      {
         break;
-      }
     }
     else
     {
-      ROS_INFO("%s: waiting\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }
