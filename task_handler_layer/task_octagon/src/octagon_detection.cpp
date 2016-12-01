@@ -19,10 +19,10 @@
 #include <sstream>
 #include <string>
 
-int percentage = 5, x = -1;  // used for how much percent of the screen should be orange
+int percentage = 5, x = -1;  // used for how much percent of the screen should be blue
                              // before deciding that a octagon is below. Used in
                              // dynamic_reconfig
-// callback for change the percent of orange before saying there is a octagon below
+// callback for change the percent of blue before saying there is a octagon below
 bool IP = false;
 bool flag = false;
 bool video = false;
@@ -33,7 +33,7 @@ int count = 0;
 
 void callback(task_octagon::octagonConfig &config, uint32_t level)
 {
-  percentage = config.orange_param;
+  percentage = config.blue_param;
   ROS_INFO("%s Reconfigure Request : New parameters :%d", ros::this_node::getName().c_str(), percentage);
 }
 
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
   n.getParam("octagon_detection/percentage", percentage);
 
   task_octagon::octagonConfig config;
-  config.orange_param = percentage;
+  config.blue_param = percentage;
   callback(config, 0);
 
   if (argc == 2)

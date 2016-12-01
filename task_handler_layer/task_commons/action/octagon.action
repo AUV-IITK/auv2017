@@ -5,4 +5,6 @@ bool order
 bool MotionCompleted
 ---
 #feedback
+float64 x_coord
+float64 y_coord
 bool nosignificance
