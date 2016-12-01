@@ -119,13 +119,11 @@ int main(int argc, char **argv)
       ROS_INFO("%s: Could not open or find the image\n", ros::this_node::getName().c_str());
       ros::spinOnce();
       continue;
-      // TODO(shikherverma) : for now I am resetting the video but later we need to handle this
-      // camera not available error properly
     }
     if (!IP)
     {
       int alert = detect(frame);
-      cv::imshow("red_hue_image", red_hue_image);
+      cv::imshow("LineDetection:red_hue_image", red_hue_image);
 
       if (alert == 1)
       {

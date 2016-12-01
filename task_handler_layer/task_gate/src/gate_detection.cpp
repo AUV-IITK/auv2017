@@ -108,16 +108,8 @@ int main(int argc, char *argv[])
   config.t3max_param = t3max;
   callback(config, 0);
 
-  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
-  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("RealPic", CV_WINDOW_NORMAL);
-
-  if (flag)
-  {
-    cvNamedWindow("F1", CV_WINDOW_NORMAL);
-    cvNamedWindow("F2", CV_WINDOW_NORMAL);
-    cvNamedWindow("F3", CV_WINDOW_NORMAL);
-  }
+  cvNamedWindow("GateDetection:AfterColorFiltering", CV_WINDOW_NORMAL);
+  cvNamedWindow("GateDetection:Contours", CV_WINDOW_NORMAL);
 
   // capture size -
   CvSize size = cvSize(width, height);
@@ -226,8 +218,7 @@ int main(int argc, char *argv[])
       rectangle(frame_mat, boundRect[0].tl(), boundRect[0].br(), color, 2, 8, 0);
       circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);  // center of screen
 
-      cv::imshow("Contours", Drawing);
-      cv::imshow("RealPic", frame_mat);
+      cv::imshow("GateDetection:Contours", Drawing);
 
       w = (boundRect[0].br()).x;
       x = (boundRect[0].br()).y;

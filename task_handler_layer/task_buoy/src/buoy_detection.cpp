@@ -109,16 +109,8 @@ int main(int argc, char *argv[])
   config.t3max_param = t3max;
   callback(config, 0);
 
-  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("circle", CV_WINDOW_NORMAL);
-  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
-
-  if (flag)
-  {
-    cvNamedWindow("F1", CV_WINDOW_NORMAL);
-    cvNamedWindow("F2", CV_WINDOW_NORMAL);
-    cvNamedWindow("F3", CV_WINDOW_NORMAL);
-  }
+  cvNamedWindow("BuoyDetection:circle", CV_WINDOW_NORMAL);
+  cvNamedWindow("BuoyDetection:AfterColorFiltering", CV_WINDOW_NORMAL);
 
   // capture size -
   CvSize size = cvSize(width, height);
@@ -322,8 +314,7 @@ int main(int argc, char *argv[])
         array.data.push_back(distance);
         pub.publish(array);
       }
-      cv::imshow("circle", circles);            // Original stream with detected ball overlay
-      cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
+      cv::imshow("BuoyDetection:circle", circles);            // Original stream with detected ball overlay
 
       if ((cvWaitKey(10) & 255) == 32)
       {

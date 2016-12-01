@@ -114,16 +114,8 @@ int main(int argc, char *argv[])
   config.t3max_param = t3max;
   callback(config, 0);
 
-  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("COM", CV_WINDOW_NORMAL);
-  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
-
-  if (flag)
-  {
-    cvNamedWindow("F1", CV_WINDOW_NORMAL);
-    cvNamedWindow("F2", CV_WINDOW_NORMAL);
-    cvNamedWindow("F3", CV_WINDOW_NORMAL);
-  }
+  cvNamedWindow("LineCentralize:COM", CV_WINDOW_NORMAL);
+  cvNamedWindow("LineCentralize:AfterColorFiltering", CV_WINDOW_NORMAL);
 
   // capture size -
   CvSize size = cvSize(width, height);
@@ -215,8 +207,7 @@ int main(int argc, char *argv[])
 
       cv::drawContours(Drawing, hull, 0, color, 2, 8, hierarchy);
       cv::circle(frame, center_of_mass, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
-      cv::imshow("COM", frame);
-      cv::imshow("Contours", Drawing);
+      cv::imshow("LineCentralize:COM", frame);
 
       cv::Point2f pt;
       pt.x = 320;  // size of my screen

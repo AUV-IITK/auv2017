@@ -146,7 +146,7 @@ void callback(int, void *)
     j++;
   }
 
-  imshow("LINES", imgLines + frame);
+  imshow("LineAngle:LINES", imgLines + frame);
 
   // if num of lines are large than one or two stray lines won't affect the mean
   // much
@@ -318,7 +318,7 @@ int main(int argc, char *argv[])
       std::vector<cv::Vec4i> hierarchy;
       cv::Scalar color(255, 255, 255);
       drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
-      cv::imshow("Contours", Drawing);
+      cv::imshow("LineAngle:Contours", Drawing);
 
       std_msgs::Float64 msg;
       Drawing.copyTo(sent_to_callback);
