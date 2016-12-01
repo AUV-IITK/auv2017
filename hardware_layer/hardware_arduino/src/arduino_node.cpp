@@ -11,8 +11,8 @@
 #define pwmPinEast 2
 #define directionPinEast1 30
 #define directionPinEast2 31
-#define directionPinWest1 33
-#define directionPinWest2 32
+#define directionPinWest1 32
+#define directionPinWest2 33
 
 #define pwmPinNorthSway 5
 #define pwmPinSouthSway 4
