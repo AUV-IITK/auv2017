@@ -37,9 +37,7 @@ private:
   ros::Subscriber detection_data;
   ros::Subscriber yaw_sub;
   ros::Subscriber centralize_data;
-  ros::Subscriber angle_data;
   ros::Publisher switch_centralize;
-  ros::Publisher switch_angle;
   ros::Publisher switch_detection;
   ros::Publisher present_X_;
   ros::Publisher present_Y_;
@@ -52,8 +50,7 @@ private:
   motion_commons::TurnGoal turngoal;
   std_msgs::Float64 data_X_;
   std_msgs::Float64 data_Y_;
-  std_msgs::Float64 angle_goal;
-  bool isOrange, success, FrontCenter, SideCenter, octagonAlign;
+  bool isblue, success, FrontCenter, SideCenter, octagonAlign;
 
 public:
   TaskoctagonInnerClass(std::string name, std::string node, std::string node1,
@@ -70,7 +67,6 @@ public:
     present_X_ = nh_.advertise<std_msgs::Float64>("/varun/motion/y_distance", 1000);
     present_Y_ = nh_.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
     switch_detection = nh_.advertise<std_msgs::Bool>("octagon_detection_switch", 1000);
-    switch_angle = nh_.advertise<std_msgs::Bool>("octagon_angle_switch", 1000);
     switch_centralize = nh_.advertise<std_msgs::Bool>("octagon_centralize_switch", 1000);
     yaw_pub_ = nh_.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
 
@@ -79,9 +75,6 @@ public:
     yaw_sub = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskoctagonInnerClass::yawCB, this);
     centralize_data = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/octagon_centralize", 1000,
                                                                  &TaskoctagonInnerClass::octagonCentralizeListener, this);
-    angle_data =
-        nh_.subscribe<std_msgs::Float64>("/varun/ip/octagon_angle", 1000, &TaskoctagonInnerClass::octagonAngleListener, this);
-
     octagon_server_.start();
   }
 
@@ -97,9 +90,9 @@ public:
   void octagonDetectedListener(std_msgs::Bool msg)
   {
     if (msg.data)
-      isOrange = true;
+      isblue = true;
     else
-      isOrange = false;
+      isblue = false;
   }
 
   void octagonCentralizeListener(std_msgs::Float64MultiArray array)
@@ -108,11 +101,6 @@ public:
     data_Y_.data = array.data[1];
     present_X_.publish(data_X_);
     present_Y_.publish(data_Y_);
-  }
-
-  void octagonAngleListener(std_msgs::Float64 msg)
-  {
-    angle_goal.data = msg.data;
   }
 
   void spinThreadSidewardCamera()
@@ -165,7 +153,6 @@ public:
 
   void preemptCB(void)
   {
-    // Not actually preempting the goal because Shibhansh did it in analysisCB
     ROS_INFO("%s: Called when preempted from the client", action_name_.c_str());
   }
 
@@ -173,7 +160,7 @@ public:
   {
     ROS_INFO("Inside analysisCB");
     success = true;
-    isOrange = false;
+    isblue = false;
     octagonAlign = false;
     FrontCenter = false;
     SideCenter = false;
@@ -212,7 +199,7 @@ public:
       }
       looprate.sleep();
 
-      if (isOrange)
+      if (isblue)
       {
         // stop will happen outside while loop so if preempted then too it will
         // stop
@@ -325,20 +312,6 @@ public:
     std_msgs::Bool msg;
     msg.data = true;
     switch_detection.publish(msg);
-  }
-
-  void angle_switch_on()
-  {
-    std_msgs::Bool msg;
-    msg.data = false;
-    switch_angle.publish(msg);
-  }
-
-  void angle_switch_off()
-  {
-    std_msgs::Bool msg;
-    msg.data = true;
-    switch_angle.publish(msg);
   }
 
   void centralize_switch_on()
