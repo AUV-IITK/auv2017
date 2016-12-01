@@ -161,7 +161,7 @@ public:
     ROS_INFO("Inside analysisCB");
     success = true;
     isblue = false;
-    octagonAlign = false;
+    // octagonAlign = false;
     FrontCenter = false;
     SideCenter = false;
     ros::Rate looprate(12);
@@ -256,44 +256,49 @@ public:
 
     TaskoctagonInnerClass::centralize_switch_off();
 
-    TaskoctagonInnerClass::angle_switch_on();
+    // TaskoctagonInnerClass::angle_switch_on();
 
     TurnClient_.cancelGoal();  // stopped stablisation
 
-    while (angle_goal.data == 0.0)
-    {
-      sleep(.01);
-    }
-    turngoal.AngleToTurn = angle_goal.data;
-    turngoal.loop = 10;
-    TurnClient_.sendGoal(turngoal);
-    boost::thread spin_thread_turn_camera(&TaskoctagonInnerClass::spinThreadTurnCamera, this);
-    ROS_INFO("%s: octagon is going to be aligned", action_name_.c_str());
+    // while (angle_goal.data == 0.0)
+    // {
+    //   sleep(.01);
+    // }
+    // turngoal.AngleToTurn = angle_goal.data;
+    // turngoal.loop = 10;
+    // TurnClient_.sendGoal(turngoal);
+    // boost::thread spin_thread_turn_camera(&TaskoctagonInnerClass::spinThreadTurnCamera, this);
+    // ROS_INFO("%s: octagon is going to be aligned", action_name_.c_str());
 
-    while (goal->order && success)
-    {
-      if (octagon_server_.isPreemptRequested() || !ros::ok())
-      {
-        ROS_INFO("%s: Preempted", action_name_.c_str());
-        // set the action state to preempted
-        octagon_server_.setPreempted();
-        success = false;
-        break;
-      }
+    // while (goal->order && success)
+    // {
+    //   if (octagon_server_.isPreemptRequested() || !ros::ok())
+    //   {
+    //     ROS_INFO("%s: Preempted", action_name_.c_str());
+    //     // set the action state to preempted
+    //     octagon_server_.setPreempted();
+    //     success = false;
+    //     break;
+    //   }
 
-      looprate.sleep();
-      if (octagonAlign)
-      {
-        ROS_INFO("%s: octagon is aligned.", action_name_.c_str());
-        break;
-      }
+    //   looprate.sleep();
+    //   if (octagonAlign)
+    //   {
+    //     ROS_INFO("%s: octagon is aligned.", action_name_.c_str());
+    //     break;
+    //   }
 
-      feedback_.AngleRemaining = angle_goal.data;
-      feedback_.x_coord = data_X_.data;
-      feedback_.y_coord = data_Y_.data;
-      octagon_server_.publishFeedback(feedback_);
-      ros::spinOnce();
-    }
+    //   feedback_.AngleRemaining = angle_goal.data;
+    //   feedback_.x_coord = data_X_.data;
+    //   feedback_.y_coord = data_Y_.data;
+    //   octagon_server_.publishFeedback(feedback_);
+    //   ros::spinOnce();
+    // }
+
+    upwardgoal.Goal = 100;
+    upwardgoal.loop = 10;
+    UpwardClient_.sendGoal(upwardgoal);
+    ROS_INFO("%s: coming out of the octagon", action_name_.c_str());
 
     result_.MotionCompleted = success;
     ROS_INFO("%s: Success is %s", action_name_.c_str(), success ? "true" : "false");
