@@ -50,10 +50,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   {
     count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
-    cvNamedWindow("newframe", CV_WINDOW_NORMAL);
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
-    cv::imshow("newframe", newframe);
     ////////////////////////// FATAL ///////////////////////////////////////////////////
   }
   catch (cv_bridge::Exception &e)
@@ -112,12 +110,6 @@ int main(int argc, char **argv)
   config.orange_param = percentage;
   callback(config, 0);
 
-  if (argc == 2)
-  {
-    cvNamedWindow("F3", CV_WINDOW_NORMAL);
-    cvCreateTrackbar("percentage", "red_hue_image", &percentage, 100, NULL);
-  }
-
   int oldAlert = 42;  // Used to decide when to print
 
   while (ros::ok())
@@ -127,13 +119,11 @@ int main(int argc, char **argv)
       ROS_INFO("%s: Could not open or find the image\n", ros::this_node::getName().c_str());
       ros::spinOnce();
       continue;
-      // TODO(shikherverma) : for now I am resetting the video but later we need to handle this
-      // camera not available error properly
     }
     if (!IP)
     {
       int alert = detect(frame);
-      cv::imshow("red_hue_image", red_hue_image);
+      cv::imshow("LineDetection:red_hue_image", red_hue_image);
 
       if (alert == 1)
       {

@@ -308,6 +308,8 @@ public:
       ros::spinOnce();
     }
 
+    TaskLineInnerClass::angle_switch_off();
+
     result_.MotionCompleted = success;
     ROS_INFO("%s: Success is %s", action_name_.c_str(), success ? "true" : "false");
     line_server_.setSucceeded(result_);

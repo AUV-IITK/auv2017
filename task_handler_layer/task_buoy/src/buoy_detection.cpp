@@ -53,10 +53,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   {
     count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
-    cvNamedWindow("newframe", CV_WINDOW_NORMAL);
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
-    cv::imshow("newframe", newframe);
     ////////////////////////// FATAL ///////////////////////////////////////////////////
   }
   catch (cv_bridge::Exception &e)
@@ -111,16 +109,8 @@ int main(int argc, char *argv[])
   config.t3max_param = t3max;
   callback(config, 0);
 
-  cvNamedWindow("Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("circle", CV_WINDOW_NORMAL);
-  cvNamedWindow("After Color Filtering", CV_WINDOW_NORMAL);
-
-  if (flag)
-  {
-    cvNamedWindow("F1", CV_WINDOW_NORMAL);
-    cvNamedWindow("F2", CV_WINDOW_NORMAL);
-    cvNamedWindow("F3", CV_WINDOW_NORMAL);
-  }
+  cvNamedWindow("BuoyDetection:circle", CV_WINDOW_NORMAL);
+  cvNamedWindow("BuoyDetection:AfterColorFiltering", CV_WINDOW_NORMAL);
 
   // capture size -
   CvSize size = cvSize(width, height);
@@ -165,14 +155,7 @@ int main(int argc, char *argv[])
     cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
     cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
     cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
-    cv::imshow("After Color Filtering", thresholded);  // The stream after color filtering
-
-    if (flag)
-    {
-      cv::imshow("F1", thresholded_hsv[0]);  // individual filters
-      cv::imshow("F2", thresholded_hsv[1]);
-      cv::imshow("F3", thresholded_hsv[2]);
-    }
+    cv::imshow("BuoyDetection:AfterColorFiltering", thresholded);  // The stream after color filtering
 
     if ((cvWaitKey(10) & 255) == 27)
       break;
@@ -331,8 +314,7 @@ int main(int argc, char *argv[])
         array.data.push_back(distance);
         pub.publish(array);
       }
-      cv::imshow("circle", circles);            // Original stream with detected ball overlay
-      cv::imshow("Contours", thresholded_Mat);  // The stream after color filtering
+      cv::imshow("BuoyDetection:circle", circles);            // Original stream with detected ball overlay
 
       if ((cvWaitKey(10) & 255) == 32)
       {
