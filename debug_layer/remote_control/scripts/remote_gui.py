@@ -20,38 +20,33 @@ if __name__ == '__main__':
         window.wm_title("AUV Remote Controller")
         side_stab_var = IntVar()
         vert_stab_var = IntVar()
-        forward_motion = rospy.Publisher('/pwm/forward', Int32)
-        Turn_motion = rospy.Publisher('/pwm/turn', Int32)
-        Sideward_motion = rospy.Publisher('/pwm/sideward', Int32)
-        Upward_motion = rospy.Publisher('/pwm/upward', Int32)
+        forward_motion = rospy.Publisher(
+            '/pwm/forward', Int32, queue_size=1000)
+        Turn_motion = rospy.Publisher('/pwm/turn', Int32, queue_size=1000)
+        Sideward_motion = rospy.Publisher(
+            '/pwm/sideward', Int32, queue_size=1000)
+        Upward_motion = rospy.Publisher('/pwm/upward', Int32, queue_size=1000)
+        present_depth_data = rospy.Publisher(
+            '/varun/motion/z_distance', Float64, queue_size=1000)
+        present_angle_data = rospy.Publisher(
+            '/varun/motion/yaw', Float64, queue_size=1000)
         rospy.init_node('remote_gui', anonymous=True)
-
-        def change_pwm_motion_forward(data):
-            w01.set(data.data)
-
-        def change_pwm_motion_turn(data):
-            w02.set(data.data)
-
-        def change_pwm_motion_sideward(data):
-            w03.set(data.data)
-
-        def change_pwm_motion_upward(data):
-            w04.set(data.data)
 
         def pressure_sensor_data(data):
             global present_depth
             present_depth = data.data
-        # topic for motion_forward
-        rospy.Subscriber("/pwm/forward", Int32, change_pwm_motion_forward)
-        # topic for motion_turn
-        rospy.Subscriber("/pwm/turn", Int32, change_pwm_motion_turn)
-        # topic for motion_sideward
-        rospy.Subscriber("/pwm/sideward", Int32, change_pwm_motion_sideward)
-        # topic for motion_upward
-        rospy.Subscriber("/pwm/upward", Int32, change_pwm_motion_upward)
+            present_depth_data.publish(data.data)
+
+        def imu_sensor_data(data):
+            global present_angle
+            present_angle = data.data
+            present_angle_data.publish(data.data)
+
         # topic for pressure sensor data
         rospy.Subscriber("/varun/sensors/pressure_sensor/depth",
                          Float64, pressure_sensor_data)
+        rospy.Subscriber("/varun/sensors/imu/yaw",
+                         Float64, imu_sensor_data)
 # #################################################################
 # FORWARD_RELATED########################################################
 
@@ -60,48 +55,53 @@ if __name__ == '__main__':
             w1.set(w1.get() + 10)
             rospy.loginfo("forward is clicked with pwm = %d", w1.get())
             forward_motion.publish(w1.get())
+            forward_motion.publish(w1.get())
+            forward_motion.publish(w1.get())
 
         def backwardClicked(event):
             w1.set(w1.get() - 10)
             rospy.loginfo("backward is clicked with pwm = %d", w1.get())
             forward_motion.publish(w1.get())
+            forward_motion.publish(w1.get())
+            forward_motion.publish(w1.get())
 
         def stop_front(event):
             rospy.loginfo("Stop is clicked")
+            forward_motion.publish(0)
+            forward_motion.publish(0)
             forward_motion.publish(0)
             w1.set(0)
 # #######################################################################
 # SIDEWARD_RELATED#######################################################
 
         def stop_sway(event):
-            if side_stab_var.get() == 0:
-                rospy.loginfo("Stop is clicked")
-                Sideward_motion.publish(0)
-                w3.set(0)
-            else:
-                rospy.loginfo("side stability is on")
+            rospy.loginfo("Stop is clicked")
+            Sideward_motion.publish(0)
+            Sideward_motion.publish(0)
+            Sideward_motion.publish(0)
+            w3.set(0)
 
         def leftClicked(event):
-            if side_stab_var.get() == 0:
-                w3.set(w3.get() - 10)
-                rospy.loginfo("sway left is clicked with pwm = %d", w3.get())
-                Sideward_motion.publish(w3.get())
-            else:
-                rospy.loginfo("side stability is on")
+            w3.set(w3.get() - 10)
+            rospy.loginfo("sway left is clicked with pwm = %d", w3.get())
+            Sideward_motion.publish(w3.get())
+            Sideward_motion.publish(w3.get())
+            Sideward_motion.publish(w3.get())
 
         def rightClicked(event):
-            if side_stab_var.get() == 0:
-                w3.set(w3.get() + 10)
-                rospy.loginfo("Sway right is clicked with pwm = %d", w3.get())
-                Sideward_motion.publish(w3.get())
-            else:
-                rospy.loginfo("side stability is on")
+            w3.set(w3.get() + 10)
+            rospy.loginfo("Sway right is clicked with pwm = %d", w3.get())
+            Sideward_motion.publish(w3.get())
+            Sideward_motion.publish(w3.get())
+            Sideward_motion.publish(w3.get())
 # #######################################################################
 # VERTICAL_RELATED#######################################################
 
         def stop_vertical(event):
             if vert_stab_var.get() == 0:
                 rospy.loginfo("Stop is clicked")
+                Upward_motion.publish(0)
+                Upward_motion.publish(0)
                 Upward_motion.publish(0)
                 w2.set(0)
             else:
@@ -112,6 +112,8 @@ if __name__ == '__main__':
                 w2.set(w2.get() + 10)
                 rospy.loginfo("up is clicked with pwm = %d", w2.get())
                 Upward_motion.publish(w2.get())
+                Upward_motion.publish(w2.get())
+                Upward_motion.publish(w2.get())
             else:
                 rospy.loginfo("vertical stability is on")
 
@@ -119,6 +121,8 @@ if __name__ == '__main__':
             if vert_stab_var.get() == 0:
                 w2.set(w2.get() - 10)
                 rospy.loginfo("dowm is clicked with pwm = %d", w2.get())
+                Upward_motion.publish(w2.get())
+                Upward_motion.publish(w2.get())
                 Upward_motion.publish(w2.get())
             else:
                 rospy.loginfo("vertical stability is on")
@@ -129,6 +133,8 @@ if __name__ == '__main__':
             if side_stab_var.get() == 0:
                 rospy.loginfo("Stop is clicked")
                 Turn_motion.publish(0)
+                Turn_motion.publish(0)
+                Turn_motion.publish(0)
                 w4.set(0)
             else:
                 rospy.loginfo("side stability is on")
@@ -138,6 +144,8 @@ if __name__ == '__main__':
                 w4.set(w4.get() + 10)
                 rospy.loginfo("clockwise is clicked with pwm = %d", w4.get())
                 Turn_motion.publish(w4.get())
+                Turn_motion.publish(w4.get())
+                Turn_motion.publish(w4.get())
             else:
                 rospy.loginfo("side stability is on")
 
@@ -146,6 +154,8 @@ if __name__ == '__main__':
                 w4.set(w4.get() - 10)
                 rospy.loginfo(
                     "anticlockwise is clicked with pwm = %d", w4.get())
+                Turn_motion.publish(w4.get())
+                Turn_motion.publish(w4.get())
                 Turn_motion.publish(w4.get())
             else:
                 rospy.loginfo("side stability is on")
@@ -159,32 +169,44 @@ if __name__ == '__main__':
             w3.set(0)
             w4.set(0)
             Turn_motion.publish(0)
+            Turn_motion.publish(0)
+            Turn_motion.publish(0)
+            Sideward_motion.publish(0)
+            Sideward_motion.publish(0)
             Sideward_motion.publish(0)
             Upward_motion.publish(0)
+            Upward_motion.publish(0)
+            Upward_motion.publish(0)
+            forward_motion.publish(0)
+            forward_motion.publish(0)
             forward_motion.publish(0)
 # #######################################################################
 
         def verticalStabilize():
             client_vertical = actionlib.SimpleActionClient(
-                'upward', motion_commons.Upward.UpwardAction)
+                'upward', motion_commons.msg.UpwardAction)
             client_vertical.wait_for_server()
             goal_upward = motion_commons.msg.UpwardGoal(
                 Goal=present_depth, loop=100000)
             if vert_stab_var.get() == 1:
                 client_vertical.send_goal(goal_upward)
             else:
-                client_vertical.cancel_goal(goal_upward)
+                goal_upward = motion_commons.msg.UpwardGoal(
+                    Goal=present_depth, loop=0)
+                client_vertical.send_goal(goal_upward)
 
-        def sidewardStabilize():
+        def turnStabilize():
             client_turn = actionlib.SimpleActionClient(
-                'turningXY', motion_commons.Turn.TurnAction)
+                'turningXY', motion_commons.msg.TurnAction)
             client_turn.wait_for_server()
-            goal_turn = motion_commons.msg.TurnAction(
+            goal_turn = motion_commons.msg.TurnGoal(
                 AngleToTurn=0.0, loop=100000)
             if side_stab_var.get() == 1:
                 client_turn.send_goal(goal_turn)
             else:
-                client_turn.cancel_goal(goal_turn)
+                goal_turn = motion_commons.msg.TurnGoal(
+                    AngleToTurn=0.0, loop=0)
+                client_turn.send_goal(goal_turn)
 
 # LABEL TOP##################################################################
         label = Label(window, bd=5, font=("Helvetica", 16),
@@ -194,11 +216,11 @@ if __name__ == '__main__':
 # TOTAL RESET################################################################
         Button(window, bg="darkmagenta", font=("Helvetica", 14), fg="white",
                height=3, width=10, text="Reset", command=reset).pack()
-        window.bind('r', reset)
+        window.bind("<space>", reset)
 # ###########################################################################
         t1 = Checkbutton(window, text="Vert. Stab.", command=verticalStabilize,
                          variable=vert_stab_var, onvalue=1, offvalue=0, height=5, width=20)
-        t2 = Checkbutton(window, text="Side Stab.", command=sidewardStabilize,
+        t2 = Checkbutton(window, text="Side Stab.", command=turnStabilize,
                          variable=side_stab_var, onvalue=1, offvalue=0, height=5, width=20)
         t1.pack()
         t2.pack()
