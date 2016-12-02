@@ -122,8 +122,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">// never ever put the argument of the callback function anything other then the specified</span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> forwardCb(task_commons::lineActionFeedback msg)</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s: Angle Remaining = %f, x_coord = %f, y_coord = %f&quot;</span>,</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    ros::this_node::getName().c_str(), msg.feedback.AngleRemaining, msg.feedback.x_coord, msg.feedback.y_coord);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s: Angle Remaining = %f, x_coord = %f, y_coord = %f&quot;</span>, ros::this_node::getName().c_str(),</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;           msg.feedback.AngleRemaining, msg.feedback.x_coord, msg.feedback.y_coord);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
@@ -156,7 +156,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Dec 1 2016 22:17:58 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Dec 2 2016 16:47:40 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
