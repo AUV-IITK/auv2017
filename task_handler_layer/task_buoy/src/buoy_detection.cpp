@@ -84,7 +84,6 @@ int main(int argc, char *argv[])
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
   ros::Rate loop_rate(10);
 
-
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
 
@@ -259,7 +258,7 @@ int main(int argc, char *argv[])
       cv::Mat circles = frame;
       circle(circles, center_ideal[0], r[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
       circle(circles, center_ideal[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);    // center is made on the screen
-      circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);            // center of screen
+      circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);             // center of screen
 
       int net_x_cord = 320 - center_ideal[0].x + r[0];
       int net_y_cord = -240 + center_ideal[0].y + r[0];
@@ -314,7 +313,7 @@ int main(int argc, char *argv[])
         array.data.push_back(distance);
         pub.publish(array);
       }
-      cv::imshow("BuoyDetection:circle", circles);            // Original stream with detected ball overlay
+      cv::imshow("BuoyDetection:circle", circles);  // Original stream with detected ball overlay
 
       if ((cvWaitKey(10) & 255) == 32)
       {
@@ -324,7 +323,7 @@ int main(int argc, char *argv[])
           x = 32;
       }
       if (x == 32)
-      ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
@@ -348,4 +347,3 @@ int main(int argc, char *argv[])
   output_cap.release();
   return 0;
 }
-

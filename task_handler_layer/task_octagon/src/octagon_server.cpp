@@ -59,8 +59,7 @@ private:
   bool isblue, success, FrontCenter, SideCenter, octagonAlign;
 
 public:
-  TaskoctagonInnerClass(std::string name, std::string node, std::string node1,
-                     std::string node2, std::string node3)
+  TaskoctagonInnerClass(std::string name, std::string node, std::string node1, std::string node2, std::string node3)
     :  // here we are defining the server, third argument is optional
     octagon_server_(nh_, name, boost::bind(&TaskoctagonInnerClass::analysisCB, this, _1), false)
     , action_name_(name)
@@ -80,8 +79,8 @@ public:
     detection_data = nh_.subscribe<std_msgs::Bool>("/varun/ip/octagon_detection", 1000,
                                                    &TaskoctagonInnerClass::octagonDetectedListener, this);
     yaw_sub = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskoctagonInnerClass::yawCB, this);
-    centralize_data = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/octagon_centralize", 1000,
-                                                           &TaskoctagonInnerClass::octagonCentralizeListener, this);
+    centralize_data = nh_.subscribe<std_msgs::Float64MultiArray>(
+        "/varun/ip/octagon_centralize", 1000, &TaskoctagonInnerClass::octagonCentralizeListener, this);
     octagon_server_.start();
   }
 
