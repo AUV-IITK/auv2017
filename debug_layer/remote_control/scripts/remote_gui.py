@@ -43,14 +43,20 @@ if __name__ == '__main__':
             w1.set(w1.get() + 10)
             rospy.loginfo("forward is clicked with pwm = %d", w1.get())
             forward_motion.publish(w1.get())
+            forward_motion.publish(w1.get())
+            forward_motion.publish(w1.get())
 
         def backwardClicked(event):
             w1.set(w1.get() - 10)
             rospy.loginfo("backward is clicked with pwm = %d", w1.get())
             forward_motion.publish(w1.get())
+            forward_motion.publish(w1.get())
+            forward_motion.publish(w1.get())
 
         def stop_front(event):
             rospy.loginfo("Stop is clicked")
+            forward_motion.publish(0)
+            forward_motion.publish(0)
             forward_motion.publish(0)
             w1.set(0)
 # #######################################################################
@@ -59,16 +65,22 @@ if __name__ == '__main__':
         def stop_sway(event):
             rospy.loginfo("Stop is clicked")
             Sideward_motion.publish(0)
+            Sideward_motion.publish(0)
+            Sideward_motion.publish(0)
             w3.set(0)
 
         def leftClicked(event):
             w3.set(w3.get() - 10)
             rospy.loginfo("sway left is clicked with pwm = %d", w3.get())
             Sideward_motion.publish(w3.get())
+            Sideward_motion.publish(w3.get())
+            Sideward_motion.publish(w3.get())
 
         def rightClicked(event):
             w3.set(w3.get() + 10)
             rospy.loginfo("Sway right is clicked with pwm = %d", w3.get())
+            Sideward_motion.publish(w3.get())
+            Sideward_motion.publish(w3.get())
             Sideward_motion.publish(w3.get())
 # #######################################################################
 # VERTICAL_RELATED#######################################################
@@ -76,6 +88,8 @@ if __name__ == '__main__':
         def stop_vertical(event):
             if vert_stab_var.get() == 0:
                 rospy.loginfo("Stop is clicked")
+                Upward_motion.publish(0)
+                Upward_motion.publish(0)
                 Upward_motion.publish(0)
                 w2.set(0)
             else:
@@ -86,6 +100,8 @@ if __name__ == '__main__':
                 w2.set(w2.get() + 10)
                 rospy.loginfo("up is clicked with pwm = %d", w2.get())
                 Upward_motion.publish(w2.get())
+                Upward_motion.publish(w2.get())
+                Upward_motion.publish(w2.get())
             else:
                 rospy.loginfo("vertical stability is on")
 
@@ -93,6 +109,8 @@ if __name__ == '__main__':
             if vert_stab_var.get() == 0:
                 w2.set(w2.get() - 10)
                 rospy.loginfo("dowm is clicked with pwm = %d", w2.get())
+                Upward_motion.publish(w2.get())
+                Upward_motion.publish(w2.get())
                 Upward_motion.publish(w2.get())
             else:
                 rospy.loginfo("vertical stability is on")
@@ -103,6 +121,8 @@ if __name__ == '__main__':
             if side_stab_var.get() == 0:
                 rospy.loginfo("Stop is clicked")
                 Turn_motion.publish(0)
+                Turn_motion.publish(0)
+                Turn_motion.publish(0)
                 w4.set(0)
             else:
                 rospy.loginfo("side stability is on")
@@ -112,6 +132,8 @@ if __name__ == '__main__':
                 w4.set(w4.get() + 10)
                 rospy.loginfo("clockwise is clicked with pwm = %d", w4.get())
                 Turn_motion.publish(w4.get())
+                Turn_motion.publish(w4.get())
+                Turn_motion.publish(w4.get())
             else:
                 rospy.loginfo("side stability is on")
 
@@ -120,6 +142,8 @@ if __name__ == '__main__':
                 w4.set(w4.get() - 10)
                 rospy.loginfo(
                     "anticlockwise is clicked with pwm = %d", w4.get())
+                Turn_motion.publish(w4.get())
+                Turn_motion.publish(w4.get())
                 Turn_motion.publish(w4.get())
             else:
                 rospy.loginfo("side stability is on")
@@ -133,8 +157,16 @@ if __name__ == '__main__':
             w3.set(0)
             w4.set(0)
             Turn_motion.publish(0)
+            Turn_motion.publish(0)
+            Turn_motion.publish(0)
+            Sideward_motion.publish(0)
+            Sideward_motion.publish(0)
             Sideward_motion.publish(0)
             Upward_motion.publish(0)
+            Upward_motion.publish(0)
+            Upward_motion.publish(0)
+            forward_motion.publish(0)
+            forward_motion.publish(0)
             forward_motion.publish(0)
 # #######################################################################
 
