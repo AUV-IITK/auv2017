@@ -6,3 +6,4 @@ z up   stop upward o
 x down
 c anticlock stop rotation p
 v clock 
+<space> full reset
