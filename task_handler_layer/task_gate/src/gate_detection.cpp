@@ -259,8 +259,8 @@ int main(int argc, char *argv[])
       }
       else
       {
-        array.data.push_back((frame.cols/2.0 - center.x));
-        array.data.push_back(-(frame.rows/2.0 - center.y));
+        array.data.push_back((frame.cols / 2.0 - center.x));
+        array.data.push_back(-(frame.rows / 2.0 - center.y));
       }
       pub.publish(array);
       ros::spinOnce();
@@ -288,4 +288,3 @@ int main(int argc, char *argv[])
   output_cap.release();
   return 0;
 }
-

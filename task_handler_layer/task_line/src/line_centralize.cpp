@@ -89,7 +89,6 @@ int main(int argc, char *argv[])
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("line_centralize_switch", 1000, &Switch_callback);
   ros::Rate loop_rate(10);
 
-
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
 

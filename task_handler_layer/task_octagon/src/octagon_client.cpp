@@ -32,8 +32,8 @@ void spinThread()
 // never ever put the argument of the callback function anything other then the specified
 void forwardCb(task_commons::octagonActionFeedback msg)
 {
-  ROS_INFO("%s: x_coord = %f, y_coord = %f",
-    ros::this_node::getName().c_str(), msg.feedback.x_coord, msg.feedback.y_coord);
+  ROS_INFO("%s: x_coord = %f, y_coord = %f", ros::this_node::getName().c_str(), msg.feedback.x_coord,
+           msg.feedback.y_coord);
 }
 
 int main(int argc, char **argv)
@@ -42,8 +42,8 @@ int main(int argc, char **argv)
 
   ros::NodeHandle nh;
   // here octagon_server is the name of the node of the actionserver.
-  ros::Subscriber sub_ = nh.subscribe<task_commons::octagonActionFeedback>("/octagon_server/feedback",
-               1000, &forwardCb);
+  ros::Subscriber sub_ =
+      nh.subscribe<task_commons::octagonActionFeedback>("/octagon_server/feedback", 1000, &forwardCb);
 
   Client testClient("octagon_server");
   ptrClient = &testClient;

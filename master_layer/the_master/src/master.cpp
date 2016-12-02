@@ -99,14 +99,14 @@ void spinThreadDownwardPressure()
 // never ever put the argument of the callback function anything other then the specified
 void buoyCB(task_commons::buoyActionFeedback msg)
 {
-  ROS_INFO("%s: x_coord = %f, y_coord = %f, distance = %f",
-    ros::this_node::getName().c_str(), msg.feedback.x_coord, msg.feedback.y_coord, msg.feedback.distance);
+  ROS_INFO("%s: x_coord = %f, y_coord = %f, distance = %f", ros::this_node::getName().c_str(), msg.feedback.x_coord,
+           msg.feedback.y_coord, msg.feedback.distance);
 }
 
 void lineCB(task_commons::lineActionFeedback msg)
 {
-  ROS_INFO("%s: feedback recieved Angle Remaining = %f, x_coord = %f, y_coord = %f",
-    ros::this_node::getName().c_str(), msg.feedback.AngleRemaining, msg.feedback.x_coord, msg.feedback.y_coord);
+  ROS_INFO("%s: feedback recieved Angle Remaining = %f, x_coord = %f, y_coord = %f", ros::this_node::getName().c_str(),
+           msg.feedback.AngleRemaining, msg.feedback.x_coord, msg.feedback.y_coord);
 }
 
 void pressureCB(std_msgs::Float64 pressure_sensor_data)
@@ -122,12 +122,10 @@ int main(int argc, char **argv)
 
   ros::NodeHandle nh;
   // here buoy_server is the name of the node of the actionserver.
-  ros::Subscriber sub_buoy = nh.subscribe<task_commons::buoyActionFeedback>("/buoy_server/feedback",
-    1000, &buoyCB);
-  ros::Subscriber sub_line = nh.subscribe<task_commons::lineActionFeedback>("/line_server/feedback",
-    1000, &lineCB);
-  ros::Subscriber sub_upward = nh.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth",
-    1000, &pressureCB);
+  ros::Subscriber sub_buoy = nh.subscribe<task_commons::buoyActionFeedback>("/buoy_server/feedback", 1000, &buoyCB);
+  ros::Subscriber sub_line = nh.subscribe<task_commons::lineActionFeedback>("/line_server/feedback", 1000, &lineCB);
+  ros::Subscriber sub_upward =
+      nh.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth", 1000, &pressureCB);
   pub_upward = nh.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
   pub_forward = nh.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
 
@@ -172,7 +170,7 @@ int main(int argc, char **argv)
     ros::spinOnce();
   }
 
-  goalUpward.Goal = present_depth + 10;     // add param
+  goalUpward.Goal = present_depth + 10;  // add param
   goalUpward.loop = 10;
   ROS_INFO("Action server started, sending goal to upward.");
 
@@ -198,11 +196,11 @@ int main(int argc, char **argv)
   mock_forward.data = 250;
   pub_forward.publish(mock_forward);
 
-  sleep(5);                   // add param
+  sleep(5);  // add param
 
   canForward.cancelGoal();
 
-  goalUpward.Goal = present_depth - 11;         // add param
+  goalUpward.Goal = present_depth - 11;  // add param
   goalUpward.loop = 10;
   ROS_INFO("Sending goal to upward.");
 

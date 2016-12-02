@@ -32,8 +32,8 @@ void spinThread()
 // never ever put the argument of the callback function anything other then the specified
 void forwardCb(task_commons::buoyActionFeedback msg)
 {
-  ROS_INFO("%s: x_coord = %f, y_coord = %f, distance = %f",
-    ros::this_node::getName().c_str(), msg.feedback.x_coord, msg.feedback.y_coord, msg.feedback.distance);
+  ROS_INFO("%s: x_coord = %f, y_coord = %f, distance = %f", ros::this_node::getName().c_str(), msg.feedback.x_coord,
+           msg.feedback.y_coord, msg.feedback.distance);
 }
 
 int main(int argc, char **argv)

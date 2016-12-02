@@ -75,9 +75,10 @@ int main(int argc, char *argv[])
   cvNamedWindow("F3", CV_WINDOW_NORMAL);
   cvNamedWindow("F1", CV_WINDOW_NORMAL);
 
-  if (argc != 2) printf("Please write the name of the file you want to load\n");
+  if (argc != 2)
+    printf("Please write the name of the file you want to load\n");
   cv::VideoCapture cap(argv[1]);
-  
+
   CvSize size = cvSize(width, height);
   cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
 
@@ -85,8 +86,9 @@ int main(int argc, char *argv[])
   {
     std_msgs::Float64MultiArray array;
     loop_rate.sleep();
-    if(x!=32) cap >> frame;
-    
+    if (x != 32)
+      cap >> frame;
+
     if (frame.empty())
     {
       ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
@@ -120,7 +122,6 @@ int main(int argc, char *argv[])
     cv::imshow("F2", thresholded_hsv[1]);
     cv::imshow("F3", thresholded_hsv[2]);
 
-    
     std::vector<std::vector<cv::Point> > contours;
     cv::Mat thresholded_Mat = thresholded;
     findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours in the image
@@ -143,10 +144,9 @@ int main(int argc, char *argv[])
     cv::imshow("Contours", Drawing);
     cv::imshow("RealPic", frame);
 
-
     if ((cvWaitKey(10) & 255) == 27)
       break;
-    
+
     if ((cvWaitKey(10) & 255) == 32)
     {
       if (x == 32)
@@ -155,10 +155,8 @@ int main(int argc, char *argv[])
         x = 32;
     }
     if (x == 32)
-    ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+      ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
     ros::spinOnce();
   }
   return 0;
 }
-
-  

@@ -1,6 +1,6 @@
 <launch>
   <node name="line_detection" pkg="task_line" type="line_detection" respawn="true"  output="screen">
-    <param name="percentage" type="int" value="5" />
+    <param name="percentage" type="int" value="7" />
   </node>
   <node name="line_angle" pkg="task_line" type="line_angle" respawn="true"  output="screen">
     <param name="t1min" type="int" value="121" />
