@@ -26,15 +26,27 @@ if __name__ == '__main__':
         Sideward_motion = rospy.Publisher(
             '/pwm/sideward', Int32, queue_size=1000)
         Upward_motion = rospy.Publisher('/pwm/upward', Int32, queue_size=1000)
+        present_depth_data = rospy.Publisher(
+            '/varun/motion/z_distance', Float64, queue_size=1000)
+        present_angle_data = rospy.Publisher(
+            '/varun/motion/yaw', Float64, queue_size=1000)
         rospy.init_node('remote_gui', anonymous=True)
 
         def pressure_sensor_data(data):
             global present_depth
             present_depth = data.data
+            present_depth_data.publish(data.data)
+
+        def imu_sensor_data(data):
+            global present_angle
+            present_angle = data.data
+            present_angle_data.publish(data.data)
 
         # topic for pressure sensor data
         rospy.Subscriber("/varun/sensors/pressure_sensor/depth",
                          Float64, pressure_sensor_data)
+        rospy.Subscriber("/varun/sensors/imu/yaw",
+                         Float64, imu_sensor_data)
 # #################################################################
 # FORWARD_RELATED########################################################
 
@@ -181,7 +193,7 @@ if __name__ == '__main__':
             else:
                 client_vertical.cancel_goal(goal_upward)
 
-        def sidewardStabilize():
+        def turnStabilize():
             client_turn = actionlib.SimpleActionClient(
                 'turningXY', motion_commons.Turn.TurnAction)
             client_turn.wait_for_server()
@@ -204,7 +216,7 @@ if __name__ == '__main__':
 # ###########################################################################
         t1 = Checkbutton(window, text="Vert. Stab.", command=verticalStabilize,
                          variable=vert_stab_var, onvalue=1, offvalue=0, height=5, width=20)
-        t2 = Checkbutton(window, text="Side Stab.", command=sidewardStabilize,
+        t2 = Checkbutton(window, text="Side Stab.", command=turnStabilize,
                          variable=side_stab_var, onvalue=1, offvalue=0, height=5, width=20)
         t1.pack()
         t2.pack()
