@@ -184,25 +184,29 @@ if __name__ == '__main__':
 
         def verticalStabilize():
             client_vertical = actionlib.SimpleActionClient(
-                'upward', motion_commons.Upward.UpwardAction)
+                'upward', motion_commons.msg.UpwardAction)
             client_vertical.wait_for_server()
             goal_upward = motion_commons.msg.UpwardGoal(
                 Goal=present_depth, loop=100000)
             if vert_stab_var.get() == 1:
                 client_vertical.send_goal(goal_upward)
             else:
-                client_vertical.cancel_goal(goal_upward)
+                goal_upward = motion_commons.msg.UpwardGoal(
+                    Goal=present_depth, loop=0)
+                client_vertical.send_goal(goal_upward)
 
         def turnStabilize():
             client_turn = actionlib.SimpleActionClient(
-                'turningXY', motion_commons.Turn.TurnAction)
+                'turningXY', motion_commons.msg.TurnAction)
             client_turn.wait_for_server()
-            goal_turn = motion_commons.msg.TurnAction(
+            goal_turn = motion_commons.msg.TurnGoal(
                 AngleToTurn=0.0, loop=100000)
             if side_stab_var.get() == 1:
                 client_turn.send_goal(goal_turn)
             else:
-                client_turn.cancel_goal(goal_turn)
+                goal_turn = motion_commons.msg.TurnGoal(
+                    AngleToTurn=0.0, loop=0)
+                client_turn.send_goal(goal_turn)
 
 # LABEL TOP##################################################################
         label = Label(window, bd=5, font=("Helvetica", 16),
