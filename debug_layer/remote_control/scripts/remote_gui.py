@@ -38,7 +38,7 @@ if __name__ == '__main__':
 # #################################################################
 # FORWARD_RELATED########################################################
 
-        def forwardClicked():
+        def forwardClicked(event):
             """Documentation for a function"""
             w1.set(w1.get() + 10)
             rospy.loginfo("forward is clicked with pwm = %d", w1.get())
