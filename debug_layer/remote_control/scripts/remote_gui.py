@@ -168,6 +168,8 @@ if __name__ == '__main__':
             w2.set(0)
             w3.set(0)
             w4.set(0)
+            vert_stab_var.set(0)
+            side_stab_var.set(0)
             Turn_motion.publish(0)
             Turn_motion.publish(0)
             Turn_motion.publish(0)
@@ -254,7 +256,7 @@ if __name__ == '__main__':
         l2 = Label(m2, fg="green", font=("Helvetica", 12), text="vertical")
         Stop_vertical = Button(m2, fg="yellow", bg="red",
                                text="Stop", command=stop_vertical)
-        window.bind('i', stop_front)
+        window.bind('i', stop_vertical)
         m2.add(l2)
         m2.add(w2)
         m2.add(Stop_vertical)
