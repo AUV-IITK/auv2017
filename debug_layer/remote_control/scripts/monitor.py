@@ -25,7 +25,8 @@ if __name__ == '__main__':
             w6.set(data.data)
 
         rospy.init_node('pwm_monitor', anonymous=True)
-        pressure = rospy.Subscriber("/varun/sensors/pressure_sensor/depth", Int32, change_pressure)
+        pressure = rospy.Subscriber(
+            "/varun/sensors/pressure_sensor/depth", Int32, change_pressure)
         yaw = rospy.Subscriber("/varun/sensors/imu/yaw", Int32, change_yaw)
         # topic for motion_1
         rospy.Subscriber("/pwm/forward", Int32, change_pwm_motion_1)
@@ -88,7 +89,8 @@ if __name__ == '__main__':
         main.add(m5)
         w5 = Scale(m5, length=150, troughcolor="orange", highlightbackground="grey", label="Depth",
                    fg="darkviolet", from_=-500, to=100, orient=HORIZONTAL, activebackground="lightgreen")
-        l5 = Label(m5, fg="green", font=("Helvetica", 12), text="pressure sensor")
+        l5 = Label(m5, fg="green", font=(
+            "Helvetica", 12), text="pressure sensor")
         m5.add(l5)
         m5.add(w5)
 
