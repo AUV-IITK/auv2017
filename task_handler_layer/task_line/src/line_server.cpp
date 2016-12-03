@@ -165,7 +165,8 @@ public:
 
   void preemptCB(void)
   {
-    // Not actually preempting the goal because Shibhansh did it in analysisCB
+    // Not actually preempting the goal because Prakhar did it in analysisCB
+    success = false;
     ROS_INFO("%s: Called when preempted from the client", action_name_.c_str());
   }
 
