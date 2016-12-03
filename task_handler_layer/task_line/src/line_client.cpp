@@ -52,9 +52,6 @@ int main(int argc, char **argv)
   goal.order = true;
   ROS_INFO("%s Action server started, sending goal.", ros::this_node::getName().c_str());
 
-  // Client &ca = *ptrClient;
-  // can.cancelGoal();
-  // ROS_INFO("Goal Cancelled");
   Client &can = *ptrClient;
   // send goal
   can.sendGoal(goal);
