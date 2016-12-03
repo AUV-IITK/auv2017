@@ -6,7 +6,7 @@
 #include "std_msgs/Int8.h"
 #include <fstream>
 #include <dynamic_reconfigure/server.h>
-#include <caliberate/caliberateConfig.h>
+#include <calibrate/calibrateConfig.h>
 #include <vector>
 #include <std_msgs/Bool.h>
 #include <opencv2/core/core.hpp>
@@ -26,7 +26,7 @@ cv::Mat frame;
 cv::Mat newframe;
 int count = 0, count_avg = 0, x = -1;
 
-void callback(caliberate::caliberateConfig &config, uint32_t level)
+void callback(calibrate::calibrateConfig &config, uint32_t level)
 {
   t1min = config.t1min_param;
   t1max = config.t1max_param;
@@ -34,31 +34,31 @@ void callback(caliberate::caliberateConfig &config, uint32_t level)
   t2max = config.t2max_param;
   t3min = config.t3min_param;
   t3max = config.t3max_param;
-  ROS_INFO("caliberate_Reconfigure Request:New params : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
+  ROS_INFO("calibrate_Reconfigure Request:New params : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
 }
 
 int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
 
-  ros::init(argc, argv, "caliberate");
+  ros::init(argc, argv, "calibrate");
   ros::NodeHandle n;
-  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/caliberate", 1000);
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/calibrate", 1000);
   ros::Rate loop_rate(10);
 
-  dynamic_reconfigure::Server<caliberate::caliberateConfig> server;
-  dynamic_reconfigure::Server<caliberate::caliberateConfig>::CallbackType f;
+  dynamic_reconfigure::Server<calibrate::calibrateConfig> server;
+  dynamic_reconfigure::Server<calibrate::calibrateConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
 
-  n.getParam("caliberate_detection/t1max", t1max);
-  n.getParam("caliberate_detection/t1min", t1min);
-  n.getParam("caliberate_detection/t2max", t2max);
-  n.getParam("caliberate_detection/t2min", t2min);
-  n.getParam("caliberate_detection/t3max", t3max);
-  n.getParam("caliberate_detection/t3min", t3min);
+  n.getParam("calibrate_detection/t1max", t1max);
+  n.getParam("calibrate_detection/t1min", t1min);
+  n.getParam("calibrate_detection/t2max", t2max);
+  n.getParam("calibrate_detection/t2min", t2min);
+  n.getParam("calibrate_detection/t3max", t3max);
+  n.getParam("calibrate_detection/t3min", t3min);
 
-  caliberate::caliberateConfig config;
+  calibrate::calibrateConfig config;
   config.t1min_param = t1min;
   config.t1max_param = t1max;
   config.t2min_param = t2min;
