@@ -82,14 +82,14 @@ if __name__ == '__main__':
             w3.set(0)
 
         def leftClicked(event):
-            w3.set(w3.get() - 10)
+            w3.set(w3.get() - 30)
             rospy.loginfo("sway left is clicked with pwm = %d", w3.get())
             Sideward_motion.publish(w3.get())
             Sideward_motion.publish(w3.get())
             Sideward_motion.publish(w3.get())
 
         def rightClicked(event):
-            w3.set(w3.get() + 10)
+            w3.set(w3.get() + 30)
             rospy.loginfo("Sway right is clicked with pwm = %d", w3.get())
             Sideward_motion.publish(w3.get())
             Sideward_motion.publish(w3.get())
@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
         def upClicked(event):
             if vert_stab_var.get() == 0:
-                w2.set(w2.get() + 10)
+                w2.set(w2.get() + 5)
                 rospy.loginfo("up is clicked with pwm = %d", w2.get())
                 Upward_motion.publish(w2.get())
                 Upward_motion.publish(w2.get())
@@ -119,7 +119,7 @@ if __name__ == '__main__':
 
         def downClicked(event):
             if vert_stab_var.get() == 0:
-                w2.set(w2.get() - 10)
+                w2.set(w2.get() - 5)
                 rospy.loginfo("dowm is clicked with pwm = %d", w2.get())
                 Upward_motion.publish(w2.get())
                 Upward_motion.publish(w2.get())
@@ -141,7 +141,7 @@ if __name__ == '__main__':
 
         def clock(event):
             if side_stab_var.get() == 0:
-                w4.set(w4.get() + 10)
+                w4.set(w4.get() + 5)
                 rospy.loginfo("clockwise is clicked with pwm = %d", w4.get())
                 Turn_motion.publish(w4.get())
                 Turn_motion.publish(w4.get())
@@ -151,7 +151,7 @@ if __name__ == '__main__':
 
         def anticlock(event):
             if side_stab_var.get() == 0:
-                w4.set(w4.get() - 10)
+                w4.set(w4.get() - 5)
                 rospy.loginfo(
                     "anticlockwise is clicked with pwm = %d", w4.get())
                 Turn_motion.publish(w4.get())
@@ -168,6 +168,8 @@ if __name__ == '__main__':
             w2.set(0)
             w3.set(0)
             w4.set(0)
+            vert_stab_var.set(0)
+            side_stab_var.set(0)
             Turn_motion.publish(0)
             Turn_motion.publish(0)
             Turn_motion.publish(0)
@@ -208,6 +210,22 @@ if __name__ == '__main__':
                     AngleToTurn=0.0, loop=0)
                 client_turn.send_goal(goal_turn)
 
+        def verticalStabilizeCaller(event):
+            if vert_stab_var.get() == 1:
+                vert_stab_var.set(0)
+                verticalStabilize()
+            else:
+                vert_stab_var.set(1)
+                verticalStabilize()
+
+        def turnStabilizeCaller(event):
+            if side_stab_var.get() == 1:
+                side_stab_var.set(0)
+                turnStabilize()
+            else:
+                side_stab_var.set(1)
+                turnStabilize()
+
 # LABEL TOP##################################################################
         label = Label(window, bd=5, font=("Helvetica", 16),
                       fg="blue", anchor=N, text="AUV IITK")
@@ -220,8 +238,10 @@ if __name__ == '__main__':
 # ###########################################################################
         t1 = Checkbutton(window, text="Vert. Stab.", command=verticalStabilize,
                          variable=vert_stab_var, onvalue=1, offvalue=0, height=5, width=20)
-        t2 = Checkbutton(window, text="Side Stab.", command=turnStabilize,
+        t2 = Checkbutton(window, text="Turn Stab.", command=turnStabilize,
                          variable=side_stab_var, onvalue=1, offvalue=0, height=5, width=20)
+        window.bind("q", verticalStabilizeCaller)
+        window.bind("e", turnStabilizeCaller)
         t1.pack()
         t2.pack()
 # ###########################################################################
@@ -254,7 +274,7 @@ if __name__ == '__main__':
         l2 = Label(m2, fg="green", font=("Helvetica", 12), text="vertical")
         Stop_vertical = Button(m2, fg="yellow", bg="red",
                                text="Stop", command=stop_vertical)
-        window.bind('i', stop_front)
+        window.bind('i', stop_vertical)
         m2.add(l2)
         m2.add(w2)
         m2.add(Stop_vertical)
