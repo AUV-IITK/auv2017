@@ -210,6 +210,22 @@ if __name__ == '__main__':
                     AngleToTurn=0.0, loop=0)
                 client_turn.send_goal(goal_turn)
 
+        def verticalStabilizeCaller(event):
+            if vert_stab_var.get() == 1:
+                vert_stab_var.set(0)
+                verticalStabilize()
+            else:
+                vert_stab_var.set(1)
+                verticalStabilize()
+
+        def turnStabilizeCaller(event):
+            if side_stab_var.get() == 1:
+                side_stab_var.set(0)
+                turnStabilize()
+            else:
+                side_stab_var.set(1)
+                turnStabilize()
+
 # LABEL TOP##################################################################
         label = Label(window, bd=5, font=("Helvetica", 16),
                       fg="blue", anchor=N, text="AUV IITK")
@@ -222,8 +238,10 @@ if __name__ == '__main__':
 # ###########################################################################
         t1 = Checkbutton(window, text="Vert. Stab.", command=verticalStabilize,
                          variable=vert_stab_var, onvalue=1, offvalue=0, height=5, width=20)
-        t2 = Checkbutton(window, text="Side Stab.", command=turnStabilize,
+        t2 = Checkbutton(window, text="Turn Stab.", command=turnStabilize,
                          variable=side_stab_var, onvalue=1, offvalue=0, height=5, width=20)
+        window.bind("q", verticalStabilizeCaller)
+        window.bind("e", turnStabilizeCaller)
         t1.pack()
         t2.pack()
 # ###########################################################################
