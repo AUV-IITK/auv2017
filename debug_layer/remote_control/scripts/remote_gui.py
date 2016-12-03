@@ -82,14 +82,14 @@ if __name__ == '__main__':
             w3.set(0)
 
         def leftClicked(event):
-            w3.set(w3.get() - 10)
+            w3.set(w3.get() - 30)
             rospy.loginfo("sway left is clicked with pwm = %d", w3.get())
             Sideward_motion.publish(w3.get())
             Sideward_motion.publish(w3.get())
             Sideward_motion.publish(w3.get())
 
         def rightClicked(event):
-            w3.set(w3.get() + 10)
+            w3.set(w3.get() + 30)
             rospy.loginfo("Sway right is clicked with pwm = %d", w3.get())
             Sideward_motion.publish(w3.get())
             Sideward_motion.publish(w3.get())
@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
         def upClicked(event):
             if vert_stab_var.get() == 0:
-                w2.set(w2.get() + 10)
+                w2.set(w2.get() + 5)
                 rospy.loginfo("up is clicked with pwm = %d", w2.get())
                 Upward_motion.publish(w2.get())
                 Upward_motion.publish(w2.get())
@@ -119,7 +119,7 @@ if __name__ == '__main__':
 
         def downClicked(event):
             if vert_stab_var.get() == 0:
-                w2.set(w2.get() - 10)
+                w2.set(w2.get() - 5)
                 rospy.loginfo("dowm is clicked with pwm = %d", w2.get())
                 Upward_motion.publish(w2.get())
                 Upward_motion.publish(w2.get())
@@ -141,7 +141,7 @@ if __name__ == '__main__':
 
         def clock(event):
             if side_stab_var.get() == 0:
-                w4.set(w4.get() + 10)
+                w4.set(w4.get() + 5)
                 rospy.loginfo("clockwise is clicked with pwm = %d", w4.get())
                 Turn_motion.publish(w4.get())
                 Turn_motion.publish(w4.get())
@@ -151,7 +151,7 @@ if __name__ == '__main__':
 
         def anticlock(event):
             if side_stab_var.get() == 0:
-                w4.set(w4.get() - 10)
+                w4.set(w4.get() - 5)
                 rospy.loginfo(
                     "anticlockwise is clicked with pwm = %d", w4.get())
                 Turn_motion.publish(w4.get())
