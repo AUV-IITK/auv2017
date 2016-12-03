@@ -187,6 +187,7 @@ if __name__ == '__main__':
 # #######################################################################
 
         entry_vertical = Entry(window, width=10)
+
         def verticalDataStabilize():
             client_vertical = actionlib.SimpleActionClient(
                 'upward', motion_commons.msg.UpwardAction)
@@ -211,9 +212,10 @@ if __name__ == '__main__':
             else:
                 goal_upward = motion_commons.msg.UpwardGoal(
                     Goal=present_depth, loop=0)
-                client_vertical.send_goal(goal_upward)        
+                client_vertical.send_goal(goal_upward)
 
         entry_turn = Entry(window, width=10)
+
         def turnDataStabilize():
             client_turn = actionlib.SimpleActionClient(
                 'turningXY', motion_commons.msg.TurnAction)
@@ -276,10 +278,10 @@ if __name__ == '__main__':
                          variable=side_stab_var, onvalue=1, offvalue=0, height=3, width=20)
         window.bind("q", verticalStabilizeCaller)
         window.bind("e", turnStabilizeCaller)
-        entry_vertical.pack(side=TOP,padx=10,pady=5)
+        entry_vertical.pack(side=TOP, padx=10, pady=5)
         t3.pack()
         t1.pack()
-        entry_turn.pack(side=TOP,padx=10,pady=5)
+        entry_turn.pack(side=TOP, padx=10, pady=5)
         t4.pack()
         t2.pack()
 # ###########################################################################

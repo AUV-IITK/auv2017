@@ -28,6 +28,7 @@ private:
   motion_commons::UpwardResult result_;
   ros::Publisher PWM;
   float p, i, d, band, p_stablize, i_stablize, d_stablize, band_stablize, p_upward, i_upward, d_upward, band_upward;
+  float maxPwm;
 
 public:
   // Constructor, called when new instance of class declared
@@ -158,16 +159,17 @@ public:
       output = minOutput;
     float temp = output * scale;
     int output_pwm = static_cast<int>(temp);
-    if (output_pwm > 255)
-      output_pwm = 255;
-    if (output_pwm < -255)
-      output_pwm = -255;
+    if (output_pwm > maxPwm)
+      output_pwm = maxPwm;
+    if (output_pwm < -maxPwm)
+      output_pwm = -maxPwm;
     pwm.data = output_pwm;
   }
 
-  void setPID(float new_p_stablize, float new_p_upward, float new_i_stablize, float new_i_upward, float new_d_stablize,
-              float new_d_upward, float new_band_stablize, float new_band_upward)
+  void setPID(float new_max_pwm, float new_p_stablize, float new_p_upward, float new_i_stablize, float new_i_upward,
+              float new_d_stablize, float new_d_upward, float new_band_stablize, float new_band_upward)
   {
+    maxPwm = new_max_pwm;
     p_stablize = new_p_stablize;
     p_upward = new_p_upward;
     i_stablize = new_i_stablize;
@@ -183,12 +185,12 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_upward::pidConfig &config, double level)
 {
-  ROS_INFO("%s: UpwardServer: Reconfigure Request: p_stablize=%f p_upward=%f "
+  ROS_INFO("%s: UpwardServer: Reconfigure Request: maxPwm=%f p_stablize=%f p_upward=%f "
            "i_stablize=%f i_upward=%f d_stablize=%f d_upward=%f error band_upward=%f",
-           ros::this_node::getName().c_str(), config.p_stablize, config.p_upward, config.i_stablize, config.i_upward,
-           config.d_stablize, config.d_upward, config.band_upward);
-  object->setPID(config.p_stablize, config.p_upward, config.i_stablize, config.i_upward, config.d_stablize,
-                 config.d_upward, config.band_stablize, config.band_upward);
+           ros::this_node::getName().c_str(), config.maxPwm, config.p_stablize, config.p_upward, config.i_stablize,
+           config.i_upward, config.d_stablize, config.d_upward, config.band_upward);
+  object->setPID(config.maxPwm, config.p_stablize, config.p_upward, config.i_stablize, config.i_upward,
+                 config.d_stablize, config.d_upward, config.band_stablize, config.band_upward);
 }
 
 void distanceCb(std_msgs::Float64 msg)
@@ -212,6 +214,8 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "upward");
   ros::NodeHandle n;
   double p_stablize, p_upward, i_stablize, i_upward, d_stablize, d_upward, band_stablize, band_upward;
+  double maxPwm;
+  n.getParam("upward/maxPwm", maxPwm);
   n.getParam("upward/p_stablize", p_stablize);
   n.getParam("upward/p_upward", p_upward);
   n.getParam("upward/i_stablize", i_stablize);
@@ -233,6 +237,7 @@ int main(int argc, char **argv)
   server.setCallback(f);
   // set launch file pid
   motion_upward::pidConfig config;
+  config.maxPwm = maxPwm;
   config.p_stablize = p_stablize;
   config.p_upward = p_upward;
   config.i_stablize = i_stablize;

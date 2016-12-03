@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(caliberate)
+project(calibrate)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -103,7 +103,7 @@ find_package( OpenCV REQUIRED )
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
-  cfg/caliberate.cfg
+  cfg/calibrate.cfg
 )
 
 ###################################
@@ -140,29 +140,29 @@ include_directories(include
   ${OpenCV_INCLUDE_DIRS}
 )
 
-add_executable(caliberate src/caliberate.cpp)
-target_link_libraries(caliberate ${OpenCV_LIBS} )
-target_link_libraries(caliberate ${catkin_LIBRARIES})
+add_executable(calibrate src/calibrate.cpp)
+target_link_libraries(calibrate ${OpenCV_LIBS} )
+target_link_libraries(calibrate ${catkin_LIBRARIES})
 
 ## Declare a C++ library
-# add_library(caliberate
-#   src/${PROJECT_NAME}/caliberate.cpp
+# add_library(calibrate
+#   src/${PROJECT_NAME}/calibrate.cpp
 # )
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(caliberate ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(calibrate ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(caliberate_node src/caliberate_node.cpp)
+# add_executable(calibrate_node src/calibrate_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(caliberate_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(calibrate_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(caliberate_node
+# target_link_libraries(calibrate_node
 #   ${catkin_LIBRARIES}
 # )
 
@@ -181,7 +181,7 @@ target_link_libraries(caliberate ${catkin_LIBRARIES})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS caliberate caliberate_node
+# install(TARGETS calibrate calibrate_node
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -206,7 +206,7 @@ target_link_libraries(caliberate ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_caliberate.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_calibrate.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
