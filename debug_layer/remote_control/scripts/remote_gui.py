@@ -169,7 +169,9 @@ if __name__ == '__main__':
             w3.set(0)
             w4.set(0)
             vert_stab_var.set(0)
+            verticalStabilize()
             side_stab_var.set(0)
+            turnStabilize()
             Turn_motion.publish(0)
             Turn_motion.publish(0)
             Turn_motion.publish(0)
@@ -184,6 +186,20 @@ if __name__ == '__main__':
             forward_motion.publish(0)
 # #######################################################################
 
+        entry_vertical = Entry(window, width=10)
+        def verticalDataStabilize():
+            client_vertical = actionlib.SimpleActionClient(
+                'upward', motion_commons.msg.UpwardAction)
+            client_vertical.wait_for_server()
+            goal_upward = motion_commons.msg.UpwardGoal(
+                Goal=float(entry_vertical.get()), loop=100000)
+            if vert_stab_var.get() == 1:
+                client_vertical.send_goal(goal_upward)
+            else:
+                goal_upward = motion_commons.msg.UpwardGoal(
+                    Goal=present_depth, loop=0)
+                client_vertical.send_goal(goal_upward)
+
         def verticalStabilize():
             client_vertical = actionlib.SimpleActionClient(
                 'upward', motion_commons.msg.UpwardAction)
@@ -195,7 +211,21 @@ if __name__ == '__main__':
             else:
                 goal_upward = motion_commons.msg.UpwardGoal(
                     Goal=present_depth, loop=0)
-                client_vertical.send_goal(goal_upward)
+                client_vertical.send_goal(goal_upward)        
+
+        entry_turn = Entry(window, width=10)
+        def turnDataStabilize():
+            client_turn = actionlib.SimpleActionClient(
+                'turningXY', motion_commons.msg.TurnAction)
+            client_turn.wait_for_server()
+            goal_turn = motion_commons.msg.TurnGoal(
+                AngleToTurn=float(entry_turn.get()), loop=100000)
+            if side_stab_var.get() == 1:
+                client_turn.send_goal(goal_turn)
+            else:
+                goal_turn = motion_commons.msg.TurnGoal(
+                    AngleToTurn=0.0, loop=0)
+                client_turn.send_goal(goal_turn)
 
         def turnStabilize():
             client_turn = actionlib.SimpleActionClient(
@@ -236,13 +266,21 @@ if __name__ == '__main__':
                height=3, width=10, text="Reset", command=reset).pack()
         window.bind("<space>", reset)
 # ###########################################################################
-        t1 = Checkbutton(window, text="Vert. Stab.", command=verticalStabilize,
-                         variable=vert_stab_var, onvalue=1, offvalue=0, height=5, width=20)
-        t2 = Checkbutton(window, text="Turn Stab.", command=turnStabilize,
-                         variable=side_stab_var, onvalue=1, offvalue=0, height=5, width=20)
+        t1 = Checkbutton(window, text="Vert. Present Stab.", command=verticalStabilize,
+                         variable=vert_stab_var, onvalue=1, offvalue=0, height=3, width=20)
+        t3 = Checkbutton(window, text="Vert. Data Stab.", command=verticalDataStabilize,
+                         variable=vert_stab_var, onvalue=1, offvalue=0, height=3, width=20)
+        t2 = Checkbutton(window, text="Turn Present Stab.", command=turnStabilize,
+                         variable=side_stab_var, onvalue=1, offvalue=0, height=3, width=20)
+        t4 = Checkbutton(window, text="Turn Data Stab.", command=turnDataStabilize,
+                         variable=side_stab_var, onvalue=1, offvalue=0, height=3, width=20)
         window.bind("q", verticalStabilizeCaller)
         window.bind("e", turnStabilizeCaller)
+        entry_vertical.pack(side=TOP,padx=10,pady=5)
+        t3.pack()
         t1.pack()
+        entry_turn.pack(side=TOP,padx=10,pady=5)
+        t4.pack()
         t2.pack()
 # ###########################################################################
         ca = Canvas(window, height=50)
