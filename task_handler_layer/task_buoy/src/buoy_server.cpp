@@ -169,15 +169,9 @@ public:
     turngoal.loop = 100000;
     TurnClient_.sendGoal(turngoal);
 
-    if (present_depth < 0.0)
+    if (present_Y_coord < 5.0 && present_Y_coord > -5.0)
     {
-      min_pwm_data.data = -min_pwm;
-      upward_pwm.publish(min_pwm_data);
-    }
-    else
-    {
-      min_pwm_data.data = min_pwm;
-      upward_pwm.publish(min_pwm_data);
+      upwardgoal.Goal = present_depth;
     }
 
     while (present_Y_coord > 5.0 || present_Y_coord < -5.0)
@@ -195,6 +189,16 @@ public:
       {
         upwardgoal.Goal = present_depth;
         break;
+      }
+      else if (present_depth < 0.0)
+      {
+        min_pwm_data.data = -min_pwm;
+        upward_pwm.publish(min_pwm_data);
+      }
+      else
+      {
+        min_pwm_data.data = min_pwm;
+        upward_pwm.publish(min_pwm_data);
       }
 
       feedback_.x_coord = data_X_.data;
