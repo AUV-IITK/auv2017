@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>AUV: debug_layer/caliberate/src/caliberate.cpp Source File</title>
+<title>AUV: debug_layer/calibrate/src/calibrate.cpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -80,12 +80,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_b2c71387ca7986c8d5f746a7260ca923.html">debug_layer</a></li><li class="navelem"><a class="el" href="dir_aed9579cb86001c20a1a0fe7fcadaad2.html">caliberate</a></li><li class="navelem"><a class="el" href="dir_2a1e35f28f2a0b47720ed79aca2aa9a7.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_b2c71387ca7986c8d5f746a7260ca923.html">debug_layer</a></li><li class="navelem"><a class="el" href="dir_c756bc47dd5679807cdd28b2ef25eccc.html">calibrate</a></li><li class="navelem"><a class="el" href="dir_772bafaa36f273a4219cb1ca2c854a97.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">caliberate.cpp</div>  </div>
+<div class="title">calibrate.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// Copyright 2016 AUV-IITK</span></div>
@@ -96,7 +96,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;std_msgs/Int8.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;dynamic_reconfigure/server.h&gt;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;caliberate/caliberateConfig.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;calibrate/calibrateConfig.h&gt;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;std_msgs/Bool.h&gt;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;opencv2/core/core.hpp&gt;</span></div>
@@ -116,7 +116,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;cv::Mat newframe;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keywordtype">int</span> count = 0, count_avg = 0, x = -1;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> callback(caliberate::caliberateConfig &amp;config, uint32_t level)</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> callback(calibrate::calibrateConfig &amp;config, uint32_t level)</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  t1min = config.t1min_param;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  t1max = config.t1max_param;</div>
@@ -124,31 +124,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  t2max = config.t2max_param;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  t3min = config.t3min_param;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  t3max = config.t3max_param;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;caliberate_Reconfigure Request:New params : %d %d %d %d %d %d&quot;</span>, t1min, t1max, t2min, t2max, t3min, t3max);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;calibrate_Reconfigure Request:New params : %d %d %d %d %d %d&quot;</span>, t1min, t1max, t2min, t2max, t3min, t3max);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordtype">int</span> height, width, step, channels;  <span class="comment">// parameters of the image we are working on</span></div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;caliberate&quot;</span>);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  ros::init(argc, argv, <span class="stringliteral">&quot;calibrate&quot;</span>);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  ros::NodeHandle n;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  ros::Publisher pub = n.advertise&lt;std_msgs::Float64MultiArray&gt;(<span class="stringliteral">&quot;/varun/ip/caliberate&quot;</span>, 1000);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  ros::Publisher pub = n.advertise&lt;std_msgs::Float64MultiArray&gt;(<span class="stringliteral">&quot;/varun/ip/calibrate&quot;</span>, 1000);</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  ros::Rate loop_rate(10);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  dynamic_reconfigure::Server&lt;caliberate::caliberateConfig&gt; server;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  dynamic_reconfigure::Server&lt;caliberate::caliberateConfig&gt;::CallbackType f;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  dynamic_reconfigure::Server&lt;calibrate::calibrateConfig&gt; server;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  dynamic_reconfigure::Server&lt;calibrate::calibrateConfig&gt;::CallbackType f;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  f = boost::bind(&amp;callback, _1, _2);</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  server.setCallback(f);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  n.getParam(<span class="stringliteral">&quot;caliberate_detection/t1max&quot;</span>, t1max);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  n.getParam(<span class="stringliteral">&quot;caliberate_detection/t1min&quot;</span>, t1min);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  n.getParam(<span class="stringliteral">&quot;caliberate_detection/t2max&quot;</span>, t2max);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  n.getParam(<span class="stringliteral">&quot;caliberate_detection/t2min&quot;</span>, t2min);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  n.getParam(<span class="stringliteral">&quot;caliberate_detection/t3max&quot;</span>, t3max);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  n.getParam(<span class="stringliteral">&quot;caliberate_detection/t3min&quot;</span>, t3min);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  n.getParam(<span class="stringliteral">&quot;calibrate_detection/t1max&quot;</span>, t1max);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  n.getParam(<span class="stringliteral">&quot;calibrate_detection/t1min&quot;</span>, t1min);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  n.getParam(<span class="stringliteral">&quot;calibrate_detection/t2max&quot;</span>, t2max);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  n.getParam(<span class="stringliteral">&quot;calibrate_detection/t2min&quot;</span>, t2min);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  n.getParam(<span class="stringliteral">&quot;calibrate_detection/t3max&quot;</span>, t3max);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  n.getParam(<span class="stringliteral">&quot;calibrate_detection/t3min&quot;</span>, t3min);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  caliberate::caliberateConfig config;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  calibrate::calibrateConfig config;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  config.t1min_param = t1min;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  config.t1max_param = t1max;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  config.t2min_param = t2min;</div>
@@ -254,7 +254,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Dec 3 2016 17:42:41 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Dec 3 2016 20:06:42 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
