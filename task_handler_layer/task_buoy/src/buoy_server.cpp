@@ -34,14 +34,16 @@ private:
   Server buoy_server_;
   std::string action_name_;
   std_msgs::Float64 data_X_;
-  std_msgs::Float64 data_Y_;
   std_msgs::Float64 data_distance_;
+  std_msgs::Int32 min_pwm_data;
   task_commons::buoyFeedback feedback_;
   task_commons::buoyResult result_;
   ros::Subscriber sub_ip_;
+  ros::Subscriber depth_sub_;
   ros::Subscriber yaw_sub_;
   ros::Publisher switch_buoy_detection;
   ros::Publisher yaw_pub_;
+  ros::Publisher upward_pwm;
   ros::Publisher present_distance_;
   ros::Publisher present_X_;
   ros::Publisher present_Y_;
@@ -53,8 +55,9 @@ private:
   motion_commons::SidewardGoal sidewardgoal;
   motion_commons::UpwardGoal upwardgoal;
   motion_commons::TurnGoal turngoal;
-  bool successBuoy, heightCenter, sideCenter, IP_stopped, heightGoal;
-  float present_depth;
+  bool successBuoy, sideCenter, IP_stopped, heightGoal;
+  float present_depth, present_Y_coord;
+  int min_pwm;
 
 public:
   TaskBuoyInnerClass(std::string name, std::string node, std::string node1, std::string node2, std::string node3)
@@ -73,9 +76,12 @@ public:
     present_Y_ = nh_.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
     present_distance_ = nh_.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
     yaw_pub_ = nh_.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
+    upward_pwm = nh_.advertise<std_msgs::Int32>("/pwm/upward", 1000);
     sub_ip_ =
         nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000, &TaskBuoyInnerClass::buoyNavigation, this);
     yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskBuoyInnerClass::yawCB, this);
+    depth_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth",
+        1000, &TaskBuoyInnerClass::depthCB, this);
     buoy_server_.start();
   }
 
@@ -88,21 +94,25 @@ public:
     yaw_pub_.publish(imu_data);
   }
 
+  void depthCB(std_msgs::Float64 depth_data)
+  {
+    present_depth = depth_data.data;
+  }
+
   void buoyNavigation(std_msgs::Float64MultiArray array)
   {
     data_X_.data = array.data[1];
-    data_Y_.data = array.data[2];
+    present_Y_coord = array.data[2];
     data_distance_.data = array.data[3];
 
     if (data_distance_.data > 0)
     {
       present_distance_.publish(data_distance_);
       present_X_.publish(data_X_);
-      present_Y_.publish(data_Y_);
     }
 
     // if distance is -1 to -4 then buoy is out of frame and the motion library will assume the last data.
-    else if (data_distance_.data == -5)
+    else if (data_distance_.data == -5 && sideCenter)
     {
       IP_stopped = true;
       stopBuoyDetection();
@@ -113,22 +123,8 @@ public:
   void preemptCB(void)
   {
     // Not actually preempting the goal because Prakhar did it in analysisCB
+    successBuoy = false;
     ROS_INFO("Called when preempted from the client");
-  }
-
-  void spinThreadUpwardCamera()
-  {
-    ClientUpward &tempUpward = UpwardClient_;
-    tempUpward.waitForResult();
-    heightCenter = (*(tempUpward.getResult())).Result;
-    if (heightCenter)
-    {
-      ROS_INFO("%s Bot is at height center", action_name_.c_str());
-    }
-    else
-    {
-      ROS_INFO("%s Bot is not at height center, something went wrong", action_name_.c_str());
-    }
   }
 
   void spinThreadSidewardCamera()
@@ -143,17 +139,18 @@ public:
     else
     {
       ROS_INFO("%s Bot is not at side center, something went wrong", action_name_.c_str());
+      successBuoy = false;
     }
   }
 
   void analysisCB(const task_commons::buoyGoalConstPtr goal)
   {
     ROS_INFO("Inside analysisCB");
-    heightCenter = false;
     sideCenter = false;
-    successBuoy = false;
+    successBuoy = true;
     IP_stopped = false;
     heightGoal = false;
+    min_pwm = 4;
     ros::Rate looprate(12);
     if (!buoy_server_.isActive())
       return;
@@ -166,23 +163,63 @@ public:
 
     TaskBuoyInnerClass::startBuoyDetection();
 
-    sidewardgoal.Goal = 0;
-    sidewardgoal.loop = 10;
-    SidewardClient_.sendGoal(sidewardgoal);
-    boost::thread spin_thread_sideward_camera(&TaskBuoyInnerClass::spinThreadSidewardCamera, this);
 
     // Stabilization of yaw
     turngoal.AngleToTurn = 0;
     turngoal.loop = 100000;
     TurnClient_.sendGoal(turngoal);
+    sleep(1);
+    if (present_Y_coord < 5.0 && present_Y_coord > -5.0)
+    {
+      ROS_INFO("y coordinate withing ip error range");
+      upwardgoal.Goal = present_depth;
+    }
 
-    upwardgoal.Goal = 0;
-    upwardgoal.loop = 10;
+    while (present_Y_coord > 5.0 || present_Y_coord < -5.0)
+    {
+      if (buoy_server_.isPreemptRequested() || !ros::ok())
+      {
+        ROS_INFO("%s: Preempted", action_name_.c_str());
+        // set the action state to preempted
+        buoy_server_.setPreempted();
+        successBuoy = false;
+        break;
+      }
+
+      if (present_Y_coord < 5.0 && present_Y_coord > -5.0)
+      {
+        ROS_INFO("y coordinate withing ip error range");
+        upwardgoal.Goal = present_depth;
+        break;
+      }
+      else if (present_depth < 0.0)
+      {
+        min_pwm_data.data = min_pwm;
+        upward_pwm.publish(min_pwm_data);
+      }
+      else
+      {
+        min_pwm_data.data = -min_pwm;
+        upward_pwm.publish(min_pwm_data);
+      }
+      looprate.sleep();
+      feedback_.x_coord = data_X_.data;
+      feedback_.y_coord = present_Y_coord;
+      feedback_.distance = data_distance_.data;
+      buoy_server_.publishFeedback(feedback_);
+      ros::spinOnce();
+    }
+
+    upwardgoal.loop = 100000;
     UpwardClient_.sendGoal(upwardgoal);
-    boost::thread spin_thread_upward_camera(&TaskBuoyInnerClass::spinThreadUpwardCamera, this);
-    ROS_INFO("%s: finding buoy", action_name_.c_str());
+    ROS_INFO("%s: upward Stabilization is on", action_name_.c_str());
 
-    while (goal->order)
+    sidewardgoal.Goal = 0;
+    sidewardgoal.loop = 10;
+    SidewardClient_.sendGoal(sidewardgoal);
+    boost::thread spin_thread_sideward_camera(&TaskBuoyInnerClass::spinThreadSidewardCamera, this);
+
+    while (goal->order && successBuoy)
     {
       if (buoy_server_.isPreemptRequested() || !ros::ok())
       {
@@ -193,13 +230,13 @@ public:
         break;
       }
       looprate.sleep();
-      if (heightCenter && sideCenter)
+      if (sideCenter)
       {
         break;
       }
       // publish the feedback
       feedback_.x_coord = data_X_.data;
-      feedback_.y_coord = data_Y_.data;
+      feedback_.y_coord = present_Y_coord;
       feedback_.distance = data_distance_.data;
       buoy_server_.publishFeedback(feedback_);
       ros::spinOnce();
@@ -211,7 +248,7 @@ public:
     ForwardClient_.sendGoal(forwardgoal);
     ROS_INFO("%s: Bot is moving forward to hit the buoy", action_name_.c_str());
 
-    while (goal->order)
+    while (goal->order && successBuoy)
     {
       if (buoy_server_.isPreemptRequested() || !ros::ok())
       {
@@ -225,14 +262,13 @@ public:
 
       if (IP_stopped)
       {
-        successBuoy = true;
         ROS_INFO("%s: Waiting for hitting the buoy...", action_name_.c_str());
         // sleep(1);
         break;
       }
 
       feedback_.x_coord = data_X_.data;
-      feedback_.y_coord = data_Y_.data;
+      feedback_.y_coord = present_Y_coord;
       feedback_.distance = data_distance_.data;
       buoy_server_.publishFeedback(feedback_);
       ros::spinOnce();
