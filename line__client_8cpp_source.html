@@ -142,21 +142,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  goal.order = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  ROS_INFO(<span class="stringliteral">&quot;%s Action server started, sending goal.&quot;</span>, ros::this_node::getName().c_str());</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="comment">// Client &amp;ca = *ptrClient;</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="comment">// can.cancelGoal();</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="comment">// ROS_INFO(&quot;Goal Cancelled&quot;);</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  Client &amp;can = *ptrClient;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="comment">// send goal</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  can.sendGoal(goal);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  boost::thread spin_thread(&amp;spinThread);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  ros::spin();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  Client &amp;can = *ptrClient;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="comment">// send goal</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  can.sendGoal(goal);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  boost::thread spin_thread(&amp;spinThread);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  ros::spin();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
 <div class="ttc" id="vid__pub_8cpp_html_a3c04138a5bfe5d72780bb7e82a18e627"><div class="ttname"><a href="vid__pub_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a></div><div class="ttdeci">int main(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="vid__pub_8cpp_source.html#l00075">vid_pub.cpp:75</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 4 2016 04:44:51 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Dec 4 2016 04:45:47 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

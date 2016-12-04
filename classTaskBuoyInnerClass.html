@@ -107,15 +107,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2b41f5c6e6e39d479e30e26538694abd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2b41f5c6e6e39d479e30e26538694abd"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>yawCB</b> (std_msgs::Float64 imu_data)</td></tr>
 <tr class="separator:a2b41f5c6e6e39d479e30e26538694abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02fc932592a82757cc009f658a193594"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02fc932592a82757cc009f658a193594"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>depthCB</b> (std_msgs::Float64 depth_data)</td></tr>
+<tr class="separator:a02fc932592a82757cc009f658a193594"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7da72a871d348a8900625846d32cef4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7da72a871d348a8900625846d32cef4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>buoyNavigation</b> (std_msgs::Float64MultiArray array)</td></tr>
 <tr class="separator:ae7da72a871d348a8900625846d32cef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6400b5be5c38d768124d6b88f554cb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6400b5be5c38d768124d6b88f554cb5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>preemptCB</b> (void)</td></tr>
 <tr class="separator:af6400b5be5c38d768124d6b88f554cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa37b3d009ac04046a2ca97de950b3afa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa37b3d009ac04046a2ca97de950b3afa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>spinThreadUpwardCamera</b> ()</td></tr>
-<tr class="separator:aa37b3d009ac04046a2ca97de950b3afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a509553ea24c4beaa80d853f176e2a1d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a509553ea24c4beaa80d853f176e2a1d7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>spinThreadSidewardCamera</b> ()</td></tr>
 <tr class="separator:a509553ea24c4beaa80d853f176e2a1d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,12 +143,12 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>action_name_</
 <tr class="memitem:afa9053c5e3352ff2d5a3567af7b3f2a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa9053c5e3352ff2d5a3567af7b3f2a9"></a>
 std_msgs::Float64&#160;</td><td class="memItemRight" valign="bottom"><b>data_X_</b></td></tr>
 <tr class="separator:afa9053c5e3352ff2d5a3567af7b3f2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae574112de5236ae30260bccd3414ea3f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae574112de5236ae30260bccd3414ea3f"></a>
-std_msgs::Float64&#160;</td><td class="memItemRight" valign="bottom"><b>data_Y_</b></td></tr>
-<tr class="separator:ae574112de5236ae30260bccd3414ea3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a692a7d4a61862c947eac2c04872a4e88"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a692a7d4a61862c947eac2c04872a4e88"></a>
 std_msgs::Float64&#160;</td><td class="memItemRight" valign="bottom"><b>data_distance_</b></td></tr>
 <tr class="separator:a692a7d4a61862c947eac2c04872a4e88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a13877bc62c2075936a9d6d1a2959d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a13877bc62c2075936a9d6d1a2959d9"></a>
+std_msgs::Int32&#160;</td><td class="memItemRight" valign="bottom"><b>min_pwm_data</b></td></tr>
+<tr class="separator:a3a13877bc62c2075936a9d6d1a2959d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0db4b5ebb7f98052d51e636dd2bab741"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0db4b5ebb7f98052d51e636dd2bab741"></a>
 task_commons::buoyFeedback&#160;</td><td class="memItemRight" valign="bottom"><b>feedback_</b></td></tr>
 <tr class="separator:a0db4b5ebb7f98052d51e636dd2bab741"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -158,6 +158,9 @@ task_commons::buoyResult&#160;</td><td class="memItemRight" valign="bottom"><b>r
 <tr class="memitem:a1498d17429aee5bf0549460ececc8538"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1498d17429aee5bf0549460ececc8538"></a>
 ros::Subscriber&#160;</td><td class="memItemRight" valign="bottom"><b>sub_ip_</b></td></tr>
 <tr class="separator:a1498d17429aee5bf0549460ececc8538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a801237c0dde7433bd442217becc3c16f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a801237c0dde7433bd442217becc3c16f"></a>
+ros::Subscriber&#160;</td><td class="memItemRight" valign="bottom"><b>depth_sub_</b></td></tr>
+<tr class="separator:a801237c0dde7433bd442217becc3c16f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d7b85bebb9bf78c541542fac0fb56a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d7b85bebb9bf78c541542fac0fb56a8"></a>
 ros::Subscriber&#160;</td><td class="memItemRight" valign="bottom"><b>yaw_sub_</b></td></tr>
 <tr class="separator:a1d7b85bebb9bf78c541542fac0fb56a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,6 +170,9 @@ ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>switch_buoy
 <tr class="memitem:aa88ad2242f1f6fa2e62b52a90c35bb0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa88ad2242f1f6fa2e62b52a90c35bb0e"></a>
 ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>yaw_pub_</b></td></tr>
 <tr class="separator:aa88ad2242f1f6fa2e62b52a90c35bb0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a710224ae84dbd949c437af543d42ac50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a710224ae84dbd949c437af543d42ac50"></a>
+ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>upward_pwm</b></td></tr>
+<tr class="separator:a710224ae84dbd949c437af543d42ac50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1570a7dceb1538c51ebc8fda202af90d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1570a7dceb1538c51ebc8fda202af90d"></a>
 ros::Publisher&#160;</td><td class="memItemRight" valign="bottom"><b>present_distance_</b></td></tr>
 <tr class="separator:a1570a7dceb1538c51ebc8fda202af90d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -203,9 +209,6 @@ motion_commons::TurnGoal&#160;</td><td class="memItemRight" valign="bottom"><b>t
 <tr class="memitem:a6b0bf971d9d0c4c48ab1ed4736a629d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b0bf971d9d0c4c48ab1ed4736a629d4"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>successBuoy</b></td></tr>
 <tr class="separator:a6b0bf971d9d0c4c48ab1ed4736a629d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1992f402d4d228344e724e406468b337"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1992f402d4d228344e724e406468b337"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>heightCenter</b></td></tr>
-<tr class="separator:a1992f402d4d228344e724e406468b337"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e723b16dc08ac26d34597c47e84af86"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e723b16dc08ac26d34597c47e84af86"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>sideCenter</b></td></tr>
 <tr class="separator:a7e723b16dc08ac26d34597c47e84af86"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -218,6 +221,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>heightGoal</b></td></
 <tr class="memitem:a55d9f5cc4959a0be07b6a634b6f2569f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55d9f5cc4959a0be07b6a634b6f2569f"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>present_depth</b></td></tr>
 <tr class="separator:a55d9f5cc4959a0be07b6a634b6f2569f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1832c507ae122a1b7437c01b2416cfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1832c507ae122a1b7437c01b2416cfb"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>present_Y_coord</b></td></tr>
+<tr class="separator:ad1832c507ae122a1b7437c01b2416cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60c01fb21f9d24cd81c7c0c8ca31e5f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60c01fb21f9d24cd81c7c0c8ca31e5f5"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>min_pwm</b></td></tr>
+<tr class="separator:a60c01fb21f9d24cd81c7c0c8ca31e5f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -228,7 +237,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>present_depth</b></t
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Dec 4 2016 04:44:51 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Dec 4 2016 04:45:48 for AUV by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
