@@ -47,8 +47,8 @@ const int neutral_buoyancy_offset = 0;
 MS5837 sensor;
 
 bool isMovingForward = true;
-float minUpwardPWM = 120;
-float biasSouthUp = 0;
+int minUpwardPWM = 120;
+int biasSouthUp = -70;
 float last_pressure_sensor_value, pressure_sensor_value;
 std_msgs::Float64 voltage;
 ros::NodeHandle nh;
@@ -82,6 +82,7 @@ int btd093(int pwm)
     return 0;
   }
   pwm = (c099 + s099 * pwm - c093) / (s093);
+  pwm = pwm + biasSouthUp;
   return pwm;
 }
 
@@ -147,7 +148,7 @@ void thrusterNorthUp(int pwm, int isUpward)
 
 void thrusterSouthUp(int pwm, int isUpward)
 {
-  pwm = abs(pwm) + biasSouthUp;
+  pwm = abs(pwm);
   pwm = btd093(pwm);
   analogWrite(pwmPinSouthUp, 255 - pwm);
   if (isUpward)
