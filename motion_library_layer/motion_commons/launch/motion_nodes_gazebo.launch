@@ -22,7 +22,7 @@
     <param name="band_turn" type="double" value="5.0" />
   </node>
   <node name="upward" pkg="motion_upward" type="upward" respawn="true"  output="screen">
-    <param name="maxPwm" type="double" value="255.0" />
+    <param name="maxPwm" type="double" value="4.0" />
     <param name="p_stablize" type="double" value="10.0" />
     <param name="i_stablize" type="double" value="0.0" />
     <param name="d_stablize" type="double" value="0.0" />
