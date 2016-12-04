@@ -168,9 +168,10 @@ public:
     turngoal.AngleToTurn = 0;
     turngoal.loop = 100000;
     TurnClient_.sendGoal(turngoal);
-
+    sleep(1);
     if (present_Y_coord < 5.0 && present_Y_coord > -5.0)
     {
+      ROS_INFO("y coordinate withing ip error range");
       upwardgoal.Goal = present_depth;
     }
 
@@ -187,20 +188,21 @@ public:
 
       if (present_Y_coord < 5.0 && present_Y_coord > -5.0)
       {
+        ROS_INFO("y coordinate withing ip error range");
         upwardgoal.Goal = present_depth;
         break;
       }
       else if (present_depth < 0.0)
       {
-        min_pwm_data.data = -min_pwm;
+        min_pwm_data.data = min_pwm;
         upward_pwm.publish(min_pwm_data);
       }
       else
       {
-        min_pwm_data.data = min_pwm;
+        min_pwm_data.data = -min_pwm;
         upward_pwm.publish(min_pwm_data);
       }
-
+      looprate.sleep();
       feedback_.x_coord = data_X_.data;
       feedback_.y_coord = present_Y_coord;
       feedback_.distance = data_distance_.data;
