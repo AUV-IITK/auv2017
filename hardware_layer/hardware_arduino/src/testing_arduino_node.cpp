@@ -47,12 +47,12 @@ const int neutral_buoyancy_offset = 0;
 MS5837 sensor;
 
 bool isMovingForward = true;
-int minUpwardPWM = 120;
-int biasSouthUp = -70;
+int minUpwardPWM = 80;
+int biasSouthUp = -35;
 int minSidewardPWM = 147;
 int minForwardPWM = 147;
-int minTurnForwardThrustersPWM = 147;
-int minTurnSidewardThrustersPWM = 147;
+int minTurnForwardThrustersPWM = 60;
+int minTurnSidewardThrustersPWM = 80;
 float last_pressure_sensor_value, pressure_sensor_value;
 std_msgs::Float64 voltage;
 
@@ -125,11 +125,12 @@ void thrusterNorthUp(int pwm, int isUpward)
 {
   pwm = abs(pwm);
   pwm = NormalizeUpwardPWM(pwm);
-  if (pwm > minUpwardPWM) {
+
+  if (pwm > minUpwardPWM)
     pwm = btd117(pwm);
-  } else {
+  else
     pwm = 0;
-  }
+
   analogWrite(pwmPinNorthUp, 255 - pwm);
   if (isUpward)
   {
@@ -147,11 +148,12 @@ void thrusterSouthUp(int pwm, int isUpward)
 {
   pwm = abs(pwm);
   pwm = NormalizeUpwardPWM(pwm);
-  if (pwm > minUpwardPWM) {
+
+  if (pwm > minUpwardPWM)
     pwm = btd093(pwm) + biasSouthUp;
-  } else {
+  else
     pwm = 0;
-  }
+
   analogWrite(pwmPinSouthUp, 255 - pwm);
   if (isUpward)
   {
@@ -168,20 +170,25 @@ void thrusterSouthUp(int pwm, int isUpward)
 void thrusterNorthSway(int pwm, int isRight, int isTurn)
 {
   pwm = abs(pwm);
-  if (isTurn) {
+  if (isTurn)
+  {
     pwm = NormalizeTurnSidewardThrustersPWM(pwm);
-    if (pwm > minTurnSidewardThrustersPWM) {
+    if (pwm > minTurnSidewardThrustersPWM)
       pwm = btd113(pwm);  // possible location for turn with sideward bias.
-    } else {
+    else
+      pwm = 0;
+  }
+  else
+  {
+    pwm = NormalizeSidewardPWM(pwm);
+    if (pwm > minSidewardPWM)
+    {
+      pwm = btd113(pwm);  // possible location for sideward bias.
+    }
+    else
+    {
       pwm = 0;
     }
-  } else {
-    pwm = NormalizeSidewardPWM(pwm);
-    if (pwm > minSidewardPWM) {
-      pwm = btd113(pwm);  // possible location for sideward bias.
-    } else {
-      pwm = 0;
-    }   
   }
   analogWrite(pwmPinNorthSway, 255 - pwm);
   if (isRight)
@@ -199,18 +206,27 @@ void thrusterNorthSway(int pwm, int isRight, int isTurn)
 void thrusterSouthSway(int pwm, int isRight, int isTurn)
 {
   pwm = abs(pwm);
-  if (isTurn) {
+  if (isTurn)
+  {
     pwm = NormalizeTurnSidewardThrustersPWM(pwm);
-    if (pwm > minTurnSidewardThrustersPWM) {
-      pwm = btd122(pwm); // possible location for turn with sideward bias.
-    } else {
+    if (pwm > minTurnSidewardThrustersPWM)
+    {
+      pwm = btd122(pwm);  // possible location for turn with sideward bias.
+    }
+    else
+    {
       pwm = 0;
     }
-  } else {
+  }
+  else
+  {
     pwm = NormalizeSidewardPWM(pwm);
-    if (pwm > minSidewardPWM) {
+    if (pwm > minSidewardPWM)
+    {
       pwm = btd122(pwm);  // possible location for sideward bias.
-    } else {
+    }
+    else
+    {
       pwm = 0;
     }
   }
@@ -230,18 +246,27 @@ void thrusterSouthSway(int pwm, int isRight, int isTurn)
 void thrusterEast(int pwm, int isForward, int isTurn)
 {
   pwm = abs(pwm);
-  if (isTurn) {
+  if (isTurn)
+  {
     pwm = NormalizeTurnForwardThrustersPWM(pwm);
-    if (pwm > minTurnForwardThrustersPWM) {
-      pwm = btd092(pwm); // possible location for turn with forward bias.
-    } else {
+    if (pwm > minTurnForwardThrustersPWM)
+    {
+      pwm = btd092(pwm);  // possible location for turn with forward bias.
+    }
+    else
+    {
       pwm = 0;
     }
-  } else {
+  }
+  else
+  {
     pwm = NormalizeForwardPWM(pwm);
-    if (pwm > minForwardPWM) {
+    if (pwm > minForwardPWM)
+    {
       pwm = btd092(pwm);  // possible location for forward bias.
-    } else {
+    }
+    else
+    {
       pwm = 0;
     }
   }
@@ -258,21 +283,30 @@ void thrusterEast(int pwm, int isForward, int isTurn)
   }
 }
 
-void thrusterWest(int pwm, int isForward)
+void thrusterWest(int pwm, int isForward, int isTurn)
 {
   pwm = abs(pwm);
-  if (isTurn) {
+  if (isTurn)
+  {
     pwm = NormalizeTurnForwardThrustersPWM(pwm);
-    if (pwm > minTurnForwardThrustersPWM) {
-      pwm = btd099(pwm); // possible location for turn with forward bias.
-    } else {
+    if (pwm > minTurnForwardThrustersPWM)
+    {
+      pwm = btd099(pwm);  // possible location for turn with forward bias.
+    }
+    else
+    {
       pwm = 0;
     }
-  } else {
+  }
+  else
+  {
     pwm = NormalizeForwardPWM(pwm);
-    if (pwm > minForwardPWM) {
+    if (pwm > minForwardPWM)
+    {
       pwm = btd099(pwm);  // possible location for forward bias.
-    } else {
+    }
+    else
+    {
       pwm = 0;
     }
   }
@@ -301,7 +335,8 @@ void PWMCbForward(const std_msgs::Int32& msg)
     thrusterEast(msg.data, false, false);
     thrusterWest(msg.data, false, false);
   }
-  isMovingForward = true;
+  if (msg.data != 0)
+    isMovingForward = true;
 }
 
 void PWMCbSideward(const std_msgs::Int32& msg)
@@ -316,7 +351,8 @@ void PWMCbSideward(const std_msgs::Int32& msg)
     thrusterNorthSway(msg.data, false, false);
     thrusterSouthSway(msg.data, false, false);
   }
-  isMovingForward = false;
+  if (msg.data != 0)
+    isMovingForward = false;
 }
 
 void PWMCbUpward(const std_msgs::Int32& msg)
@@ -365,6 +401,9 @@ void PWMCbTurn(const std_msgs::Int32& msg)
   }
 }
 
+// Delete me
+ros::Publisher echo_MinUpwardPWM("/pwm/echo/minupwardpwm", &echo);
+
 void setMinUpwardPWM(const std_msgs::Int32& msg)
 {
   minUpwardPWM = msg.data;
@@ -385,8 +424,6 @@ ros::Subscriber<std_msgs::Int32> subPwmTurn("/pwm/turn", &PWMCbTurn);
 ros::Publisher ps_voltage("/varun/sensors/pressure_sensor/depth", &voltage);
 ros::Subscriber<std_msgs::Int32> subMinUpwardPWM("/pwm/minupwardpwm", &setMinUpwardPWM);
 ros::Subscriber<std_msgs::Int32> subBiasSouthUp("/pwm/biassouthup", &setBiasSouthUp);
-// Delete me
-ros::Publisher echo_MinUpwardPWM("/pwm/echo/minupwardpwm", &echo);
 
 void setup()
 {
