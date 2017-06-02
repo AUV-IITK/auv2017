@@ -27,7 +27,7 @@ private:
   motion_commons::TurnFeedback feedback_;
   motion_commons::TurnResult result_;
   ros::Publisher PWM;
-  float p, i, d, band, p_stablize, i_stablize, d_stablize, p_turn, i_turn, d_turn, band_stablize, band_turn;
+  float p, i, d, band, p_stablize, i_stablize, d_stablize, p_turn, i_turn, d_turn, band_stablize, band_turn, maxPwm;
 
 public:
   // Constructor, called when new instance of class declared
@@ -109,6 +109,7 @@ public:
         band = band_turn;
       }
 
+      maxPwm = 10;
       error = finalAngularPosition - presentAngularPosition;
       if (error < 0)
         error_val = error + 360;
@@ -172,10 +173,10 @@ public:
       output = minOutput;
     float temp = output * scale;
     int output_pwm = static_cast<int>(temp);
-    if (output_pwm > 255)
-      output_pwm = 255;
-    if (output_pwm < -255)
-      output_pwm = -255;
+    if (output_pwm > maxPwm)
+      output_pwm = maxPwm;
+    if (output_pwm < -maxPwm)
+      output_pwm = -maxPwm;
     pwm.data = output_pwm;
   }
 

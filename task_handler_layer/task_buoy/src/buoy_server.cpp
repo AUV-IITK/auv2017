@@ -103,6 +103,9 @@ public:
   {
     data_X_.data = array.data[1];
     present_Y_coord = array.data[2];
+    std_msgs::Float64 ss;
+    ss.data = present_Y_coord;
+    present_Y_.publish(ss);
     data_distance_.data = array.data[3];
 
     if (data_distance_.data > 0)
@@ -150,7 +153,7 @@ public:
     successBuoy = true;
     IP_stopped = false;
     heightGoal = false;
-    min_pwm = 4;
+    min_pwm = 10;
     ros::Rate looprate(12);
     if (!buoy_server_.isActive())
       return;
@@ -169,13 +172,13 @@ public:
     turngoal.loop = 100000;
     TurnClient_.sendGoal(turngoal);
     sleep(1);
-    if (present_Y_coord < 5.0 && present_Y_coord > -5.0)
+    if (present_Y_coord < 105.0 && present_Y_coord > -105.0)
     {
       ROS_INFO("y coordinate withing ip error range");
       upwardgoal.Goal = present_depth;
     }
 
-    while (present_Y_coord > 5.0 || present_Y_coord < -5.0)
+    while (present_Y_coord > 1.0 || present_Y_coord < -1.0)
     {
       if (buoy_server_.isPreemptRequested() || !ros::ok())
       {
@@ -186,7 +189,7 @@ public:
         break;
       }
 
-      if (present_Y_coord < 5.0 && present_Y_coord > -5.0)
+      if (present_Y_coord < 105.0 && present_Y_coord > -105.0)
       {
         ROS_INFO("y coordinate withing ip error range");
         upwardgoal.Goal = present_depth;
@@ -210,7 +213,7 @@ public:
       ros::spinOnce();
     }
 
-    upwardgoal.loop = 100000;
+    upwardgoal.loop = 0;
     UpwardClient_.sendGoal(upwardgoal);
     ROS_INFO("%s: upward Stabilization is on", action_name_.c_str());
 

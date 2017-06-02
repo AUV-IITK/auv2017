@@ -47,12 +47,13 @@ const int neutral_buoyancy_offset = 0;
 MS5837 sensor;
 
 bool isMovingForward = true;
-int minUpwardPWM = 80;
-int biasSouthUp = -35;
+int minUpwardPWM = 65;
+int biasSouthUp = -10;
+int biasSouthSway = -5;
 int minSidewardPWM = 147;
 int minForwardPWM = 147;
 int minTurnForwardThrustersPWM = 60;
-int minTurnSidewardThrustersPWM = 80;
+int minTurnSidewardThrustersPWM = 120;
 float last_pressure_sensor_value, pressure_sensor_value;
 std_msgs::Float64 voltage;
 
@@ -291,7 +292,7 @@ void thrusterWest(int pwm, int isForward, int isTurn)
     pwm = NormalizeTurnForwardThrustersPWM(pwm);
     if (pwm > minTurnForwardThrustersPWM)
     {
-      pwm = btd099(pwm);  // possible location for turn with forward bias.
+      pwm = btd099(pwm) - biasSouthSway;  // possible location for turn with forward bias.
     }
     else
     {
@@ -417,13 +418,31 @@ void setBiasSouthUp(const std_msgs::Int32& msg)
   biasSouthUp = msg.data;
 }
 
+void setBiasSouthSway(const std_msgs::Int32& msg)
+{
+  biasSouthSway = msg.data;
+}
+
+void setMinTurnForwardPWM(const std_msgs::Int32& msg)
+{
+  minTurnForwardThrustersPWM = msg.data;
+}
+
+void setMinTurnSidewardPWM(const std_msgs::Int32& msg)
+{
+  minTurnSidewardThrustersPWM = msg.data;
+}
+
 ros::Subscriber<std_msgs::Int32> subPwmForward("/pwm/forward", &PWMCbForward);
 ros::Subscriber<std_msgs::Int32> subPwmSideward("/pwm/sideward", &PWMCbSideward);
 ros::Subscriber<std_msgs::Int32> subPwmUpward("/pwm/upward", &PWMCbUpward);
 ros::Subscriber<std_msgs::Int32> subPwmTurn("/pwm/turn", &PWMCbTurn);
 ros::Publisher ps_voltage("/varun/sensors/pressure_sensor/depth", &voltage);
 ros::Subscriber<std_msgs::Int32> subMinUpwardPWM("/pwm/minupwardpwm", &setMinUpwardPWM);
+ros::Subscriber<std_msgs::Int32> subMinTurnForwardPWM("/pwm/minturnforwardpwm", &setMinTurnForwardPWM);
+ros::Subscriber<std_msgs::Int32> subMinTurnSidewardPWM("/pwm/minturnsidewardpwm", &setMinTurnSidewardPWM);
 ros::Subscriber<std_msgs::Int32> subBiasSouthUp("/pwm/biassouthup", &setBiasSouthUp);
+ros::Subscriber<std_msgs::Int32> subBiasSouthSway("/pwm/biassouthsway", &setBiasSouthSway);
 
 void setup()
 {
@@ -459,7 +478,10 @@ void setup()
   nh.subscribe(subPwmUpward);
   nh.subscribe(subPwmTurn);
   nh.subscribe(subMinUpwardPWM);
+  nh.subscribe(subMinTurnForwardPWM);
+  nh.subscribe(subMinTurnSidewardPWM);
   nh.subscribe(subBiasSouthUp);
+  nh.subscribe(subBiasSouthSway);
   nh.advertise(ps_voltage);
   // Delete me
   nh.advertise(echo_MinUpwardPWM);

@@ -162,27 +162,27 @@ int main(int argc, char **argv)
 
   ClientBuoy &canBuoy = *ptrClientBuoy;
   // send goal
-  canBuoy.sendGoal(goalBuoy);
-  boost::thread spin_thread_buoy(&spinThreadBuoy);
+  // canBuoy.sendGoal(goalBuoy);
+  // boost::thread spin_thread_buoy(&spinThreadBuoy);
 
-  while (!successBuoy)
-  {
-    ros::spinOnce();
-  }
+  // while (!successBuoy)
+  // {
+  //   ros::spinOnce();
+  // }
 
   goalUpward.Goal = present_depth + 10;  // add param
-  goalUpward.loop = 10;
+  goalUpward.loop = 0;
   ROS_INFO("Action server started, sending goal to upward.");
 
-  ClientUpward &canUpward = *ptrClientUpward;
+  // ClientUpward &canUpward = *ptrClientUpward;
   // send goal
-  canUpward.sendGoal(goalUpward);
-  boost::thread spin_thread_upward(&spinThreadUpwardPressure);
+  // canUpward.sendGoal(goalUpward);
+  // boost::thread spin_thread_upward(&spinThreadUpwardPressure);
 
-  while (!successUpward)
-  {
-    ros::spinOnce();
-  }
+  // while (!successUpward)
+  // {
+  //   ros::spinOnce();
+  // }
 
   goalForward.Goal = 0;
   goalForward.loop = 10;
@@ -206,13 +206,13 @@ int main(int argc, char **argv)
 
   ClientUpward &canDownward = *ptrClientUpward;
   // send goal
-  canDownward.sendGoal(goalUpward);
-  boost::thread spin_thread_downward(&spinThreadDownwardPressure);
+  // canDownward.sendGoal(goalUpward);
+  // boost::thread spin_thread_downward(&spinThreadDownwardPressure);
 
-  while (!successDownward)
-  {
-    ros::spinOnce();
-  }
+  // while (!successDownward)
+  // {
+  //   ros::spinOnce();
+  // }
 
   successLine = false;
   goalLine.order = true;
@@ -226,6 +226,80 @@ int main(int argc, char **argv)
   {
     ros::spinOnce();
   }
+
+  goalForward.Goal = 0;
+  goalForward.loop = 10;
+  ROS_INFO("Action server started, sending goal to forward.");
+
+  // ClientForward &canForward = *ptrClientForward;
+  // send goal
+  canForward.sendGoal(goalForward);
+
+  // std_msgs::Float64 mock_forward;
+  mock_forward.data = 250;
+  pub_forward.publish(mock_forward);
+
+  sleep(2);  // add param
+
+  canForward.cancelGoal();
+
+  successLine = false;
+  goalLine.order = true;
+  ROS_INFO("Sending goal to line.");
+
+  // send goal
+  canLine.sendGoal(goalLine);
+  boost::thread spin_thread_line3(&spinThreadLine);
+
+  while (!successLine)
+  {
+    ros::spinOnce();
+  }
+
+  goalForward.Goal = 0;
+  goalForward.loop = 10;
+  ROS_INFO("Action server started, sending goal to forward.");
+
+  // ClientForward &canForward = *ptrClientForward;
+  // send goal
+  canForward.sendGoal(goalForward);
+
+  // std_msgs::Float64 mock_forward;
+  mock_forward.data = 250;
+  pub_forward.publish(mock_forward);
+
+  sleep(2);  // add param
+
+  canForward.cancelGoal();
+
+  successLine = false;
+  goalLine.order = true;
+  ROS_INFO("Sending goal to line.");
+
+  // send goal
+  canLine.sendGoal(goalLine);
+  boost::thread spin_thread_line4(&spinThreadLine);
+
+  while (!successLine)
+  {
+    ros::spinOnce();
+  }
+
+  goalForward.Goal = 0;
+  goalForward.loop = 10;
+  ROS_INFO("Action server started, sending goal to forward.");
+
+  // ClientForward &canForward = *ptrClientForward;
+  // send goal
+  canForward.sendGoal(goalForward);
+
+  // std_msgs::Float64 mock_forward;
+  mock_forward.data = 250;
+  pub_forward.publish(mock_forward);
+
+  sleep(5);  // add param
+
+  canForward.cancelGoal();
   ros::spin();
   return 0;
 }
