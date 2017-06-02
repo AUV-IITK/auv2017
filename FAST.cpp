@@ -34,7 +34,7 @@ int main(int argc,char **argv)
 
     	Mat des1, des2;
 
-	FastFeatureDetector detector(500);            //get the keypoints
+	FastFeatureDetector detector(130;            //get the keypoints
 	detector.detect(image1,kp1);
 	detector.detect(image2,kp2);
 
