@@ -34,9 +34,9 @@ int main(int argc,char **argv)
 
     	Mat des1, des2;
 
-	SurfFeatureDetector surf(500);            //get the keypoints
-	surf.detect(image1,kp1);
-	surf.detect(image2,kp2);
+	SurfFeatureDetector detector(500);            //get the keypoints
+	detector.detect(image1,kp1);
+	detector.detect(image2,kp2);
 
 	SurfDescriptorExtractor extractor;       //get the descriptors
 
