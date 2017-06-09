@@ -107,6 +107,9 @@ int main(int argc,char **argv){
             }
         }
     }
+    cv::Mat grey_image,dst;
+    cv::cvtColor(frame,grey_image,CV_BGR2GRAY);
+    cv::inpaint(frame,grey_image,dst,10,INPAINT_NS);
     //cout << "*"<< endl;
     cvNamedWindow("new_image",CV_WINDOW_AUTOSIZE);
  	cv::imshow("new_image",new_image);
