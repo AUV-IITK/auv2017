@@ -1,3 +1,4 @@
+// Copyright 2016 AUV-IITK
 #include <cv.h>
 #include <highgui.h>
 #include <ros/ros.h>
@@ -18,24 +19,16 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sstream>
 #include <string>
-
-using namespace std;
-using namespace cv;
-using namespace ros;
-
-cv::Mat dst_array,frame;
+#include <algorithm>
 
 bool IP = true;
 bool flag = false;
 bool video = false;
 int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
 
-cv::Mat src;
+cv::Mat dst_array, frame, src;
 int count = 0, count_avg = 0, x = -1;
-
-
-///////////////////////// dynamic reconfigure //////////////////////////////////////////////
-
+///////////////////////// dynamic-reconfigure//////////////////////////////////////////////
 void callback(task_buoy::buoyConfig &config, uint32_t level)
 {
   t1min = config.t1min_param;
@@ -46,210 +39,196 @@ void callback(task_buoy::buoyConfig &config, uint32_t level)
   t3max = config.t3max_param;
   ROS_INFO("Buoy_Reconfigure Request:New params : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
 }
-
-/////////////////////////////// lineDetected listeners ////////////////////////////////////////////////////
-
+/////////////////////////////// lineDetected-listeners///////////////////////////////////////
 void lineDetectedListener(std_msgs::Bool msg)
 {
   IP = msg.data;
 }
-
-
-//////////////////////////////      clor balance   ///////////////////////////////////////////////////////
-
-void SimplestCB(Mat& in, Mat& out, float percent) {
+////////////////////////////// clor-balance//////////////////////////////////////////////////
+void SimplestCB(cv::Mat& in, cv::Mat& out, float percent)
+{
     assert(in.channels() == 3);
     assert(percent > 0 && percent < 100);
-
     float half_percent = percent / 200.0f;
-
-    vector<Mat> tmpsplit; split(in,tmpsplit);
-    for(int i=0;i<3;i++) {
-        //find the low and high precentile values (based on the input percentile)
-        Mat flat; tmpsplit[i].reshape(1,1).copyTo(flat);
-        cv::sort(flat,flat,CV_SORT_EVERY_ROW + CV_SORT_ASCENDING);
-        int lowval = flat.at<uchar>(cvFloor(((float)flat.cols) * half_percent));
-        int highval = flat.at<uchar>(cvCeil(((float)flat.cols) * (1.0 - half_percent)));
-        cout << lowval << " " << highval << endl;
-        
-        //saturate below the low percentile and above the high percentile
-        tmpsplit[i].setTo(lowval,tmpsplit[i] < lowval);
-        tmpsplit[i].setTo(highval,tmpsplit[i] > highval);
-        
-        //scale the channel
-        normalize(tmpsplit[i],tmpsplit[i],0,255,NORM_MINMAX);
+    std::vector<cv::Mat> tmpsplit; split(in, tmpsplit);
+    for ( int i = 0; i < 3; i++ )
+    {
+        // find the low and high precentile values (based on the input percentile)
+        cv::Mat flat;
+        tmpsplit[i].reshape(1, 1).copyTo(flat);
+        cv::sort(flat, flat, CV_SORT_EVERY_ROW + CV_SORT_ASCENDING);
+        int lowval = flat.at<uchar>(cvFloor((static_cast<float>(flat.cols)) * half_percent));
+        int highval = flat.at<uchar>(cvCeil((static_cast<float>(flat.cols)) * (1.0 - half_percent)));
+        // saturate below the low percentile and above the high percentile
+        tmpsplit[i].setTo(lowval, tmpsplit[i] < lowval);
+        tmpsplit[i].setTo(highval, tmpsplit[i] > highval);
+        // scale the channel
+        cv::normalize(tmpsplit[i], tmpsplit[i], 0, 255, cv::NORM_MINMAX);
     }
-    merge(tmpsplit,out);
+    cv::merge(tmpsplit, out);
 }
-
-/////////////////////////////////// contrast streching /////////////////////////////////////
-
+/////////////////////////////////// contrast-streching ///////////////////////////////////////
 int computeOutput(int x, int r1, int s1, int r2, int s2)
 {
     float result;
-    if(0 <= x && x <= r1){
+    if ( 0 <= x && x <= r1 ) {
         result = s1/r1 * x;
-    }else if(r1 < x && x <= r2){
+    }
+    else if (r1 < x && x <= r2) {
         result = ((s2 - s1)/(r2 - r1)) * (x - r1) + s1;
-    }else if(r2 < x && x <= 255){
+    }
+    else if ( r2 < x && x <= 255 ) {
         result = ((255 - s2)/(255 - r2)) * (x - r2) + s2;
     }
-    return (int)result;
+    return static_cast<int>(result);
 }
-
-////////////////////////////////////  imageCallback  //////////////////////////////////////////
-
-void imageCallback(const sensor_msgs::ImageConstPtr &msg){
-
-	if (x == 32)
+//////////////////////////////////// imageCallback ///////////////////////////////////////////
+void imageCallback(const sensor_msgs::ImageConstPtr &msg)
+{
+  if (x == 32)
     return;
-  
-	try{
 
-		frame=cv_bridge::toCvShare(msg,"bgr8")->image;
-		newframe.copyTo(src);
-	}
-	catch(cv_bridge::Exception &e){
-
-		ROS_ERROR("%s:couldn't convert from '%s' to 'bgr8' .",node::this_node::getName().c_str(),msg->encoding.c_str());
-
-	}
-
+  try
+  {
+    frame = cv_bridge::toCvShare(msg, "bgr8")->image;
+    frame.copyTo(src);
+  }
+  catch(cv_bridge::Exception &e)
+  {
+    ROS_ERROR("%s:couldn't convert from '%s' to 'bgr8' .", ros::this_node::getName().c_str(), msg->encoding.c_str());
+  }
 }
+///////////////////////////////////// histogram-equalizatiion //////////////////////////////////////////////
+void equalizeHistogram(cv::Mat &src, cv::Mat &dst)
+{
+  cv::Mat frame1, frame2, frame3, frame4;
+  frame1 = src;
+  cv::imshow("frame1", frame1);
 
-/////////////////////////////////////  histogram equalizatiion //////////////////////////////////////////////
+  cv::cvtColor(frame1, frame1, CV_BGR2HSV);
 
-void equalizeHistogram(cv::Mat &src,cv::Mat &dst){
+  cv::Mat frame_array[3];
+  cv::Mat dst_array;
+  cv::split(frame1, frame_array);
 
-	Mat frame1,frame2,frame3,frame4;
+  equalizeHist(frame_array[0], frame_array[0]);
+  equalizeHist(frame_array[1], frame_array[1]);
+  equalizeHist(frame_array[2], frame_array[2]);
 
-	frame1=src;
-	cv::imshow("frame1",frame1);
-
-	cv::cvtColor(frame1,frame1,CV_BGR2HSV);
-
-	cv::Mat frame_array[3];
-	cv::Mat dst_array;
-	cv::split(frame1,frame_array);
-
-	equalizeHist( frame_array[0], frame_array[0] );
-	equalizeHist( frame_array[1], frame_array[1] );
-	equalizeHist( frame_array[2], frame_array[2] );
-
-	cv::merge(frame_array,3,dst_array);
-	dst=dst_array;
-	cv::imshow("dst_array",dst_array);
-	cv::imshow("final_image",dst_array);
-	cv::waitKey(0);
-	return ;
-
+  cv::merge(frame_array, 3, dst_array);
+  dst = dst_array;
+  cv::imshow("dst_array", dst_array);
+  cv::imshow("final_image", dst_array);
+  cv::waitKey(0);
+  return;
 }
-///////////////////////////////////////////   Erosion  //////////////////////////////////////////
-
+/////////////////////////////////////////// Erosion /////////////////////////////////////////////////////////////
 int erosion_elem = 0;
 int erosion_size = 0;
-int const max_elem=2;
-int const max_kernel_size=21;
+int const max_elem = 2;
+int const max_kernel_size = 21;
 
-
-void Erosion( int, void* )
+void Erosion(int, void*)
 {
-  
   int erosion_type;
-  if( erosion_elem == 0 ){ erosion_type = MORPH_RECT; }
-  else if( erosion_elem == 1 ){ erosion_type = MORPH_CROSS; }
-  else if( erosion_elem == 2) { erosion_type = MORPH_ELLIPSE; }
+  if (erosion_elem == 0) { erosion_type = cv::MORPH_RECT; }
+  else if (erosion_elem == 1) { erosion_type = cv::MORPH_CROSS; }
+  else if (erosion_elem == 2) { erosion_type = cv::MORPH_ELLIPSE; }
 
-  Mat element = getStructuringElement( erosion_type,
-                                       Size( 2*erosion_size + 1, 2*erosion_size+1 ),
-                                       Point( erosion_size, erosion_size ) );
-
+  cv::Mat element = getStructuringElement(erosion_type, cv::Size(2*erosion_size + 1, 2*erosion_size+1),
+    cv::Point(erosion_size, erosion_size));
   /// Apply the erosion operation
-  erode( dst_array, dst_array, element );
-  imshow( "Erosion Demo", dst_array );
 
+  erode(dst_array, dst_array, element);
+  imshow("Erosion Demo", dst_array);
+}
+/////////// apply-eroion //////////////////////////////////////////////////////////////////////////////
+void apply_erosion(cv::Mat &src)
+{
+  cv::namedWindow("Erosion Demo", CV_WINDOW_AUTOSIZE);
+  cv::createTrackbar("Element:\n 0: Rect \n 1: Cross \n 2: Ellipse", "Erosion Demo", &erosion_elem, max_elem, Erosion);
+  cv::createTrackbar("Kernel size:\n 2n +1", "Erosion Demo", &erosion_size, max_kernel_size, Erosion);
+  Erosion(0, 0);
 }
 
-////////////	apply eroion    //////////////////////////////////////////////////////////////////////////////
+int main(int argc, char **argv)
+{
+  int height, width, step, channels;  // parameters of the image we are working on
+  std::string Video_Name = "Random_Video";
+  if (argc >= 2)
+    flag = true;
+  if (argc == 3)
+  {
+    video = true;
+    std::string avi = ".avi";
+    Video_Name = (argv[2]) + avi;
+  }
+  //////////// subscribing to the image published by the image publisher /////////////////////////////
+  ros::init(argc, argv, "task_buoy");
+  ros::NodeHandle n;
+  ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000);
+  ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
+  ros::Rate loop_rate(10);
+  
+  image_transport::ImageTransport it(n);
+  image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
+  ////////////////////// dynamic reconfigure ////////////////////////////////////////////////////////
+  dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
+  dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
+  f = boost::bind(&callback, _1, _2);
+  server.setCallback(f);
 
-void apply_erosion(cv::Mat &src){
+  cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
+  cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
 
-	cv::namedWindow("Erosion Demo",CV_WINDOW_AUTOSIZE);
-	createTrackbar( "Element:\n 0: Rect \n 1: Cross \n 2: Ellipse", "Erosion Demo",&erosion_elem, max_elem,Erosion );
-	createTrackbar( "Kernel size:\n 2n +1", "Erosion Demo",&erosion_size, max_kernel_size,Erosion);
-	Erosion(0,0);
-}
+  /*n.getParam("buoy_detection/t1max", t1max);
+  n.getParam("buoy_detection/t1min", t1min);
+  n.getParam("buoy_detection/t2max", t2max);
+  n.getParam("buoy_detection/t2min", t2min);
+  n.getParam("buoy_detection/t3max", t3max);
+  n.getParam("buoy_detection/t3min", t3min);
 
-int main(int argc, char **argv){
+  task_buoy::buoyConfig config;
+  config.t1min_param = t1min;
+  config.t1max_param = t1max;
+  config.t2min_param = t2min;
+  config.t2max_param = t2max;
+  config.t3min_param = t3min;
+  config.t3max_param = t3max;
+  callback(config, 0);*/
 
-	int height, width, step, channels;  // parameters of the image we are working on
-  	std::string Video_Name = "Random_Video";
-  	if (argc >= 2)
-    	flag = true;
-  	if (argc == 3)
-  	{
-    	video = true;
-    	std::string avi = ".avi";
-    	Video_Name = (argv[2]) + avi;
-  	}
+  CvSize size = cvSize(width, height);
+  std::vector<cv::Point2f> center_ideal(5);
 
-	////////////subscribing to the image published by the image publisher/////////////////////////////
+  cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;
+  float r[5];
 
-	ros::init(argc,argv,"task_buoy");
-	ros::NodeHandle nh;
-	ros::Publisher pub =n.advertise<std_msgs::Float64MultiArray>("/varun/ip/buoy",1000);
-
-	ros::Subscriber sub=n.advertise<std_msgs::Bool>("buoy_detection_switch",1000,&lineDetectedListener);
-	image_transport::ImageTransport it(nh);
-	image_transport::Subscriber sub1=it.subscribe("/varun/sensors/front_camera/image_raw",1,imageCallback);
-
-	////////////////////// dynamic reconfigure ////////////////////////////////////////////////////////
-
-  	dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
-  	dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
-  	f = boost::bind(&callback, _1, _2);
-  	server.setCallback(f);
-
-  	n.getParam("buoy_detection/t1max", t1max);
-  	n.getParam("buoy_detection/t1min", t1min);
-  	n.getParam("buoy_detection/t2max", t2max);
-  	n.getParam("buoy_detection/t2min", t2min);
-  	n.getParam("buoy_detection/t3max", t3max);
-  	n.getParam("buoy_detection/t3min", t3min);
-
-  	task_buoy::buoyConfig config;
-  	config.t1min_param = t1min;
-  	config.t1max_param = t1max;
-  	config.t2min_param = t2min;
-  	config.t2max_param = t2max;
- 	config.t3min_param = t3min;
-  	config.t3max_param = t3max;
-  	callback(config, 0);
-
-  	CvSize size = cvSize(width, height);
-  	std::vector<cv::Point2f> center_ideal(5);  
-
-  	cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;
-  	float r[5];  
-
-  	for (int m = 0; m++; m < 5)
-    	r[m] = 0;
-    while(ros::ok()){
+  for (int m = 0; m++; m < 5)
+    r[m] = 0;
+  while (ros::ok())
+  {
+    std_msgs::Float64MultiArray array;
+    loop_rate.sleep();
+    if(src.empty())
+    {
+        ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
+        ros::spinOnce();
+        continue;
+    }
+    height=src.rows;
+    width=src.cols;
+    step=src.step;    
 
     if (!IP)
     {
-  	///////////////////////////// color balance, histogram equalization, erosion ////////////////////////////
-
-		SimplestCB(frame,dst_array);
-		equalizeHistogram(dst_array,dst_array);
-		apply_erosion(dst_array);
-	
-	///////////////applying thresholding,reducing the noise,filters ,contour_detectors///////////////////
-	
-		cv::inRange(dst_array,hsv_min,hsv_max,thresholded);
-		cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
-    	cv::imshow("BuoyDetection:AfterColorFiltering", thresholded);  // The stream after color filtering
-
+    ///////////////////////////// color balance, histogram equalization, erosion ////////////////////////////
+      SimplestCB(frame, dst_array, 1);
+      equalizeHistogram(dst_array, dst_array);
+      apply_erosion(dst_array);
+      /////////////// applying thresholding,reducing the noise,filters ,contour_detectors///////////////////
+      cv::inRange(dst_array, hsv_min, hsv_max, thresholded);
+      cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
+      cv::imshow("BuoyDetection:AfterColorFiltering", thresholded);  // The stream after color filtering
       // find contours
       std::vector<std::vector<cv::Point> > contours;
       cv::Mat thresholded_Mat = thresholded;
@@ -416,10 +395,10 @@ int main(int argc, char **argv){
       // remove higher bits using AND operator
       if ((cvWaitKey(10) & 255) == 27)
         break;
-
-  }
-  else{
-  	if ((cvWaitKey(10) & 255) == 32)
+    }
+    else
+    {
+      if ((cvWaitKey(10) & 255) == 32)
       {
         if (x == 32)
           x = -1;
@@ -429,8 +408,7 @@ int main(int argc, char **argv){
       if (x == 32)
         ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
+    }
   }
-}
-	return 0;
-
+  return 0;
 }
