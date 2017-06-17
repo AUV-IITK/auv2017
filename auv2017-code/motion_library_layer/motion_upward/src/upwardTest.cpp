@@ -105,9 +105,9 @@ int main(int argc, char **argv)
   dynamic_reconfigure::Server<motion_upward::upwardConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
-  motion_upward::upwardConfig config;
+  /*motion_upward::upwardConfig config;
   config.bool_param = false;
-  callback(config, 0);
+    callback(config, 0);*/
 
   // waiting for goal
   ros::spin();
