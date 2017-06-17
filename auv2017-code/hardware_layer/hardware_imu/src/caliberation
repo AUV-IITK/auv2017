@@ -1,0 +1,74 @@
+#include "navstik"
+using namespace std;
+
+NavStik nav;
+
+//bias and linear constant for the caliberation of Accelerometer
+#define BiasA_x /*0.511558*/                       1.049103
+#define BiasA_y /*/-0.230395*/                      -0.218415
+#define BiasA_z /*/-1.758256/*/                      0.070886
+
+#define Alpha_A  /*/1.031150/*/                      1.153687
+#define Beta_A   /*/0.956985/*/                      0.988549
+#define Gamma_A  /*/0.831406/*/                      0.961142
+
+//bias and linear conastant for the caliberation of Magnetoometer
+#define BiasH_x  0.042499
+#define BiasH_y  0.122872
+#define BiasH_z  0.001617
+
+#define Alpha_H  0.845243
+#define Beta_H   0.853257
+#define Gamma_H   0.932019
+
+float BiasG_x= -0.056503;
+float BiasG_y = 0.023454;
+float BiasG_z  =0.019339;
+
+//these values will contain the final values of gyrosocpe, accelerometer, and magnnetometer
+
+float gyro[3];
+float magnetom[3];
+float accel[3];
+
+void removegyrooff(){
+  float gyrooff[3]={0,0,0},n=50;
+  for(int i=0;i<n;i++){
+    gyrooff[0]+=nav.gyrox();
+    gyrooff[1]+=nav.gyroy();
+    gyrooff[2]+=nav.gyroz();
+    printf("removing gyro offset %d\n",i);
+  }
+  BiasG_x=gyrooff[0]/n;
+  BiasG_y=gyrooff[1]/n;
+  BiasG_z=gyrooff[2]/n;
+}
+
+// Codelets to read values of various sensors using functions from NavStik.
+
+void Read_Accel()
+  {
+   accel[0] = ( nav.accelx() - BiasA_x )*Alpha_A;
+   accel[1] = ( nav.accely() - BiasA_y )*Beta_A;
+   accel[2] = ( nav.accelz() - BiasA_z )*Gamma_A;
+   // printf("%f\t",nav.accelx());
+   // printf("%f\t",nav.accely());
+   // printf("%f\n",nav.accelz());
+  }
+
+void Read_Gyro()
+  {
+   gyro[0] = nav.gyrox() - BiasG_x ;
+   gyro[1] = nav.gyrox() - BiasG_y ;
+   gyro[2] = nav.gyroz() - BiasG_z ;
+  }
+
+void Read_Magn()
+  {
+   magnetom[0] = ( nav.magx() - BiasH_x )*Alpha_H;
+   magnetom[1] = ( nav.magy() - BiasH_y )*Beta_H;
+   magnetom[2] = ( nav.magz() - BiasH_z )*Gamma_H;
+  /* printf("%f \t",nav.magx());
+   printf("%f \t",nav.magy());
+   printf("%f \n",nav.magz());*/
+  }

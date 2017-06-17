@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+  <model name="octagon">
+    <pose>0 0 0 0 0 0</pose>
+    <link name="octagon">
+      <gravity>0</gravity>
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>10</mass>
+        <inertia>
+          <ixx>1</ixx>
+          <ixy>1</ixy>
+          <ixz>1</ixz>
+          <iyy>1</iyy>
+          <iyz>1</iyz>
+          <izz>1</izz>
+        </inertia>
+      </inertial>
+      <visual name="octagon_visual">
+        <geometry>
+          <mesh>
+            <uri>model://octagon/meshes/octagon.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="octagon_collision">
+        <geometry>
+          <mesh>
+            <uri>model://octagon/meshes/octagon.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

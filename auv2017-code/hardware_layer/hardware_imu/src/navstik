@@ -1,0 +1,265 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <pthread.h>
+
+using namespace std;
+
+class NavStik
+{
+  public:
+	enum Status { fine, path_not_defined, not_connected, not_initialised };
+
+  private:
+	Status stat;
+	ifstream navstik;
+	string Path;
+	void getPath();	
+
+  public:
+	static const float error = 5.0;
+	
+	string path()
+	{
+		return Path;
+	}
+
+	Status status()
+	{
+		return stat;
+	}
+	
+	NavStik();
+	float accelx();
+	float accely();
+	float accelz();
+	float gyrox();
+	float gyroy();
+	float gyroz();
+	float magx();
+	float magy();
+	float magz();
+
+	~NavStik()
+	{
+		navstik.close();
+	}
+};
+
+NavStik::NavStik()
+{
+	string val;
+	bool init = false;
+	stat = fine;
+
+	getPath();
+	if(stat != fine)
+		return;	
+
+	std::system("echo 'usb' > /dev/navstik");
+	std::system("echo 'usb' > /dev/navstik");
+	navstik.open(Path.c_str());
+
+	if(!navstik)
+	{
+		cout<<"NavStik not connected!"<<endl<<"wait for 30 seconds...."<<endl;
+		for (int i = 1; i <= 30; ++i)
+		{
+			cout<<i<<'\n';
+			sleep(1);
+		}
+		
+		while (!navstik)
+		{
+			cout<<"Connecting..."<<endl;
+			std::system("echo 'usb' > /dev/navstik");
+			std::system("echo 'usb' > /dev/navstik");
+			navstik.open(Path.c_str());
+		}
+
+		cout<<"NavStik connected"<<endl;
+	}
+	for(int i=1; i<10; i++)
+	{	
+		getline(navstik, val);		
+		if(val.find("NAVSTIK") != string::npos)
+		{
+			init = true;
+			break;
+		}
+	}
+
+	if(!init)
+	{
+		cout<<"NavStik not initialised!"<<endl;
+		stat = not_initialised;
+	}
+}
+
+float NavStik::accelx()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK1")) != string::npos)
+		{
+			val = val.substr(pos+10, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::accely()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK1")) != string::npos)
+		{
+			val = val.substr(pos+19, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::accelz()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK1")) != string::npos)
+		{
+			val = val.substr(pos+28, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::gyrox()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK1")) != string::npos)
+		{
+			val = val.substr(pos+37, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::gyroy()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK1")) != string::npos)
+		{
+			val = val.substr(pos+46, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::gyroz()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK1")) != string::npos)
+		{
+			val = val.substr(pos+55, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::magx()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK1")) != string::npos)
+		{
+			val = val.substr(pos+64, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::magy()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK1")) != string::npos)
+		{
+			val = val.substr(pos+73, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+float NavStik::magz()
+{
+	string val;
+	long int pos;
+	
+	while(!navstik.eof())
+	{	
+		getline(navstik, val);		
+		if((pos = val.find("NAVSTIK1")) != string::npos)
+		{
+			val = val.substr(pos+82, 7);
+			return atof(val.c_str());
+		}
+	}
+	
+	return error;
+}
+
+void NavStik::getPath()
+{
+	Path = "/dev/navstik";
+}

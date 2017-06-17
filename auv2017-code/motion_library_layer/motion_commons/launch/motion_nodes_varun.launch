@@ -1,0 +1,35 @@
+<launch>
+  <node name="forward" pkg="motion_forward" type="forward" respawn="true"  output="screen">
+    <param name="p_param" type="double" value="1.0" />
+    <param name="i_param" type="double" value="0.0" />
+    <param name="d_param" type="double" value="0.0" />
+    <param name="band_param" type="double" value="15.0" />
+  </node>
+  <node name="sideward" pkg="motion_sideward" type="sideward" respawn="true"  output="screen">
+    <param name="p_param" type="double" value="1.0" />
+    <param name="i_param" type="double" value="0.0" />
+    <param name="d_param" type="double" value="0.0" />
+    <param name="band_param" type="double" value="15.0" />
+  </node>
+  <node name="turningXY" pkg="motion_turn" type="turningXY" respawn="true"  output="screen">
+    <param name="p_stablize" type="double" value="1.5" />
+    <param name="i_stablize" type="double" value="0.0" />
+    <param name="d_stablize" type="double" value="0.0" />
+    <param name="band_stablize" type="double" value="0.0" />
+    <param name="p_turn" type="double" value="2.0" />
+    <param name="i_turn" type="double" value="0.0" />
+    <param name="d_turn" type="double" value="0.0" />
+    <param name="band_turn" type="double" value="5.0" />
+  </node>
+  <node name="upward" pkg="motion_upward" type="upward" respawn="true"  output="screen">
+    <param name="maxPwm" type="double" value="255.0" />
+    <param name="p_stablize" type="double" value="4.0" />
+    <param name="i_stablize" type="double" value="0.0" />
+    <param name="d_stablize" type="double" value="0.0" />
+    <param name="band_stablize" type="double" value="0.0" />
+    <param name="p_upward" type="double" value="4.0" />
+    <param name="i_upward" type="double" value="0.0" />
+    <param name="d_upward" type="double" value="0.0" />
+    <param name="band_upward" type="double" value="15.0" />
+  </node>
+</launch>
