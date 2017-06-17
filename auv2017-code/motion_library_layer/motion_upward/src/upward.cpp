@@ -16,6 +16,7 @@ float previousDepth = 0;
 float finalDepth, error, output;
 bool initData = false;
 std_msgs::Int32 pwm;  // pwm to be send to arduino
+double p_stablize, p_upward, i_stablize, i_upward, d_stablize, d_upward, band_stablize, band_upward,maxPwm;
 
 // new inner class, to encapsulate the interaction with actionclient
 class innerActionClass
@@ -185,6 +186,16 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_upward::pidConfig &config, double level)
 {
+    maxPwm=config.maxPwm;
+    p_stabilize=config.p_stabilize;
+    i_stabilize=config.i_stabilize;
+    d_stabilize=config.d_stabilize;
+    p_upward=config.p_upward;
+    i_upward=config.i_upward;
+    d_upward=config.d_upward;
+    band_stabilize=config.band_stablize;
+    band_upward=config.band_upward;
+    
   ROS_INFO("%s: UpwardServer: Reconfigure Request: maxPwm=%f p_stablize=%f p_upward=%f "
            "i_stablize=%f i_upward=%f d_stablize=%f d_upward=%f error band_upward=%f",
            ros::this_node::getName().c_str(), config.maxPwm, config.p_stablize, config.p_upward, config.i_stablize,
@@ -213,9 +224,8 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "upward");
   ros::NodeHandle n;
-  double p_stablize, p_upward, i_stablize, i_upward, d_stablize, d_upward, band_stablize, band_upward;
-  double maxPwm;
-  n.getParam("upward/maxPwm", maxPwm);
+  
+  /*n.getParam("upward/maxPwm", maxPwm);
   n.getParam("upward/p_stablize", p_stablize);
   n.getParam("upward/p_upward", p_upward);
   n.getParam("upward/i_stablize", i_stablize);
@@ -223,7 +233,7 @@ int main(int argc, char **argv)
   n.getParam("upward/d_stablize", d_stablize);
   n.getParam("upward/d_upward", d_upward);
   n.getParam("upward/band_stablize", band_stablize);
-  n.getParam("upward/band_upward", band_upward);
+  n.getParam("upward/band_upward", band_upward);*/
 
   ros::Subscriber zDistance = n.subscribe<std_msgs::Float64>("/varun/motion/z_distance", 1000, &distanceCb);
 
@@ -236,7 +246,7 @@ int main(int argc, char **argv)
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
   // set launch file pid
-  motion_upward::pidConfig config;
+  /*motion_upward::pidConfig config;
   config.maxPwm = maxPwm;
   config.p_stablize = p_stablize;
   config.p_upward = p_upward;
@@ -246,7 +256,7 @@ int main(int argc, char **argv)
   config.d_upward = d_upward;
   config.band_stablize = band_stablize;
   config.band_upward = band_upward;
-  callback(config, 0);
+  callback(config, 0);*/
 
   ros::spin();
   return 0;
