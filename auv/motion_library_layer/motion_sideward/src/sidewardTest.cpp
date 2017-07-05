@@ -118,9 +118,9 @@ int main(int argc, char **argv)
   dynamic_reconfigure::Server<motion_sideward::sidewardConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
-  motion_sideward::sidewardConfig config;
+ /* motion_sideward::sidewardConfig config;
   config.bool_param = false;
-  callback(config, 0);
+  callback(config, 0);*/
 
   // waiting for goal
   ros::spin();
