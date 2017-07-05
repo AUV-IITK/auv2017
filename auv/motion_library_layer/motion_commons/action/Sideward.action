@@ -1,0 +1,9 @@
+#goal definition
+float32 Goal
+int32 loop
+---
+#result definition
+bool Result
+---
+#feedback
+float32 DistanceRemaining

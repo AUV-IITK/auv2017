@@ -1,0 +1,44 @@
+# Lines that start with '#' are comments.
+# ignore objects and libraries
+*.o
+*.a
+*.d
+*.so
+*.lo
+*.la
+# ignore python compiled files:
+*.pyc
+# ignore gcov files
+*.gcda
+*.gcno
+*.gcov
+# ignore tag files
+tags
+# we don't care about vi swp files
+*.swp
+# we also don't care about emacs swap files
+*~
+.backup-*
+# nothing in the root directory should be checked in.
+root
+# setup.bash is a generated file.
+setup.bash
+config.mk
+# gcov files
+*.gcno
+*.gcov
+# Testing output files
+*.out
+.build-version
+.rospack_cache
+*.tar.gz
+# ignore videos and ros bag files to keep repo small
+*.avi
+*.mp4
+*.bag
+# ignore backup files from astyle
+*.orig
+# ignore generated docs. Travis will generate and host at gh-pages for online use
+html/*
+# ignore doxygen bkp file
+*.bak

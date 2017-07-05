@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find varun_gazebo)/launch/varun_world.launch" />
+  <node name="mock_pressure_sensor" pkg="varun_gazebo" type="mock_pressure_sensor.py" respawn="true" />
+  <node name="mock_imu_eular" pkg="varun_gazebo" type="mock_imu_eular.py" respawn="true" />
+</launch>

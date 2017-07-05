@@ -1,0 +1,21 @@
+<robot name="marker_target_x">
+  <link name="marker_target_x">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.31 0.46 0"/>
+      <mass value="10"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://varun_gazebo/models/marker_target_x/meshes/marker_target_x.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://varun_gazebo/models/marker_target_x/meshes/marker_target_x.dae"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>
