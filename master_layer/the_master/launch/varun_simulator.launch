@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find the_master)/launch/master_nodes.launch" />
+  <include file="$(find task_commons)/launch/task_nodes_gazebo.launch" />
+  <include file="$(find motion_commons)/launch/motion_nodes_gazebo.launch" />
+  <include file="$(find varun_gazebo)/launch/debug_nodes.launch" />
+</launch>

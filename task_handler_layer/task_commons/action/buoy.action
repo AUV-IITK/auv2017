@@ -1,0 +1,10 @@
+#goal definition
+bool order
+---
+#result definition
+bool MotionCompleted
+---
+#feedback
+float64 x_coord
+float64 y_coord
+float64 distance
