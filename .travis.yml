@@ -36,8 +36,8 @@
 
 ################################################################################
 
-# Use ubuntu trusty (14.04) with sudo privileges.
-dist: trusty
+# Use ubuntu xenial (16.04) with sudo privileges.
+dist: xenial
 sudo: required
 language:
   - generic
@@ -88,16 +88,16 @@ install:
 # wstool looks for a ROSINSTALL_FILE defined in the environment variables.
 before_script:
   # source dependencies: install using wstool.
- - ~/catkin_ws/src/auv/utils/setup.sh
+ - ~/catkin_ws/src/auv2017/utils/setup.sh
 
 # Compile and test. If the CATKIN_OPTIONS file exists, use it as an argument to
 # catkin_make.
 script:
   # compile all pkgs
   - cd ~/catkin_ws
-  - src/auv/utils/build.sh
+  - src/auv2017/utils/build.sh
   # Testing: Use both run_tests (to see the output) and test (to error out).
   - catkin_make run_tests  # This always returns 0, but looks pretty.
   - catkin_make test  # This will return non-zero if a test fails.
   - sudo ln -s /usr/bin/doxypy /usr/local/bin/doxypy
-  - src/auv/utils/deploy_docs.sh
+  - src/auv2017/utils/deploy_docs.sh
