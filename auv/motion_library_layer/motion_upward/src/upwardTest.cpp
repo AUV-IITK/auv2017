@@ -88,7 +88,7 @@ int main(int argc, char **argv)
   // Subscribing to feedback from ActionServer
   ros::Subscriber sub_ = nh.subscribe<motion_commons::UpwardActionFeedback>("/upward/feedback", 1000, &upwardCb);
   ros::Subscriber pressure_data_sub =
-      nh.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth", 1000, &pressure_data_callback);
+  nh.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth", 1000, &pressure_data_callback);
   pressure_data_pub = nh.advertise<std_msgs::Float64>("/varun/motion/z_distance", 1000);
 
   // Declaring a new ActionClient
@@ -105,9 +105,9 @@ int main(int argc, char **argv)
   dynamic_reconfigure::Server<motion_upward::upwardConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
-  motion_upward::upwardConfig config;
+ /* motion_upward::upwardConfig config;
   config.bool_param = false;
-  callback(config, 0);
+  callback(config, 0);*/
 
   // waiting for goal
   ros::spin();
