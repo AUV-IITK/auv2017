@@ -1,4 +1,4 @@
-// Copyright 2016 AUV-IITK
+// Copyright 2016 AUV-IITKs
 #include <cv.h>
 #include <highgui.h>
 #include <ros/ros.h>
@@ -27,6 +27,9 @@ int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
 
 cv::Mat frame;
 cv::Mat newframe;
+// cv::Mat dst_array;
+cv::Mat dst;
+
 int count = 0, count_avg = 0, x = -1;
 
 void callback(task_buoy::buoyConfig &config, uint32_t level)
@@ -63,20 +66,93 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
+
+// void SimplestCB(cv::Mat& in, cv::Mat& out, float percent)
+// {
+//    assert(in.channels() == 3);
+//    assert(percent > 0 && percent < 100);
+//    float half_percent = percent / 200.0f;
+//    std::vector<cv::Mat> tmpsplit; split(in, tmpsplit);
+//    for ( int i = 0; i < 3; i++ )
+//    {
+//        // find the low and high precentile values (based on the input percentile)
+//        cv::Mat flat;
+//        tmpsplit[i].reshape(1, 1).copyTo(flat);
+//        cv::sort(flat, flat, CV_SORT_EVERY_ROW + CV_SORT_ASCENDING);
+//        int lowval = flat.at<uchar>(cvFloor((static_cast<float>(flat.cols)) * half_percent));
+//        int highval = flat.at<uchar>(cvCeil((static_cast<float>(flat.cols)) * (1.0 - half_percent)));
+//        // saturate below the low percentile and above the high percentile
+//        tmpsplit[i].setTo(lowval, tmpsplit[i] < lowval);
+//        tmpsplit[i].setTo(highval, tmpsplit[i] > highval);
+//        // scale the channel
+//        cv::normalize(tmpsplit[i], tmpsplit[i], 0, 255, cv::NORM_MINMAX);
+//    }
+//    cv::merge(tmpsplit, out);
+//    cout << "inside simplestcb : no problem here" << endl;
+// }
+
+void balance_white(cv::Mat mat) {
+  double discard_ratio = 0.05;
+  int hists[3][256];
+  memset(hists, 0, 3*256*sizeof(int));
+
+  for (int y = 0; y < mat.rows; ++y) {
+    uchar* ptr = mat.ptr<uchar>(y);
+    for (int x = 0; x < mat.cols; ++x) {
+      for (int j = 0; j < 3; ++j) {
+        hists[j][ptr[x * 3 + j]] += 1;
+      }
+    }
+  }
+
+  // cumulative hist
+  int total = mat.cols*mat.rows;
+  int vmin[3], vmax[3];
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 255; ++j) {
+      hists[i][j + 1] += hists[i][j];
+    }
+    vmin[i] = 0;
+    vmax[i] = 255;
+    while (hists[i][vmin[i]] < discard_ratio * total)
+      vmin[i] += 1;
+    while (hists[i][vmax[i]] > (1 - discard_ratio) * total)
+      vmax[i] -= 1;
+    if (vmax[i] < 255 - 1)
+      vmax[i] += 1;
+  }
+
+
+  for (int y = 0; y < mat.rows; ++y) {
+    uchar* ptr = mat.ptr<uchar>(y);
+    for (int x = 0; x < mat.cols; ++x) {
+      for (int j = 0; j < 3; ++j) {
+        int val = ptr[x * 3 + j];
+        if (val < vmin[j])
+          val = vmin[j];
+        if (val > vmax[j])
+          val = vmax[j];
+        ptr[x * 3 + j] = static_cast<uchar>((val - vmin[j]) * 255.0 / (vmax[j] - vmin[j]));
+      }
+    }
+  }
+}
+
+
 int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
-  std::string Video_Name = "Random_Video";
-  if (argc >= 2)
-    flag = true;
-  if (argc == 3)
-  {
-    video = true;
-    std::string avi = ".avi";
-    Video_Name = (argv[2]) + avi;
-  }
+  // std::string Video_Name = "Random_Video";
+  // if (argc >= 2)
+  //  flag = true;
+  // if (argc == 3)
+  // {
+  //  video = true;
+  //  std::string avi = ".avi";
+  //  Video_Name = (argv[2]) + avi;
+  // }
 
-  cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
+  // cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
 
   ros::init(argc, argv, "buoy_detection");
   ros::NodeHandle n;
@@ -92,34 +168,28 @@ int main(int argc, char *argv[])
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
 
-  n.getParam("buoy_detection/t1max", t1max);
-  n.getParam("buoy_detection/t1min", t1min);
-  n.getParam("buoy_detection/t2max", t2max);
-  n.getParam("buoy_detection/t2min", t2min);
-  n.getParam("buoy_detection/t3max", t3max);
-  n.getParam("buoy_detection/t3min", t3min);
-
-  task_buoy::buoyConfig config;
-  config.t1min_param = t1min;
-  config.t1max_param = t1max;
-  config.t2min_param = t2min;
-  config.t2max_param = t2max;
-  config.t3min_param = t3min;
-  config.t3max_param = t3max;
-  callback(config, 0);
-
   cvNamedWindow("BuoyDetection:circle", CV_WINDOW_NORMAL);
-  cvNamedWindow("BuoyDetection:AfterColorFiltering", CV_WINDOW_NORMAL);
-
+  cvNamedWindow("BuoyDetection:AfterThresholding", CV_WINDOW_NORMAL);
+  cvNamedWindow("BuoyDetection:AfterEnhancing",CV_WINDOW_NORMAL);
+  // cvNamedWindow("BuoyDetection:AfterSimplestCB",CV_WINDOW_NORMAL);
   // capture size -
   CvSize size = cvSize(width, height);
   std::vector<cv::Point2f> center_ideal(5);
 
-  cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
+  // cv::Mat hsv_frame, thresholded, filtered;  // image converted to HSV plane
   float r[5];
 
   for (int m = 0; m++; m < 5)
     r[m] = 0;
+
+
+  // all the cv::Mat declared outside the loop to increase the speed
+  
+  cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
+  cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
+  
+  cv::Mat lab_image, balanced_image1, dstx, thresholded, image_clahe, dst;
+  std::vector<cv::Mat> lab_planes(3);
 
   while (ros::ok())
   {
@@ -132,29 +202,122 @@ int main(int argc, char *argv[])
       continue;
     }
 
-    if (video)
-      output_cap.write(frame);
+    // if (video)
+    //  output_cap.write(frame);
+    
     // get the image data
     height = frame.rows;
     width = frame.cols;
     step = frame.step;
 
-    // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
-    cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
-    cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
-    cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-    // Filter out colors which are out of range.
-    cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);
-    // Split image into its 3 one dimensional images
-    cv::Mat thresholded_hsv[3];
-    cv::split(hsv_frame, thresholded_hsv);
+    // SimplestCB(frame, dst, 1);
+    // cv::imshow("BuoyDetection:AfterColorFiltering",dst);
 
+    // cv::Mat frame_array[3];
+
+    // cv::split(dst, frame_array);
+
+    // cv::equalizeHist(frame_array[0], frame_array[0]);
+    // cv::equalizeHist(frame_array[1], frame_array[1]);
+    // cv::equalizeHist(frame_array[2], frame_array[2]);
+
+    // cv::merge(frame_array, 3, dst_array);*/
+
+    // cv::Mat thresholded;
+
+    // cv::Mat image = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
+    
+    // frame.copyTo(balanced_image);
+    // balance_white(balanced_image);
+    // cv::Mat dst1;
+    // fastNlMeansDenoisingColored(balanced_image, balanced_image, 3, 7, 21);
+    // bilateralFilter(balanced_image, dst1, 4, 8, 8);
+        
+    cv::cvtColor(frame, lab_image, CV_BGR2Lab);
+
+    // Extract the L channel
+    cv::split(lab_image, lab_planes);  // now we have the L image in lab_planes[0]
+
+    // apply the CLAHE algorithm to the L channel
+    cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
+    clahe->setClipLimit(4);
+    
+    clahe->apply(lab_planes[0], dst);
+
+    // Merge the the color planes back into an Lab image
+    dst.copyTo(lab_planes[0]);
+    cv::merge(lab_planes, lab_image);
+
+    // convert back to RGB
+    cv::Mat image_clahe;
+    cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
+    
+    for (int i=0; i < 7; i++)
+    {
+      bilateralFilter(image_clahe, dstx, 6, 8, 8);
+      bilateralFilter(dstx, image_clahe, 6, 8, 8);
+    }
+    // balance_white(dst2);
+    
+    image_clahe.copyTo(balanced_image1);
+    balance_white(balanced_image1);
+    
+    for (int i=0; i < 2; i++)
+    {
+      bilateralFilter(balanced_image1, dstx, 6, 8, 8);
+      bilateralFilter(dstx, balanced_image1, 6, 8, 8);
+    }
+        
+    // fastNlMeansDenoisingColored(image_clahe, image_clahe, 3, 7, 21);
+    // bilateralFilter(image_clahe, dst2, 4, 8, 8);
+    // balance_white(dst2);
+    // image_clahe.copyTo(balanced_image1);
+    // balance_white(balanced_image1);
+    // cv::Mat dst3;
+    // fastNlMeansDenoisingColored(balanced_image1, balanced_image1, 3, 7, 21);
+    // inpaint(balanced_image1,  Mat::zeros(balanced_image1.size(), CV_8U), dst3, 3, INPAINT_TELEA);
     // Filter out colors which are out of range.
-    cv::inRange(thresholded_hsv[0], cv::Scalar(t1min, 0, 0, 0), cv::Scalar(t1max, 0, 0, 0), thresholded_hsv[0]);
-    cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
-    cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
-    cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
-    cv::imshow("BuoyDetection:AfterColorFiltering", thresholded);  // The stream after color filtering
+
+    cv::inRange(balanced_image1, hsv_min, hsv_max, thresholded);
+    // cv::Mat dst4;
+    // bilateralFilter(thresholded, dst4, 4, 8, 8)
+
+
+    // bilateralFilter(balanced_image1, dst2, 4, 8, 8);
+    // balance_white(balanced_image1);
+    // cv::Mat dst4;
+    // bilateralFilter(thresholded, dst4, 20, 20, 20);
+    // cv::Mat dst4;
+    // bilateralFilter(thresholded, dst4, 4, 8, 8)
+    // morphological opening (remove small objects from the foreground)
+    // cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+    
+    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
+
+    cv::imshow("BuoyDetection:AfterEnhancing", balanced_image1);
+    cv::imshow("BuoyDetection:AfterThresholding", thresholded);
+
+
+    // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
+    // cv::cvtColor(dst_array, hsv_frame, CV_BGR2HSV);
+    
+    // cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
+    // cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
+    // Filter out colors which are out of range.
+    // cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);
+
+    // morphological opening (remove small objects from the foreground)
+    // cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+    // cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+
+    // morphological closing (fill small holes in the foreground)
+    // cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+    // cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+
+    // cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
+    // cv::imshow("BuoyDetection:AfterColorFiltering", thresholded);  // The stream after color filtering
 
     if ((cvWaitKey(10) & 255) == 27)
       break;
@@ -344,6 +507,6 @@ int main(int argc, char *argv[])
       ros::spinOnce();
     }
   }
-  output_cap.release();
+  // output_cap.release();
   return 0;
 }
