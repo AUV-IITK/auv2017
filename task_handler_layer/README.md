@@ -10,6 +10,6 @@
 8. Then workspace directory where the repo is built and source it ```source devel/setup.sh```
 9. Then ```rosrun package_name node_name```
 
-[Link for the buoy bagfile](https://drive.google.com/open?id=0ByiJsJ1iI0Y_RVpodlAzdnl0S0U)
-[Link for the line bagfile](https://drive.google.com/open?id=0ByiJsJ1iI0Y_OFl2YWpqbUtoRUE)
-[Link for the gate bagfile](https://drive.google.com/open?id=0ByiJsJ1iI0Y_UEZlbDR6OFZoS0k)
+* [Link for the buoy bagfile](https://drive.google.com/open?id=0ByiJsJ1iI0Y_RVpodlAzdnl0S0U)
+* [Link for the line bagfile](https://drive.google.com/open?id=0ByiJsJ1iI0Y_OFl2YWpqbUtoRUE)
+* [Link for the gate bagfile](https://drive.google.com/open?id=0ByiJsJ1iI0Y_UEZlbDR6OFZoS0k)
