@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find the_master)/launch/master_nodes.launch" />
+  <include file="$(find task_commons)/launch/task_nodes_varun.launch" />
+  <include file="$(find motion_commons)/launch/motion_nodes_varun.launch" />
+  <include file="$(find hardware_arduino)/launch/hardware_nodes.launch" />
+</launch>

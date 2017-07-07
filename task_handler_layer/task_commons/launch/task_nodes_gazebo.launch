@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find task_line)/launch/task_line_gazebo.launch" />
+  <include file="$(find task_buoy)/launch/task_buoy_gazebo.launch" />
+  <include file="$(find task_gate)/launch/task_gate_gazebo.launch" />
+  <include file="$(find task_octagon)/launch/task_octagon_gazebo.launch" />  
+</launch>
