@@ -118,11 +118,8 @@ int detect(cv::Mat image)
   resize(image, resizeimage, size);  // resize image
   cv::waitKey(20);
   // detect red color here
-  // medianBlur(resizeimage, bgr_image, 3);  // blur to reduce noise
   balance_white(resizeimage);
   bilateralFilter(resizeimage, dst1, 4, 8, 8);
-  // cv::Scalar hsv_min = cv::Scalar(0, 0, 20, 0);
-  // cv::Scalar hsv_max = cv::Scalar(80, 260, 260, 0);
 
   cv::inRange(dst1, cv::Scalar(0, 0, 20), cv::Scalar(80, 260, 260), red_hue_image);
   
@@ -132,14 +129,7 @@ int detect(cv::Mat image)
   cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
   cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
   cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-    
         
-  // Convert input image to HSV
-  // cv::Mat hsv_image;
-  // cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);
-  // keep only red color
-  // inRange(hsv_image, cv::Scalar(0, 100, 100), cv::Scalar(179, 255, 255), red_hue_image);
-  // GaussianBlur(red_hue_image, red_hue_image, cv::Size(9, 9), 2, 2);  // gaussian blur to remove false positives
   int nonzero = countNonZero(red_hue_image);
   int nonzeropercentage = nonzero / 3072;
   if (nonzero > (3072 * percentage))  // return 1 if a major portion of image

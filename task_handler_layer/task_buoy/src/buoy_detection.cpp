@@ -66,31 +66,6 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-
-// void SimplestCB(cv::Mat& in, cv::Mat& out, float percent)
-// {
-//    assert(in.channels() == 3);
-//    assert(percent > 0 && percent < 100);
-//    float half_percent = percent / 200.0f;
-//    std::vector<cv::Mat> tmpsplit; split(in, tmpsplit);
-//    for ( int i = 0; i < 3; i++ )
-//    {
-//        // find the low and high precentile values (based on the input percentile)
-//        cv::Mat flat;
-//        tmpsplit[i].reshape(1, 1).copyTo(flat);
-//        cv::sort(flat, flat, CV_SORT_EVERY_ROW + CV_SORT_ASCENDING);
-//        int lowval = flat.at<uchar>(cvFloor((static_cast<float>(flat.cols)) * half_percent));
-//        int highval = flat.at<uchar>(cvCeil((static_cast<float>(flat.cols)) * (1.0 - half_percent)));
-//        // saturate below the low percentile and above the high percentile
-//        tmpsplit[i].setTo(lowval, tmpsplit[i] < lowval);
-//        tmpsplit[i].setTo(highval, tmpsplit[i] > highval);
-//        // scale the channel
-//        cv::normalize(tmpsplit[i], tmpsplit[i], 0, 255, cv::NORM_MINMAX);
-//    }
-//    cv::merge(tmpsplit, out);
-//    cout << "inside simplestcb : no problem here" << endl;
-// }
-
 void balance_white(cv::Mat mat) {
   double discard_ratio = 0.05;
   int hists[3][256];
@@ -142,19 +117,6 @@ void balance_white(cv::Mat mat) {
 int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
-  // std::string Video_Name = "Random_Video";
-  // if (argc >= 2)
-  //  flag = true;
-  // if (argc == 3)
-  // {
-  //  video = true;
-  //  std::string avi = ".avi";
-  //  Video_Name = (argv[2]) + avi;
-  // }
-
-  // cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
-
-  ros::init(argc, argv, "buoy_detection");
   ros::NodeHandle n;
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000);
   ros::Subscriber sub = n.subscribe<std_msgs::Bool>("buoy_detection_switch", 1000, &lineDetectedListener);
@@ -171,12 +133,10 @@ int main(int argc, char *argv[])
   cvNamedWindow("BuoyDetection:circle", CV_WINDOW_NORMAL);
   cvNamedWindow("BuoyDetection:AfterThresholding", CV_WINDOW_NORMAL);
   cvNamedWindow("BuoyDetection:AfterEnhancing",CV_WINDOW_NORMAL);
-  // cvNamedWindow("BuoyDetection:AfterSimplestCB",CV_WINDOW_NORMAL);
-  // capture size -
+  
   CvSize size = cvSize(width, height);
   std::vector<cv::Point2f> center_ideal(5);
 
-  // cv::Mat hsv_frame, thresholded, filtered;  // image converted to HSV plane
   float r[5];
 
   for (int m = 0; m++; m < 5)
@@ -202,37 +162,12 @@ int main(int argc, char *argv[])
       continue;
     }
 
-    // if (video)
-    //  output_cap.write(frame);
     
     // get the image data
     height = frame.rows;
     width = frame.cols;
     step = frame.step;
 
-    // SimplestCB(frame, dst, 1);
-    // cv::imshow("BuoyDetection:AfterColorFiltering",dst);
-
-    // cv::Mat frame_array[3];
-
-    // cv::split(dst, frame_array);
-
-    // cv::equalizeHist(frame_array[0], frame_array[0]);
-    // cv::equalizeHist(frame_array[1], frame_array[1]);
-    // cv::equalizeHist(frame_array[2], frame_array[2]);
-
-    // cv::merge(frame_array, 3, dst_array);*/
-
-    // cv::Mat thresholded;
-
-    // cv::Mat image = cv::imread(argv[1], CV_LOAD_IMAGE_COLOR);
-    
-    // frame.copyTo(balanced_image);
-    // balance_white(balanced_image);
-    // cv::Mat dst1;
-    // fastNlMeansDenoisingColored(balanced_image, balanced_image, 3, 7, 21);
-    // bilateralFilter(balanced_image, dst1, 4, 8, 8);
-        
     cv::cvtColor(frame, lab_image, CV_BGR2Lab);
 
     // Extract the L channel
@@ -268,30 +203,10 @@ int main(int argc, char *argv[])
       bilateralFilter(dstx, balanced_image1, 6, 8, 8);
     }
         
-    // fastNlMeansDenoisingColored(image_clahe, image_clahe, 3, 7, 21);
-    // bilateralFilter(image_clahe, dst2, 4, 8, 8);
-    // balance_white(dst2);
-    // image_clahe.copyTo(balanced_image1);
-    // balance_white(balanced_image1);
-    // cv::Mat dst3;
-    // fastNlMeansDenoisingColored(balanced_image1, balanced_image1, 3, 7, 21);
-    // inpaint(balanced_image1,  Mat::zeros(balanced_image1.size(), CV_8U), dst3, 3, INPAINT_TELEA);
     // Filter out colors which are out of range.
 
     cv::inRange(balanced_image1, hsv_min, hsv_max, thresholded);
-    // cv::Mat dst4;
-    // bilateralFilter(thresholded, dst4, 4, 8, 8)
-
-
-    // bilateralFilter(balanced_image1, dst2, 4, 8, 8);
-    // balance_white(balanced_image1);
-    // cv::Mat dst4;
-    // bilateralFilter(thresholded, dst4, 20, 20, 20);
-    // cv::Mat dst4;
-    // bilateralFilter(thresholded, dst4, 4, 8, 8)
-    // morphological opening (remove small objects from the foreground)
-    // cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-    
+   
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
@@ -300,24 +215,6 @@ int main(int argc, char *argv[])
     cv::imshow("BuoyDetection:AfterThresholding", thresholded);
 
 
-    // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
-    // cv::cvtColor(dst_array, hsv_frame, CV_BGR2HSV);
-    
-    // cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
-    // cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-    // Filter out colors which are out of range.
-    // cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);
-
-    // morphological opening (remove small objects from the foreground)
-    // cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-    // cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-
-    // morphological closing (fill small holes in the foreground)
-    // cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-    // cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-
-    // cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
-    // cv::imshow("BuoyDetection:AfterColorFiltering", thresholded);  // The stream after color filtering
 
     if ((cvWaitKey(10) & 255) == 27)
       break;

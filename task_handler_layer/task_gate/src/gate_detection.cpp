@@ -114,17 +114,6 @@ void balance_white(cv::Mat mat) {
 int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
-  // std::string Video_Name = "Random_Video";
-  // if (argc >= 2)
-  //   flag = true;
-  // if (argc == 3)
-  // {
-  //   video = true;
-  //   std::string avi = ".avi";
-  //   Video_Name = (argv[2]) + avi;
-  // }
-
-  // cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
 
   ros::init(argc, argv, "gate_detection");
   ros::NodeHandle n;
@@ -140,22 +129,6 @@ int main(int argc, char *argv[])
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
 
-  // n.getParam("gate_detection/t1max", t1max);
-  // n.getParam("gate_detection/t1min", t1min);
-  // n.getParam("gate_detection/t2max", t2max);
-  // n.getParam("gate_detection/t2min", t2min);
-  // n.getParam("gate_detection/t3max", t3max);
-  // n.getParam("gate_detection/t3min", t3min);
-
-  // task_gate::gateConfig config;
-  // config.t1min_param = t1min;
-  // config.t1max_param = t1max;
-  // config.t2min_param = t2min;
-  // config.t2max_param = t2max;
-  // config.t3min_param = t3min;
-  // config.t3max_param = t3max;
-  // callback(config, 0);
-
   cvNamedWindow("GateDetection:AfterThresholding", CV_WINDOW_NORMAL);
   cvNamedWindow("GateDetection:AfterEnhancing", CV_WINDOW_NORMAL);
   cvNamedWindow("GateDetection:Gate",CV_WINDOW_NORMAL);
@@ -170,7 +143,6 @@ int main(int argc, char *argv[])
   cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
   cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
   cv::Mat lab_image, image_clahe, dst1, balanced_image1, dstx, thresholded, dst;
-  // cv::Mat balanced_image;
   std::vector<cv::Mat> lab_planes(3);
 
   while (ros::ok())
@@ -185,18 +157,13 @@ int main(int argc, char *argv[])
       continue;
     }
 
-    // if (video)
-    //   output_cap.write(frame);
     // get the image data
     height = frame.rows;
     width = frame.cols;
     step = frame.step;
 
-    // cv::Mat white_balance;
-    // balanceWhite(frame, white_balance, WHITE_BALANCE_SIMPLE, 0, 255, 0, 255);
     frame.copyTo(balanced_image);
     balance_white(balanced_image);
-    // fastNlMeansDenoisingColored(balanced_image, balanced_image, 3, 7, 21);
     bilateralFilter(balanced_image, dst1, 4, 8, 8);
         
     cv::cvtColor(frame, lab_image, CV_BGR2Lab);
@@ -233,20 +200,7 @@ int main(int argc, char *argv[])
       bilateralFilter(dstx, dst1, 6, 8, 8);
     }
 
-    // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
-    // cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
-    // Filter out colors which are out of range.
     cv::inRange(balanced_image1, cv::Scalar(0, 0, 80), cv::Scalar(100, 50, 260), thresholded);
-    // Split image into its 3 one dimensional images
-    // cv::Mat thresholded_hsv[3];
-    // cv::split(hsv_frame, thresholded_hsv);
-
-    // Filter out colors which are out of range.
-    // cv::inRange(thresholded_hsv[0], cv::Scalar(t1min, 0, 0, 0), cv::Scalar(t1max, 0, 0, 0), thresholded_hsv[0]);
-    // cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
-    // cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
-    // cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
-    // The stream after color filtering
 
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
@@ -289,13 +243,6 @@ int main(int argc, char *argv[])
           largest_contour_index = i;  // Store the index of largest contour
         }
       }
-      // Convex HULL
-      // std::vector<std::vector<cv::Point> > hull(contours.size());
-      // convexHull(cv::Mat(contours[largest_contour_index]), hull[largest_contour_index], false);
-
-      // cv::Mat Drawing(thresholded_Mat.rows, thresholded_Mat.cols, CV_8UC1, cv::Scalar::all(0));
-      // std::vector<cv::Vec4i> hierarchy;
-      // cv::Scalar color(255, 255, 255);
 
       cv::Rect boundRect;
 
