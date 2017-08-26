@@ -1,0 +1,17 @@
+<launch>
+  <node name="octagon_detection" pkg="task_octagon" type="octagon_detection" respawn="true"  output="screen">
+    <param name="percentage" type="int" value="5" />
+  </node>
+  <node name="octagon_centralize" pkg="task_octagon" type="octagon_centralize" respawn="true"  output="screen">
+    <param name="t1min" type="int" value="9" />
+    <param name="t1max" type="int" value="53" />
+    <param name="t2min" type="int" value="103" />
+    <param name="t2max" type="int" value="213" />
+    <param name="t3min" type="int" value="185" />
+    <param name="t3max" type="int" value="225" />
+  </node> 
+  <node name="octagon_server" pkg="task_octagon" type="octagon_server" respawn="true"  output="screen">
+  </node>
+  <!-- <node name="octagon_client" pkg="task_octagon" type="octagon_client" respawn="true"  output="screen">
+  </node> -->
+</launch>

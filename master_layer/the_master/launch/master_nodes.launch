@@ -1,0 +1,3 @@
+<launch>
+  <node name="master" pkg="the_master" type="master" respawn="true" />
+</launch>

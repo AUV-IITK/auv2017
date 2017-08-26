@@ -1,0 +1,21 @@
+<robot name="mittal">
+  <link name="mittal">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.4 0.2 0"/>
+      <mass value="10"/>
+      <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://varun_gazebo/models/mittal/meshes/mittal.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://varun_gazebo/models/mittal/meshes/mittal.dae"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>

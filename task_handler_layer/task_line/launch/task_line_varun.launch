@@ -1,0 +1,25 @@
+<launch>
+  <node name="line_detection" pkg="task_line" type="line_detection" respawn="true"  output="screen">
+    <param name="percentage" type="int" value="7" />
+  </node>
+  <node name="line_angle" pkg="task_line" type="line_angle" respawn="true"  output="screen">
+    <param name="t1min" type="int" value="121" />
+    <param name="t1max" type="int" value="198" />
+    <param name="t2min" type="int" value="0" />
+    <param name="t2max" type="int" value="255" />
+    <param name="t3min" type="int" value="0" />
+    <param name="t3max" type="int" value="255" />
+  </node>
+  <node name="line_centralize" pkg="task_line" type="line_centralize" respawn="true"  output="screen">
+    <param name="t1min" type="int" value="121" />
+    <param name="t1max" type="int" value="198" />
+    <param name="t2min" type="int" value="0" />
+    <param name="t2max" type="int" value="255" />
+    <param name="t3min" type="int" value="0" />
+    <param name="t3max" type="int" value="255" />
+  </node> 
+  <node name="line_server" pkg="task_line" type="line_server" respawn="true"  output="screen">
+  </node>
+  <!-- <node name="line_client" pkg="task_line" type="line_client" respawn="true"  output="screen">
+  </node> -->
+</launch>

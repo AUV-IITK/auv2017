@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>varun_description</name>
+  <version>0.0.0</version>
+  <description>The varun_description package</description>
+  <maintainer email="root@shikherverma.com">Shikher Verma</maintainer>
+  <license>BSD</license>
+  <url type="website">http://auv-iitk.github.io</url>
+  <url type="bugtracker">https://github.com/auv-iitk/auv/issues</url>
+  <url type="repository">https://github.com/auv-iitk/auv</url>
+  <author email="root@shikherverma.com">Shikher Verma</author>
+  <buildtool_depend>catkin</buildtool_depend>
+  <export>
+  </export>
+</package>

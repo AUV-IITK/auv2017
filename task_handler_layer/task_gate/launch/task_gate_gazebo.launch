@@ -1,0 +1,12 @@
+<launch>
+  <node name="gate_detection" pkg="task_gate" type="gate_detection" respawn="true"  output="screen">
+    <param name="t1min" type="int" value="0" />
+    <param name="t1max" type="int" value="130" />
+    <param name="t2min" type="int" value="0" />
+    <param name="t2max" type="int" value="100" />
+    <param name="t3min" type="int" value="150" />
+    <param name="t3max" type="int" value="260" />
+  </node>
+  <node name="gate_server" pkg="task_gate" type="gate_server" respawn="true"  output="screen">
+  </node>
+</launch>
