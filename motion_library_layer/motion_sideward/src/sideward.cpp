@@ -16,7 +16,7 @@ float previousSidePosition = 0;
 float finalSidePosition, error, output;
 bool initData = false;
 std_msgs::Int32 pwm;  // pwm to be send to arduino
-
+double p_param, i_param, d_param, band_param;
 // new inner class, to encapsulate the interaction with actionclient
 class innerActionClass
 {
@@ -75,8 +75,7 @@ public:
       loop_rate.sleep();
     }
 
-    if (goal->Goal == 1)
-      finalSidePosition = 0;
+    finalSidePosition = goal->Goal;
 
     float derivative = 0, integral = 0, dt = 1.0 / loopRate;
     bool reached = false;
@@ -162,6 +161,10 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_sideward::pidConfig &config, double level)
 {
+  p_param=config.p;
+  i_param=config.i;
+  d_param=config.d;
+  band_param=config.band;
   ROS_INFO("%s SidewardServer: Reconfigure Request: p= %f i= %f d=%f error band=%f", ros::this_node::getName().c_str(),
            config.p, config.i, config.d, config.band);
   object->setPID(config.p, config.i, config.d, config.band);
@@ -187,11 +190,10 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "sideward");
   ros::NodeHandle n;
-  double p_param, i_param, d_param, band_param;
-  n.getParam("sideward/p_param", p_param);
+ /* n.getParam("sideward/p_param", p_param);
   n.getParam("sideward/i_param", i_param);
   n.getParam("sideward/d_param", d_param);
-  n.getParam("sideward/band_param", band_param);
+  n.getParam("sideward/band_param", band_param);*/
 
   ros::Subscriber yDistance = n.subscribe<std_msgs::Float64>("/varun/motion/y_distance", 1000, &distanceCb);
 
@@ -204,12 +206,12 @@ int main(int argc, char **argv)
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
   // set launch file pid
-  motion_sideward::pidConfig config;
+  /*motion_sideward::pidConfig config;
   config.p = p_param;
   config.i = i_param;
   config.d = d_param;
   config.band = band_param;
-  callback(config, 0);
+  callback(config, 0);*/
 
   ros::spin();
   return 0;
