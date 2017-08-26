@@ -182,7 +182,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-void balance_white(cv::Mat mat) {
+void balance_white(cv::Mat mat)
+{
   double discard_ratio = 0.05;
   int hists[3][256];
   memset(hists, 0, 3*256*sizeof(int));
@@ -256,6 +257,8 @@ int main(int argc, char *argv[])
   // capture size -
   CvSize size = cvSize(width, height);
 
+  cv::Mat lab_image, balanced_image1, dstx, thresholded, image_clahe, dst;
+
   // Initialize different images that are going to be used in the program
   cv::Mat red_hue_image, dst1;  // image converted to HSV plane
   // asking for the minimum distance where bwe fire torpedo
@@ -284,14 +287,13 @@ int main(int argc, char *argv[])
     bilateralFilter(frame, dst1, 4, 8, 8);
 
     cv::inRange(dst1, cv::Scalar(0, 0, 20), cv::Scalar(80, 260, 260), red_hue_image);
-  
+
     cv::erode(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::erode(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
     cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-  
 
     cv::imshow("LineAngle:AfterThresholding", red_hue_image);  // The stream after color filtering
 

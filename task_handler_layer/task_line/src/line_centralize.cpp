@@ -67,7 +67,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-void balance_white(cv::Mat mat) {
+void balance_white(cv::Mat mat)
+{
   double discard_ratio = 0.05;
   int hists[3][256];
   memset(hists, 0, 3*256*sizeof(int));
@@ -138,11 +139,12 @@ int main(int argc, char *argv[])
   cvNamedWindow("LineCentralize:AfterColorFiltering", CV_WINDOW_NORMAL);
   cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
   cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-    
+
   // capture size -
   CvSize size = cvSize(width, height);
 
-  cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
+  cv::Mat lab_image, balanced_image1, dstx, thresholded, image_clahe, dst , dst1;  // image converted to HSV plane
+
   while (ros::ok())
   {
     std_msgs::Float64MultiArray array;
@@ -165,7 +167,7 @@ int main(int argc, char *argv[])
     bilateralFilter(frame, dst1, 4, 8, 8);
 
     cv::inRange(dst1, cv::Scalar(0, 0, 20), cv::Scalar(80, 260, 260), thresholded);
-  
+
     cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));

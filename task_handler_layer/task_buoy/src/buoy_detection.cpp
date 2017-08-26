@@ -66,7 +66,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-void balance_white(cv::Mat mat) {
+void balance_white(cv::Mat mat)
+{
   double discard_ratio = 0.05;
   int hists[3][256];
   memset(hists, 0, 3*256*sizeof(int));
@@ -132,8 +133,8 @@ int main(int argc, char *argv[])
 
   cvNamedWindow("BuoyDetection:circle", CV_WINDOW_NORMAL);
   cvNamedWindow("BuoyDetection:AfterThresholding", CV_WINDOW_NORMAL);
-  cvNamedWindow("BuoyDetection:AfterEnhancing",CV_WINDOW_NORMAL);
-  
+  cvNamedWindow("BuoyDetection:AfterEnhancing", CV_WINDOW_NORMAL);
+
   CvSize size = cvSize(width, height);
   std::vector<cv::Point2f> center_ideal(5);
 
@@ -142,12 +143,11 @@ int main(int argc, char *argv[])
   for (int m = 0; m++; m < 5)
     r[m] = 0;
 
-
   // all the cv::Mat declared outside the loop to increase the speed
-  
+
   cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
   cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-  
+
   cv::Mat lab_image, balanced_image1, dstx, thresholded, image_clahe, dst;
   std::vector<cv::Mat> lab_planes(3);
 
@@ -162,7 +162,6 @@ int main(int argc, char *argv[])
       continue;
     }
 
-    
     // get the image data
     height = frame.rows;
     width = frame.cols;
@@ -176,7 +175,7 @@ int main(int argc, char *argv[])
     // apply the CLAHE algorithm to the L channel
     cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
     clahe->setClipLimit(4);
-    
+
     clahe->apply(lab_planes[0], dst);
 
     // Merge the the color planes back into an Lab image
@@ -186,27 +185,29 @@ int main(int argc, char *argv[])
     // convert back to RGB
     cv::Mat image_clahe;
     cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
-    
+
     for (int i=0; i < 7; i++)
     {
       bilateralFilter(image_clahe, dstx, 6, 8, 8);
       bilateralFilter(dstx, image_clahe, 6, 8, 8);
     }
+
     // balance_white(dst2);
-    
+
     image_clahe.copyTo(balanced_image1);
     balance_white(balanced_image1);
-    
+
     for (int i=0; i < 2; i++)
     {
       bilateralFilter(balanced_image1, dstx, 6, 8, 8);
       bilateralFilter(dstx, balanced_image1, 6, 8, 8);
     }
-        
+
+
     // Filter out colors which are out of range.
 
     cv::inRange(balanced_image1, hsv_min, hsv_max, thresholded);
-   
+
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));

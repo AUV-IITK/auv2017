@@ -60,7 +60,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-void balance_white(cv::Mat mat) {
+void balance_white(cv::Mat mat)
+{
   double discard_ratio = 0.05;
   int hists[3][256];
   memset(hists, 0, 3*256*sizeof(int));
@@ -122,14 +123,14 @@ int detect(cv::Mat image)
   bilateralFilter(resizeimage, dst1, 4, 8, 8);
 
   cv::inRange(dst1, cv::Scalar(0, 0, 20), cv::Scalar(80, 260, 260), red_hue_image);
-  
+
   cv::erode(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
   cv::erode(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
   cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
   cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
   cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
   cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-        
+
   int nonzero = countNonZero(red_hue_image);
   int nonzeropercentage = nonzero / 3072;
   if (nonzero > (3072 * percentage))  // return 1 if a major portion of image

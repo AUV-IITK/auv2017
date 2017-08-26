@@ -63,7 +63,8 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-void balance_white(cv::Mat mat) {
+void balance_white(cv::Mat mat)
+{
   double discard_ratio = 0.05;
   int hists[3][256];
   memset(hists, 0, 3*256*sizeof(int));
@@ -131,7 +132,7 @@ int main(int argc, char *argv[])
 
   cvNamedWindow("GateDetection:AfterThresholding", CV_WINDOW_NORMAL);
   cvNamedWindow("GateDetection:AfterEnhancing", CV_WINDOW_NORMAL);
-  cvNamedWindow("GateDetection:Gate",CV_WINDOW_NORMAL);
+  cvNamedWindow("GateDetection:Gate", CV_WINDOW_NORMAL);
 
   // capture size -
   CvSize size = cvSize(width, height);
@@ -142,7 +143,7 @@ int main(int argc, char *argv[])
 
   cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
   cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-  cv::Mat lab_image, image_clahe, dst1, balanced_image1, dstx, thresholded, dst;
+  cv::Mat lab_image, balanced_image, image_clahe, dst1, balanced_image1, dstx, thresholded, dst;
   std::vector<cv::Mat> lab_planes(3);
 
   while (ros::ok())
@@ -165,7 +166,7 @@ int main(int argc, char *argv[])
     frame.copyTo(balanced_image);
     balance_white(balanced_image);
     bilateralFilter(balanced_image, dst1, 4, 8, 8);
-        
+
     cv::cvtColor(frame, lab_image, CV_BGR2Lab);
 
     // Extract the L channel
@@ -182,9 +183,9 @@ int main(int argc, char *argv[])
 
     // convert back to RGB
     cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
-      
+
     // fastNlMeansDenoisingColored(image_clahe, image_clahe, 3, 7, 21);
-        
+
     for (int i=0; i < 10; i++)
     {
       bilateralFilter(image_clahe, dstx, 6, 8, 8);
@@ -193,7 +194,7 @@ int main(int argc, char *argv[])
     // balance_white(dst2);
     image_clahe.copyTo(balanced_image1);
     balance_white(balanced_image1);
-    
+
     for (int i=0; i < 3; i++)
     {
       bilateralFilter(dst1, dstx, 6, 8, 8);
@@ -219,6 +220,10 @@ int main(int argc, char *argv[])
       cv::Mat thresholded_Mat = thresholded;
       findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours in the image
       double largest_area = 0, largest_contour_index = 0;
+
+      cv::Mat Drawing(thresholded_Mat.rows, thresholded_Mat.cols, CV_8UC1, cv::Scalar::all(0));
+      std::vector<cv::Vec4i> hierarchy;
+      cv::Scalar color(255, 255, 255);
 
       if (contours.empty())
       {
@@ -255,7 +260,7 @@ int main(int argc, char *argv[])
       center.y = ((boundRect.tl()).y + (boundRect.br()).y) / 2;
       int side_x = (boundRect.br()).x - (boundRect.tl()).x;
       int side_y = -((boundRect.tl()).y - (boundRect.br()).y);
-      // drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
+      drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
 
       cv::Mat frame_mat = frame;
       cv::Point2f screen_center;
