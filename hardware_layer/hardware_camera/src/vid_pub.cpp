@@ -39,7 +39,7 @@ std::string exec(const char *cmd)
 
 bool checkIfFrontisZero()
 {
-  std::string serialNumber = "243FA8C0";
+  std::string serialNumber = "987C602E";
   const char *command = "udevadm info -a -p  $(udevadm info -q path -n /dev/video0)";
   std::string video0 = exec(command);
   if (video0.find(serialNumber))

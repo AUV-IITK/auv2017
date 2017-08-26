@@ -16,7 +16,7 @@ float previousAngularPosition = 0;
 float finalAngularPosition, error, output, error_val;
 bool initData = false;
 std_msgs::Int32 pwm;  // pwm to be send to arduino
-
+double p_stablize, p_turn, i_stablize, i_turn, d_stablize, d_turn, band_stablize, band_turn;
 // new inner class, to encapsulate the interaction with actionclient
 class innerActionClass
 {
@@ -197,6 +197,15 @@ innerActionClass *object;
 // dynamic reconfig
 void callback(motion_turn::pidConfig &config, double level)
 {
+  p_stablize=config.p_stablize;
+  p_turn=config.p_turn;
+  i_stablize=config.i_stablize;
+  i_turn=config.i_turn;
+  d_stablize=config.d_stablize;
+  d_turn=config.d_turn;
+  band_stablize=config.band_stablize;
+  band_turn=config.band_turn;
+
   ROS_INFO("%s TurnServer: Reconfigure Request: p_stablize=%f p_turn=%f "
            "i_stablize=%f i_turn=%f d_stablize=%f d_turn=%f error band_turn=%f",
            ros::this_node::getName().c_str(), config.p_stablize, config.p_turn, config.i_stablize, config.i_turn,
@@ -226,15 +235,14 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "turningXY");
   ros::NodeHandle n;
-  double p_stablize, p_turn, i_stablize, i_turn, d_stablize, d_turn, band_stablize, band_turn;
-  n.getParam("turningXY/p_stablize", p_stablize);
+ /* n.getParam("turningXY/p_stablize", p_stablize);
   n.getParam("turningXY/p_turn", p_turn);
   n.getParam("turningXY/i_stablize", i_stablize);
   n.getParam("turningXY/i_turn", i_turn);
   n.getParam("turningXY/d_stablize", d_stablize);
   n.getParam("turningXY/d_turn", d_turn);
   n.getParam("turningXY/band_stablize", band_stablize);
-  n.getParam("turningXY/band_turn", band_turn);
+  n.getParam("turningXY/band_turn", band_turn);*/
 
   ros::Subscriber yaw = n.subscribe<std_msgs::Float64>("/varun/motion/yaw", 1000, &yawCb);
 
@@ -247,7 +255,7 @@ int main(int argc, char **argv)
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
   // set launch file pid
-  motion_turn::pidConfig config;
+ /* motion_turn::pidConfig config;
   config.p_stablize = p_stablize;
   config.p_turn = p_turn;
   config.i_stablize = i_stablize;
@@ -256,7 +264,7 @@ int main(int argc, char **argv)
   config.d_turn = d_turn;
   config.band_stablize = band_stablize;
   config.band_turn = band_turn;
-  callback(config, 0);
+  callback(config, 0);*/
 
   ros::spin();
   return 0;
