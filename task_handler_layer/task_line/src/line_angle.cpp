@@ -262,9 +262,7 @@ int main(int argc, char *argv[])
   // Initialize different images that are going to be used in the program
   cv::Mat red_hue_image, dst1;  // image converted to HSV plane
   // asking for the minimum distance where bwe fire torpedo
-  cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
-  cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-
+  
   while (ros::ok())
   {
     loop_rate.sleep();
@@ -285,6 +283,9 @@ int main(int argc, char *argv[])
 
     balance_white(frame);
     bilateralFilter(frame, dst1, 4, 8, 8);
+    
+    cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
+    cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
 
     cv::inRange(dst1, cv::Scalar(0, 0, 20), cv::Scalar(80, 260, 260), red_hue_image);
 

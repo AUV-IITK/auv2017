@@ -141,8 +141,6 @@ int main(int argc, char *argv[])
   // image converted to HSV plane
   // asking for the minimum distance where bwe fire torpedo
 
-  cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
-  cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
   cv::Mat lab_image, balanced_image, image_clahe, dst1, balanced_image1, dstx, thresholded, dst;
   std::vector<cv::Mat> lab_planes(3);
 
@@ -200,7 +198,9 @@ int main(int argc, char *argv[])
       bilateralFilter(dst1, dstx, 6, 8, 8);
       bilateralFilter(dstx, dst1, 6, 8, 8);
     }
-
+    cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
+    cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
+  
     cv::inRange(balanced_image1, cv::Scalar(0, 0, 80), cv::Scalar(100, 50, 260), thresholded);
 
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));

@@ -137,9 +137,7 @@ int main(int argc, char *argv[])
 
   cvNamedWindow("LineCentralize:COM", CV_WINDOW_NORMAL);
   cvNamedWindow("LineCentralize:AfterColorFiltering", CV_WINDOW_NORMAL);
-  cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
-  cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-
+  
   // capture size -
   CvSize size = cvSize(width, height);
 
@@ -165,6 +163,8 @@ int main(int argc, char *argv[])
 
     balance_white(frame);
     bilateralFilter(frame, dst1, 4, 8, 8);
+    cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
+    cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
 
     cv::inRange(dst1, cv::Scalar(0, 0, 20), cv::Scalar(80, 260, 260), thresholded);
 

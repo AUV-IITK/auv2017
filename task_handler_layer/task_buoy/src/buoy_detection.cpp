@@ -145,9 +145,7 @@ int main(int argc, char *argv[])
 
   // all the cv::Mat declared outside the loop to increase the speed
 
-  cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
-  cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-
+  
   cv::Mat lab_image, balanced_image1, dstx, thresholded, image_clahe, dst;
   std::vector<cv::Mat> lab_planes(3);
 
@@ -205,6 +203,9 @@ int main(int argc, char *argv[])
 
 
     // Filter out colors which are out of range.
+
+    cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
+    cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
 
     cv::inRange(balanced_image1, hsv_min, hsv_max, thresholded);
 
