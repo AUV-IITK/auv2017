@@ -2,6 +2,7 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Float64.h>
+#include <sensor_msgs/Imu.h>
 #include <motion_commons/TurnAction.h>
 #include <motion_commons/TurnActionFeedback.h>
 #include <actionlib/client/simple_action_client.h>
@@ -12,6 +13,9 @@
 typedef actionlib::SimpleActionClient<motion_commons::TurnAction> Client;
 Client *clientPointer;
 motion_commons::TurnGoal goal;
+
+#define TO_DEG(x) (x * 57.2957795131)
+std_msgs::Float64 imu_data;
 
 ros::Publisher imu_data_pub;
 bool goalSet = false;
@@ -47,9 +51,14 @@ void callback(motion_turn::turningConfig &config, double level)
   }
 }
 
-void imu_data_callback(std_msgs::Float64 msg)
+void imu_data_callback(sensor_msgs::Imu msg)
 {
-  imu_data_pub.publish(msg);
+  float q0 = msg.orientation.w;
+  float q1 = msg.orientation.x;
+  float q2 = msg.orientation.y;
+  float q3 = msg.orientation.z;
+  imu_data.data = TO_DEG(atan2(2*q1*q2-2*q0*q3, 2*q0*q0+2*q1*q1-1));
+  imu_data_pub.publish(imu_data);
 }
 
 // never ever put the argument of the callback function anything other then the
@@ -65,7 +74,7 @@ int main(int argc, char **argv)
 
   ros::NodeHandle nh;
   ros::Subscriber sub_ = nh.subscribe<motion_commons::TurnActionFeedback>("/turningXY/feedback", 1000, &turnCb);
-  ros::Subscriber imu_data_sub = nh.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &imu_data_callback);
+  ros::Subscriber imu_data_sub = nh.subscribe<sensor_msgs::Imu>("/mavros/imu/data", 1000, &imu_data_callback);
   imu_data_pub = nh.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
 
   Client TurnTestClient("turningXY");

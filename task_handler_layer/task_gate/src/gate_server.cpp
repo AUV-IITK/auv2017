@@ -3,6 +3,7 @@
 #include <std_msgs/Float32.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/Int32.h>
+#include <sensor_msgs/Imu.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/Float64MultiArray.h>
@@ -27,6 +28,8 @@ typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> ClientSide
 typedef actionlib::SimpleActionClient<motion_commons::UpwardAction> ClientUpward;
 typedef actionlib::SimpleActionClient<motion_commons::TurnAction> ClientTurn;
 
+#define TO_DEG(x) (x * 57.2957795131)
+
 class TaskGateInnerClass
 {
 private:
@@ -35,6 +38,7 @@ private:
   std::string action_name_;
   std_msgs::Float64 data_X_;
   std_msgs::Float64 data_Y_;
+  std_msgs::Float64 imu_data;
   task_commons::gateFeedback feedback_;
   task_commons::gateResult result_;
   ros::Subscriber sub_gate_;
@@ -76,7 +80,7 @@ public:
     yaw_pub_ = nh_.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
     sub_gate_ =
         nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/gate", 1000, &TaskGateInnerClass::gateNavigation, this);
-    yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskGateInnerClass::yawCB, this);
+    yaw_sub_ = nh_.subscribe<sensor_msgs::Imu>("/mavros/imu/data", 1000, &TaskGateInnerClass::yawCB, this);
     sub_line_ = nh_.subscribe<std_msgs::Bool>("lineDetection", 1000, &TaskGateInnerClass::lineDetectedListener, this);
     gate_server_.start();
   }
@@ -85,8 +89,13 @@ public:
   {
   }
 
-  void yawCB(std_msgs::Float64 imu_data)
+  void yawCB(sensor_msgs::Imu msg)
   {
+    float q0 = msg.orientation.w;
+    float q1 = msg.orientation.x;
+    float q2 = msg.orientation.y;
+    float q3 = msg.orientation.z;
+    imu_data.data = TO_DEG(atan2(2*q1*q2-2*q0*q3, 2*q0*q0+2*q1*q1-1));
     yaw_pub_.publish(imu_data);
   }
 

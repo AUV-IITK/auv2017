@@ -2,6 +2,7 @@
 #include <ros/ros.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Float64.h>
+#include <sensor_msgs/Imu.h>
 #include <std_msgs/Int32.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Bool.h>
@@ -27,6 +28,8 @@ typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> ClientSide
 typedef actionlib::SimpleActionClient<motion_commons::UpwardAction> ClientUpward;
 typedef actionlib::SimpleActionClient<motion_commons::TurnAction> ClientTurn;
 
+#define TO_DEG(x) (x * 57.2957795131)
+
 class TaskBuoyInnerClass
 {
 private:
@@ -35,6 +38,7 @@ private:
   std::string action_name_;
   std_msgs::Float64 data_X_;
   std_msgs::Float64 data_distance_;
+  std_msgs::Float64 imu_data;
   std_msgs::Int32 min_pwm_data;
   task_commons::buoyFeedback feedback_;
   task_commons::buoyResult result_;
@@ -79,7 +83,7 @@ public:
     upward_pwm = nh_.advertise<std_msgs::Int32>("/pwm/upward", 1000);
     sub_ip_ =
         nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000, &TaskBuoyInnerClass::buoyNavigation, this);
-    yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskBuoyInnerClass::yawCB, this);
+    yaw_sub_ = nh_.subscribe<sensor_msgs::Imu>("/mavros/imu/data", 1000, &TaskBuoyInnerClass::yawCB, this);
     depth_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth",
         1000, &TaskBuoyInnerClass::depthCB, this);
     buoy_server_.start();
@@ -89,8 +93,13 @@ public:
   {
   }
 
-  void yawCB(std_msgs::Float64 imu_data)
+  void yawCB(sensor_msgs::Imu msg)
   {
+    float q0 = msg.orientation.w;
+    float q1 = msg.orientation.x;
+    float q2 = msg.orientation.y;
+    float q3 = msg.orientation.z;
+    imu_data.data = TO_DEG(atan2(2*q1*q2-2*q0*q3, 2*q0*q0+2*q1*q1-1));
     yaw_pub_.publish(imu_data);
   }
 
