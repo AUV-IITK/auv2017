@@ -1,4 +1,4 @@
-# Generic .travis.yml file for running continuous integration on Travis-CI with
+tom# Generic .travis.yml file for running continuous integration on Travis-CI with
 # any ROS package.
 #
 # This installs ROS on a clean Travis-CI virtual machine, creates a ROS
@@ -48,14 +48,14 @@ cache:
 # trigger a build matrix for different ROS distributions if desired.
 env:
   global:
-    - ROS_DISTRO=indigo
+    - ROS_DISTRO=kinetic
     - ROS_CI_DESKTOP="`lsb_release -cs`"  # e.g. [precise|trusty|...]
     - CI_SOURCE_PATH=$(pwd)
     - ROSINSTALL_FILE=$CI_SOURCE_PATH/dependencies.rosinstall
     - CATKIN_OPTIONS=$CI_SOURCE_PATH/catkin.options
     - ROS_PARALLEL_JOBS='-j8 -l6'
     - ENCRYPTION_LABEL= "175037b63dc1"
-    - secure: "MNKLqvnESDZohJcLtL0sadZRH09lAg1lFN8VoYpbqBhyS+T5lOM6Jq3XYwrCN2hvj+dnxTRiu+TmHS5F4feAewt4TwQks9GUIsUN/c/EKC/AQcCxf5TjrhLTD6ncXS6qcHJXikwWYe2xCo96sAGt6kcDX2ULhrRa4R4tXYIFb7gV5at8xIeHHCMWLVM5H7uAVCEeWg8nNn0xSgcdJwq9Z3QQUwwkGC5VLp39lN4XqjyOYqoCZajegEzxaQqMbXKUIfoudMCBDQLjC2Ws4/H7UsuS+aeIhiKr/w77gvshJx2WFWEwxx82iIhZADtSygC2NIoZ0xf8slq/Jq9p4QXonMxqaSNwUbtuIqUkjRMoh40BOkIJBKg+eoJ2FAhVf/P+1070FwCSFNYa86KxRsd+VdPKVfsHgT9EIZt5+0lwjLfbTm31pZQtLvRDLTbrdAPs83TWHO8ancK58OFB8sW7+MLGUFJ1Espk+xYUnBbo5SM3bS+X/AWwcHIze7BDQo9smhOJoBbcr/YCLYGGJCZnA31YFiVCIIcjZ5NJfJWf3FI4EyIDxCqxxaeT+velZwjh9jPb6dX3C97GFmR9f3LErgR6llQzg7ks+ecKK/lJmz91z0BPk1sDJiq/AG01HdkYCJJgsyHZVI0rwaHeAeSBqgAxxXY0mJxEZSj4uQ9HQQ4="
+    - secure: ""
 
 ################################################################################
 
@@ -64,7 +64,7 @@ before_install:
   - sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
   - wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
   - sudo apt-get update -qq
-  - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-catkin 
+  - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-catkin
   - source /opt/ros/$ROS_DISTRO/setup.bash
   # Prepare rosdep to install dependencies.
   - sudo rosdep init

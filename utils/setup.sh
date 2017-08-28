@@ -2,7 +2,7 @@
 #
 # This script downloads and installs all the dependencies of packages in auv repo.
 #
-ROS_DISTRO=$'indigo'
+ROS_DISTRO=$'kinetic'
 
 STR=$'This script does not install ros
 Please refer to https://github.com/AUV-IITK/AUVWiki/wiki for recommended version of ros'
