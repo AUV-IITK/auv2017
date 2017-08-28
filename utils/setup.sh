@@ -11,6 +11,8 @@ echo "$STR"
 echo "installing required packages"
 sudo apt-get update
 sudo apt-get install -y python-catkin-pkg python-rosdep ros-$ROS_DISTRO-catkin
+# install dependencies for mavros
+sudo apt-get install python-wstool python-rosinstall-generator python-catkin-tools
 # installing for syntax check
 sudo apt-get install python-pip
 sudo pip install autopep8
@@ -23,6 +25,14 @@ rosdep update
 wstool init
 if [[ -f $ROSINSTALL_FILE ]] ; then wstool merge $ROSINSTALL_FILE ; fi
 wstool up
+
+# get source (upstream - released) for mavros
+rosinstall_generator --upstream-development mavros | tee /tmp/mavros.rosinstall
+# get latest released mavlink package
+rosinstall_generator mavlink | tee -a /tmp/mavros.rosinstall
+# Setup workspace & install deps
+wstool merge -t src /tmp/mavros.rosinstall
+wstool update -t src
 
 echo "Installing dependencies"
 sudo apt-get install -y \
@@ -47,7 +57,7 @@ source /opt/ros/$ROS_DISTRO/setup.bash
 
 # package depdencies: install using rosdep.
 cd ~/catkin_ws
-rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO -y
 
 # setup rosserial arduino
 source /opt/ros/$ROS_DISTRO/setup.bash
