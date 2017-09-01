@@ -30,7 +30,7 @@ cv::Mat newframe;
 // cv::Mat dst_array;
 cv::Mat dst;
 
-int count = 0, count_avg = 0, x = -1;
+int count = 0, count_avg = 0; // x = -1;
 
 void callback(task_buoy::buoyConfig &config, uint32_t level)
 {
@@ -50,15 +50,13 @@ void lineDetectedListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  if (x == 32)
-    return;
+  // if (x == 32)
+  //   return;
   try
   {
-    count++;
+    // count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
-    ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
-    ////////////////////////// FATAL ///////////////////////////////////////////////////
   }
   catch (cv_bridge::Exception &e)
   {
@@ -212,8 +210,8 @@ int main(int argc, char *argv[])
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
 
-    if ((cvWaitKey(10) & 255) == 27)
-      break;
+    // if ((cvWaitKey(10) & 255) == 27)
+    //   break;
 
     if (!IP)
     {
@@ -268,8 +266,8 @@ int main(int argc, char *argv[])
         ros::spinOnce();
         // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
         // remove higher bits using AND operator
-        if ((cvWaitKey(10) & 255) == 27)
-          break;
+        // if ((cvWaitKey(10) & 255) == 27)
+        //   break;
         continue;
       }
       for (int i = 0; i < contours.size(); i++)  // iterate through each contour.
@@ -379,34 +377,34 @@ int main(int argc, char *argv[])
         array.data.push_back(distance);
         pub.publish(array);
       }
-      cv::imshow("BuoyDetection:circle", circles);  // Original stream with detected ball overlay
+      // cv::imshow("BuoyDetection:circle", circles);  // Original stream with detected ball overlay
 
-      if ((cvWaitKey(10) & 255) == 32)
-      {
-        if (x == 32)
-          x = -1;
-        else
-          x = 32;
-      }
-      if (x == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+      // if ((cvWaitKey(10) & 255) == 32)
+      // {
+      //   if (x == 32)
+      //     x = -1;
+      //   else
+      //     x = 32;
+      // }
+      // if (x == 32)
+      //   ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
-      if ((cvWaitKey(10) & 255) == 27)
-        break;
+      // if ((cvWaitKey(10) & 255) == 27)
+      //   break;
     }
     else
     {
-      if ((cvWaitKey(10) & 255) == 32)
-      {
-        if (x == 32)
-          x = -1;
-        else
-          x = 32;
-      }
-      if (x == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+      // if ((cvWaitKey(10) & 255) == 32)
+      // {
+      //   if (x == 32)
+      //     x = -1;
+      //   else
+      //     x = 32;
+      // }
+      // if (x == 32)
+      //   ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }

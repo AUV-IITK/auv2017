@@ -40,7 +40,7 @@ using std::vector;
 using std::endl;
 using std::cout;
 
-int w = -2, x = -2, y = -2, z = -2, m = -1;
+int w = -2, x = -2, y = -2, z = -2;
 bool IP = true;
 bool flag = false;
 bool video = false;
@@ -166,11 +166,11 @@ void lineAngleListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  if (m == 32)
-    return;
+  // if (m == 32)
+  //   return;
   try
   {
-    count++;
+    // count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
@@ -297,8 +297,8 @@ int main(int argc, char *argv[])
 
     cv::imshow("LineAngle:AfterThresholding", red_hue_image);  // The stream after color filtering
 
-    if ((cvWaitKey(10) & 255) == 27)
-      break;
+    // if ((cvWaitKey(10) & 255) == 27)
+    //   break;
 
     if (!IP)
     {
@@ -367,30 +367,30 @@ int main(int argc, char *argv[])
 
       // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
       // remove higher bits using AND operator
-      if ((cvWaitKey(10) & 255) == 27)
-        break;
-      if ((cvWaitKey(10) & 255) == 32)
-      {
-        if (m == 32)
-          m = -1;
-        else
-          m = 32;
-      }
-      if (m == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+      // if ((cvWaitKey(10) & 255) == 27)
+      //   break;
+      // if ((cvWaitKey(10) & 255) == 32)
+      // {
+      //   if (m == 32)
+      //     m = -1;
+      //   else
+      //     m = 32;
+      // }
+      // if (m == 32)
+      //   ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
     else
     {
-      if ((cvWaitKey(10) & 255) == 32)
-      {
-        if (m == 32)
-          x = -1;
-        else
-          m = 32;
-      }
-      if (m == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+      // if ((cvWaitKey(10) & 255) == 32)
+      // {
+      //   if (m == 32)
+      //     x = -1;
+      //   else
+      //     m = 32;
+      // }
+      // if (m == 32)
+      //   ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }

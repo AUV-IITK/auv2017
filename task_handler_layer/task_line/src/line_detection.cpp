@@ -19,7 +19,7 @@
 #include <sstream>
 #include <string>
 
-int percentage = 5, x = -1;  // used for how much percent of the screen should be orange
+int percentage = 5; // used for how much percent of the screen should be orange
                              // before deciding that a line is below. Used in
                              // dynamic_reconfig
 // callback for change the percent of orange before saying there is a line below
@@ -44,11 +44,11 @@ void lineDetectedListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  if (x == 32)
-    return;
+  // if (x == 32)
+  //   return;
   try
   {
-    count++;
+    // count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
@@ -221,15 +221,15 @@ int main(int argc, char **argv)
       }
       ros::spinOnce();
       loop_rate.sleep();
-      if ((cvWaitKey(10) & 255) == 32)
-      {
-        if (x == 32)
-          x = -1;
-        else
-          x = 32;
-      }
-      if (x == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+      // if ((cvWaitKey(10) & 255) == 32)
+      // {
+      //   if (x == 32)
+      //     x = -1;
+      //   else
+      //     x = 32;
+      // }
+      // if (x == 32)
+      //   ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
     else
