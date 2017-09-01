@@ -125,15 +125,14 @@ int main(int argc, char *argv[])
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
+  image_transport::Publisher pub1 = it.advertise("/first_picture", 1);
+  image_transport::Publisher pub2 = it.advertise("/second_picture", 1);
+  image_transport::Publisher pub3 = it.advertise("/third_picture", 1);
 
   dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
   dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
-
-  cvNamedWindow("BuoyDetection:circle", CV_WINDOW_NORMAL);
-  cvNamedWindow("BuoyDetection:AfterThresholding", CV_WINDOW_NORMAL);
-  cvNamedWindow("BuoyDetection:AfterEnhancing", CV_WINDOW_NORMAL);
 
   CvSize size = cvSize(width, height);
   std::vector<cv::Point2f> center_ideal(5);
@@ -145,7 +144,7 @@ int main(int argc, char *argv[])
 
   // all the cv::Mat declared outside the loop to increase the speed
 
-  
+
   cv::Mat lab_image, balanced_image1, dstx, thresholded, image_clahe, dst;
   std::vector<cv::Mat> lab_planes(3);
 
@@ -213,11 +212,6 @@ int main(int argc, char *argv[])
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
 
-    cv::imshow("BuoyDetection:AfterEnhancing", balanced_image1);
-    cv::imshow("BuoyDetection:AfterThresholding", thresholded);
-
-
-
     if ((cvWaitKey(10) & 255) == 27)
       break;
 
@@ -228,6 +222,13 @@ int main(int argc, char *argv[])
       cv::Mat thresholded_Mat = thresholded;
       findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
+
+      sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
+      sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
+
+      pub2.publish(msg2);
+      pub3.publish(msg3);
+
       if (contours.empty())
       {
         int x_cord = 320 - center_ideal[0].x;
@@ -321,6 +322,9 @@ int main(int argc, char *argv[])
       circle(circles, center_ideal[0], r[0], cv::Scalar(0, 250, 0), 1, 8, 0);  // minenclosing circle
       circle(circles, center_ideal[0], 4, cv::Scalar(0, 250, 0), -1, 8, 0);    // center is made on the screen
       circle(circles, pt, 4, cv::Scalar(150, 150, 150), -1, 8, 0);             // center of screen
+
+      sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", circles).toImageMsg();
+      pub1.publish(msg1);
 
       int net_x_cord = 320 - center_ideal[0].x + r[0];
       int net_y_cord = -240 + center_ideal[0].y + r[0];

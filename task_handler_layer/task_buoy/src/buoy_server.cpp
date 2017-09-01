@@ -77,8 +77,7 @@ public:
     present_distance_ = nh_.advertise<std_msgs::Float64>("/varun/motion/x_distance", 1000);
     yaw_pub_ = nh_.advertise<std_msgs::Float64>("/varun/motion/yaw", 1000);
     upward_pwm = nh_.advertise<std_msgs::Int32>("/pwm/upward", 1000);
-    sub_ip_ =
-        nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000, &TaskBuoyInnerClass::buoyNavigation, this);
+    sub_ip_ = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000, &TaskBuoyInnerClass::buoyNavigation, this);
     yaw_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskBuoyInnerClass::yawCB, this);
     depth_sub_ = nh_.subscribe<std_msgs::Float64>("/varun/sensors/pressure_sensor/depth",
         1000, &TaskBuoyInnerClass::depthCB, this);

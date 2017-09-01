@@ -124,15 +124,14 @@ int main(int argc, char *argv[])
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/front_camera/image_raw", 1, imageCallback);
+  image_transport::Publisher pub1 = it.advertise("/first_picture", 1);
+  image_transport::Publisher pub2 = it.advertise("/second_picture", 1);
+  image_transport::Publisher pub3 = it.advertise("/third_picture", 1);
 
   dynamic_reconfigure::Server<task_gate::gateConfig> server;
   dynamic_reconfigure::Server<task_gate::gateConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
-
-  cvNamedWindow("GateDetection:AfterThresholding", CV_WINDOW_NORMAL);
-  cvNamedWindow("GateDetection:AfterEnhancing", CV_WINDOW_NORMAL);
-  cvNamedWindow("GateDetection:Gate", CV_WINDOW_NORMAL);
 
   // capture size -
   CvSize size = cvSize(width, height);
@@ -200,15 +199,12 @@ int main(int argc, char *argv[])
     }
     cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
     cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-  
+
     cv::inRange(balanced_image1, cv::Scalar(0, 0, 80), cv::Scalar(100, 50, 260), thresholded);
 
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
-
-    cv::imshow("GateDetection:AfterEnhancing", balanced_image1);
-    cv::imshow("GateDetection:AfterThresholding", thresholded);
 
     if ((cvWaitKey(10) & 255) == 27)
       break;
@@ -224,6 +220,9 @@ int main(int argc, char *argv[])
       cv::Mat Drawing(thresholded_Mat.rows, thresholded_Mat.cols, CV_8UC1, cv::Scalar::all(0));
       std::vector<cv::Vec4i> hierarchy;
       cv::Scalar color(255, 255, 255);
+
+      sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
+      sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
 
       if (contours.empty())
       {
@@ -271,7 +270,8 @@ int main(int argc, char *argv[])
       rectangle(frame_mat, boundRect.tl(), boundRect.br(), color, 2, 8, 0);
       circle(frame_mat, screen_center, 4, cv::Scalar(150, 150, 150), -1, 8, 0);  // center of screen
 
-      cv::imshow("GateDetection:Gate", frame_mat);
+      sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame_mat).toImageMsg();
+      pub1.publish(msg1);
 
       w = (boundRect.br()).x;
       x = (boundRect.br()).y;

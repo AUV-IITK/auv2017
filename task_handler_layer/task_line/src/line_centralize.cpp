@@ -129,15 +129,15 @@ int main(int argc, char *argv[])
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
+  image_transport::Publisher pub1 = it.advertise("/first_picture", 1);
+  image_transport::Publisher pub2 = it.advertise("/second_picture", 1);
+  image_transport::Publisher pub3 = it.advertise("/third_picture", 1);
 
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
 
-  cvNamedWindow("LineCentralize:COM", CV_WINDOW_NORMAL);
-  cvNamedWindow("LineCentralize:AfterColorFiltering", CV_WINDOW_NORMAL);
-  
   // capture size -
   CvSize size = cvSize(width, height);
 
@@ -187,6 +187,13 @@ int main(int argc, char *argv[])
       thresholded.copyTo(thresholded_Mat);
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
+
+      sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
+      sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
+
+      pub2.publish(msg2);
+      pub3.publish(msg3);
+
       if (contours.empty())
       {
         array.data.push_back(0);
@@ -225,7 +232,11 @@ int main(int argc, char *argv[])
 
       cv::drawContours(Drawing, hull, 0, color, 2, 8, hierarchy);
       cv::circle(frame, center_of_mass, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
-      cv::imshow("LineCentralize:COM", frame);
+      // cv::imshow("LineCentralize:COM", frame);
+
+      sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame).toImageMsg();
+      pub1.publish(msg1);
+
 
       cv::Point2f pt;
       pt.x = 320;  // size of my screen

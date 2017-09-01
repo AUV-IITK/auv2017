@@ -153,6 +153,9 @@ int main(int argc, char **argv)
                             // input. and in the case of other sensors , this
                             // rate should be same as there rate of data
                             // generation
+  image_transport::Publisher pub1 = it.advertise("/first_picture", 1);
+  image_transport::Publisher pub2 = it.advertise("/second_picture", 1);
+  image_transport::Publisher pub3 = it.advertise("/third_picture", 1);
 
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
@@ -175,10 +178,20 @@ int main(int argc, char **argv)
       ros::spinOnce();
       continue;
     }
+
     if (!IP)
     {
       int alert = detect(frame);
-      cv::imshow("LineDetection:red_hue_image", red_hue_image);
+      // cv::imshow("LineDetection:red_hue_image", red_hue_image);
+
+      sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", Drawing).toImageMsg();
+      sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
+      sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
+
+      pub1.publish(msg1);
+      pub2.publish(msg2);
+      pub3.publish(msg3);
+
 
       if (alert == 1)
       {

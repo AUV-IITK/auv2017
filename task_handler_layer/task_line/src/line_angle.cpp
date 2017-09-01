@@ -244,15 +244,14 @@ int main(int argc, char *argv[])
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
+  image_transport::Publisher pub1 = it.advertise("/first_picture", 1);
+  image_transport::Publisher pub2 = it.advertise("/second_picture", 1);
+  image_transport::Publisher pub3 = it.advertise("/third_picture", 1);
 
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
   f = boost::bind(&callback_dyn, _1, _2);
   server.setCallback(f);
-
-  cvNamedWindow("LineAngle:AfterColorFiltering", CV_WINDOW_NORMAL);
-  cvNamedWindow("LineAngle:Contours", CV_WINDOW_NORMAL);
-  cvNamedWindow("LineAngle:LINES", CV_WINDOW_NORMAL);
 
   // capture size -
   CvSize size = cvSize(width, height);
@@ -262,7 +261,7 @@ int main(int argc, char *argv[])
   // Initialize different images that are going to be used in the program
   cv::Mat red_hue_image, dst1;  // image converted to HSV plane
   // asking for the minimum distance where bwe fire torpedo
-  
+
   while (ros::ok())
   {
     loop_rate.sleep();
@@ -283,7 +282,7 @@ int main(int argc, char *argv[])
 
     balance_white(frame);
     bilateralFilter(frame, dst1, 4, 8, 8);
-    
+
     cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
     cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
 
@@ -308,6 +307,13 @@ int main(int argc, char *argv[])
       cv::Mat thresholded_Mat = red_hue_image;
       findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours in the image
       double largest_area = 0, largest_contour_index = 0;
+
+      sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
+      sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
+
+      pub2.publish(msg2);
+      pub3.publish(msg3);
+
       if (contours.empty())
       {
         msg.data = -finalAngle * (180 / 3.14) + 90;
@@ -337,7 +343,7 @@ int main(int argc, char *argv[])
       std::vector<cv::Vec4i> hierarchy;
       cv::Scalar color(255, 255, 255);
       drawContours(Drawing, contours, largest_contour_index, color, 2, 8, hierarchy);
-      cv::imshow("LineAngle:Contours", Drawing);
+      // cv::imshow("LineAngle:Contours", Drawing);
 
       std_msgs::Float64 msg;
       Drawing.copyTo(sent_to_callback);
@@ -346,6 +352,10 @@ int main(int argc, char *argv[])
       when the angle is 90 it will show -90
       -------------TO BE CORRECTED-------------
       */
+
+      sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", Drawing).toImageMsg();
+      pub1.publish(msg1);
+
       msg.data = -finalAngle * (180 / 3.14);
       if (lineCount > 0)
       {
