@@ -11,9 +11,9 @@
   catkin_make --pkg varun_gazebo &&
 catkin_make roslint_varun_gazebo &&
 # build mavros packages using catkin_make_isolated
-  catkin_make_isolated --pkg libmavconn && 
-  catkin_make_isolated --pkg mavlink && 
-  catkin_make_isolated --pkg mavros && 
-  catkin_make_isolated --pkg mavros_extras && 
-  catkin_make_isolated --pkg mavros_msgs && 
+  catkin_make_isolated --pkg mavlink &&
+  catkin_make_isolated --pkg libmavconn &&
+  catkin_make_isolated --pkg mavros_msgs &&
+  catkin_make_isolated --pkg mavros &&
+  catkin_make_isolated --pkg mavros_extras &&
   catkin_make_isolated --pkg test_mavros)
