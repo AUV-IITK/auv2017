@@ -1,4 +1,4 @@
-// Copyright 2016 AUV-IITK
+// Copyright 2017 AUV-IITK
 #include <cv.h>
 #include <highgui.h>
 #include <ros/ros.h>
@@ -55,7 +55,6 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
   try
   {
-    // count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
@@ -175,10 +174,6 @@ int main(int argc, char *argv[])
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
 
-
-    // if ((cvWaitKey(10) & 255) == 27)
-    //   break;
-
     if ((!IP))
     {
       // find contours
@@ -201,10 +196,7 @@ int main(int argc, char *argv[])
 
         pub.publish(array);
         ros::spinOnce();
-        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-        // remove higher bits using AND operator
-        // if ((cvWaitKey(10) & 255) == 27)
-        //   break;
+
         continue;
       }
 
@@ -247,16 +239,12 @@ int main(int argc, char *argv[])
       pub.publish(array);
 
       ros::spinOnce();
-      // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-      // remove higher bits using AND operator
-      // if ((cvWaitKey(10) & 255) == 27)
-      //   break;
     }
+
     else
     {
       ros::spinOnce();
     }
   }
-  // output_cap.release();
   return 0;
 }

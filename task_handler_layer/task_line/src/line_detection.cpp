@@ -44,11 +44,8 @@ void lineDetectedListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  // if (x == 32)
-  //   return;
   try
   {
-    // count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
@@ -182,7 +179,6 @@ int main(int argc, char **argv)
     if (!IP)
     {
       int alert = detect(frame);
-      // cv::imshow("LineDetection:red_hue_image", red_hue_image);
 
       sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", Drawing).toImageMsg();
       sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
@@ -221,28 +217,11 @@ int main(int argc, char **argv)
       }
       ros::spinOnce();
       loop_rate.sleep();
-      // if ((cvWaitKey(10) & 255) == 32)
-      // {
-      //   if (x == 32)
-      //     x = -1;
-      //   else
-      //     x = 32;
-      // }
-      // if (x == 32)
-      //   ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+
       ros::spinOnce();
     }
     else
     {
-      if ((cvWaitKey(10) & 255) == 32)
-      {
-        if (x == 32)
-          x = -1;
-        else
-          x = 32;
-      }
-      if (x == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }

@@ -1,4 +1,4 @@
-// Copyright 2016 AUV-IITK
+// Copyright 2017 AUV-IITK
 #include <iostream>
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
@@ -22,23 +22,23 @@
 #include <sstream>
 #include <string>
 #include "std_msgs/Header.h"
-using cv::Mat;
-using cv::split;
-using cv::Size;
-using cv::Scalar;
-using cv::normalize;
-using cv::Point;
-using cv::VideoCapture;
-using cv::NORM_MINMAX;
-using cv::MORPH_ELLIPSE;
-using cv::COLOR_BGR2HSV;
-using cv::destroyAllWindows;
-using cv::getStructuringElement;
-using cv::Vec4i;
-using cv::namedWindow;
-using std::vector;
-using std::endl;
-using std::cout;
+// using cv::Mat;
+// using cv::split;
+// using cv::Size;
+// using cv::Scalar;
+// using cv::normalize;
+// using cv::Point;
+// using cv::VideoCapture;
+// using cv::NORM_MINMAX;
+// using cv::MORPH_ELLIPSE;
+// using cv::COLOR_BGR2HSV;
+// using cv::destroyAllWindows;
+// using cv::getStructuringElement;
+// using cv::Vec4i;
+// using cv::namedWindow;
+// using std::vector;
+// using std::endl;
+// using std::cout;
 
 int w = -2, x = -2, y = -2, z = -2;
 bool IP = true;
@@ -166,11 +166,8 @@ void lineAngleListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  // if (m == 32)
-  //   return;
   try
   {
-    // count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
@@ -297,9 +294,6 @@ int main(int argc, char *argv[])
 
     cv::imshow("LineAngle:AfterThresholding", red_hue_image);  // The stream after color filtering
 
-    // if ((cvWaitKey(10) & 255) == 27)
-    //   break;
-
     if (!IP)
     {
       // find contours
@@ -319,10 +313,7 @@ int main(int argc, char *argv[])
         msg.data = -finalAngle * (180 / 3.14) + 90;
         pub.publish(msg);
         ros::spinOnce();
-        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-        // remove higher bits using AND operator
-        if ((cvWaitKey(10) & 255) == 27)
-          break;
+
         continue;
       }
 
@@ -363,37 +354,15 @@ int main(int argc, char *argv[])
       }
       callback(0, 0);  // for displaying the thresholded image initially
       ros::spinOnce();
-      // loop_rate.sleep();
+      loop_rate.sleep();
 
-      // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-      // remove higher bits using AND operator
-      // if ((cvWaitKey(10) & 255) == 27)
-      //   break;
-      // if ((cvWaitKey(10) & 255) == 32)
-      // {
-      //   if (m == 32)
-      //     m = -1;
-      //   else
-      //     m = 32;
-      // }
-      // if (m == 32)
-      //   ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
     else
     {
-      // if ((cvWaitKey(10) & 255) == 32)
-      // {
-      //   if (m == 32)
-      //     x = -1;
-      //   else
-      //     m = 32;
-      // }
-      // if (m == 32)
-      //   ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }
-  // output_cap.release();
+
   return 0;
 }

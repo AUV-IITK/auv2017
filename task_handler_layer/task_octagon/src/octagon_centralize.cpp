@@ -25,7 +25,7 @@ bool flag = false;
 bool video = false;
 cv::Mat frame;
 cv::Mat newframe;
-int count = 0, count_avg = 0;
+int count_avg = 0;
 int t1min, t1max, t2min, t2max, t3min, t3max;
 
 void callback(task_octagon::octagonConfig &config, double level)
@@ -55,12 +55,9 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
   try
   {
-    count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
-    cvNamedWindow("newframe", CV_WINDOW_NORMAL);
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
-    cv::imshow("newframe", newframe);
     ////////////////////////// FATAL ///////////////////////////////////////////////////
   }
   catch (cv_bridge::Exception &e)

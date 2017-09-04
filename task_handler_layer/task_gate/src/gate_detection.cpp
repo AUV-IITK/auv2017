@@ -1,4 +1,4 @@
-// Copyright 2016 AUV-IITK
+// Copyright 2017 AUV-IITK
 #include <cv.h>
 #include <highgui.h>
 #include <ros/ros.h>
@@ -47,11 +47,8 @@ void gateListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  // if (p == 32)
-  //   return;
   try
   {
-    // count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
@@ -136,10 +133,6 @@ int main(int argc, char *argv[])
   // capture size -
   CvSize size = cvSize(width, height);
 
-  // Initialize different images that are going to be used in the program
-  // image converted to HSV plane
-  // asking for the minimum distance where bwe fire torpedo
-
   cv::Mat lab_image, balanced_image, image_clahe, dst1, balanced_image1, dstx, thresholded, dst;
   std::vector<cv::Mat> lab_planes(3);
 
@@ -206,9 +199,6 @@ int main(int argc, char *argv[])
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
 
-    // if ((cvWaitKey(10) & 255) == 27)
-    //   break;
-
     if (!IP)
     {
       // find contours
@@ -231,10 +221,7 @@ int main(int argc, char *argv[])
 
         pub.publish(array);
         ros::spinOnce();
-        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-        // remove higher bits using AND operator
-        // if ((cvWaitKey(10) & 255) == 27)
-        //   break;
+
         continue;
       }
 
@@ -318,26 +305,14 @@ int main(int argc, char *argv[])
       pub.publish(array);
       ros::spinOnce();
 
-      // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-      // remove higher bits using AND operator
-      // if ((cvWaitKey(10) & 255) == 27)
-      //   break;
-    }
+      }
     else
     {
       ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
-      // if ((cvWaitKey(10) & 255) == 32)
-      // {
-      //   if (p == 32)
-      //     p = -1;
-      //   else
-      //     p = 32;
-      // }
-      // if (p == 32)
-      //   ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+
       ros::spinOnce();
     }
   }
-  // output_cap.release();
+
   return 0;
 }
