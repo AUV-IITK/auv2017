@@ -1,45 +1,53 @@
 // Copyright 2017 AUV-IITK
-#include <cv.h>
-#include <highgui.h>
-#include <ros/ros.h>
-#include "std_msgs/String.h"
-#include "std_msgs/Int8.h"
-#include <fstream>
-#include <dynamic_reconfigure/server.h>
+#include "lib.hpp"
 #include <task_buoy/buoyConfig.h>
-#include <vector>
-#include <std_msgs/Bool.h>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/opencv.hpp>
-#include "std_msgs/Float32MultiArray.h"
-#include <opencv/highgui.h>
-#include <image_transport/image_transport.h>
-#include "std_msgs/Float64MultiArray.h"
-#include <cv_bridge/cv_bridge.h>
-#include <sstream>
-#include <string>
+#include "pre_processing.h"
+
+#define SHELLSCRIPT_DUMP "\
+#/bin/bash \n\
+echo -e \"parameters dumped!!\" \n\
+rosparam dump ~/catkin_ws/src/auv/task_handler_layer/task_buoy/launch/dump.yaml /buoy_detection\
+"
+#define SHELLSCRIPT_LOAD "\
+#/bin/bash \n\
+echo -e \"parameters loaded!!\" \n\
+rosparam load ~/catkin_ws/src/auv/task_handler_layer/task_buoy/launch/dump.yaml /buoy_detection\
+"
 
 bool IP = true;
-bool flag = false;
-bool video = false;
-int t1min, t1max, t2min, t2max, t3min, t3max;  // Default Params
+bool save = false;
+bool threshold = false;
+int flag = 0;
+int count = 0;
+int BGR[3][2];  // rgb values for color filtering
 
+int red_buoy[3][2], green_buoy[3][2], blue_buoy[3][2]; // rows for colors and colors for max and min ; 0, 1, 2 for blue, green and red ; 0 for min and 1 max
 cv::Mat frame;
 cv::Mat newframe;
 cv::Mat dst;
 
-int count = 0, count_avg = 0;
+int count_avg = 0;
 
 void callback(task_buoy::buoyConfig &config, uint32_t level)
 {
-  t1min = config.t1min_param;
-  t1max = config.t1max_param;
-  t2min = config.t2min_param;
-  t2max = config.t2max_param;
-  t3min = config.t3min_param;
-  t3max = config.t3max_param;
-  ROS_INFO("Buoy_Reconfigure Request:New params : %d %d %d %d %d %d", t1min, t1max, t2min, t2max, t3min, t3max);
+  flag = config.flag_param; // flag parameter for thresholding the buoys
+  threshold = config.threshold_param; // initial value is false
+
+  if (!threshold){
+    pre_processing::update_values(config, flag, blue_buoy, green_buoy, red_buoy); // update the values in the rqt_reconfigure which were saved last time
+  }
+
+  // updating the values in the BGR matrix
+  pre_processing::threshold_values_update(BGR, config);
+
+  if (!count){
+    config.save_param = false;
+    count++;
+  }
+
+  save = config.save_param;
+
+  ROS_INFO("Buoy_Reconfigure Request:New params : %d %d %d %d %d %d %d %d %d", BGR[0][0], BGR[0][1], BGR[1][0], BGR[1][1], BGR[2][0], BGR[2][1], save, flag, threshold);
 }
 
 void lineDetectedListener(std_msgs::Bool msg)
@@ -60,57 +68,10 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
-void balance_white(cv::Mat mat)
-{
-  double discard_ratio = 0.05;
-  int hists[3][256];
-  memset(hists, 0, 3*256*sizeof(int));
-
-  for (int y = 0; y < mat.rows; ++y) {
-    uchar* ptr = mat.ptr<uchar>(y);
-    for (int x = 0; x < mat.cols; ++x) {
-      for (int j = 0; j < 3; ++j) {
-        hists[j][ptr[x * 3 + j]] += 1;
-      }
-    }
-  }
-
-  // cumulative hist
-  int total = mat.cols*mat.rows;
-  int vmin[3], vmax[3];
-  for (int i = 0; i < 3; ++i) {
-    for (int j = 0; j < 255; ++j) {
-      hists[i][j + 1] += hists[i][j];
-    }
-    vmin[i] = 0;
-    vmax[i] = 255;
-    while (hists[i][vmin[i]] < discard_ratio * total)
-      vmin[i] += 1;
-    while (hists[i][vmax[i]] > (1 - discard_ratio) * total)
-      vmax[i] -= 1;
-    if (vmax[i] < 255 - 1)
-      vmax[i] += 1;
-  }
-
-
-  for (int y = 0; y < mat.rows; ++y) {
-    uchar* ptr = mat.ptr<uchar>(y);
-    for (int x = 0; x < mat.cols; ++x) {
-      for (int j = 0; j < 3; ++j) {
-        int val = ptr[x * 3 + j];
-        if (val < vmin[j])
-          val = vmin[j];
-        if (val > vmax[j])
-          val = vmax[j];
-        ptr[x * 3 + j] = static_cast<uchar>((val - vmin[j]) * 255.0 / (vmax[j] - vmin[j]));
-      }
-    }
-  }
-}
-
 
 int main(int argc, char *argv[])
 {
+  ros::init(argc, argv, "buoy_detection");
   int height, width, step, channels;  // parameters of the image we are working on
   ros::NodeHandle n;
   ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("/varun/ip/buoy", 1000);
@@ -122,6 +83,10 @@ int main(int argc, char *argv[])
   image_transport::Publisher pub1 = it.advertise("/first_picture", 1);
   image_transport::Publisher pub2 = it.advertise("/second_picture", 1);
   image_transport::Publisher pub3 = it.advertise("/third_picture", 1);
+
+  system(SHELLSCRIPT_LOAD);
+
+  pre_processing::get_buoys_params(n, red_buoy, blue_buoy, green_buoy); // to get the values of parameters from the parameter server
 
   dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
   dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
@@ -136,13 +101,30 @@ int main(int argc, char *argv[])
   for (int m = 0; m++; m < 5)
     r[m] = 0;
 
-  cv::Mat lab_image, balanced_image1, dstx, thresholded, image_clahe, dst;
-  std::vector<cv::Mat> lab_planes(3);
+  cv::Mat lab_image, balanced_image1, dstx, image_clahe, dst, dst1;
+  std::vector<cv::Mat> buoys(3);
+  std::vector<cv::Mat> thresholded(3);
 
   while (ros::ok())
   {
     std_msgs::Float64MultiArray array;
     loop_rate.sleep();
+
+    if (! ros::param::has("/buoy_detection/b2min")) // for checking whether the parameters are created or not
+      std::cout << "not exist" << std::endl;
+
+    if (threshold){
+      pre_processing::threshold(BGR, red_buoy, blue_buoy, green_buoy, flag); // to put change the values of red_buoy, green_buoy, blue_buoy through dynamic_reconfigure
+    }
+
+    if (save == true){
+
+      pre_processing::set_buoy_params(n, red_buoy, blue_buoy, green_buoy);
+      save = false;
+      system(SHELLSCRIPT_DUMP); // all the parameters saved in the yaml file
+
+    }
+
     if (frame.empty())
     {
       ROS_INFO("%s: empty frame", ros::this_node::getName().c_str());
@@ -155,107 +137,63 @@ int main(int argc, char *argv[])
     width = frame.cols;
     step = frame.step;
 
-    cv::cvtColor(frame, lab_image, CV_BGR2Lab);
+    image_clahe = pre_processing::color_correction(frame, 4);
 
-    // Extract the L channel
-    cv::split(lab_image, lab_planes);  // now we have the L image in lab_planes[0]
-
-    // apply the CLAHE algorithm to the L channel
-    cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
-    clahe->setClipLimit(4);
-
-    clahe->apply(lab_planes[0], dst);
-
-    // Merge the the color planes back into an Lab image
-    dst.copyTo(lab_planes[0]);
-    cv::merge(lab_planes, lab_image);
-
-    // convert back to RGB
-    cv::Mat image_clahe;
-    cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
-
-    for (int i=0; i < 7; i++)
-    {
-      bilateralFilter(image_clahe, dstx, 6, 8, 8);
-      bilateralFilter(dstx, image_clahe, 6, 8, 8);
-    }
-
-    // balance_white(dst2);
+    pre_processing::denoise(image_clahe, 7); // for removing the colored noise
 
     image_clahe.copyTo(balanced_image1);
-    balance_white(balanced_image1);
+    dst1 = pre_processing::balance_white(balanced_image1, 0.05);
 
-    for (int i=0; i < 2; i++)
-    {
-      bilateralFilter(balanced_image1, dstx, 6, 8, 8);
-      bilateralFilter(dstx, balanced_image1, 6, 8, 8);
-    }
+    pre_processing::denoise(dst1, 2);
 
+    for (int i = 0; i < 3; i++)
+      buoys[i] = dst1;
+
+    cv::Scalar red_buoy_min = cv::Scalar(red_buoy[0][0], red_buoy[1][0], red_buoy[2][0], 0);
+    cv::Scalar red_buoy_max = cv::Scalar(red_buoy[0][1], red_buoy[1][1], red_buoy[2][1], 0);
+
+    cv::Scalar blue_buoy_min = cv::Scalar(blue_buoy[0][0], blue_buoy[1][0], blue_buoy[2][0], 0);
+    cv::Scalar blue_buoy_max = cv::Scalar(blue_buoy[0][1], blue_buoy[1][1], blue_buoy[2][1], 0);
+
+    cv::Scalar green_buoy_min = cv::Scalar(green_buoy[0][0], green_buoy[1][0], green_buoy[2][0], 0);
+    cv::Scalar green_buoy_max = cv::Scalar(green_buoy[0][1], green_buoy[1][1], green_buoy[2][1], 0);
+
+    // thresholding all the colors according to their thresholding values
+    cv::inRange(buoys[0], red_buoy_min, red_buoy_max, thresholded[0]);
+    cv::inRange(buoys[1], green_buoy_min, green_buoy_max, thresholded[1]);
+    cv::inRange(buoys[2], blue_buoy_min, blue_buoy_max, thresholded[2]);
 
     // Filter out colors which are out of range.
 
-    cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
-    cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
+    for (int i = 0; i < 3; i++)
+    {
+      cv::dilate(thresholded[i], thresholded[i], getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+      cv::dilate(thresholded[i], thresholded[i], getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+      cv::dilate(thresholded[i], thresholded[i], getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
+    }
 
-    cv::inRange(balanced_image1, hsv_min, hsv_max, thresholded);
-
-    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
-    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
-
-    if (!IP)
+    if (1)
     {
       // find contours
       std::vector<std::vector<cv::Point> > contours;
-      cv::Mat thresholded_Mat = thresholded;
+      cv::Mat thresholded_Mat = thresholded[0];
       findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
-
+      std::cout << "inside if" << std::endl;
       sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
-      sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
+      sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded_Mat).toImageMsg();
 
       pub2.publish(msg2);
       pub3.publish(msg3);
 
       if (contours.empty())
       {
-        int x_cord = 320 - center_ideal[0].x;
-        int y_cord = -240 + center_ideal[0].y;
-        if (x_cord < -270)
-        {
-          array.data.push_back(-2);  // top
-          array.data.push_back(-2);
-          array.data.push_back(-2);
-          array.data.push_back(-2);
-          pub.publish(array);
-        }
-        else if (x_cord > 270)
-        {
-          array.data.push_back(-1);  // left_side
-          array.data.push_back(-1);
-          array.data.push_back(-1);
-          array.data.push_back(-1);
-          pub.publish(array);
-        }
-        else if (y_cord > 200)
-        {
-          array.data.push_back(-3);  // bottom
-          array.data.push_back(-3);
-          array.data.push_back(-3);
-          array.data.push_back(-3);
-          pub.publish(array);
-        }
-        else if (y_cord < -200)
-        {
-          array.data.push_back(-4);  // right_side
-          array.data.push_back(-4);
-          array.data.push_back(-4);
-          array.data.push_back(-4);
-          pub.publish(array);
-        }
+        array = pre_processing::empty_contour_handler(center_ideal[0]);
+        pub.publish(array);
         ros::spinOnce();
         continue;
       }
+
       for (int i = 0; i < contours.size(); i++)  // iterate through each contour.
       {
         double a = contourArea(contours[i], false);  //  Find the area of contour
@@ -310,65 +248,14 @@ int main(int argc, char *argv[])
       sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", circles).toImageMsg();
       pub1.publish(msg1);
 
-      int net_x_cord = 320 - center_ideal[0].x + r[0];
-      int net_y_cord = -240 + center_ideal[0].y + r[0];
-      if (net_x_cord < -310)
-      {
-        array.data.push_back(-2);  // top
-        array.data.push_back(-2);
-        array.data.push_back(-2);
-        array.data.push_back(-2);
-        pub.publish(array);
-      }
-      else if (net_x_cord > 310)
-      {
-        array.data.push_back(-1);  // left_side
-        array.data.push_back(-1);
-        array.data.push_back(-1);
-        array.data.push_back(-1);
-        pub.publish(array);
-        ros::spinOnce();
-      }
-      else if (net_y_cord > 230)
-      {
-        array.data.push_back(-3);  // bottom
-        array.data.push_back(-3);
-        array.data.push_back(-3);
-        array.data.push_back(-3);
-        pub.publish(array);
-      }
-      else if (net_y_cord < -230)
-      {
-        array.data.push_back(-4);  // right_side
-        array.data.push_back(-4);
-        array.data.push_back(-4);
-        array.data.push_back(-4);
-        pub.publish(array);
-      }
-      else if (r[0] > 110)
-      {
-        array.data.push_back(-5);
-        array.data.push_back(-5);
-        array.data.push_back(-5);
-        array.data.push_back(-5);
-        pub.publish(array);
-      }
-      else
-      {
-        float distance;
-        distance = pow(radius[0] / 7526.5, -.92678);  // function found using experiment
-        array.data.push_back(r[0]);                   // publish radius
-        array.data.push_back((320 - center_ideal[0].x));
-        array.data.push_back(-(240 - center_ideal[0].y));
-        array.data.push_back(distance);
-        pub.publish(array);
-      }
-
+      array = pre_processing::edge_case_handler(center_ideal[0], r[0]);
+      pub.publish(array);
       ros::spinOnce();
+
     }
     else
     {
-            ros::spinOnce();
+      ros::spinOnce();
     }
   }
 

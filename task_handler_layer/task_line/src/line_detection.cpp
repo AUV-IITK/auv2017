@@ -176,17 +176,17 @@ int main(int argc, char **argv)
       continue;
     }
 
-    if (!IP)
+    if (1)
     {
       int alert = detect(frame);
 
-      sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", Drawing).toImageMsg();
-      sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
-      sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
+      sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "mono8", red_hue_image).toImageMsg();
+      // sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
+      // sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
 
       pub1.publish(msg1);
-      pub2.publish(msg2);
-      pub3.publish(msg3);
+      // pub2.publish(msg2);
+      // pub3.publish(msg3);
 
 
       if (alert == 1)

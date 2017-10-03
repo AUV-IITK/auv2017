@@ -1,0 +1,57 @@
+b1max: 88
+b1min: 95
+b2max: 100
+b2min: 88
+b3max: 100
+b3min: 98
+buoy_detection: {b1max: 257, b1min: 257, b2max: 257, b2min: 257, b3max: 257, b3min: 257,
+  done_param: false, flag_param: 0, g1max: 257, g1min: 257, g2max: 257, g2min: 257,
+  g3max: 257, g3min: 257, r1max: 257, r1min: 257, r2max: 257, r2min: 257, r3max: 257,
+  r3min: 257, save_param: false, t1max: 0, t1max_param: 0, t1min: 0, t1min_param: 0,
+  t2max: 171, t2max_param: 158, t2min: 0, t2min_param: 0, t3max: 255, t3max_param: 255,
+  t3min: 100, t3min_param: 119, threshold_param: false}
+done_param: false
+first_picture:
+  compressed: {format: jpeg, jpeg_quality: 80, png_level: 9}
+  compressedDepth: {depth_max: 10.0, depth_quantization: 100.0, png_level: 9}
+  theora: {keyframe_frequency: 64, optimize_for: 1, quality: 31, target_bitrate: 800000}
+flag_param: 0
+g1max: 205
+g1min: 205
+g2max: 204
+g2min: 207
+g3max: 207
+g3min: 204
+r1max: 0
+r1min: 0
+r2max: 0
+r2min: 0
+r3max: 0
+r3min: 0
+rosdistro: 'indigo
+
+  '
+roslaunch:
+  uris: {host_akash_x556uqk__36022: 'http://akash-X556UQK:36022/', host_akash_x556uqk__37654: 'http://akash-X556UQK:37654/',
+    host_akash_x556uqk__40381: 'http://akash-X556UQK:40381/', host_akash_x556uqk__40987: 'http://akash-X556UQK:40987/',
+    host_akash_x556uqk__46436: 'http://akash-X556UQK:46436/'}
+rosversion: '1.11.21
+
+  '
+run_id: 5f895260-8ff0-11e7-a7cf-74c63be22b97
+save_param: true
+second_picture:
+  compressed: {format: jpeg, jpeg_quality: 80, png_level: 9}
+  compressedDepth: {depth_max: 10.0, depth_quantization: 100.0, png_level: 9}
+  theora: {keyframe_frequency: 64, optimize_for: 1, quality: 31, target_bitrate: 800000}
+t1max_param: 95
+t1min_param: 88
+t2max_param: 88
+t2min_param: 100
+t3max_param: 98
+t3min_param: 100
+third_picture:
+  compressed: {format: jpeg, jpeg_quality: 80, png_level: 9}
+  compressedDepth: {depth_max: 10.0, depth_quantization: 100.0, png_level: 9}
+  theora: {keyframe_frequency: 64, optimize_for: 1, quality: 31, target_bitrate: 800000}
+threshold_param: false
