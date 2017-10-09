@@ -6,19 +6,16 @@ and studying flights with the help from other sensors that can be attached to it
 processes data outputs from various sensors and use the processed data for various motions of the flight. Similarly, it has an IMU
 as well. It applies [EKF](https://en.wikipedia.org/wiki/Extended_Kalman_filter) algorithm on the IMU's data and gives the output in form of [quateranions](https://en.wikipedia.org/wiki/Quaternion) to us.
 
-  To use PIXHAWK with ROS install [Mavros](http://wiki.ros.org/mavros) package from [this](https://dev.px4.io/en/ros/mavros_installation.html) site in the src folder of your catkin_ws. While installing, don't run the
-last command
+  To use PIXHAWK with ROS install **Mavros** package from the [Readme.md](https://github.com/mavlink/mavros/blob/master/mavros/README.md#binary-installation-deb) file. Go down to the **Binary Installation** title and run the command
+ ```
+ sudo apt-get install ros-kinetic-mavros ros-kinetic-mavros-extras
+ ```
+for Ubuntu **Kinetic**. After this installation plug-in PIXHAWK in your laptop and run the command
 ```
-catkin build
+rosrun mavros mavros_node _fcu_url:=/dev/ttyACM0:921600 _gcs_url:=udp://@172.16.254.1
 ```
-Instead use
-```
-catkin_make_isolated
-```
-as we use **catkin_make** for compiling our code instead of **catkin build**. Now, connect the PIXHAWK and run the command
-```
-roslaunch mavros px4.launch
-```
+as given in the **PROGRAMS** title of the [Readme.md](https://github.com/mavlink/mavros/blob/master/mavros/README.md#binary-installation-deb) file. You have to take care that your PIXHAWK is connected via **ACM0** port. Otherwise, you hace to change the port **number** accordingly.
+
 Now run the command
 ```
 rostopic list
