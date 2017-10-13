@@ -15,11 +15,8 @@ sudo apt-get install -y python-catkin-pkg python-rosdep ros-$ROS_DISTRO-catkin
 sudo apt-get install python-pip
 sudo pip install autopep8
 sudo apt-get install clang-format-3.6
-# adding dependicies for installing mavros
-cd ~/catkin_ws
-catkin init
-sudo apt-get install python-wstool python-rosinstall-generator python-catkin-tools
-
+# installing mavros packages for PIXHAWK
+sudo apt-get install ros-$ROS_DISTRO-mavros ros-$ROS_DISTRO-mavros-extras
 # source ros setup script
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Prepare rosdep to install dependencies.
@@ -28,17 +25,6 @@ rosdep update
 wstool init
 if [[ -f $ROSINSTALL_FILE ]] ; then wstool merge $ROSINSTALL_FILE ; fi
 wstool up
-
-# Following few commands are for installing mavros as given in site used to install it.
-cd ~/catkin_ws
-# get source (upstream - released) for mavros
-rosinstall_generator --upstream-development mavros | tee /tmp/mavros.rosinstall
-# get latest released mavlink package
-rosinstall_generator mavlink | tee -a /tmp/mavros.rosinstall
-# Setup workspace & install deps
-wstool merge -t src /tmp/mavros.rosinstall
-wstool update -t src
-cd ~/catkin_ws/src
 
 echo "Installing dependencies"
 sudo apt-get install -y \
@@ -63,7 +49,7 @@ source /opt/ros/$ROS_DISTRO/setup.bash
 
 # package depdencies: install using rosdep.
 cd ~/catkin_ws
-rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO -y
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
 
 # setup rosserial arduino
 source /opt/ros/$ROS_DISTRO/setup.bash
