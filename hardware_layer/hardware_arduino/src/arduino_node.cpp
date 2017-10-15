@@ -5,6 +5,7 @@
 #include <math.h>
 #include <Wire.h>
 #include "MS5837.h"
+#include "thrustercalibration.h"
 
 #define pwmPinWest 3
 #define pwmPinEast 2
@@ -31,6 +32,8 @@
 
 MS5837 sensor;
 
+arduino_thrust AEAST,AWEST,ANORTHUP,ASOUTHUP,ANORTHSWAY,ASOUTHSWAY;
+
 float last_pressure_sensor_value, pressure_sensor_value;
 std_msgs::Float64 voltage;
 ros::NodeHandle nh;
@@ -38,133 +41,80 @@ ros::NodeHandle nh;
 void TEastCb(const std_msgs::Int32 msg)
 {
     int pwm=msg.data;
+    pwm=abs(pwm);
     bool isForward=true;
-    if(pwm<=0)
-    {
-        pwm=abs(pwm);
+    if(msg.data<=0)
         isForward=false;
-    }
-    analogWrite(pwmPinEast, 255 - pwm);
     if(isForward)
-    {
-        digitalWrite(directionPinEast1, HIGH);
-        digitalWrite(directionPinEast2, LOW);
-    }
+        AEAST.ON(255-pwm,HIGH,LOW);
     else
-    {
-        digitalWrite(directionPinEast1, LOW);
-        digitalWrite(directionPinEast2, HIGH);
-    }
+        AEAST.ON(255-pwm,LOW,HIGH);
 }
+
 
 void TWestCb(const std_msgs::Int32 msg)
 {
     int pwm=msg.data;
+    pwm=abs(pwm);
     bool isForward=true;
-    if(pwm<=0)
-    {
-        pwm=abs(pwm);
+    if(msg.data<=0)
         isForward=false;
-    }
-    analogWrite(pwmPinWest, 255 - pwm);
     if(isForward)
-    {
-        digitalWrite(directionPinWest1, HIGH);
-        digitalWrite(directionPinWest2, LOW);
-    }
+        AWEST.ON(255-pwm,HIGH,LOW);
     else
-    {
-        digitalWrite(directionPinWest1, LOW);
-        digitalWrite(directionPinWest2, HIGH);
-    }
+        AWEST.ON(255-pwm,LOW,HIGH);
 }
 
 void TNorthSwayCb(const std_msgs::Int32 msg)
 {
     int pwm=msg.data;
+    pwm=abs(pwm);
     bool isSideward=true;
-    if(pwm<=0)
-    {
-        pwm=abs(pwm);
+    if(msg.data<=0)
         isSideward=false;
-    }
-    analogWrite(pwmPinNorthSway, 255 - pwm);
     if(isSideward)
-    {
-        digitalWrite(directionPinNorthSway1, HIGH);
-        digitalWrite(directionPinNorthSway2, LOW);
-    }
+        ANORTHSWAY.ON(255-pwm,HIGH,LOW);
     else
-    {
-        digitalWrite(directionPinNorthSway1, LOW);
-        digitalWrite(directionPinNorthSway2, HIGH);
-    }
+        ANORTHSWAY.ON(255-pwm,LOW,HIGH);
 }
 
 void TSouthSwayCb(const std_msgs::Int32 msg)
 {
     int pwm=msg.data;
+    pwm=abs(pwm);
     bool isSideward=true;
-    if(pwm<=0)
-    {
-        pwm=abs(pwm);
+    if(msg.data<=0)
         isSideward=false;
-    }
-    analogWrite(pwmPinSouthSway, 255 - pwm);
     if(isSideward)
-    {
-        digitalWrite(directionPinSouthSway1, HIGH);
-        digitalWrite(directionPinSouthSway2, LOW);
-    }
+        ASOUTHSWAY.ON(255-pwm,HIGH,LOW);
     else
-    {
-        digitalWrite(directionPinSouthSway1, LOW);
-        digitalWrite(directionPinSouthSway2, HIGH);
-    }
+        ASOUTHSWAY.ON(255-pwm,LOW,HIGH);
 }
 
 void TNorthUpCb(const std_msgs::Int32 msg)
 {
     int pwm=msg.data;
+    pwm=abs(pwm);
     bool isUpward=true;
-    if(pwm<=0)
-    {
-        pwm=abs(pwm);
+    if(msg.data<=0)
         isUpward=false;
-    }
-    analogWrite(pwmPinNorthUp, 255 - pwm);
     if(isUpward)
-    {
-        digitalWrite(directionPinNorthUp1, HIGH);
-        digitalWrite(directionPinNorthUp2, LOW);
-    }
+        ANORTHUP.ON(255-pwm,HIGH,LOW);
     else
-    {
-        digitalWrite(directionPinNorthUp1, LOW);
-        digitalWrite(directionPinNorthUp2, HIGH);
-    }
+        ANORTHUP.ON(255-pwm,LOW,HIGH);
 }
 
 void TSouthUpCb(const std_msgs::Int32 msg)
 {
     int pwm=msg.data;
+    pwm=abs(pwm);
     bool isUpward=true;
-    if(pwm<=0)
-    {
-        pwm=abs(pwm);
+    if(msg.data<=0)
         isUpward=false;
-    }
-    analogWrite(pwmPinSouthUp, 255 - pwm);
     if(isUpward)
-    {
-        digitalWrite(directionPinSouthUp1, HIGH);
-        digitalWrite(directionPinSouthUp2, LOW);
-    }
+        ASOUTHUP.ON(255-pwm,HIGH,LOW);
     else
-    {
-        digitalWrite(directionPinSouthUp1, LOW);
-        digitalWrite(directionPinSouthUp2, HIGH);
-    }
+        ASOUTHUP.ON(255-pwm,LOW,HIGH);
 }
 
 ros::Subscriber<std_msgs::Int32> subPwmEast("/ard/east", &TEastCb);
@@ -184,26 +134,14 @@ void setup()
     sensor.init();
     
     sensor.setFluidDensity(997);    //kg/m^3 (freshwater, 1029 for seawater)
-    pinMode(pwmPinEast, OUTPUT);
-    pinMode(directionPinEast1, OUTPUT);
-    pinMode(directionPinEast2, OUTPUT);
-    pinMode(pwmPinWest, OUTPUT);
-    pinMode(directionPinWest1, OUTPUT);
-    pinMode(directionPinWest2, OUTPUT);
     
-    pinMode(directionPinSouthSway1, OUTPUT);
-    pinMode(directionPinSouthSway2, OUTPUT);
-    pinMode(pwmPinNorthSway, OUTPUT);
-    pinMode(directionPinNorthSway2, OUTPUT);
-    pinMode(pwmPinSouthSway, OUTPUT);
-    pinMode(directionPinNorthSway1, OUTPUT);
-    
-    pinMode(directionPinSouthUp1, OUTPUT);
-    pinMode(directionPinSouthUp2, OUTPUT);
-    pinMode(pwmPinNorthUp, OUTPUT);
-    pinMode(directionPinNorthUp2, OUTPUT);
-    pinMode(pwmPinSouthUp, OUTPUT);
-    pinMode(directionPinNorthUp1, OUTPUT);
+    //setting the pins to output mode
+    AEAST.setPins(pwmPinEast,directionPinEast1,directionPinEast2);
+    AWEST.setPins(pwmPinWest,directionPinWest1,directionPinWest2);
+    ANORTHSWAY.setPins(pwmPinNorthSway,directionPinNorthSway1,directionPinNorthSway2);
+    ASOUTHSWAY.setPins(pwmPinSouthSway,directionPinSouthSway1,directionPinSouthSway2);
+    ANORTHUP.setPins(pwmPinNorthUp,directionPinNorthUp1,directionPinNorthUp2);
+    ASOUTHUP.setPins(pwmPinSouthUp,directionPinSouthUp1,directionPinSouthUp2);
     
     nh.subscribe(subPwmEast);
     nh.subscribe(subPwmWest);
@@ -212,7 +150,9 @@ void setup()
     nh.subscribe(subPwmNorthUp);
     nh.subscribe(subPwmSouthUp);
     nh.advertise(ps_voltage);
+    
     Serial.begin(57600);
+    
     std_msgs::Int32 v;
     v.data=0;
     TEastCb(v);
