@@ -38,7 +38,7 @@ class arduino_thrust
         arduino_thrust();
     
         //sets the direction and pwm pins for the thrusters
-        void setPins();
+        void setPins(int A1, int D1, int D2);
     
         //applies analogwrite and digitalwrite functions in arduino
         void ON(int pwm,bool Dir1,bool Dir2);
