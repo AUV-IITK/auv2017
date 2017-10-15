@@ -1,6 +1,5 @@
-#ifndef PWM_CONST.H
-#define PWM_CONST.H
-
+#ifndef THRUSTERCALIBRATION_H
+#define THRUSTERCALIBRATION_H
 using namespace std;
 
 struct mode         //structure to store the three speed mode values in one direction
