@@ -24,9 +24,9 @@ class thruster{
         void setvalues();
 
 	private:
-        int pwm;        //stores the value of pwm corresponding to each thruster
-        mode clock;     //stores the value of high,med and low pwm values for clockwise direction
-        mode anticlock;    //stores the value of high,med and low pwm values for anticlockwise direction
+        int pwm_;        //stores the value of pwm corresponding to each thruster
+        mode clock_;     //stores the value of high,med and low pwm values for clockwise direction
+        mode anticlock_;    //stores the value of high,med and low pwm values for anticlockwise direction
 }
 
 #endif
