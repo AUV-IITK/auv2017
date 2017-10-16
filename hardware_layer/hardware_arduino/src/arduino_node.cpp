@@ -5,7 +5,7 @@
 #include <math.h>
 #include <Wire.h>
 #include "MS5837.h"
-#include "thrustercalibration.h"
+#include "thruster.h"
 
 #define pwmPinWest 3
 #define pwmPinEast 2
