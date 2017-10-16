@@ -8,67 +8,67 @@
 thruster TEAST,TWEST,TNORTHUP,TSOUTHUP,TNORTHSWAY,TSOUTHSWAY;
 
 
-bool isMovingForward=false; //variable to distinguish for turning with forward or sideward thrusters
+bool isMovingForward = false; //variable to distinguish for turning with forward or sideward thrusters
 
 void ForwardCB(const std_msgs::Int32& msg)  //callback function
 {
-    int pwm=msg.data;
-    TEAST.calibration(pwm,TEAST.mode(abs(pwm)));    //classifying and storing the value in private pwm variable
-    TWEST.calibration(pwm,TWEST.mode(abs(pwm)));
+    int pwm = msg.data;
+    TEAST.calibration(pwm, TEAST.mode(abs(pwm)));    //classifying and storing the value in private pwm variable
+    TWEST.calibration(pwm, TWEST.mode(abs(pwm)));
     std_msgs::Int32 v;
-    v.data=TEAST.pwm;
+    v.data = TEAST.pwm;
     pubPwmEast.publish(v);  //publishing on concerned topics linked to arduino
-    v.data=TWEST.pwm;
+    v.data = TWEST.pwm;
     pubPwmWest.publish(v);
-    isMovingForward=true;
+    isMovingForward = true;
 }
 
 void SidewardCB(const std_msgs::Int32& msg)
 {
-    int pwm=msg.data;
-    TNORTHSWAY.calibration(pwm,TNORTHSWAY.mode(abs(pwm)));
-    TSOUTHSWAY.calibration(pwm,TSOUTHSWAY.mode(abs(pwm)));
+    int pwm = msg.data;
+    TNORTHSWAY.calibration(pwm, TNORTHSWAY.mode(abs(pwm)));
+    TSOUTHSWAY.calibration(pwm, TSOUTHSWAY.mode(abs(pwm)));
     std_msgs::Int32 v;
-    v.data=TNORTHSWAY.pwm;
+    v.data = TNORTHSWAY.pwm;
     pubPwmNorthSway.publish(v);
-    v.data=TSOUTHSWAY.pwm;
+    v.data = TSOUTHSWAY.pwm;
     pubPwmSouthSway.publish(v);
-    isMovingForward=false;
+    isMovingForward = false;
 }
 
 void UpwardCB(const std_msgs::Int32& msg)
 {
-    int pwm=msg.data;
-    TNORTHUP.calibration(pwm,TNORTHUP.mode(abs(pwm)));
-    TSOUTHUP.calibration(pwm,TSOUTHUP.mode(abs(pwm)));
+    int pwm = msg.data;
+    TNORTHUP.calibration(pwm, TNORTHUP.mode(abs(pwm)));
+    TSOUTHUP.calibration(pwm, TSOUTHUP.mode(abs(pwm)));
     std_msgs::Int32 v;
-    v.data=TNORTHUP.pwm;
+    v.data = TNORTHUP.pwm;
     pubPwmNorthUp.publish(v);
-    v.data=TSOUTHUP.pwm;
+    v.data = TSOUTHUP.pwm;
     pubPwmSouthUp.publish(v);
-    isMovingForward=false;
+    isMovingForward = false;
 }
 
 void TurnCB(const std_msgs::Int32& msg)
 {
-    int pwm=msg.data;
+    int pwm = msg.data;
     std_msgs::Int32 v;
     if(!isMovingForward)    //checking if forward thrusters are not preoccupied
     {
-        TEAST.calibration(pwm,TEAST.mode(abs(pwm)));
-        TWEST.calibration(-pwm,TWEST.mode(abs(pwm)));
-        v.data=TEAST.pwm;
+        TEAST.calibration(pwm, TEAST.mode(abs(pwm)));
+        TWEST.calibration(-pwm, TWEST.mode(abs(pwm)));
+        v.data = TEAST.pwm;
         pubPwmEast.publish(v);
-        v.data=TWEST.pwm;
+        v.data = TWEST.pwm;
         pubPwmWest.publish(v);
     }
     else    ///forward thrusters are already in motion
     {
-        TNORTHSWAY.calibration(pwm,TNORTHSWAY.mode(abs(pwm)));
-        TSOUTHSWAY.calibration(-pwm,TSOUTHSWAY.mode(abs(pwm)));
-        v.data=TNORTHSWAY.pwm;
+        TNORTHSWAY.calibration(pwm, TNORTHSWAY.mode(abs(pwm)));
+        TSOUTHSWAY.calibration(-pwm, TSOUTHSWAY.mode(abs(pwm)));
+        v.data = TNORTHSWAY.pwm;
         pubPwmNorthSway.publish(v);
-        v.data=TSOUTHSWAY.pwm;
+        v.data = TSOUTHSWAY.pwm;
         pubPwmSouthSway.publish(v);
     }
 }
@@ -85,12 +85,12 @@ int main(int argc, char **argv)
     ros::Subscriber subPwmTurn = n.subscribe("/pwm/turn", 1000, TurnCB);
     
     //Topics for publishing data and communicating to the arduino
-    ros::Publisher pubPwmEast= n.advertise<std_msgs::Int32>("/ard/east", 1000);
-    ros::Publisher pubPwmWest= n.advertise<std_msgs::Int32>("/ard/west", 1000);
-    ros::Publisher pubPwmNorthUp= n.advertise<std_msgs::Int32>("/ard/northup", 1000);
-    ros::Publisher pubPwmSouthUp= n.advertise<std_msgs::Int32>("/ard/southup", 1000);
-    ros::Publisher pubPwmNorthSway= n.advertise<std_msgs::Int32>("/ard/northsway", 1000);
-    ros::Publisher pubPwmSouthSway= n.advertise<std_msgs::Int32>("/ard/southsway", 1000);
+    ros::Publisher pubPwmEast = n.advertise<std_msgs::Int32>("/ard/east", 1000);
+    ros::Publisher pubPwmWest = n.advertise<std_msgs::Int32>("/ard/west", 1000);
+    ros::Publisher pubPwmNorthUp = n.advertise<std_msgs::Int32>("/ard/northup", 1000);
+    ros::Publisher pubPwmSouthUp = n.advertise<std_msgs::Int32>("/ard/southup", 1000);
+    ros::Publisher pubPwmNorthSway = n.advertise<std_msgs::Int32>("/ard/northsway", 1000);
+    ros::Publisher pubPwmSouthSway = n.advertise<std_msgs::Int32>("/ard/southsway", 1000);
     
     ros::spin();
     return 0;

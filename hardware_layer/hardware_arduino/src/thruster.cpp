@@ -11,11 +11,11 @@ thruster::thruster();
 
 void thruster::mode(int P)
 {
-    if(P==0)
+    if(P == 0)
         return 0;
-    else if(P<180)
+    else if(P < 180)
         return LOW;
-    else if(pwm>=180 && pwm<220)
+    else if(pwm >= 180 && pwm < 220)
         return MED;
     else
         return HIGH;
@@ -23,33 +23,33 @@ void thruster::mode(int P)
 
 void thruster::setValues(int HC, int MC, int LC, int HAC, int MAC, int LAC)
 {
-    clock_.High=HC;
-    clock_.Med=MC;
-    clock_.Low=LC;
-    anticlock_.High=HAC;
-    anticlock_.Med=MAC;
-    anticlock_Low.LAC;
+    clock_.High = HC;
+    clock_.Med = MC;
+    clock_.Low = LC;
+    anticlock_.High = HAC;
+    anticlock_.Med = MAC;
+    anticlock_.Low = LAC;
 }
 
 void thruster::calibration(int PWM, int M)
 {
-    bool positive=true
-    if(M==0 && PWM==0)
+    bool positive = true
+    if(M == 0 && PWM == 0)
     {
-        pwm_=0;
+        pwm_ = 0;
         return;
     }
-    if(PWM<0)
-        positive=false;
-    if(positive==true)
+    if(PWM < 0)
+        positive = false;
+    if(positive == true)
     {
         switch(M)
         {
-            case 1: pwm_=clock_.Low;
+            case 1: pwm_ = clock_.Low;
                 break;
-            case 2: pwm_=clock_.Med;
+            case 2: pwm_ = clock_.Med;
                 break;
-            case 3: pwm_=clock_.High;
+            case 3: pwm_ = clock_.High;
                 break;
         }
     }
@@ -57,11 +57,11 @@ void thruster::calibration(int PWM, int M)
     {
         switch(M)
         {
-            case 1: pwm_=anticlock_.Low;
+            case 1: pwm_ = anticlock_.Low;
                 break;
-            case 2: pwm_=anticlock_.Med;
+            case 2: pwm_ = anticlock_.Med;
                 break;
-            case 3: pwm_=anticlock_.High;
+            case 3: pwm_ = anticlock_.High;
                 break;
         }
     }

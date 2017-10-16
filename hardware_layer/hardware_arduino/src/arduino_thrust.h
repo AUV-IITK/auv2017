@@ -13,7 +13,7 @@ class arduino_thrust
         void setPins(int A1, int D1, int D2);
     
         //applies analogwrite and digitalwrite functions in arduino
-        void ON(int pwm,bool Dir1,bool Dir2);
+        void ON(int pwm, bool Dir1, bool Dir2);
     
     private:
         int An1_;   //stores the analog pin number for the thruster on arduino

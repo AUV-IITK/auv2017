@@ -40,81 +40,81 @@ ros::NodeHandle nh;
 
 void TEastCb(const std_msgs::Int32 msg)
 {
-    int pwm=msg.data;
-    pwm=abs(pwm);
-    bool isForward=true;
-    if(msg.data<=0)
-        isForward=false;
+    int pwm = msg.data;
+    pwm = abs(pwm);
+    bool isForward = true;
+    if(msg.data <= 0)
+        isForward = false;
     if(isForward)
-        AEAST.ON(255-pwm,HIGH,LOW);
+        AEAST.ON(255-pwm, HIGH, LOW);
     else
-        AEAST.ON(255-pwm,LOW,HIGH);
+        AEAST.ON(255-pwm, LOW, HIGH);
 }
 
 
 void TWestCb(const std_msgs::Int32 msg)
 {
-    int pwm=msg.data;
-    pwm=abs(pwm);
-    bool isForward=true;
-    if(msg.data<=0)
-        isForward=false;
+    int pwm = msg.data;
+    pwm = abs(pwm);
+    bool isForward = true;
+    if(msg.data <= 0)
+        isForward = false;
     if(isForward)
-        AWEST.ON(255-pwm,HIGH,LOW);
+        AWEST.ON(255-pwm, HIGH, LOW);
     else
-        AWEST.ON(255-pwm,LOW,HIGH);
+        AWEST.ON(255-pwm, LOW, HIGH);
 }
 
 void TNorthSwayCb(const std_msgs::Int32 msg)
 {
-    int pwm=msg.data;
-    pwm=abs(pwm);
-    bool isSideward=true;
-    if(msg.data<=0)
-        isSideward=false;
+    int pwm = msg.data;
+    pwm = abs(pwm);
+    bool isSideward = true;
+    if(msg.data <= 0)
+        isSideward = false;
     if(isSideward)
-        ANORTHSWAY.ON(255-pwm,HIGH,LOW);
+        ANORTHSWAY.ON(255-pwm, HIGH, LOW);
     else
-        ANORTHSWAY.ON(255-pwm,LOW,HIGH);
+        ANORTHSWAY.ON(255-pwm, LOW, HIGH);
 }
 
 void TSouthSwayCb(const std_msgs::Int32 msg)
 {
-    int pwm=msg.data;
-    pwm=abs(pwm);
-    bool isSideward=true;
-    if(msg.data<=0)
-        isSideward=false;
+    int pwm = msg.data;
+    pwm = abs(pwm);
+    bool isSideward = true;
+    if(msg.data <= 0)
+        isSideward = false;
     if(isSideward)
-        ASOUTHSWAY.ON(255-pwm,HIGH,LOW);
+        ASOUTHSWAY.ON(255-pwm, HIGH, LOW);
     else
-        ASOUTHSWAY.ON(255-pwm,LOW,HIGH);
+        ASOUTHSWAY.ON(255-pwm, LOW, HIGH);
 }
 
 void TNorthUpCb(const std_msgs::Int32 msg)
 {
-    int pwm=msg.data;
-    pwm=abs(pwm);
-    bool isUpward=true;
-    if(msg.data<=0)
-        isUpward=false;
+    int pwm = msg.data;
+    pwm = abs(pwm);
+    bool isUpward = true;
+    if(msg.data <= 0)
+        isUpward = false;
     if(isUpward)
-        ANORTHUP.ON(255-pwm,HIGH,LOW);
+        ANORTHUP.ON(255-pwm, HIGH, LOW);
     else
-        ANORTHUP.ON(255-pwm,LOW,HIGH);
+        ANORTHUP.ON(255-pwm, LOW, HIGH);
 }
 
 void TSouthUpCb(const std_msgs::Int32 msg)
 {
-    int pwm=msg.data;
-    pwm=abs(pwm);
-    bool isUpward=true;
-    if(msg.data<=0)
-        isUpward=false;
+    int pwm = msg.data;
+    pwm = abs(pwm);
+    bool isUpward = true;
+    if(msg.data <= 0)
+        isUpward = false;
     if(isUpward)
-        ASOUTHUP.ON(255-pwm,HIGH,LOW);
+        ASOUTHUP.ON(255-pwm, HIGH, LOW);
     else
-        ASOUTHUP.ON(255-pwm,LOW,HIGH);
+        ASOUTHUP.ON(255-pwm, LOW, HIGH);
 }
 
 ros::Subscriber<std_msgs::Int32> subPwmEast("/ard/east", &TEastCb);
@@ -154,7 +154,7 @@ void setup()
     Serial.begin(57600);
     
     std_msgs::Int32 v;
-    v.data=0;
+    v.data = 0;
     TEastCb(v);
     TWestCb(v);
     TNorthSwayCb(v);
