@@ -1,5 +1,5 @@
 #include <iostream.h>
-#include "thrustercalibration.h"
+#include "thruster.h"
 
 #define HIGH 3
 #define MED 2

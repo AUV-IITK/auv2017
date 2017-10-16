@@ -1,5 +1,5 @@
-#ifndef THRUSTER_H
-#define THRUSTER_H
+#ifndef thruster_h
+#define thruster_h
 using namespace std;
 
 struct mode         //structure to store the three speed mode values in one direction
