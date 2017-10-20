@@ -34,11 +34,11 @@ void callback(task_buoy::buoyConfig &config, uint32_t level)
   threshold = config.threshold_param; // initial value is false
 
   if (!threshold){
-    pre_processing::update_values(config, flag, blue_buoy, green_buoy, red_buoy); // update the values in the rqt_reconfigure which were saved last time
+    task_buoy::update_values(config, flag, blue_buoy, green_buoy, red_buoy); // update the values in the rqt_reconfigure which were saved last time
   }
 
   // updating the values in the BGR matrix
-  pre_processing::threshold_values_update(BGR, config);
+  task_buoy::threshold_values_update(BGR, config);
 
   if (!count){
     config.save_param = false;
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 
   system(SHELLSCRIPT_LOAD);
 
-  pre_processing::get_buoys_params(n, red_buoy, blue_buoy, green_buoy); // to get the values of parameters from the parameter server
+  task_buoy::get_buoys_params(n, red_buoy, blue_buoy, green_buoy); // to get the values of parameters from the parameter server
 
   dynamic_reconfigure::Server<task_buoy::buoyConfig> server;
   dynamic_reconfigure::Server<task_buoy::buoyConfig>::CallbackType f;
@@ -114,12 +114,12 @@ int main(int argc, char *argv[])
       std::cout << "not exist" << std::endl;
 
     if (threshold){
-      pre_processing::threshold(BGR, red_buoy, blue_buoy, green_buoy, flag); // to put change the values of red_buoy, green_buoy, blue_buoy through dynamic_reconfigure
+      task_buoy::threshold(BGR, red_buoy, blue_buoy, green_buoy, flag); // to put change the values of red_buoy, green_buoy, blue_buoy through dynamic_reconfigure
     }
 
     if (save == true){
 
-      pre_processing::set_buoy_params(n, red_buoy, blue_buoy, green_buoy);
+      task_buoy::set_buoy_params(n, red_buoy, blue_buoy, green_buoy);
       save = false;
       system(SHELLSCRIPT_DUMP); // all the parameters saved in the yaml file
 
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
 
       if (contours.empty())
       {
-        array = pre_processing::empty_contour_handler(center_ideal[0]);
+        array = post_processing::empty_contour_handler(center_ideal[0]);
         pub.publish(array);
         ros::spinOnce();
         continue;
@@ -248,7 +248,7 @@ int main(int argc, char *argv[])
       sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", circles).toImageMsg();
       pub1.publish(msg1);
 
-      array = pre_processing::edge_case_handler(center_ideal[0], r[0]);
+      array = post_processing::edge_case_handler(center_ideal[0], r[0]);
       pub.publish(array);
       ros::spinOnce();
 

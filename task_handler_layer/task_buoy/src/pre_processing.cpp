@@ -4,172 +4,185 @@
 
 namespace pre_processing{
 
-cv::Mat balance_white(cv::Mat src, float parameter){
+  cv::Mat balance_white(cv::Mat src, float parameter){ // same for all the tasks
 
-  float discard_ratio = parameter;
-  cv::Mat mat = src;
+    float discard_ratio = parameter;
+    cv::Mat mat = src;
 
-  int hists[3][256];
-  memset(hists, 0, 3*256*sizeof(int));
+    int hists[3][256];
+    memset(hists, 0, 3*256*sizeof(int));
 
-  for (int y = 0; y < mat.rows; ++y) {
-    uchar* ptr = mat.ptr<uchar>(y);
-    for (int x = 0; x < mat.cols; ++x) {
-      for (int j = 0; j < 3; ++j) {
-        hists[j][ptr[x * 3 + j]] += 1;
+    for (int y = 0; y < mat.rows; ++y) {
+      uchar* ptr = mat.ptr<uchar>(y);
+      for (int x = 0; x < mat.cols; ++x) {
+        for (int j = 0; j < 3; ++j) {
+          hists[j][ptr[x * 3 + j]] += 1;
+        }
       }
     }
-  }
 
-  // cumulative hist
-  int total = mat.cols*mat.rows;
-  int vmin[3], vmax[3];
-  for (int i = 0; i < 3; ++i) {
-    for (int j = 0; j < 255; ++j) {
-      hists[i][j + 1] += hists[i][j];
+    // cumulative hist
+    int total = mat.cols*mat.rows;
+    int vmin[3], vmax[3];
+    for (int i = 0; i < 3; ++i) {
+      for (int j = 0; j < 255; ++j) {
+        hists[i][j + 1] += hists[i][j];
+      }
+      vmin[i] = 0;
+      vmax[i] = 255;
+      while (hists[i][vmin[i]] < discard_ratio * total)
+        vmin[i] += 1;
+      while (hists[i][vmax[i]] > (1 - discard_ratio) * total)
+        vmax[i] -= 1;
+      if (vmax[i] < 255 - 1)
+        vmax[i] += 1;
     }
-    vmin[i] = 0;
-    vmax[i] = 255;
-    while (hists[i][vmin[i]] < discard_ratio * total)
-      vmin[i] += 1;
-    while (hists[i][vmax[i]] > (1 - discard_ratio) * total)
-      vmax[i] -= 1;
-    if (vmax[i] < 255 - 1)
-      vmax[i] += 1;
-  }
 
-
-  for (int y = 0; y < mat.rows; ++y) {
-    uchar* ptr = mat.ptr<uchar>(y);
-    for (int x = 0; x < mat.cols; ++x) {
-      for (int j = 0; j < 3; ++j) {
-        int val = ptr[x * 3 + j];
-        if (val < vmin[j])
-          val = vmin[j];
-        if (val > vmax[j])
-          val = vmax[j];
-        ptr[x * 3 + j] = static_cast<uchar>((val - vmin[j]) * 255.0 / (vmax[j] - vmin[j]));
+    for (int y = 0; y < mat.rows; ++y) {
+      uchar* ptr = mat.ptr<uchar>(y);
+      for (int x = 0; x < mat.cols; ++x) {
+        for (int j = 0; j < 3; ++j) {
+          int val = ptr[x * 3 + j];
+          if (val < vmin[j])
+            val = vmin[j];
+          if (val > vmax[j])
+            val = vmax[j];
+          ptr[x * 3 + j] = static_cast<uchar>((val - vmin[j]) * 255.0 / (vmax[j] - vmin[j]));
+        }
       }
     }
+
+    return mat;
   }
 
-  return mat;
-}
+///////////////////////////////////////////////////////////////////////////////////////////////
 
-cv::Mat color_correction(cv::Mat src, int parameter){
+  cv::Mat color_correction(cv::Mat src, int parameter){ // same for all the tasks
 
-  std::vector<cv::Mat> lab_planes(3);
-  cv::Mat dst, lab_image;
+    std::vector<cv::Mat> lab_planes(3);
+    cv::Mat dst, lab_image;
 
-  cv::cvtColor(src, lab_image, CV_BGR2Lab);
+    cv::cvtColor(src, lab_image, CV_BGR2Lab);
 
-  // Extract the L channel
-  cv::split(lab_image, lab_planes);  // now we have the L image in lab_planes[0]
+    // Extract the L channel
+    cv::split(lab_image, lab_planes);  // now we have the L image in lab_planes[0]
 
-  // apply the CLAHE algorithm to the L channel
-  cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
-  clahe->setClipLimit(parameter);
+    // apply the CLAHE algorithm to the L channel
+    cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
+    clahe->setClipLimit(parameter);
 
-  clahe->apply(lab_planes[0], dst);
+    clahe->apply(lab_planes[0], dst);
 
-  // Merge the the color planes back into an Lab image
-  dst.copyTo(lab_planes[0]);
-  cv::merge(lab_planes, lab_image);
+    // Merge the the color planes back into an Lab image
+    dst.copyTo(lab_planes[0]);
+    cv::merge(lab_planes, lab_image);
 
-  // convert back to RGB
-  cv::Mat image_clahe;
-  cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
+    // convert back to RGB
+    cv::Mat image_clahe;
+    cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
 
-  return image_clahe;
-
-}
-void denoise(cv::Mat &src, int i){
-
-  cv::Mat dstx;
-
-  for (int j = 0; j < i; j++){
-    bilateralFilter(src, dstx, 6, 8, 8);
-    bilateralFilter(dstx, src, 6, 8, 8);
-  }
-
-}
-
-std_msgs::Float64MultiArray empty_contour_handler(cv::Point2f center_ideal){
-
-  std_msgs::Float64MultiArray array;
-
-  int x_cord = center_ideal.x - 320;
-  int y_cord = 240 - center_ideal.y;
-
-  if (x_cord < -270)
-  {
-    for (int i = 0; i < 4; i++)
-      array.data.push_back(-2); // left_side
-  }
-  else if (x_cord > 270)
-  {
-    for (int i = 0; i < 4; i++)
-      array.data.push_back(-3); // right_side
-  }
-  else if (y_cord > 200)
-  {
-    for (int i = 0; i < 4; i++)
-      array.data.push_back(-3);  // top
-  }
-  else if (y_cord < -200)
-  {
-    for (int i = 0; i < 4; i++)
-      array.data.push_back(-4);  // bottom
-  }
-
-  return array;
-
-}
-std_msgs::Float64MultiArray edge_case_handler(cv::Point2f center, int radius){
-
-  std_msgs::Float64MultiArray array;
-
-  int net_x_cord = 320 - center.x + radius;
-  int net_y_cord = -240 + center.y + radius;
-
-  if (net_x_cord < -310)
-  {
-    for (int i = 0; i < 4; i++)
-      array.data.push_back(-2);  // right_side
-  }
-  else if (net_x_cord > 310)
-  {
-    for (int i = 0; i < 4; i++)
-      array.data.push_back(-1);  // left_side
-  }
-  else if (net_y_cord > 230)
-  {
-    for (int i = 0; i < 4; i++)
-      array.data.push_back(-3);  // bottom
-  }
-  else if (net_y_cord < -230)
-  {
-    for (int i = 0; i < 4; i++)
-      array.data.push_back(-4);  // right_side
-  }
-  else if (radius > 110)
-  {
-    for (int i = 0; i < 4; i++)
-      array.data.push_back(-5); // when the bot is very near
-  }
-  else
-  {
-    float distance;
-    distance = pow(radius / 7526.5, -.92678);  // function found using experiment
-    array.data.push_back(radius);                   // publish radius
-    array.data.push_back((320 - center.x));
-    array.data.push_back(-(240 - center.y));
-    array.data.push_back(distance);
-  }
-
-  return array;
+    return image_clahe;
 
   }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  void denoise(cv::Mat &src, int i){ // may be needed in a task
+
+    cv::Mat dstx;
+
+    for (int j = 0; j < i; j++){
+      bilateralFilter(src, dstx, 6, 8, 8);
+      bilateralFilter(dstx, src, 6, 8, 8);
+    }
+
+  }
+
+};
+
+namespace post_processing{
+
+  std_msgs::Float64MultiArray empty_contour_handler(cv::Point2f center_ideal){
+
+    std_msgs::Float64MultiArray array;
+
+    int x_cord = center_ideal.x - 320;
+    int y_cord = 240 - center_ideal.y;
+
+    if (x_cord < -270)
+    {
+      for (int i = 0; i < 4; i++)
+        array.data.push_back(-2); // left_side
+    }
+    else if (x_cord > 270)
+    {
+      for (int i = 0; i < 4; i++)
+        array.data.push_back(-3); // right_side
+    }
+    else if (y_cord > 200)
+    {
+      for (int i = 0; i < 4; i++)
+        array.data.push_back(-3);  // top
+    }
+    else if (y_cord < -200)
+    {
+      for (int i = 0; i < 4; i++)
+        array.data.push_back(-4);  // bottom
+    }
+
+    return array;
+
+  }
+
+  std_msgs::Float64MultiArray edge_case_handler(cv::Point2f center, int radius){
+
+    std_msgs::Float64MultiArray array;
+
+    int net_x_cord = 320 - center.x + radius;
+    int net_y_cord = -240 + center.y + radius;
+
+    if (net_x_cord < -310)
+    {
+      for (int i = 0; i < 4; i++)
+        array.data.push_back(-2);  // right_side
+    }
+    else if (net_x_cord > 310)
+    {
+      for (int i = 0; i < 4; i++)
+        array.data.push_back(-1);  // left_side
+    }
+    else if (net_y_cord > 230)
+    {
+      for (int i = 0; i < 4; i++)
+        array.data.push_back(-3);  // bottom
+    }
+    else if (net_y_cord < -230)
+    {
+      for (int i = 0; i < 4; i++)
+        array.data.push_back(-4);  // right_side
+    }
+    else if (radius > 110)
+    {
+      for (int i = 0; i < 4; i++)
+        array.data.push_back(-5); // when the bot is very near
+    }
+    else
+    {
+      float distance;
+      distance = pow(radius / 7526.5, -.92678);  // function found using experiment
+      array.data.push_back(radius);                   // publish radius
+      array.data.push_back((320 - center.x));
+      array.data.push_back(-(240 - center.y));
+      array.data.push_back(distance);
+    }
+
+    return array;
+
+    }
+
+};
+
+namespace task_buoy{
 
   void get_buoys_params(ros::NodeHandle &nh, int red_buoy[][2], int blue_buoy[][2], int green_buoy[][2])
   {
@@ -291,4 +304,4 @@ std_msgs::Float64MultiArray edge_case_handler(cv::Point2f center, int radius){
     BGR[2][1] = config.t3max_param;
   }
 
-}
+};

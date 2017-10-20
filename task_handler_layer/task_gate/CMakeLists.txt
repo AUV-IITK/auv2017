@@ -143,6 +143,7 @@ add_executable(gate_server src/gate_server.cpp)
 add_executable(gate_client src/gate_client.cpp)
 target_link_libraries(gate_detection ${OpenCV_LIBS} )
 target_link_libraries(gate_detection ${catkin_LIBRARIES})
+target_link_libraries(gate_detection pre_processing)
 target_link_libraries(gate_server ${catkin_LIBRARIES})
 target_link_libraries(gate_client ${catkin_LIBRARIES})
 
