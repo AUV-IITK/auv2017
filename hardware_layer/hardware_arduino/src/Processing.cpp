@@ -16,9 +16,9 @@ void ForwardCB(const std_msgs::Int32& msg)  //callback function
     TEAST.calibration(pwm, TEAST.mode(abs(pwm)));    //classifying and storing the value in private pwm variable
     TWEST.calibration(pwm, TWEST.mode(abs(pwm)));
     std_msgs::Int32 v;
-    v.data = TEAST.pwm;
+    v.data = TEAST.pwm_;
     pubPwmEast.publish(v);  //publishing on concerned topics linked to arduino
-    v.data = TWEST.pwm;
+    v.data = TWEST.pwm_;
     pubPwmWest.publish(v);
     isMovingForward = true;
 }
@@ -29,9 +29,9 @@ void SidewardCB(const std_msgs::Int32& msg)
     TNORTHSWAY.calibration(pwm, TNORTHSWAY.mode(abs(pwm)));
     TSOUTHSWAY.calibration(pwm, TSOUTHSWAY.mode(abs(pwm)));
     std_msgs::Int32 v;
-    v.data = TNORTHSWAY.pwm;
+    v.data = TNORTHSWAY.pwm_;
     pubPwmNorthSway.publish(v);
-    v.data = TSOUTHSWAY.pwm;
+    v.data = TSOUTHSWAY.pwm_;
     pubPwmSouthSway.publish(v);
     isMovingForward = false;
 }
@@ -42,9 +42,9 @@ void UpwardCB(const std_msgs::Int32& msg)
     TNORTHUP.calibration(pwm, TNORTHUP.mode(abs(pwm)));
     TSOUTHUP.calibration(pwm, TSOUTHUP.mode(abs(pwm)));
     std_msgs::Int32 v;
-    v.data = TNORTHUP.pwm;
+    v.data = TNORTHUP.pwm_;
     pubPwmNorthUp.publish(v);
-    v.data = TSOUTHUP.pwm;
+    v.data = TSOUTHUP.pwm_;
     pubPwmSouthUp.publish(v);
     isMovingForward = false;
 }
@@ -57,18 +57,18 @@ void TurnCB(const std_msgs::Int32& msg)
     {
         TEAST.calibration(pwm, TEAST.mode(abs(pwm)));
         TWEST.calibration(-pwm, TWEST.mode(abs(pwm)));
-        v.data = TEAST.pwm;
+        v.data = TEAST.pwm_;
         pubPwmEast.publish(v);
-        v.data = TWEST.pwm;
+        v.data = TWEST.pwm_;
         pubPwmWest.publish(v);
     }
     else    ///forward thrusters are already in motion
     {
         TNORTHSWAY.calibration(pwm, TNORTHSWAY.mode(abs(pwm)));
         TSOUTHSWAY.calibration(-pwm, TSOUTHSWAY.mode(abs(pwm)));
-        v.data = TNORTHSWAY.pwm;
+        v.data = TNORTHSWAY.pwm_;
         pubPwmNorthSway.publish(v);
-        v.data = TSOUTHSWAY.pwm;
+        v.data = TSOUTHSWAY.pwm_;
         pubPwmSouthSway.publish(v);
     }
 }
@@ -76,7 +76,7 @@ void TurnCB(const std_msgs::Int32& msg)
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "Processing");
-    ros::NodeHandle nh;
+    ros::NodeHandle n;
     
     //Topics receiving pwm values from the motion library
     ros::Subscriber subPwmForward = n.subscribe("/pwm/forward", 1000, ForwardCB);

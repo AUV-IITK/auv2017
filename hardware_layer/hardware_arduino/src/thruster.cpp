@@ -33,7 +33,7 @@ void thruster::setValues(int HC, int MC, int LC, int HAC, int MAC, int LAC)
 
 void thruster::calibration(int PWM, int M)
 {
-    bool positive = true
+    bool positive = true;
     if(M == 0 && PWM == 0)
     {
         pwm_ = 0;

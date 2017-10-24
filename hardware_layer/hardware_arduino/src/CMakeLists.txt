@@ -13,9 +13,3 @@ generate_arduino_firmware(arduino_node
   BOARD uno
   PORT /dev/arduino
 )
-
-generate_arduino_firmware(testing_arduino_node
-  SRCS testing_arduino_node.cpp ${ROS_LIB_DIR}/time.cpp
-  BOARD uno
-  PORT /dev/arduino
-)

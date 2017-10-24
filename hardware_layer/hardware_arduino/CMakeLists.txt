@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## Check for lint errors
-roslint_cpp(src/arduino_node.cpp src/testing_arduino_node.cpp)
+roslint_cpp(src/arduino_node.cpp)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -160,8 +160,6 @@ rosserial_configure_client(
 rosserial_add_client_target(src arduino_node ALL)
 rosserial_add_client_target(src arduino_node-upload)
 
-rosserial_add_client_target(src testing_arduino_node ALL)
-rosserial_add_client_target(src testing_arduino_node-upload)
 
 #############
 ## Install ##
