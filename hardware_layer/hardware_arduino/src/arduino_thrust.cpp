@@ -1,10 +1,7 @@
 #include "Arduino.h"
 #include "arduino_thrust.h"
-#include <iostream.h>
 
 using namespace std;
-
-arduino_thrust::arduino_thrust();
 
 void arduino_thrust::setPins(int A1, int D1, int D2)
 {

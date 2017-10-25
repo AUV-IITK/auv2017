@@ -12,15 +12,16 @@ struct thrusterMode         //structure to store the three speed mode values in 
 class thruster
 {
 	public:
-    
-		thruster();
-    
+
         //tells the speed mode of the thruster
         int mode(int P);
-    
+
+        // returns the value of pwm_
+        int getPWM();
+
         //it sets the struct values of any instance of this class
         void setValues(int HC, int MC,int LC, int HAC, int MAC, int LAC);
-    
+
         //it classifies the obtained pwm variable to given specified speed modes
         void calibration(int PWM, int M);
 
@@ -31,5 +32,3 @@ class thruster
 };
 
 #endif
-
-

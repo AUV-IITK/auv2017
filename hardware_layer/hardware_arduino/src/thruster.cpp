@@ -1,4 +1,3 @@
-#include <iostream.h>
 #include "thruster.h"
 
 #define HIGH 3
@@ -7,18 +6,20 @@
 
 using namespace std;
 
-thruster::thruster();
-
-void thruster::mode(int P)
+int thruster::mode(int P)
 {
     if(P == 0)
         return 0;
     else if(P < 180)
         return LOW;
-    else if(pwm >= 180 && pwm < 220)
+    else if(P >= 180 && P < 220)
         return MED;
     else
         return HIGH;
+}
+
+int thruster::getPWM(){
+  return pwm_;
 }
 
 void thruster::setValues(int HC, int MC, int LC, int HAC, int MAC, int LAC)
