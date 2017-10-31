@@ -127,11 +127,8 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(yawDirect src/yawDirect.cpp)
-target_link_libraries(yawDirect ${catkin_LIBRARIES})
-
-add_executable(dcm src/dcm.cpp)
-target_link_libraries(dcm ${catkin_LIBRARIES})
+add_executable(px4 src/px4.cpp)
+target_link_libraries(px4 ${catkin_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(IMU

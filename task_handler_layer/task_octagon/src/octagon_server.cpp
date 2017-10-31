@@ -3,7 +3,6 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int32.h>
-#include <sensor_msgs/Imu.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Float64MultiArray.h>
 #include <std_msgs/Bool.h>
@@ -31,8 +30,6 @@ typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> Client_Sid
 typedef actionlib::SimpleActionClient<motion_commons::TurnAction> Client_Turn;
 typedef actionlib::SimpleActionClient<motion_commons::UpwardAction> Client_Upward;
 
-#define TO_DEG(x) (x * 57.2957795131)
-
 class TaskoctagonInnerClass
 {
 private:
@@ -59,7 +56,6 @@ private:
   motion_commons::UpwardGoal upwardgoal;
   std_msgs::Float64 data_X_;
   std_msgs::Float64 data_Y_;
-  std_msgs::Float64 imu_data;
   bool isblue, success, FrontCenter, SideCenter, octagonAlign;
 
 public:
@@ -82,7 +78,7 @@ public:
 
     detection_data = nh_.subscribe<std_msgs::Bool>("/varun/ip/octagon_detection", 1000,
                                                    &TaskoctagonInnerClass::octagonDetectedListener, this);
-    yaw_sub = nh_.subscribe<sensor_msgs::Imu>("/mavros/imu/data", 1000, &TaskoctagonInnerClass::yawCB, this);
+    yaw_sub = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskoctagonInnerClass::yawCB, this);
     centralize_data = nh_.subscribe<std_msgs::Float64MultiArray>(
         "/varun/ip/octagon_centralize", 1000, &TaskoctagonInnerClass::octagonCentralizeListener, this);
     octagon_server_.start();
@@ -92,13 +88,8 @@ public:
   {
   }
 
-  void yawCB(sensor_msgs::Imu msg)
+  void yawCB(std_msgs::Float64 imu_data)
   {
-    float q0 = msg.orientation.w;
-    float q1 = msg.orientation.x;
-    float q2 = msg.orientation.y;
-    float q3 = msg.orientation.z;
-    imu_data.data = TO_DEG(atan2(2*q1*q2-2*q0*q3, 2*q0*q0+2*q1*q1-1));
     yaw_pub_.publish(imu_data);
   }
 

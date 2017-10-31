@@ -3,7 +3,6 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int32.h>
-#include <sensor_msgs/Imu.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Float64MultiArray.h>
 #include <std_msgs/Bool.h>
@@ -26,8 +25,6 @@ typedef actionlib::SimpleActionServer<task_commons::lineAction> Server;
 typedef actionlib::SimpleActionClient<motion_commons::ForwardAction> Client_Forward;
 typedef actionlib::SimpleActionClient<motion_commons::SidewardAction> Client_Sideward;
 typedef actionlib::SimpleActionClient<motion_commons::TurnAction> Client_Turn;
-
-#define TO_DEG(x) (x * 57.2957795131)
 
 class TaskLineInnerClass
 {
@@ -56,7 +53,6 @@ private:
   std_msgs::Float64 data_X_;
   std_msgs::Float64 data_Y_;
   std_msgs::Float64 angle_goal;
-  std_msgs::Float64 imu_data;
   bool isOrange, success, FrontCenter, SideCenter, LineAlign;
 
 public:
@@ -80,7 +76,7 @@ public:
 
     detection_data = nh_.subscribe<std_msgs::Bool>("/varun/ip/line_detection", 1000,
                                                    &TaskLineInnerClass::lineDetectedListener, this);
-    yaw_sub = nh_.subscribe<sensor_msgs::Imu>("/mavros/imu/data", 1000, &TaskLineInnerClass::yawCB, this);
+    yaw_sub = nh_.subscribe<std_msgs::Float64>("/varun/sensors/imu/yaw", 1000, &TaskLineInnerClass::yawCB, this);
     centralize_data = nh_.subscribe<std_msgs::Float64MultiArray>("/varun/ip/line_centralize", 1000,
                                                                  &TaskLineInnerClass::lineCentralizeListener, this);
     angle_data =
@@ -93,13 +89,8 @@ public:
   {
   }
 
-  void yawCB(sensor_msgs::Imu msg)
+  void yawCB(std_msgs::Float64 imu_data)
   {
-    float q0 = msg.orientation.w;
-    float q1 = msg.orientation.x;
-    float q2 = msg.orientation.y;
-    float q3 = msg.orientation.z;
-    imu_data.data = TO_DEG(atan2(2*q1*q2-2*q0*q3, 2*q0*q0+2*q1*q1-1));
     yaw_pub_.publish(imu_data);
   }
 
