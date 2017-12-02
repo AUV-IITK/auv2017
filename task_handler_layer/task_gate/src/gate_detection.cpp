@@ -187,19 +187,19 @@ int main(int argc, char *argv[])
 
     for (int i=0; i < 3; i++)
     {
-      bilateralFilter(dst1, dstx, 6, 8, 8);
-      bilateralFilter(dstx, dst1, 6, 8, 8);
+      bilateralFilter(balanced_image1, dstx, 6, 8, 8);
+      bilateralFilter(dstx, balanced_image1, 6, 8, 8);
     }
     cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
     cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
 
-    cv::inRange(balanced_image1, cv::Scalar(0, 0, 80), cv::Scalar(100, 50, 260), thresholded);
+    cv::inRange(balanced_image, hsv_min, hsv_max, thresholded);
 
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
     cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
 
-    if (!IP)
+    if (1)
     {
       // find contours
       std::vector<std::vector<cv::Point> > contours;
@@ -212,7 +212,10 @@ int main(int argc, char *argv[])
       cv::Scalar color(255, 255, 255);
 
       sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
-      sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
+      sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image).toImageMsg();
+
+      pub2.publish(msg2);
+      pub3.publish(msg3);
 
       if (contours.empty())
       {

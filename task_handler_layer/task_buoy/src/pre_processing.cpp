@@ -180,6 +180,69 @@ namespace post_processing{
 
     }
 
+    int get_largest_contour_index(std::vector<std::vector<cv::Point2f> > contours){ // to get the leargest contour index in a group of contours
+
+      int largest_contour_index = 0;
+      double largest_area = 0;
+
+      for (int i = 0; i < contours.size(); i++)  // iterate through each contour.
+      {
+        double a = contourArea(contours[i], false);  //  Find the area of contour
+        if (a > largest_area)
+        {
+          largest_area = a;
+          largest_contour_index = i;  // Store the index of largest contour
+        }
+      }
+
+      return largest_contour_index;
+
+    }
+
+    cv::Point2f get_center_of_contour(std::vector<std::vector<cv::Point2f> > contours){ // to get the center of the contour
+
+      int largest_contour_index = get_largest_contour_index(contours);
+      std::vector<std::vector<cv::Point> > hull(1);
+      cv::convexHull(cv::Mat(contours[largest_contour_index]), hull[0], false);
+
+      cv::Moments mu;
+      mu = cv::moments(hull[0], false);
+      cv::Point2f center_of_mass;
+
+      center_of_mass = cv::Point2f(mu.m10 / mu.m00, mu.m01 / mu.m00);
+
+      return center_of_mass;
+
+    }
+
+    void avg_fn(float *radius_ideal, std::vector<cv::Point2f> &center_ideal, float &current_radius, cv::Point2f &current_center, int &count_avg){
+      float radius_avg = (radius_ideal[0] + radius_ideal[1] + radius_ideal[2] + radius_ideal[3] + radius_ideal[4]) / 5;
+      if ((current_radius < (radius_avg + 10)) && (count_avg >= 5))
+      {
+        radius_ideal[4] = radius_ideal[3];
+        radius_ideal[3] = radius_ideal[2];
+        radius_ideal[2] = radius_ideal[1];
+        radius_ideal[1] = radius_ideal[0];
+        radius_ideal[0] = current_radius;
+        center_ideal[4] = center_ideal[3];
+        center_ideal[3] = center_ideal[2];
+        center_ideal[2] = center_ideal[1];
+        center_ideal[1] = center_ideal[0];
+        center_ideal[0] = current_center;
+        count_avg++;
+      }
+      else if (count_avg <= 5)
+      {
+        radius_ideal[count_avg] = current_radius;
+        center_ideal[count_avg] = current_center;
+        count_avg++;
+      }
+      else
+      {
+        count_avg = 0;
+      }
+    }
+
 };
 
 namespace task_buoy{

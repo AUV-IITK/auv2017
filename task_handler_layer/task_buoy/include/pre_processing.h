@@ -6,7 +6,6 @@
 #include <task_buoy/buoyConfig.h>
 
 namespace pre_processing{
-
   cv::Mat balance_white(cv::Mat src, float parameter); // for removing the color cast
   cv::Mat color_correction(cv::Mat src, int parameter); // apply the CLAHE algorithm here
   void denoise(cv::Mat &src, int i); // applying bilateralFilter 2*i times
@@ -15,6 +14,9 @@ namespace pre_processing{
 namespace post_processing{
   std_msgs::Float64MultiArray empty_contour_handler(cv::Point2f); // gives the last coordinates of the center of the buoy if the present frame is empty
   std_msgs::Float64MultiArray edge_case_handler(cv::Point2f, int radius); // tells if buoy is at the edges and which edge
+  int get_largest_contour_index(std::vector<std::vector<cv::Point2f> > contours); // to get the biggest contour in a set of contours
+  cv::Point2f get_contour_center(std::vector<std::vector<cv::Point2f> > contours); // to get the center of the contour
+  void avg_fn(float *radius_ideal, std::vector<cv::Point2f> &center_ideal, float &current_radius, cv::Point2f &current_center, int &count_avg);
 };
 
 namespace task_buoy{
