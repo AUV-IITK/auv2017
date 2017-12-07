@@ -1,4 +1,4 @@
-// Copyright 2016 AUV-IITK
+// Copyright 2017 AUV-IITK
 #include <cv.h>
 #include <highgui.h>
 #include <ros/ros.h>
@@ -25,7 +25,7 @@ bool flag = false;
 bool video = false;
 cv::Mat frame;
 cv::Mat newframe;
-int count = 0, count_avg = 0;
+int count_avg = 0;
 int t1min, t1max, t2min, t2max, t3min, t3max;
 
 void callback(task_line::lineConfig &config, double level)
@@ -55,7 +55,6 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
   try
   {
-    count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
@@ -67,21 +66,59 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
+void balance_white(cv::Mat mat)
+{
+  double discard_ratio = 0.05;
+  int hists[3][256];
+  memset(hists, 0, 3*256*sizeof(int));
+
+  for (int y = 0; y < mat.rows; ++y) {
+    uchar* ptr = mat.ptr<uchar>(y);
+    for (int x = 0; x < mat.cols; ++x) {
+      for (int j = 0; j < 3; ++j) {
+        hists[j][ptr[x * 3 + j]] += 1;
+      }
+    }
+  }
+
+  // cumulative hist
+  int total = mat.cols*mat.rows;
+  int vmin[3], vmax[3];
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 255; ++j) {
+      hists[i][j + 1] += hists[i][j];
+    }
+    vmin[i] = 0;
+    vmax[i] = 255;
+    while (hists[i][vmin[i]] < discard_ratio * total)
+      vmin[i] += 1;
+    while (hists[i][vmax[i]] > (1 - discard_ratio) * total)
+      vmax[i] -= 1;
+    if (vmax[i] < 255 - 1)
+      vmax[i] += 1;
+  }
+
+
+  for (int y = 0; y < mat.rows; ++y) {
+    uchar* ptr = mat.ptr<uchar>(y);
+    for (int x = 0; x < mat.cols; ++x) {
+      for (int j = 0; j < 3; ++j) {
+        int val = ptr[x * 3 + j];
+        if (val < vmin[j])
+          val = vmin[j];
+        if (val > vmax[j])
+          val = vmax[j];
+        ptr[x * 3 + j] = static_cast<uchar>((val - vmin[j]) * 255.0 / (vmax[j] - vmin[j]));
+      }
+    }
+  }
+}
+
+
 int main(int argc, char *argv[])
 {
   int height, width, step, channels;  // parameters of the image we are working on
   cv::Scalar color(255, 255, 255);
-  std::string Video_Name = "Random_Video";
-  if (argc >= 2)
-    flag = true;
-  if (argc == 3)
-  {
-    video = true;
-    std::string avi = ".avi";
-    Video_Name = (argv[2]) + avi;
-  }
-
-  cv::VideoWriter output_cap(Video_Name, CV_FOURCC('D', 'I', 'V', 'X'), 9, cv::Size(640, 480));
 
   ros::init(argc, argv, "line_centralize");
   ros::NodeHandle n;
@@ -91,35 +128,20 @@ int main(int argc, char *argv[])
 
   image_transport::ImageTransport it(n);
   image_transport::Subscriber sub1 = it.subscribe("/varun/sensors/bottom_camera/image_raw", 1, imageCallback);
+  image_transport::Publisher pub1 = it.advertise("/first_picture", 1);
+  image_transport::Publisher pub2 = it.advertise("/second_picture", 1);
+  image_transport::Publisher pub3 = it.advertise("/third_picture", 1);
 
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
   f = boost::bind(&callback, _1, _2);
   server.setCallback(f);
 
-  n.getParam("line_centralize/t1max", t1max);
-  n.getParam("line_centralize/t1min", t1min);
-  n.getParam("line_centralize/t2max", t2max);
-  n.getParam("line_centralize/t2min", t2min);
-  n.getParam("line_centralize/t3max", t3max);
-  n.getParam("line_centralize/t3min", t3min);
-
-  task_line::lineConfig config;
-  config.t1min_param = t1min;
-  config.t1max_param = t1max;
-  config.t2min_param = t2min;
-  config.t2max_param = t2max;
-  config.t3min_param = t3min;
-  config.t3max_param = t3max;
-  callback(config, 0);
-
-  cvNamedWindow("LineCentralize:COM", CV_WINDOW_NORMAL);
-  cvNamedWindow("LineCentralize:AfterColorFiltering", CV_WINDOW_NORMAL);
-
   // capture size -
   CvSize size = cvSize(width, height);
 
-  cv::Mat hsv_frame, thresholded, thresholded1, thresholded2, thresholded3, filtered;  // image converted to HSV plane
+  cv::Mat lab_image, balanced_image1, dstx, thresholded, image_clahe, dst , dst1;  // image converted to HSV plane
+
   while (ros::ok())
   {
     std_msgs::Float64MultiArray array;
@@ -132,33 +154,25 @@ int main(int argc, char *argv[])
       continue;
     }
 
-    if (video)
-      output_cap.write(frame);
 
     // get the image data
     height = frame.rows;
     width = frame.cols;
     step = frame.step;
 
-    // Covert color space to HSV as it is much easier to filter colors in the HSV color-space.
-    cv::cvtColor(frame, hsv_frame, CV_BGR2HSV);
+    balance_white(frame);
+    bilateralFilter(frame, dst1, 4, 8, 8);
     cv::Scalar hsv_min = cv::Scalar(t1min, t2min, t3min, 0);
     cv::Scalar hsv_max = cv::Scalar(t1max, t2max, t3max, 0);
-    // Filter out colors which are out of range.
-    cv::inRange(hsv_frame, hsv_min, hsv_max, thresholded);
-    // Split image into its 3 one dimensional images
-    cv::Mat thresholded_hsv[3];
-    cv::split(hsv_frame, thresholded_hsv);
 
-    // Filter out colors which are out of range.
-    cv::inRange(thresholded_hsv[0], cv::Scalar(t1min, 0, 0, 0), cv::Scalar(t1max, 0, 0, 0), thresholded_hsv[0]);
-    cv::inRange(thresholded_hsv[1], cv::Scalar(t2min, 0, 0, 0), cv::Scalar(t2max, 0, 0, 0), thresholded_hsv[1]);
-    cv::inRange(thresholded_hsv[2], cv::Scalar(t3min, 0, 0, 0), cv::Scalar(t3max, 0, 0, 0), thresholded_hsv[2]);
-    cv::GaussianBlur(thresholded, thresholded, cv::Size(9, 9), 0, 0, 0);
-    cv::imshow("LineCentralize:AfterColorFiltering", thresholded);  // The stream after color filtering
+    cv::inRange(dst1, cv::Scalar(0, 0, 20), cv::Scalar(80, 260, 260), thresholded);
 
-    if ((cvWaitKey(10) & 255) == 27)
-      break;
+    cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+    cv::erode(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
+    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+    cv::dilate(thresholded, thresholded, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
 
     if ((!IP))
     {
@@ -168,6 +182,13 @@ int main(int argc, char *argv[])
       thresholded.copyTo(thresholded_Mat);
       cv::findContours(thresholded_Mat, contours, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);  // Find the contours
       double largest_area = 0, largest_contour_index = 0;
+
+      sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
+      sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
+
+      pub2.publish(msg2);
+      pub3.publish(msg3);
+
       if (contours.empty())
       {
         array.data.push_back(0);
@@ -175,10 +196,7 @@ int main(int argc, char *argv[])
 
         pub.publish(array);
         ros::spinOnce();
-        // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-        // remove higher bits using AND operator
-        if ((cvWaitKey(10) & 255) == 27)
-          break;
+
         continue;
       }
 
@@ -206,7 +224,11 @@ int main(int argc, char *argv[])
 
       cv::drawContours(Drawing, hull, 0, color, 2, 8, hierarchy);
       cv::circle(frame, center_of_mass, 5, cv::Scalar(0, 250, 0), -1, 8, 1);
-      cv::imshow("LineCentralize:COM", frame);
+      // cv::imshow("LineCentralize:COM", frame);
+
+      sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame).toImageMsg();
+      pub1.publish(msg1);
+
 
       cv::Point2f pt;
       pt.x = 320;  // size of my screen
@@ -217,16 +239,12 @@ int main(int argc, char *argv[])
       pub.publish(array);
 
       ros::spinOnce();
-      // If ESC key pressed, Key=0x10001B under OpenCV 0.9.7(linux version),
-      // remove higher bits using AND operator
-      if ((cvWaitKey(10) & 255) == 27)
-        break;
     }
+
     else
     {
       ros::spinOnce();
     }
   }
-  output_cap.release();
   return 0;
 }

@@ -3,20 +3,20 @@
     <param name="percentage" type="int" value="7" />
   </node>
   <node name="line_angle" pkg="task_line" type="line_angle" respawn="true"  output="screen">
-    <param name="t1min" type="int" value="121" />
-    <param name="t1max" type="int" value="198" />
+    <param name="t1min" type="int" value="0" />
+    <param name="t1max" type="int" value="80" />
     <param name="t2min" type="int" value="0" />
-    <param name="t2max" type="int" value="255" />
-    <param name="t3min" type="int" value="0" />
-    <param name="t3max" type="int" value="255" />
+    <param name="t2max" type="int" value="260" />
+    <param name="t3min" type="int" value="20" />
+    <param name="t3max" type="int" value="260" />
   </node>
   <node name="line_centralize" pkg="task_line" type="line_centralize" respawn="true"  output="screen">
-    <param name="t1min" type="int" value="121" />
-    <param name="t1max" type="int" value="198" />
+    <param name="t1min" type="int" value="0" />
+    <param name="t1max" type="int" value="80" />
     <param name="t2min" type="int" value="0" />
-    <param name="t2max" type="int" value="255" />
-    <param name="t3min" type="int" value="0" />
-    <param name="t3max" type="int" value="255" />
+    <param name="t2max" type="int" value="260" />
+    <param name="t3min" type="int" value="20" />
+    <param name="t3max" type="int" value="260" />
   </node> 
   <node name="line_server" pkg="task_line" type="line_server" respawn="true"  output="screen">
   </node>

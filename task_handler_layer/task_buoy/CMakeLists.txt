@@ -146,6 +146,12 @@ include_directories(include
   ${OpenCV_INCLUDE_DIRS}
 )
 
+add_library(lib SHARED src/lib.cpp include/lib.hpp)
+target_link_libraries(lib ${OpencvLIBRARIES})
+add_library(pre_processing SHARED src/pre_processing.cpp include/pre_processing.h)
+target_link_libraries(pre_processing ${OpencvLIBRARIES})
+target_link_libraries(pre_processing lib)
+
 add_executable(buoy_detection src/buoy_detection.cpp)
 add_executable(buoy_server src/buoy_server.cpp)
 add_executable(buoy_client src/buoy_client.cpp)
@@ -153,7 +159,8 @@ target_link_libraries(buoy_detection ${OpenCV_LIBS} )
 target_link_libraries(buoy_detection ${catkin_LIBRARIES})
 target_link_libraries(buoy_server ${catkin_LIBRARIES})
 target_link_libraries(buoy_client ${catkin_LIBRARIES})
-
+target_link_libraries(buoy_detection pre_processing)
+target_link_libraries(buoy_detection lib)
 ## Declare a C++ library
 # add_library(task_buoy
 #   src/${PROJECT_NAME}/task_buoy.cpp

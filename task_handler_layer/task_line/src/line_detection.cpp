@@ -19,7 +19,7 @@
 #include <sstream>
 #include <string>
 
-int percentage = 5, x = -1;  // used for how much percent of the screen should be orange
+int percentage = 5; // used for how much percent of the screen should be orange
                              // before deciding that a line is below. Used in
                              // dynamic_reconfig
 // callback for change the percent of orange before saying there is a line below
@@ -44,11 +44,8 @@ void lineDetectedListener(std_msgs::Bool msg)
 
 void imageCallback(const sensor_msgs::ImageConstPtr &msg)
 {
-  if (x == 32)
-    return;
   try
   {
-    count++;
     newframe = cv_bridge::toCvShare(msg, "bgr8")->image;
     ///////////////////////////// DO NOT REMOVE THIS, IT COULD BE INGERIOUS TO HEALTH /////////////////////
     newframe.copyTo(frame);
@@ -60,22 +57,77 @@ void imageCallback(const sensor_msgs::ImageConstPtr &msg)
   }
 }
 
+void balance_white(cv::Mat mat)
+{
+  double discard_ratio = 0.05;
+  int hists[3][256];
+  memset(hists, 0, 3*256*sizeof(int));
+
+  for (int y = 0; y < mat.rows; ++y) {
+    uchar* ptr = mat.ptr<uchar>(y);
+    for (int x = 0; x < mat.cols; ++x) {
+      for (int j = 0; j < 3; ++j) {
+        hists[j][ptr[x * 3 + j]] += 1;
+      }
+    }
+  }
+
+  // cumulative hist
+  int total = mat.cols*mat.rows;
+  int vmin[3], vmax[3];
+  for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 255; ++j) {
+      hists[i][j + 1] += hists[i][j];
+    }
+    vmin[i] = 0;
+    vmax[i] = 255;
+    while (hists[i][vmin[i]] < discard_ratio * total)
+      vmin[i] += 1;
+    while (hists[i][vmax[i]] > (1 - discard_ratio) * total)
+      vmax[i] -= 1;
+    if (vmax[i] < 255 - 1)
+      vmax[i] += 1;
+  }
+
+
+  for (int y = 0; y < mat.rows; ++y) {
+    uchar* ptr = mat.ptr<uchar>(y);
+    for (int x = 0; x < mat.cols; ++x) {
+      for (int j = 0; j < 3; ++j) {
+        int val = ptr[x * 3 + j];
+        if (val < vmin[j])
+          val = vmin[j];
+        if (val > vmax[j])
+          val = vmax[j];
+        ptr[x * 3 + j] = static_cast<uchar>((val - vmin[j]) * 255.0 / (vmax[j] - vmin[j]));
+      }
+    }
+  }
+}
+
+
 // callback for off switch.
 int detect(cv::Mat image)
 {
   cv::Size size(640, 480);  // the dst image size,e.g.100x100
   cv::Mat resizeimage;      // dst image
   cv::Mat bgr_image;
+  cv::Mat dst1;
   resize(image, resizeimage, size);  // resize image
   cv::waitKey(20);
   // detect red color here
-  medianBlur(resizeimage, bgr_image, 3);  // blur to reduce noise
-  // Convert input image to HSV
-  cv::Mat hsv_image;
-  cvtColor(bgr_image, hsv_image, cv::COLOR_BGR2HSV);
-  // keep only red color
-  inRange(hsv_image, cv::Scalar(0, 100, 100), cv::Scalar(179, 255, 255), red_hue_image);
-  GaussianBlur(red_hue_image, red_hue_image, cv::Size(9, 9), 2, 2);  // gaussian blur to remove false positives
+  balance_white(resizeimage);
+  bilateralFilter(resizeimage, dst1, 4, 8, 8);
+
+  cv::inRange(dst1, cv::Scalar(0, 0, 20), cv::Scalar(80, 260, 260), red_hue_image);
+
+  cv::erode(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+  cv::erode(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3)));
+  cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+  cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+  cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+  cv::dilate(red_hue_image, red_hue_image, getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5)));
+
   int nonzero = countNonZero(red_hue_image);
   int nonzeropercentage = nonzero / 3072;
   if (nonzero > (3072 * percentage))  // return 1 if a major portion of image
@@ -98,6 +150,9 @@ int main(int argc, char **argv)
                             // input. and in the case of other sensors , this
                             // rate should be same as there rate of data
                             // generation
+  image_transport::Publisher pub1 = it.advertise("/first_picture", 1);
+  image_transport::Publisher pub2 = it.advertise("/second_picture", 1);
+  image_transport::Publisher pub3 = it.advertise("/third_picture", 1);
 
   dynamic_reconfigure::Server<task_line::lineConfig> server;
   dynamic_reconfigure::Server<task_line::lineConfig>::CallbackType f;
@@ -120,10 +175,19 @@ int main(int argc, char **argv)
       ros::spinOnce();
       continue;
     }
-    if (!IP)
+
+    if (1)
     {
       int alert = detect(frame);
-      cv::imshow("LineDetection:red_hue_image", red_hue_image);
+
+      sensor_msgs::ImagePtr msg1 = cv_bridge::CvImage(std_msgs::Header(), "mono8", red_hue_image).toImageMsg();
+      // sensor_msgs::ImagePtr msg2 = cv_bridge::CvImage(std_msgs::Header(), "bgr8", balanced_image1).toImageMsg();
+      // sensor_msgs::ImagePtr msg3 = cv_bridge::CvImage(std_msgs::Header(), "mono8", thresholded).toImageMsg();
+
+      pub1.publish(msg1);
+      // pub2.publish(msg2);
+      // pub3.publish(msg3);
+
 
       if (alert == 1)
       {
@@ -153,28 +217,11 @@ int main(int argc, char **argv)
       }
       ros::spinOnce();
       loop_rate.sleep();
-      if ((cvWaitKey(10) & 255) == 32)
-      {
-        if (x == 32)
-          x = -1;
-        else
-          x = 32;
-      }
-      if (x == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
+
       ros::spinOnce();
     }
     else
     {
-      if ((cvWaitKey(10) & 255) == 32)
-      {
-        if (x == 32)
-          x = -1;
-        else
-          x = 32;
-      }
-      if (x == 32)
-        ROS_INFO("%s: PAUSED\n", ros::this_node::getName().c_str());
       ros::spinOnce();
     }
   }

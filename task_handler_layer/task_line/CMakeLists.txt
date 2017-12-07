@@ -129,6 +129,10 @@ include_directories(include
 
 ## Declare a cpp executable
 # add_executable(task_line_detection_node src/task_line_detection_node.cpp)
+
+#add_library(pre_processing SHARED src/pre_processing.cpp src/pre_processing.h)
+#target_link_libraries(pre_processing ${OpenCV_LIBS})
+
 add_executable(line_detection src/line_detection.cpp)
 add_executable(line_angle src/line_angle.cpp)
 add_executable(line_centralize src/line_centralize.cpp)
@@ -144,10 +148,16 @@ add_executable(line_client src/line_client.cpp)
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(line_detection ${catkin_LIBRARIES})
+target_link_libraries(line_detection pre_processing)
+
 target_link_libraries(line_angle ${OpenCV_LIBS})
 target_link_libraries(line_angle ${catkin_LIBRARIES})
+target_link_libraries(line_angle pre_processing)
+
 target_link_libraries(line_centralize ${OpenCV_LIBS})
 target_link_libraries(line_centralize ${catkin_LIBRARIES})
+target_link_libraries(line_centralize pre_processing)
+
 target_link_libraries(line_detection ${OpenCV_LIBS})
 target_link_libraries(line_server ${catkin_LIBRARIES})
 target_link_libraries(line_client ${catkin_LIBRARIES})
