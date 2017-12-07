@@ -9,4 +9,5 @@
   # build debug layer
   catkin_make --pkg varun_description &&
   catkin_make --pkg varun_gazebo &&
-catkin_make roslint_varun_gazebo)
+catkin_make roslint_varun_gazebo &&
+)

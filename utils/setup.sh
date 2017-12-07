@@ -15,6 +15,8 @@ sudo apt-get install -y python-catkin-pkg python-rosdep ros-$ROS_DISTRO-catkin
 sudo apt-get install python-pip
 sudo pip install autopep8
 sudo apt-get install clang-format-3.6
+# installing mavros packages for PIXHAWK
+sudo apt-get install ros-$ROS_DISTRO-mavros ros-$ROS_DISTRO-mavros-extras
 # source ros setup script
 source /opt/ros/$ROS_DISTRO/setup.bash
 # Prepare rosdep to install dependencies.
