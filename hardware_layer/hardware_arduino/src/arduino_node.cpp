@@ -4,8 +4,8 @@
 #include <std_msgs/Float64.h>
 #include <math.h>
 #include <Wire.h>
-#include "MS5837.h"
-#include "arduino_thrust.h"
+#include "../include/MS5837.h"
+#include "../include/arduino_thrust.h"
 
 #define pwmPinWest 3
 #define pwmPinEast 2
