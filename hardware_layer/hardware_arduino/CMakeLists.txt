@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## Check for lint errors
-roslint_cpp(src/arduino_node.cpp)
+roslint_cpp(src/Processing.cpp)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -136,7 +136,9 @@ include_directories(
 # add_dependencies(hardware_arduino ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-add_executable(arduino_node src/Processing.cpp)
+add_executable(Processing src/Processing.cpp)
+add_library(thruster src/thruster.cpp)
+target_link_libraries(Processing thruster)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above

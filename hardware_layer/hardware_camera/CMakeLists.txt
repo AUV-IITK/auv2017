@@ -10,15 +10,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
-  dynamic_reconfigure
-  actionlib
-  actionlib_msgs
   message_generation
-  task_commons
-  motion_commons
-  cv_bridge
-  sensor_msgs
   image_transport
+  usb_cam
 )
 
 ## System dependencies are found with CMake's conventions
@@ -27,7 +21,6 @@ roslint_cpp()
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED COMPONENTS system)
-find_package( OpenCV REQUIRED )
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -100,9 +93,9 @@ find_package( OpenCV REQUIRED )
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-generate_dynamic_reconfigure_options(
-  cfg/camera.cfg
-)
+# generate_dynamic_reconfigure_options(
+#   cfg/camera.cfg
+# )
 
 ###################################
 ## catkin specific configuration ##
@@ -122,7 +115,7 @@ generate_messages(
 catkin_package(
   #  INCLUDE_DIRS include
   #  LIBRARIES task_buoy
-  CATKIN_DEPENDS roscpp rospy std_msgs actionlib actionlib_msgs message_generation task_commons motion_commons
+  CATKIN_DEPENDS roscpp rospy std_msgs message_generation
   #  DEPENDS system_lib
 )
 
@@ -137,9 +130,9 @@ set(CMAKE_CXX_FLAGS "-std=gnu++11 ${CMAKE_CXX_FLAGS}")
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(include
-  ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
+  # ${dynamic_reconfigure_PACKAGE_PATH}/cmake/cfgbuild.cmake
   ${catkin_INCLUDE_DIRS}
-  ${OpenCV_INCLUDE_DIRS}
+  # ${OpenCV_INCLUDE_DIRS}
 )
 
 
@@ -199,9 +192,9 @@ include_directories(include
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
-add_executable(vid_pub src/vid_pub.cpp)
-target_link_libraries(vid_pub ${catkin_LIBRARIES})
-target_link_libraries(vid_pub ${OpenCV_LIBS})
+#add_executable(vid_pub src/vid_pub.cpp)
+#target_link_libraries(vid_pub ${catkin_LIBRARIES})
+#target_link_libraries(vid_pub ${OpenCV_LIBS})
 
 #############
 ## Testing ##
