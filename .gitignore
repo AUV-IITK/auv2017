@@ -42,3 +42,4 @@ config.mk
 html/*
 # ignore doxygen bkp file
 *.bak
+AUV-Qt-Interface
