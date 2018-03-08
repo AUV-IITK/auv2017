@@ -1,7 +1,8 @@
 #include <ros/ros.h>
+
 #include <std_msgs/Int32.h>
 #include <math.h>
-#include "../include/thruster.h"
+#include "thruster.h"
 
 //instances of the class thruster defined in header file
 thruster TEAST,TWEST,TNORTHUP,TSOUTHUP,TNORTHSWAY,TSOUTHSWAY;

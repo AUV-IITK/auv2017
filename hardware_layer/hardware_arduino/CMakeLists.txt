@@ -122,6 +122,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -138,7 +139,7 @@ include_directories(
 ## Declare a C++ executable
 add_executable(Processing src/Processing.cpp)
 add_library(thruster src/thruster.cpp)
-target_link_libraries(Processing thruster)
+target_link_libraries(Processing thruster ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -155,12 +156,12 @@ rosserial_generate_ros_lib(
 )
 
 rosserial_configure_client(
-  DIRECTORY src
+  DIRECTORY firmware
   TOOLCHAIN_FILE ${ROSSERIAL_ARDUINO_TOOLCHAIN}
 )
 
-rosserial_add_client_target(src arduino_node ALL)
-rosserial_add_client_target(src arduino_node-upload)
+rosserial_add_client_target(firmware arduino_node ALL)
+rosserial_add_client_target(firmware arduino_node-upload)
 
 
 #############
